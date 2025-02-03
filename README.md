@@ -3,7 +3,7 @@
 | Nombre    | Email     | Github      |
 |:-------------|:------------:|-------------:|
 | Álvaro Fernández González       | a.fernandezgo.2020@alumnos.urjc.es       | [alvaro-f-g](https://github.com/alvaro-f-g)       |
-|        |        |      |
+| Gonzalo Fernández González       | g.fernandezg.2020@alumnos.urjc.es       | [gonfergon](https://github.com/gonfergon)     |
 |      |        |   |
 | |       |      |
 |       |      |       |
@@ -12,9 +12,9 @@
   - Diagrama (insertar)
 - **Permisos de usuario**:
   - Usuario registrado: Impartir o recibir clases, ver y añadir reseñas.
-  - Usuario anónimo o no registrado: Ver clases, y acceder a las reseñas.
+  - Usuario anónimo o no registrado: Ver clases impartidas, y acceder a las reseñas.
   - Administrador: Puede añadir, borrar o editar clases y reseñas.
-- **Imágenes**: Del perfil de los usuarios, y de la asignatura impartida.
+- **Imágenes**: Del perfil de los usuarios, y de las asignaturas impartidas.
 - **Gráficos**: De las clases recibidas e impartidas por el usuario.
 - **Tecnología complementaria**: Comunicación a través de correos de los usuarios.
 - **Algoritmo o consulta avanzada**: Filtrar clases por asignaturas y valoraciones en las reseñas.
