@@ -4,12 +4,12 @@
 |:-------------|:------------:|-------------:|
 | Álvaro Fernández González       | a.fernandezgo.2020@alumnos.urjc.es       | [alvaro-f-g](https://github.com/alvaro-f-g)       |
 | Gonzalo Fernández González       | g.fernandezg.2020@alumnos.urjc.es       | [gonfergon](https://github.com/gonfergon)     |
-|      |        |   |
+| Eloy de Sande de las Heras     | e.desande.2021@alumnos.urjc.es       | [eloydsdlh](https://github.com/eloydsdlh)  |
 | |       |      |
 |       |      |       |
 ## Aspectos principales:
 - **Entidades**: usuario, asignatura, clases, reseña
-  - Diagrama (insertar)
+  ![Diagrama E-R](images/ERDiagram)
 - **Permisos de usuario**:
   - Usuario registrado: Impartir o recibir clases, ver y añadir reseñas.
   - Usuario anónimo o no registrado: Ver clases impartidas, y acceder a las reseñas.
