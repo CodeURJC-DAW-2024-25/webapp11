@@ -8,14 +8,14 @@
 | |       |      |
 |       |      |       |
 ## Aspectos principales:
-- **Entidades**: usuario, asignatura, clases, reseña
+- **Entidades**: usuario, inscripción, curso, comentario
   ![Diagrama E-R](images/ERDiagram)
 - **Permisos de usuario**:
-  - Usuario registrado: Impartir o recibir clases, ver y añadir reseñas.
-  - Usuario anónimo o no registrado: Ver clases impartidas, y acceder a las reseñas.
-  - Administrador: Puede añadir, borrar o editar clases y reseñas.
+  - Usuario registrado: Impartir o recibir cursos, ver y añadir comentarios.
+  - Usuario anónimo o no registrado: Ver cursos impartidos, y acceder a las reseñas.
+  - Administrador: Puede añadir, borrar o editar cursos y comentarios.
 - **Imágenes**: Del perfil de los usuarios, y de las asignaturas impartidas.
-- **Gráficos**: De las clases recibidas e impartidas por el usuario.
+- **Gráficos**: De las cursos recibidos e impartidos por el usuario.
 - **Tecnología complementaria**: Comunicación a través de correos de los usuarios.
-- **Algoritmo o consulta avanzada**: Filtrar clases por asignaturas y valoraciones en las reseñas.
+- **Algoritmo o consulta avanzada**: Filtrar cursos por temática y ordenar por valoración los cursos.
 
