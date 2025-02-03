@@ -5,7 +5,7 @@
 | Álvaro Fernández González       | a.fernandezgo.2020@alumnos.urjc.es       | [alvaro-f-g](https://github.com/alvaro-f-g)       |
 | Gonzalo Fernández González       | g.fernandezg.2020@alumnos.urjc.es       | [gonfergon](https://github.com/gonfergon)     |
 | Eloy de Sande de las Heras     | e.desande.2021@alumnos.urjc.es       | [eloydsdlh](https://github.com/eloydsdlh)  |
-| Olga Somalo Serrano             |  o.somalo.2021@alumnos.urjc.es           |  [olga-ssf] (https://github.com/olga-ssf)     |
+| Olga Somalo Serrano             |  o.somalo.2021@alumnos.urjc.es           |  [olga-ssf](https://github.com/olga-ssf)     |
 |       |      |       |
 ## Aspectos principales:
 - **Entidades**: usuario, inscripción, curso, comentario
