@@ -17,4 +17,4 @@
 - **Imágenes**: Del perfil de los usuarios, y de los cursos impartidos.
 - **Gráficos**: De las cursos recibidos e impartidos por el usuario y de las valoraciones.
 - **Tecnología complementaria**: Envío  de correos a los usuarios indicándoles que  han sido registrados correctamente.
-- **Algoritmo o consulta avanzada**: Mostrar cursos de interés o afines al usuario.(Si se dispone de  tiempo: Filtrar cursos por valoraciónes.)
+- **Algoritmo o consulta avanzada**: Mostrar cursos de interés o afines al usuario(Si se dispone de  tiempo: Filtrar cursos por valoraciónes).
