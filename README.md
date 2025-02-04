@@ -14,8 +14,7 @@
   - Usuario registrado: Impartir o recibir cursos, ver y añadir comentarios.
   - Usuario anónimo o no registrado: Ver cursos impartidos, y acceder a las reseñas.
   - Administrador: Puede añadir, borrar o editar cursos y comentarios.
-- **Imágenes**: Del perfil de los usuarios, y de las asignaturas impartidas.
-- **Gráficos**: De las cursos recibidos e impartidos por el usuario.
-- **Tecnología complementaria**: Comunicación a través de correos de los usuarios.
-- **Algoritmo o consulta avanzada**: Filtrar cursos por temática y ordenar por valoración los cursos.
-
+- **Imágenes**: Del perfil de los usuarios, y de los cursos impartidos.
+- **Gráficos**: De las cursos recibidos e impartidos por el usuario y de las valoraciones.
+- **Tecnología complementaria**: Envío  de correos a los usuarios indicándoles que  han sido registrados correctamente.
+- **Algoritmo o consulta avanzada**: Mostrar cursos de interés o afines al usuario.(Si se dispone de  tiempo: Filtrar cursos por valoraciónes.)
