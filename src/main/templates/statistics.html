@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas del Curso</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/style.css">
+    <!-- Agregar librería de gráficos (ejemplo con Chart.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+        .card-body {
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header py-3">
+                <div class="row flex-nowrap justify-content-between align-items-center">
+                    <div class="col-4">
+                        <a class="header-logo text-dark" href="#">Cognite</a>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end align-items-center">
+                        <a class="text-muted" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-3"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg>
+                        </a>
+                        <a class="btn btn-sm btn-outline-secondary mr-2" href="./login.html">Log in</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="./signup.html">Sign up</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-scroller py-1 mb-2">
+                <nav class="nav d-flex justify-content-between">
+                    <a class="p-2 text-muted" href="#">Desarrollo web</a>
+                    <a class="p-2 text-muted" href="#">Desarrollo móvil</a>
+                    <a class="p-2 text-muted" href="#">Desarrollo de videojuegos</a>
+                    <a class="p-2 text-muted" href="#">Emprendimiento</a>
+                    <a class="p-2 text-muted" href="#">Finanzas</a>
+                    <a class="p-2 text-muted" href="#">Marketing digital</a>
+                    <a class="p-2 text-muted" href="#">Liderazgo</a>
+                    <a class="p-2 text-muted" href="#">Comunicación</a>
+                </nav>
+            </div>
+        </header>
+    </div>
+
+    <main class="container mt-4">
+        <h2 class="mb-4">Estadísticas de Curso: Desarrollo Web Completo</h2>
+        
+        <div class="row">
+            <!-- Gráfico 1 -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Calificación Promedio</h5>
+                        <canvas id="calificacionPromedio" width="100%" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gráfico 2 -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Porcentaje de Estudiantes Completados</h5>
+                        <canvas id="porcentajeCompletados" width="100%" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Gráfico 3 -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Tendencia de Inscripciones</h5>
+                        <canvas id="tendenciaInscripciones" width="100%" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfico 4 -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Distribución de Tareas Completadas</h5>
+                        <canvas id="distribucionTareas" width="100%" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer mt-4 p-3 bg-light text-center">
+        <p>Cognite &copy; 2025 <br> Grupo 11</p>
+        <p><a href="#">Back to top</a></p>
+    </footer>
+
+    <script>
+        // Ejemplo de gráficos con Chart.js
+
+        // Gráfico de Calificación Promedio
+        var ctx1 = document.getElementById('calificacionPromedio').getContext('2d');
+        var calificacionPromedioChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+                datasets: [{
+                    label: 'Calificación Promedio',
+                    data: [4, 4.2, 4.5, 4.3],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        // Gráfico de Porcentaje de Estudiantes Completados
+        var ctx2 = document.getElementById('porcentajeCompletados').getContext('2d');
+        var porcentajeCompletadosChart = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Completados', 'No Completados'],
+                datasets: [{
+                    label: 'Porcentaje de Estudiantes',
+                    data: [75, 25],
+                    backgroundColor: ['#36A2EB', '#FF6384'],
+                    borderColor: ['#fff', '#fff'],
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        // Gráfico de Tendencia de Inscripciones
+        var ctx3 = document.getElementById('tendenciaInscripciones').getContext('2d');
+        var tendenciaInscripcionesChart = new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
+                datasets: [{
+                    label: 'Inscripciones',
+                    data: [50, 75, 100, 120],
+                    fill: false,
+                    borderColor: '#4bc0c0',
+                    tension: 0.1
+                }]
+            }
+        });
+
+        // Gráfico de Distribución de Tareas Completadas
+        var ctx4 = document.getElementById('distribucionTareas').getContext('2d');
+        var distribucionTareasChart = new Chart(ctx4, {
+            type: 'pie',
+            data: {
+                labels: ['Tareas Completadas', 'Tareas Pendientes'],
+                datasets: [{
+                    label: 'Distribución de Tareas',
+                    data: [80, 20],
+                    backgroundColor: ['#36A2EB', '#FF6384'],
+                    borderColor: ['#fff', '#fff'],
+                    borderWidth: 1
+                }]
+            }
+        });
+    </script>
+
+</body>
+</html>
