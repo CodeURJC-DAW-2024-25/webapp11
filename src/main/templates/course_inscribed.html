@@ -44,6 +44,48 @@
                 <h5>Profesor: Juan Pérez</h5>
                 <p><strong>Temática:</strong> Desarrollo Web</p>
                 <p>Descripción: En este curso aprenderás los fundamentos del desarrollo web moderno con tecnologías como HTML, CSS y JavaScript.</p>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>Comentarios</h4>
+                        <div class="comment mb-3">
+                            <strong>Ana López</strong>
+                            <p>Excelente curso, muy bien explicado.</p>
+                            <button class="btn btn-link btn-sm">Responder</button>
+                            <div class="comment ml-3">
+                                <strong>Juan Pérez</strong>
+                                <p>¡Gracias Ana! Me alegra que te haya servido.</p>
+                                <button class="btn btn-link btn-sm">Responder</button>
+                            </div>
+                        </div>
+                        <div class="comment mb-3">
+                            <strong>Carlos Gómez</strong>
+                            <p>¿Este curso cubre también React?</p>
+                            <button class="btn btn-link btn-sm">Responder</button>
+                            <div class="comment ml-3">
+                                <strong>Juan Pérez</strong>
+                                <p>Sí, en los últimos módulos hablamos sobre React.</p>
+                                <button class="btn btn-link btn-sm">Responder</button>
+                            </div>
+                        </div>
+                        <textarea class="form-control mb-2" placeholder="Añade un comentario..."></textarea>
+                        <button class="btn btn-primary">Comentar</button>
+                        <br>
+                        <hr>
+                        <h4>Añadir valoración</h4>
+                        <div class="rating-container">
+                            <label for="rating-select">Selecciona una valoración:</label>
+                            <select id="rating-select" name="rating">
+                                <option value="5">⭐⭐⭐⭐⭐</option>
+                                <option value="4">⭐⭐⭐⭐</option>
+                                <option value="3">⭐⭐⭐</option>
+                                <option value="2">⭐⭐</option>
+                                <option value="1">⭐</option>
+                            </select>
+                            <button class="btn btn-primary" id="rate-button">Valorar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane fade" id="material" role="tabpanel" aria-labelledby="material-tab">
                 <h4>Previsualización del material</h4>
@@ -52,48 +94,6 @@
                 </object>
             </div>
           </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <h4>Comentarios</h4>
-                <div class="comment mb-3">
-                    <strong>Ana López</strong>
-                    <p>Excelente curso, muy bien explicado.</p>
-                    <button class="btn btn-link btn-sm">Responder</button>
-                    <div class="comment ml-3">
-                        <strong>Juan Pérez</strong>
-                        <p>¡Gracias Ana! Me alegra que te haya servido.</p>
-                        <button class="btn btn-link btn-sm">Responder</button>
-                    </div>
-                </div>
-                <div class="comment mb-3">
-                    <strong>Carlos Gómez</strong>
-                    <p>¿Este curso cubre también React?</p>
-                    <button class="btn btn-link btn-sm">Responder</button>
-                    <div class="comment ml-3">
-                        <strong>Juan Pérez</strong>
-                        <p>Sí, en los últimos módulos hablamos sobre React.</p>
-                        <button class="btn btn-link btn-sm">Responder</button>
-                    </div>
-                </div>
-                <textarea class="form-control mb-2" placeholder="Añade un comentario..."></textarea>
-                <button class="btn btn-primary">Comentar</button>
-                <br>
-                <hr>
-                <h4>Añadir valoración</h4>
-                <div class="rating-container">
-                    <label for="rating-select">Selecciona una valoración:</label>
-                    <select id="rating-select" name="rating">
-                        <option value="5">⭐⭐⭐⭐⭐</option>
-                        <option value="4">⭐⭐⭐⭐</option>
-                        <option value="3">⭐⭐⭐</option>
-                        <option value="2">⭐⭐</option>
-                        <option value="1">⭐</option>
-                    </select>
-                    <button class="btn btn-primary" id="rate-button">Valorar</button>
-                </div>
-            </div>
-        </div>
     </main>
 
     <footer class="footer mt-4 p-3 bg-light text-center">
