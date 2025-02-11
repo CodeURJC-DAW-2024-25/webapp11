@@ -1,4 +1,4 @@
-# Nombre de la aplicación:
+# Nombre de la aplicación: Cognite
 ## Integrantes:
 | Nombre    | Email     | Github      |
 |:-------------|:------------:|-------------:|
@@ -34,3 +34,10 @@
   - Vista de usuario no inscrito: Solo tiene acceso a la información del curso, no a los materiales.
 - **Página de estadísticas:** Se muestran estadísticas sobre un curso en concreto, por ejemplo la calificación promedio de un curso o el número de inscritos.
 - **Página de error:** Se muestra cuando sucede algún tipo de error, mostrando un mensaje para informar al usuario de lo sucedido.
+
+## Diagrama de navegación:
+- **Azul:** Todos los usuarios.
+- **Amarillo:** Usuarios Registrados.
+- **Verde:** Administrador.
+- **Nota:** desde cualquier página puedes llegar a la página de error
+![Diagrama de navegación](images/Diagrama_navegacion)
