@@ -40,4 +40,4 @@
 - **Amarillo:** Usuarios Registrados.
 - **Verde:** Administrador.
 - **Nota:** desde cualquier página puedes llegar a la página de error
-![Diagrama de navegación](images/Diagrama_navegacion.png)
+![Diagrama de navegación](images/diagrama_navegacion.png)
