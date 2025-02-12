@@ -1,0 +1,112 @@
+{{>header}}
+<main class="container mt-4">
+    <img src="{{imagen}}" alt="Imagen del curso" class="img-fluid mb-3">
+    <h2>{{nombre}}</h2>
+    <h5>Profesor: {{teacher}}</h5>
+    <p><strong>Temática:</strong> {{topic}}</p>
+    <p>Descripción: {{description}}</p>
+
+    {{#isEnrolled}}
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="content-tab" data-bs-toggle="tab" data-bs-target="#content" type="button" role="tab" aria-controls="content" aria-selected="true">Contenidos</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="material-tab" data-bs-toggle="tab" data-bs-target="#material" type="button" role="tab" aria-controls="material" aria-selected="false">Material</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="content" role="tabpanel">
+                <h4>Material</h4>
+                <object data="{{material}}" type="application/pdf" width="100%" height="400px">
+                    <p>Tu navegador no admite la visualización de PDFs. <a href="{{material}}" target="_blank">Haz clic aquí para verlo</a>.</p>
+                </object>
+            </div>
+        </div>
+    {{/isIEnrolled}}
+    
+    {{#isTeacher}}
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="content-tab" data-bs-toggle="tab" data-bs-target="#content" type="button" role="tab" aria-controls="content" aria-selected="true">Contenidos</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="material-tab" data-bs-toggle="tab" data-bs-target="#material" type="button" role="tab" aria-controls="material" aria-selected="false">Material</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="content" role="tabpanel">
+                <h4>Material</h4>
+                <object data="{{material}}" type="application/pdf" width="100%" height="400px">
+                    <p>Tu navegador no admite la visualización de PDFs. <a href="{{material}}" target="_blank">Haz clic aquí para verlo</a>.</p>
+                </object>
+                <button class="btn btn-success mt-3">Editar curso</button>  <!-- Falta funcionalidad -->
+                <button class="btn btn-danger mt-3">Eliminar curso</button> <!-- Falta funcionalidad -->
+                <a class="btn btn-secondary mt-3" href="/statistics/{{id}}">Ver estadísticas</a>
+            </div>
+        </div>
+
+    {{/isTeacher}}
+
+    {{^isEnrolled}}
+        <button class="btn btn-success mt-3">Inscribirse al curso</button>
+    {{/isEnrolled}}
+
+    <h4>Comentarios</h4>
+    {{#comments}}
+        <div class="comment mb-3">
+            <strong>{{author}}</strong>
+            <p>{{content}}</p>
+            {{#isEnrolled}}
+                <form action="/course/{{course.id}}/comment" method="post">
+                    <input type="hidden" name="parentId" value="{{id}}">
+                    <textarea class="form-control mb-2" name="content" placeholder="Responder..."></textarea>
+                    <button class="btn btn-link btn-sm">Responder</button>
+                </form>
+            {{/isEnrolled}}
+            {{#isTeacher}}
+                <form action="/course/{{course.id}}/comment" method="post">
+                    <input type="hidden" name="parentId" value="{{id}}">
+                    <textarea class="form-control mb-2" name="content" placeholder="Responder..."></textarea>
+                    <button class="btn btn-link btn-sm">Responder</button>
+                </form>
+                <button class="btn btn-link btn-sm" style="color: red;">Reportar</button>   <!-- Falta funcionalidad -->
+            {{/isTeacher}}
+            {{#replies}}
+                <div class="comment ml-3">
+                    <strong>{{author}}</strong>
+                    <p>{{content}}</p>
+                </div>
+                {{#isEnrolled}}
+                    <form action="/course/{{course.id}}/comment" method="post">
+                        <input type="hidden" name="parentId" value="{{id}}">
+                        <textarea class="form-control mb-2" name="content" placeholder="Responder..."></textarea>
+                        <button class="btn btn-link btn-sm">Responder</button>
+                    </form>
+                {{/isEnrolled}}
+                {{#isTeacher}}
+                    <form action="/course/{{course.id}}/comment" method="post">
+                        <input type="hidden" name="parentId" value="{{id}}">
+                        <textarea class="form-control mb-2" name="content" placeholder="Responder..."></textarea>
+                        <button class="btn btn-link btn-sm">Responder</button>
+                    </form>
+                    <button class="btn btn-link btn-sm" style="color: red;">Reportar</button>   //Falta funcionalidad
+                {{/isTeacher}}
+            {{/replies}}
+        </div>
+    {{/comments}}
+
+    {{#isEnrolled}}
+        <form action="/course/{{course.id}}/comment" method="post">
+            <textarea class="form-control mb-2" name="contenido" placeholder="Añadir un comentario..."></textarea>
+            <button class="btn btn-primary">Comentar</button>
+        </form>
+    {{/isEnrolled}}
+
+    {{^isEnrolled}}
+        {{^isTeacher}}
+            <p><a href="/login">Inicia sesión</a> para dejar un comentario.</p>
+        {{/isTeacher}}
+    {{/isEnrolled}}
+</main>
+{{>footer}}

@@ -1,0 +1,50 @@
+{{>header}}
+<br>
+<div class="container">
+    <h2 class="text-dark">Porque buscaste "{{topic}}"</h2>
+    <div class="row g-4">
+        {{#recomendCourses}}
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <img src="{{image}}" class="card-img-top">
+                    <div class="card-body">
+                        <strong class="d-inline-block mb-2 text-primary">{{topic}}</strong>
+                        <h5 class="card-title">{{title}}</h5>
+                        <div class="mb-1 text-muted">{{rating}}</div>
+                        <p class="card-text">{{description}}</p>
+                        <a href="/curso/{{id}}" class="btn btn-primary">Ver curso</a>
+                    </div>
+                </div>
+            </div>
+        {{/recomendCourses}}
+    </div>
+</div>
+<br>
+
+<div class="container">
+    <h2 class="text-dark">Todos los cursos</h2>
+    <div class="row mb-2">
+        {{#allCourses}}
+            <div class="col-lg-6 col-md-12">
+                <div class="card flex-md-row mb-4 box-shadow">
+                    <div class="card-body d-flex flex-column align-items-start">
+                        <strong class="d-inline-block mb-2 text-primary">{{topic}}</strong>
+                        <h3 class="mb-0">
+                            <a class="text-dark" href="/curso/{{id}}">{{title}}</a>
+                        </h3>
+                        <div class="mb-1 text-muted">{{rating}}</div>
+                        <p class="card-text mb-auto">{{description}}</p>
+                        <a href="/curso/{{id}}">Ver curso</a>
+                    </div>
+                    <img class="card-img-right flex-auto d-none d-md-block d-lg-block" src="{{image}}" style="width: 200px; height: 250px; object-fit: cover;">
+                </div>
+            </div>
+        {{/allCourses}}
+    </div>
+
+    <div class="text-center">
+        <a href="#" class="btn btn-primary">Cargar más</a>
+    </div>
+</div>
+<br>
+{{>footer}}
