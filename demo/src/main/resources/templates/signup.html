@@ -3,8 +3,6 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
         <link rel="icon" href="../../../../favicon.ico">
         <title>Sign up - Cognite</title>
 
@@ -18,7 +16,7 @@
     <body class="text-center body-sign">
         <div class="container">
             <div class="header-logo text-dark">Cognite</div>
-            <form class=" mx-auto">
+            <form class=" mx-auto" method="POST" action="newUser" enctype="multipart/form-data"> <!-- action='url_controlador'-->
                 
                 <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
 
@@ -26,14 +24,14 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
                     </div>
-                    <input type="text" id="inputFirstName" class="form-control" placeholder="Nombre" required autofocus>
+                    <input type="text" id="firstName"  name="firstName" class="form-control" placeholder="Nombre" required autofocus>
                 </div>
 
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fa-solid fa-user-plus"></i></span>
                     </div>
-                    <input type="text" id="inputLastName" class="form-control" placeholder="Apellidos" required>
+                    <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Apellidos" required>
                 </div>
 
 
@@ -41,7 +39,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
                     </div>
-                    <input type="email" id="inputEmail" class="form-control" placeholder="Email" required>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
                 </div>
 
                 <div class="form-group input-group">
@@ -49,8 +47,8 @@
                         <span class="input-group-text"><i class="fa-solid fa-image"></i></span>
                     </div>
                     <div class="custom-file">
-                        <input type="file" id="inputProfilePic" class="custom-file-input" accept="image/*" required>
-                        <label class="custom-file-label" for="inputProfilePic" style="text-align: left;">Imagen de perfil</label>
+                        <input type="file" id="profileImage" name="profileImage" class="custom-file-input" accept="image/*" required>
+                        <label class="custom-file-label" for="profileImage" style="text-align: left;">Imagen de perfil</label>
                     </div>
                 </div>
               
@@ -59,7 +57,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fa-solid fa-book"></i></span>
                     </div>
-                    <select id="inputTopic" class="form-control" required>
+                    <select id="topic" name="topic" class="form-control" required>
                         <option value="" disabled selected>Me gustaría aprender sobre...</option>
                         <option value="desarrollo-web">Desarrollo web</option>
                         <option value="desarrollo-movil">Desarrollo móvil</option>
@@ -76,14 +74,14 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
                     </div>
-                    <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required>
                 </div>
 
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
                     </div>
-                    <input type="password" id="inputRepeatPassword" class="form-control" placeholder="Repetir contraseña" required>
+                    <input type="password" id="repeatPassword" name="repeatPassword" class="form-control" placeholder="Repetir contraseña" required>
                 </div>
 
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>

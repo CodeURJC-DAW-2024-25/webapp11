@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../../../favicon.ico">
+
+        <title>Page Not Found - Cognite</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="../styles/style.css" rel="stylesheet">
+    </head>
+    <body class="text-center body-sign">
+        <form class="form-sign">
+            <div class="header-logo text-dark">Cognite</div>
+            <h1 class="h3 mb-3 font-weight-normal">{{errorTitle}}</h1>
+            <p class="lead">{{errorMessage}}</p>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="window.history.back()">Volver a la página anterior</button>
+            <button class="btn btn-lg btn-secondary btn-block" type="submit" onclick="window.location.href='index.html'">Ir a la página principal</button>
+            <p class="mt-5 mb-3 text-muted">&copy; 2025 Cognite</p>
+        </form>
+    </body>
+</html>
