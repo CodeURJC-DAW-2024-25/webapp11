@@ -1,10 +1,15 @@
 package es.daw.demo.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 
 
 @Entity
@@ -22,6 +27,11 @@ public class User {
     @Lob
     private byte[] profileImage;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher") 
+    private List<Course> enrolledCourses = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
+    private List<Course> taughtCourses = new ArrayList<>();
 
     protected User() {
         //Used by JPA
@@ -85,5 +95,17 @@ public class User {
     }
     public void setId(long id) {
         this.id = id;
+    }
+    public List<Course> getEnrolledCourses() {
+        return enrolledCourses;
+    }
+    public void setEnrolledCourses(Course course) {
+        this.enrolledCourses.add(course);
+    }
+    public List<Course> getTaughtCourses() {
+        return taughtCourses;
+    }
+    public void setTaughtCourses(Course course) {
+        this.taughtCourses.add(course);
     }
 }

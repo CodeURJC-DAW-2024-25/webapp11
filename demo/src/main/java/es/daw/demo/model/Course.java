@@ -1,14 +1,9 @@
 
 package es.daw.demo.model;
 
-import java.lang.annotation.Inherited;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Entity;
@@ -33,21 +28,17 @@ public class Course {
     @Lob
     private Blob notes;
 
-    private String instructoriD;
-
-    @Min(0)
-    @Max(5)
+    private String instructorId;
     private int rating;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Comment> comments = new ArrayList<>();
+    private List<Review> comments = new ArrayList<>();
 
     public Course() {
+        // Used by JPA
     }
 
-    // Constructor con parámetros
-    public Course(String title, String description, String topic, Blob image, Blob notes, String instructorId,
-            int rating) {
+    public Course(String title, String description, String topic, Blob image, Blob notes, String instructorId, int rating) {
         this.title = title;
         this.description = description;
         this.topic = topic;
@@ -122,11 +113,11 @@ public class Course {
         this.rating = rating;
     }
 
-    public List<Comment> getComments() {
+    public List<Review> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<Review> comments) {
         this.comments = comments;
     }
 
