@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+
 import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.repository.UserRepository;
 import es.daw.demo.model.User;
@@ -97,5 +99,13 @@ public class CourseController {
         Course course = courseRepository.findById(id).orElseThrow();
         model.addAttribute("course", course);
         return "course";
+    }
+
+    // Show all courses
+    @GetMapping("/")
+    public String getIndex (Model model) {
+        model.addAttribute("allCourses", courseRepository.findAll());
+        model.addAttribute("recomendCourses", courseRepository.findTop4ByOrderByRatingDesc());
+        return "index";
     }
 }

@@ -96,12 +96,7 @@ public class User {
     public void setId(long id) {
         this.id = id;
     }
-    public List<Course> getEnrolledCourses() {
-        return enrolledCourses;
-    }
-    public void setEnrolledCourses(Course course) {
-        this.enrolledCourses.add(course);
-    }
+
     public List<Course> getTaughtCourses() {
         return taughtCourses;
     }

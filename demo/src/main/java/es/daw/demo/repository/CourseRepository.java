@@ -8,4 +8,10 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findByTitle(String title);
 
     List<Course> findByTopic(String topic);
+
+    Course findById(long id);
+
+    List<Course> findTop4ByOrderByRatingDesc();
+
+    List<Course> findByNombreContainingIgnoreCaseOrfindByTopicContainingIgnoreCase(String name);
 }
