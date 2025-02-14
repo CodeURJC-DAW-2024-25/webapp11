@@ -4,8 +4,10 @@ package es.daw.demo.model;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,7 +30,12 @@ public class Course {
     @Lob
     private Blob notes;
 
-    private String instructorId;
+    @ManyToOne
+    private User instructor;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
+    private List<Enrollment> enrollment = new ArrayList<>();
+
     private int rating;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -38,13 +45,13 @@ public class Course {
         // Used by JPA
     }
 
-    public Course(String title, String description, String topic, Blob image, Blob notes, String instructorId, int rating) {
+    public Course(String title, String description, String topic, Blob image, Blob notes, User instructor, int rating) {
         this.title = title;
         this.description = description;
         this.topic = topic;
         this.image = image;
         this.notes = notes;
-        this.instructorId = instructorId;
+        this.instructor = instructor;
         this.rating = rating;
     }
 
@@ -97,12 +104,12 @@ public class Course {
         this.notes = notes;
     }
 
-    public String getInstructorId() {
-        return instructorId;
+    public User getInstructor() {
+        return instructor;
     }
 
-    public void setInstructorId(String instructorId) {
-        this.instructorId = instructorId;
+    public void setInstructor(User instructor) {
+        this.instructor = instructor;
     }
 
     public int getRating() {
@@ -119,6 +126,16 @@ public class Course {
 
     public void setComments(List<Review> comments) {
         this.comments = comments;
+    }
+
+    public void addComment(Review comment) {
+        this.comments.add(comment);
+        comment.setCourse(this);
+    }
+
+    public void removeComment(Review comment) {
+        this.comments.remove(comment);
+        comment.setCourse(null);
     }
 
 }

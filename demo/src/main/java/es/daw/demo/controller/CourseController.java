@@ -5,8 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import es.daw.demo.repository.CourseRepository;
+import es.daw.demo.repository.UserRepository;
+import es.daw.demo.model.User;
 import es.daw.demo.model.Course;
 import java.util.Optional;
+import java.sql.Blob;
 
 @Controller
 @RequestMapping("/courses")
@@ -15,20 +18,32 @@ public class CourseController {
     @Autowired
     private CourseRepository courseRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     // new course
     @PostMapping("/newCourse")
     public String newCourse(@RequestParam String title,
             @RequestParam String description,
             @RequestParam String topic,
-            @RequestParam String instructorId,
+            @RequestParam Long instructorId,
+            @RequestParam Blob image,
+            @RequestParam Blob notes,
             Model model) {
-        Course newCourse = new Course(title, description, topic, null, null, instructorId, 0);
+        Optional<User> instructorOptional = userRepository.findById(instructorId);
+        if (!instructorOptional.isPresent()) {
+            model.addAttribute("errorTitle", "Error al crear el curso");
+            model.addAttribute("errorMessage", "El instructor no existe");
+            return "error";
+        }
+        User instructor = instructorOptional.get();
+        Course newCourse = new Course(title, description, topic, image, notes, instructor, 0);
         courseRepository.save(newCourse);
         model.addAttribute("message", "Course created successfully");
         return "index"; // go back to principle page
     }
 
-    // search courses by title
+    // search courses by title ????
     @GetMapping("/searchCourse")
     public String searchCourses(@RequestParam String title, Model model) {
         model.addAttribute("courses", courseRepository.findByTitle(title));
@@ -63,5 +78,24 @@ public class CourseController {
             model.addAttribute("errorMessage", "course does not exist");
             return "error";
         }
+    }
+
+    // Update course
+    @PostMapping("/updateCourse")
+    public String updateCourse (Model model, Course updatedCourse, @PathVariable Long id) {
+        Course oldCourse = courseRepository.findById(id).orElseThrow();
+        updatedCourse.setId(id);
+
+        oldCourse.getComments().forEach(comment -> updatedCourse.addComment(comment));
+        return "redirect:/showCourse/" + id;
+    }
+
+
+    // Show course
+    @GetMapping("/showCourse/{{id}}")
+    public String showCourse(@PathVariable Long id, Model model) {
+        Course course = courseRepository.findById(id).orElseThrow();
+        model.addAttribute("course", course);
+        return "course";
     }
 }

@@ -23,14 +23,14 @@ public class User {
     private String email;
     private String password;
     private String topic;
-
+    //private Boolean admin = false;
     @Lob
     private byte[] profileImage;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher") 
-    private List<Course> enrolledCourses = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") 
+    private List<Enrollment> enrollement = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "instructor")
     private List<Course> taughtCourses = new ArrayList<>();
 
     protected User() {

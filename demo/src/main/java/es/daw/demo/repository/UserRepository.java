@@ -7,5 +7,5 @@ import es.daw.demo.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
     List <User> findByFirstName (String firstName);
-    //User findById (long id);
+    User findById (long id);
 }

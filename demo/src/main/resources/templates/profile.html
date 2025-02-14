@@ -5,15 +5,15 @@
             <img id="profile-img" src="https://picsum.photos/150?random=" class="rounded-circle img-fluid mb-3" alt="Foto de perfil">
             <input type="file" class="form-control-file d-none" id="upload-photo">
             
-            <p id="user-name"><strong>{{name}} + {{userName}}</strong></p>
-            <p><strong>Email:</strong> <span id="user-email">{{email}}</span></p>
+            <p id="user-name"><strong>{{user.firstName}} + {{user.lastName}}</strong></p>
+            <p><strong>Email:</strong> <span id="user-email">{{user.email}}</span></p>
             
             <button class="btn btn-primary" onclick="enableEdit()">Editar perfil</button>
             <!-- Formulario de edición ?????? -->
             <form id="edit-form" class="mt-3 d-none">
                 <div class="form-group">
                     <label for="edit-name">Nombre</label>
-                    <input type="text" class="form-control" id="edit-name" value="Nombre del Usuario">
+                    <input type="text" class="form-control" id="edit-name" value="{{user.firstName}}">
                 </div>
                 <div class="form-group">
                     <label for="edit-email">Email</label>
@@ -34,7 +34,7 @@
 
     <h3 class="text-center">Cursos Matriculados</h3>
     <div class="row" id="courses-list">
-        {{#courses}}
+        {{#user.enrolledCourses}}
             <div class="col-md-4">
                 <div class="card">
                     <img src="{{image}}" class="card-img-top" alt="Curso">
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-        {{/cursos}}
+        {{/user.enrolledCourses}}
     </div>
     <br>
     <div class="row">
@@ -69,7 +69,7 @@
     </div>
     <br>
     <div class="row g-4" id="my-courses-list">
-        {{#myCourses}}
+        {{#user.taughtCourses}}
         <div class="col-md-3 mb-4">
             <div class="card">
                 <img src="{{image}}" class="card-img-top">
@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-        {{/myCourses}}  
+        {{/user.taughtCourses}}  
     </div>        
 </main>
 <script>
