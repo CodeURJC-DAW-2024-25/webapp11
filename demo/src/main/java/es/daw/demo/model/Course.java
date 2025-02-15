@@ -1,4 +1,3 @@
-
 package es.daw.demo.model;
 
 import java.sql.Blob;
