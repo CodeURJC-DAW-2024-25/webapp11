@@ -94,7 +94,7 @@ public class CourseController {
 
 
     // Show course
-    @GetMapping("/showCourse/{{id}}")
+    @GetMapping("/showCourse/{id}")
     public String showCourse(@PathVariable Long id, Model model) {
         Course course = courseRepository.findById(id).orElseThrow();
         model.addAttribute("course", course);

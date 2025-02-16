@@ -32,12 +32,12 @@ public class Course {
     @ManyToOne
     private User instructor;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course", orphanRemoval = true)
     private List<Enrollment> enrollment = new ArrayList<>();
 
     private int rating;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course", orphanRemoval = true)
     private List<Review> comments = new ArrayList<>();
 
     public Course() {

@@ -13,5 +13,5 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     List<Course> findTop4ByOrderByRatingDesc();
 
-    List<Course> findByNombreContainingIgnoreCaseOrfindByTopicContainingIgnoreCase(String name);
+    //List<Course> findByTitleContainingIgnoreCaseOrfindByTopicContainingIgnoreCase(String name);
 }

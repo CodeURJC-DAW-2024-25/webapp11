@@ -26,7 +26,7 @@ public class Review {
     @ManyToOne (cascade = CascadeType.ALL)
     private User user;
 
-    @OneToOne (cascade = CascadeType.ALL)
+    @ManyToOne (cascade = CascadeType.ALL)
     private Course course;
 
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "parent", orphanRemoval = true)

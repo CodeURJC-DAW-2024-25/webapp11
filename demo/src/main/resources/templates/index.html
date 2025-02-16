@@ -40,6 +40,11 @@
                 </div>
             </div>
         {{/allCourses}}
+        {{^allCourses}}
+            <div class="alert alert-warning" role="alert">
+                No hay cursos disponibles
+            </div>
+        {{/allCourses}}
     </div>
 
     <div class="text-center">
