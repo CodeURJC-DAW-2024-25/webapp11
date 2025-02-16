@@ -4,17 +4,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 
 import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import es.daw.demo.model.User;
 import es.daw.demo.model.Course;
 import java.util.Optional;
 import java.sql.Blob;
 
 @Controller
-@RequestMapping("/courses")
+
 public class CourseController {
 
     @Autowired
@@ -103,9 +103,12 @@ public class CourseController {
 
     // Show all courses
     @GetMapping("/")
-    public String getIndex (Model model) {
+    public String getIndex (Model model, HttpSession session) {
+        model.addAttribute("pagetitle", "Inicio");
+        model.addAttribute("isLoggedIn", session.getAttribute("user") != null);
         model.addAttribute("allCourses", courseRepository.findAll());
         model.addAttribute("recomendCourses", courseRepository.findTop4ByOrderByRatingDesc());
+        model.addAttribute("topic", "Prueba");
         return "index";
     }
 }
