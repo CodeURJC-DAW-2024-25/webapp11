@@ -1,6 +1,5 @@
 package es.daw.demo.model;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.GenerationType;
 import java.util.Date;
 
@@ -37,5 +36,38 @@ public class Enrollment {
         this.user = user;
         this.course = course;
         this.date = new Date();
+    }
+
+    // getters and setters
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

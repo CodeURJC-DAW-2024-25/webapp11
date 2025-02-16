@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 
 import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.repository.UserRepository;
@@ -84,14 +83,13 @@ public class CourseController {
 
     // Update course
     @PostMapping("/updateCourse")
-    public String updateCourse (Model model, Course updatedCourse, @PathVariable Long id) {
+    public String updateCourse(Model model, Course updatedCourse, @PathVariable Long id) {
         Course oldCourse = courseRepository.findById(id).orElseThrow();
         updatedCourse.setId(id);
 
         oldCourse.getComments().forEach(comment -> updatedCourse.addComment(comment));
         return "redirect:/showCourse/" + id;
     }
-
 
     // Show course
     @GetMapping("/showCourse/{id}")
@@ -103,7 +101,7 @@ public class CourseController {
 
     // Show all courses
     @GetMapping("/")
-    public String getIndex (Model model) {
+    public String getIndex(Model model) {
         model.addAttribute("allCourses", courseRepository.findAll());
         model.addAttribute("recomendCourses", courseRepository.findTop4ByOrderByRatingDesc());
         return "index";
