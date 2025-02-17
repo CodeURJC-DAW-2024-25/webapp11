@@ -83,14 +83,13 @@ public class CourseController {
 
     // Update course
     @PostMapping("/updateCourse")
-    public String updateCourse (Model model, Course updatedCourse, @PathVariable Long id) {
+    public String updateCourse(Model model, Course updatedCourse, @PathVariable Long id) {
         Course oldCourse = courseRepository.findById(id).orElseThrow();
         updatedCourse.setId(id);
 
         oldCourse.getComments().forEach(comment -> updatedCourse.addComment(comment));
         return "redirect:/showCourse/" + id;
     }
-
 
     // Show course
     @GetMapping("/showCourse/{id}")

@@ -6,13 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
 
 @Entity
 public class Review {
@@ -23,20 +19,20 @@ public class Review {
     private String text;
     private String rating;
 
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Course course;
 
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "parent", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parent", orphanRemoval = true)
     private List<Review> hijos;
 
     @ManyToOne
     private Review parent;
 
     public Review() {
-        //Used by JPA
+        // Used by JPA
     }
 
     public Review(String text, String rating, User user, Course course, Review parent) {
@@ -48,7 +44,7 @@ public class Review {
         this.parent = parent;
     }
 
-    //Getters and setters
+    // Getters and setters
     public long getId() {
         return id;
     }
@@ -60,7 +56,7 @@ public class Review {
     public String getText() {
         return text;
     }
-    
+
     public void setText(String text) {
         this.text = text;
     }
@@ -111,17 +107,19 @@ public class Review {
         }
         hijos.add(hijo);
     }
-    /* Creo que va en el service
-    public void removeHijo(Comment hijo) {
-        if (hijos != null) {
-            hijos.remove(hijo);
-        }
-    }
-
-    public void remove() {
-        if (parent != null) {
-            parent.removeHijo(this);
-        }
-
-    }*/
+    /*
+     * Creo que va en el service
+     * public void removeHijo(Comment hijo) {
+     * if (hijos != null) {
+     * hijos.remove(hijo);
+     * }
+     * }
+     * 
+     * public void remove() {
+     * if (parent != null) {
+     * parent.removeHijo(this);
+     * }
+     * 
+     * }
+     */
 }
