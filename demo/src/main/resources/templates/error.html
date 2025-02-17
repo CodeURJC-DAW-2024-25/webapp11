@@ -16,8 +16,12 @@
     <body class="text-center body-sign">
         <form class="form-sign">
             <div class="header-logo text-dark">Cognite</div>
-            <h1 class="h3 mb-3 font-weight-normal">{{errorTitle}}</h1>
-            <p class="lead">{{errorMessage}}</p>
+            {{#errorTitle}}
+                <h1 class="h3 mb-3 font-weight-normal">{{errorTitle}}</h1>
+            {{#errorTitle}}
+            {{#errorMessage}}
+                <p class="lead">{{errorMessage}}</p>
+            {{#errorMessage}}
             <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="window.history.back()">Volver a la página anterior</button>
             <button class="btn btn-lg btn-secondary btn-block" type="submit" onclick="window.location.href='index.html'">Ir a la página principal</button>
             <p class="mt-5 mb-3 text-muted">&copy; 2025 Cognite</p>

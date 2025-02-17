@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import es.daw.demo.repository.UserRepository;
 import es.daw.demo.model.User;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 import jakarta.servlet.http.HttpSession;
 
+@Controller
 public class UserController {
     
     @Autowired 
@@ -36,14 +38,21 @@ public class UserController {
             return "error";
         }
 
-        // Check if the user already exists
-        /*if (userRepository.findByEmail(email) != null) {
+        try {
+            // Check if the user already exists
+            if (userRepository.existsByEmail(email)) {
+                model.addAttribute("errorTitle", "Error al crear la cuenta");
+                model.addAttribute("errorMessage", "El usuario ya existe");
+                return "error";
+            }
+            User newUser = new User(firstName, lastName, email, topic, password, profileImage.getBytes());
+            userRepository.save(newUser);
+            model.addAttribute("user", newUser);
+        } catch (Exception e) {
             model.addAttribute("errorTitle", "Error al crear la cuenta");
-            model.addAttribute("errorMessage", "El email ya está en uso");
+            model.addAttribute("errorMessage", "Error al crear la cuenta");
             return "error";
-        }*/
-
-        // Save the user
+        }
         
 
 
@@ -54,6 +63,11 @@ public class UserController {
         return "index";
     }
 
+    // Change view to the sign up page
+    @GetMapping("/signUp")
+    public String showSignUpPage() {
+        return "signup"; 
+    }
 
     // Find a user by email and Password
     @PostMapping("/findUser")

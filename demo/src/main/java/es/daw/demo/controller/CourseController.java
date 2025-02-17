@@ -14,7 +14,6 @@ import java.util.Optional;
 import java.sql.Blob;
 
 @Controller
-
 public class CourseController {
 
     @Autowired
