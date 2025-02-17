@@ -3,6 +3,7 @@ package es.daw.demo.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.sql.Blob;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class User {
     private String topic;
     //private Boolean admin = false;
     @Lob
-    private byte[] profileImage;
+    private Blob profileImage;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") 
     private List<Enrollment> enrollement = new ArrayList<>();
@@ -37,18 +38,19 @@ public class User {
         //Used by JPA
     }
 
-    public User(String firstName, String lastName, String email, String password, String topic, byte[] profileImage) {
+    public User(String firstName, String lastName, String email, String password, String topic) {
         super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.topic = topic;
-        this.profileImage = profileImage;
     }
 
 
-
+    public void setImageFile(Blob imageFile) {
+		this.profileImage = imageFile;
+	}
 
 
 
@@ -72,12 +74,10 @@ public class User {
     public String getTopic() {
         return topic;
     }
-    public byte[] getProfileImage() {
+    public Blob getProfileImage() {
         return profileImage;
     }
-    public void setProfileImage(byte[] profileImage) {
-        this.profileImage = profileImage;
-    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

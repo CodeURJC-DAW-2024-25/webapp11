@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import es.daw.demo.repository.UserRepository;
+import es.daw.demo.service.UserService;
 import es.daw.demo.model.User;
 import java.util.Optional;
 
@@ -18,9 +19,42 @@ import jakarta.servlet.http.HttpSession;
 public class UserController {
     
     @Autowired 
-    private UserRepository userRepository;
+    private UserService userService;
 
     // Create a new user
+    @PostMapping("/newUser")
+    public String newUser(@RequestParam String firstName,
+                          @RequestParam String lastName,
+                          @RequestParam String email,
+                          @RequestParam MultipartFile profileImage,
+                          @RequestParam String topic,
+                          @RequestParam String password,
+                          @RequestParam String repeatPassword,
+                          Model model
+                        ) throws Exception {
+        // Check if the passwords match
+        if (!password.equals(repeatPassword)) {
+            model.addAttribute("errorTitle", "Error al crear la cuenta");
+            model.addAttribute("errorMessage", "Las contraseñas no coinciden");
+            return "error";
+        }
+
+        // Check if the user already exists
+        if (userService.existsByEmail(email)) {
+            model.addAttribute("errorTitle", "Error al crear la cuenta");
+            model.addAttribute("errorMessage", "El usuario ya existe");
+            return "error";
+        }
+        User user = new User(firstName, lastName, email, password, topic);
+        userService.save(user, profileImage);
+        //Redirección al índice no funciona todavía, falta añadir los atributos al modelo
+        return "index";
+    }
+
+
+
+
+    /*
     @GetMapping("/newUser")
     public String newUser(@RequestParam String firstName,
                           @RequestParam String lastName,
@@ -62,7 +96,7 @@ public class UserController {
 
         return "index";
     }
-
+    */
     // Change view to the sign up page
     @GetMapping("/signUp")
     public String showSignUpPage() {
