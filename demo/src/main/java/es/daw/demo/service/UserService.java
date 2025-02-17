@@ -1,6 +1,7 @@
 package es.daw.demo.service;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,9 @@ public class UserService {
     
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    public Optional<User> findById (long id) {
+        return userRepository.findById(id);
     }
 }

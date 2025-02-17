@@ -1,19 +1,27 @@
 package es.daw.demo.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import es.daw.demo.repository.UserRepository;
+
 import es.daw.demo.service.UserService;
 import es.daw.demo.model.User;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import java.sql.SQLException;
 import java.util.Optional;
 
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.OnClose;
+
 
 @Controller
 public class UserController {
@@ -30,7 +38,8 @@ public class UserController {
                           @RequestParam String topic,
                           @RequestParam String password,
                           @RequestParam String repeatPassword,
-                          Model model
+                          Model model,
+                          HttpSession session
                         ) throws Exception {
         // Check if the passwords match
         if (!password.equals(repeatPassword)) {
@@ -47,62 +56,52 @@ public class UserController {
         }
         User user = new User(firstName, lastName, email, password, topic);
         userService.save(user, profileImage);
+
+        //Save user in session
+        session.setAttribute("loggedInUser", user);
+
+        model.addAttribute("pagetitle", "Perfil");
+        model.addAttribute("isLoggedIn", true);
+        model.addAttribute("topic", topic);
+        model.addAttribute("user", user);
         //Redirección al índice no funciona todavía, falta añadir los atributos al modelo
-        return "index";
+        return "profile";
     }
 
-
-
-
-    /*
-    @GetMapping("/newUser")
-    public String newUser(@RequestParam String firstName,
-                          @RequestParam String lastName,
-                          @RequestParam String email,
-                          @RequestParam MultipartFile profileImage,
-                          @RequestParam String topic,
-                          @RequestParam String password,
-                          @RequestParam String repeatPassword,
-                          Model model
-                        ) {
-        // Check if the passwords match
-        if (!password.equals(repeatPassword)) {
-            model.addAttribute("errorTitle", "Error al crear la cuenta");
-            model.addAttribute("errorMessage", "Las contraseñas no coinciden");
-            return "error";
-        }
-
-        try {
-            // Check if the user already exists
-            if (userRepository.existsByEmail(email)) {
-                model.addAttribute("errorTitle", "Error al crear la cuenta");
-                model.addAttribute("errorMessage", "El usuario ya existe");
-                return "error";
-            }
-            User newUser = new User(firstName, lastName, email, topic, password, profileImage.getBytes());
-            userRepository.save(newUser);
-            model.addAttribute("user", newUser);
-        } catch (Exception e) {
-            model.addAttribute("errorTitle", "Error al crear la cuenta");
-            model.addAttribute("errorMessage", "Error al crear la cuenta");
-            return "error";
-        }
-        
-
-
-
-
-
-
-        return "index";
-    }
-    */
     // Change view to the sign up page
     @GetMapping("/signUp")
     public String showSignUpPage() {
         return "signup"; 
     }
 
+    // Change view to the login page
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login"; 
+    }
+
+    // Upload a profile image
+    @GetMapping("/profileImage/{id}")
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+        Optional<User> user = userService.findById(id);
+		if (user.isPresent() && user.get().getProfileImage() != null) {
+
+			Resource file = new InputStreamResource(user.get().getProfileImage().getBinaryStream());
+
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+					.contentLength(user.get().getProfileImage().length()).body(file);
+
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+    }
+    
+
+
+
+
+
+    /* 
     // Find a user by email and Password
     @PostMapping("/findUser")
     public String findUser(@RequestParam String email,
@@ -149,5 +148,5 @@ public class UserController {
             model.addAttribute("errorMessage", "El usuario no existe");
             return "error";
         }
-    }
+    }*/
 }

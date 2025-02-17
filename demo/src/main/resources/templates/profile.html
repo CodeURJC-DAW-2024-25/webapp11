@@ -2,10 +2,10 @@
 <main class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-6 text-center p-4 border rounded">
-            <img id="profile-img" src="https://picsum.photos/150?random=" class="rounded-circle img-fluid mb-3" alt="Foto de perfil">
+            <img id="profile-img" src="/profileImage/{{user.id}}" class="rounded-circle img-fluid mb-3" alt="Foto de perfil">
             <input type="file" class="form-control-file d-none" id="upload-photo">
             
-            <p id="user-name"><strong>{{user.firstName}} + {{user.lastName}}</strong></p>
+            <p id="user-name"><strong>{{user.firstName}} {{user.lastName}}</strong></p>
             <p><strong>Email:</strong> <span id="user-email">{{user.email}}</span></p>
             
             <button class="btn btn-primary" onclick="enableEdit()">Editar perfil</button>
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-        {{/user.enrolledCourses}}
+
     </div>
     <br>
     <div class="row">
@@ -61,6 +61,12 @@
             </div>
         </div>
     </div>
+    {{/user.enrolledCourses}}
+    {{^user.enrolledCourses}}
+            <div class="col-md-12 text-center">
+                <p>No tienes cursos matriculados</p>
+            </div>
+        {{/user.enrolledCourses}}
     <hr>
 
     <div class="d-flex align-items-center justify-content-between">
@@ -83,6 +89,11 @@
             </div>
         </div>
         {{/user.taughtCourses}}  
+        {{^user.taughtCourses}}
+            <div class="col-md-12 text-center">
+                <p>No tienes cursos impartidos</p>
+            </div>
+        {{/user.taughtCourses}}
     </div>        
 </main>
 <script>

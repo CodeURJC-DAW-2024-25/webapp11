@@ -25,12 +25,12 @@
                         </a>
                         <input type="text" name="findCourse" class="form-control border-0 bg-transparent" placeholder="Buscar un curso">
                         {{#isLoggedIn}}
-                            <a class="btn btn-sm btn-outline-secondary" href="page.html">Inicio</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="/">Inicio</a>
                             <a class="btn btn-sm btn-outline-secondary ml-2" href="logout">Cerrar sesión</a>
                         {{/isLoggedIn}}
             
                         {{^isLoggedIn}}
-                            <a class="btn btn-sm btn-outline-secondary mr-2" href="./login.html">Log in</a>
+                            <a class="btn btn-sm btn-outline-secondary mr-2" href="/login">Log in</a>
                             <a class="btn btn-sm btn-outline-secondary" href="/signUp">Sign up</a>
                         {{/isLoggedIn}}
                     </div>
