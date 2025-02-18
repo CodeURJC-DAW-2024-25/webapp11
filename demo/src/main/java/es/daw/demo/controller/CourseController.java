@@ -38,7 +38,7 @@ public class CourseController {
             return "error";
         }
         User instructor = instructorOptional.get();
-        Course newCourse = new Course(title, description, topic, image, notes, instructor, 0);
+        Course newCourse = new Course(title, description, topic, image, instructor, 0);
         courseRepository.save(newCourse);
         model.addAttribute("message", "Course created successfully");
         return "index"; // go back to principle page

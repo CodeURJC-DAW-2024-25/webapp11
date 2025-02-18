@@ -44,12 +44,12 @@ public class Course {
         // Used by JPA
     }
 
-    public Course(String title, String description, String topic, Blob image, Blob notes, User instructor, int rating) {
+    public Course(String title, String description, String topic, Blob image, User instructor, int rating) {
         this.title = title;
         this.description = description;
         this.topic = topic;
         this.image = image;
-        this.notes = notes;
+        //this.notes = notes;
         this.instructor = instructor;
         this.rating = rating;
     }
