@@ -44,20 +44,25 @@ public class Course {
         // Used by JPA
     }
 
-    public Course(String title, String description, String topic, Blob image, Blob notes, User instructor, int rating) {
+    public Course(String title, String description, String topic, User instructor) {
+        super();
         this.title = title;
         this.description = description;
         this.topic = topic;
-        this.image = image;
-        this.notes = notes;
         this.instructor = instructor;
-        this.rating = rating;
     }
 
     // Getters y Setters
     public Long getId() {
         return id;
     }
+
+    public void setImageFile(Blob imageFile) {
+		this.image = imageFile;
+	}
+    public void setNoteFile(Blob noteFile) {
+		this.notes = noteFile;
+	}
 
     public void setId(Long id) {
         this.id = id;

@@ -60,12 +60,19 @@ public class UserController {
         //Save user in session
         session.setAttribute("loggedInUser", user);
 
-        model.addAttribute("pagetitle", "Perfil");
-        model.addAttribute("isLoggedIn", true);
-        model.addAttribute("topic", topic);
-        model.addAttribute("user", user);
+        //model.addAttribute("pagetitle", "Perfil");
+        //model.addAttribute("isLoggedIn", true);
+        //model.addAttribute("topic", topic);
+        //model.addAttribute("user", user);
         //Redirección al índice no funciona todavía, falta añadir los atributos al modelo
-        return "profile";
+        return "redirect:/login";
+    }
+
+
+    // Change view to the log in page
+    @GetMapping("/logIn")
+    public String showLogInPage() {
+        return "login"; 
     }
 
     // Change view to the sign up page

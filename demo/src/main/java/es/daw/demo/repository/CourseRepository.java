@@ -9,7 +9,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     List<Course> findByTopic(String topic);
 
-    Course findById(long id);
+    //Course findById(long id);
 
     List<Course> findTop4ByOrderByRatingDesc();
 

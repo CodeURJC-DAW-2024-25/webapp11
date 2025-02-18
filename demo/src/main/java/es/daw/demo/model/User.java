@@ -5,7 +5,9 @@ import java.util.List;
 
 import java.sql.Blob;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,7 +26,10 @@ public class User {
     private String email;
     private String password;
     private String topic;
-    //private Boolean admin = false;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles;
+
     @Lob
     private Blob profileImage;
 
@@ -48,14 +53,19 @@ public class User {
     }
 
 
-    public void setImageFile(Blob imageFile) {
-		this.profileImage = imageFile;
-	}
 
 
 
 
     // Getters and setters
+    public void setImageFile(Blob imageFile) {
+		this.profileImage = imageFile;
+	}
+
+    public List<String> getRoles() {
+		return roles;
+	}
+
     public long getId() {
         return id;
     }

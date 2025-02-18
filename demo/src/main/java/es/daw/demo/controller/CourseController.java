@@ -3,60 +3,117 @@ package es.daw.demo.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 
 import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.repository.UserRepository;
+import es.daw.demo.service.CourseService;
+import es.daw.demo.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import es.daw.demo.model.User;
 import es.daw.demo.model.Course;
 import java.util.Optional;
+import java.security.Principal;
 import java.sql.Blob;
+import java.sql.SQLException;
+
 
 @Controller
 public class CourseController {
 
     @Autowired
-    private CourseRepository courseRepository;
+    private CourseService courseService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     // new course
-    @PostMapping("/newCourse")
-    public String newCourse(@RequestParam String title,
-            @RequestParam String description,
-            @RequestParam String topic,
-            @RequestParam Long instructorId,
-            @RequestParam Blob image,
-            @RequestParam Blob notes,
-            Model model) {
-        Optional<User> instructorOptional = userRepository.findById(instructorId);
-        if (!instructorOptional.isPresent()) {
-            model.addAttribute("errorTitle", "Error al crear el curso");
-            model.addAttribute("errorMessage", "El instructor no existe");
-            return "error";
-        }
-        User instructor = instructorOptional.get();
-        Course newCourse = new Course(title, description, topic, image, notes, instructor, 0);
-        courseRepository.save(newCourse);
-        model.addAttribute("message", "Course created successfully");
-        return "index"; // go back to principle page
+    @PostMapping("/newCourse/{id}")
+    public String newCourse(@PathVariable Long id,
+                            @RequestParam String title,
+                            @RequestParam String description,
+                            @RequestParam String topic,
+                            @RequestParam MultipartFile image,
+                            @RequestParam MultipartFile notes,
+                            Model model) throws Exception {
+        Course course = new Course(title, description, topic, userService.findById(id).orElseThrow());
+        courseService.save(course, image, notes);
+    
+        model.addAttribute("pagetitle", title);
+        model.addAttribute("isTeacher", true);
+        model.addAttribute("course", course);
+        return "redirect:/course/" + course.getId();
     }
+
+
+    @ModelAttribute
+	public void addAttributes(Model model, HttpServletRequest request) {
+
+		Principal principal = request.getUserPrincipal();
+
+		if (principal != null) {
+
+			model.addAttribute("isLoggedIn", true);
+			model.addAttribute("userName", principal.getName());
+			model.addAttribute("admin", request.isUserInRole("ADMIN"));
+
+		} else {
+			model.addAttribute("isLoggedIn", false);
+		}
+	}
+
+    // Upload course image
+    @GetMapping("/image/{id}")
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+        Optional<Course> course = courseService.findById(id);
+		if (course.isPresent() && course.get().getImage() != null) {
+
+			Resource file = new InputStreamResource(course.get().getImage().getBinaryStream());
+
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+					.contentLength(course.get().getImage().length()).body(file);
+
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+    }
+
+    // Upload course notes
+    @GetMapping("/notes/{id}")
+    public ResponseEntity<Object> downloadNotes(@PathVariable long id) throws SQLException {
+        Optional<Course> course = courseService.findById(id);
+		if (course.isPresent() && course.get().getNotes() != null) {
+
+			Resource file = new InputStreamResource(course.get().getNotes().getBinaryStream());
+
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "application/pdf")
+					.contentLength(course.get().getNotes().length()).body(file);
+
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+    }   
+    
 
     // search courses by title ????
     @GetMapping("/searchCourse")
     public String searchCourses(@RequestParam String title, Model model) {
-        model.addAttribute("courses", courseRepository.findByTitle(title));
+        model.addAttribute("courses", courseService.findByTitle(title));
         return "courses";
     }
 
     // edit course
     @PostMapping("/editCourse")
     public String editCourse(@ModelAttribute Course editedCourse, Model model) {
-        Optional<Course> courseOptional = courseRepository.findById(editedCourse.getId());
+        Optional<Course> courseOptional = courseService.findById(editedCourse.getId());
         if (courseOptional.isPresent()) {
-            courseRepository.save(editedCourse);
+            courseService.save(editedCourse);
             model.addAttribute("message", "Course edited successfully");
             return "courseDetails";
         } else {
@@ -69,9 +126,9 @@ public class CourseController {
     // delete course
     @PostMapping("/deleteCourse")
     public String deleteCourse(@RequestParam Long id, Model model) {
-        Optional<Course> courseOptional = courseRepository.findById(id);
+        Optional<Course> courseOptional = courseService.findById(id);
         if (courseOptional.isPresent()) {
-            courseRepository.deleteById(id);
+            courseService.deleteById(id);
             model.addAttribute("message", "course deleted successfully");
             return "index";
         } else {
@@ -80,11 +137,17 @@ public class CourseController {
             return "error";
         }
     }
+    // Change view to the new course page
+    @PostMapping("/createCourse")
+    public String showNewCoursePage(@PathVariable Long id, Model model) {
+        model.addAttribute("instructorId", id);
+        return "new_course";
+    }
 
     // Update course
     @PostMapping("/updateCourse")
     public String updateCourse(Model model, Course updatedCourse, @PathVariable Long id) {
-        Course oldCourse = courseRepository.findById(id).orElseThrow();
+        Course oldCourse = courseService.findById(id).orElseThrow();
         updatedCourse.setId(id);
 
         oldCourse.getComments().forEach(comment -> updatedCourse.addComment(comment));
@@ -94,7 +157,7 @@ public class CourseController {
     // Show course
     @GetMapping("/showCourse/{id}")
     public String showCourse(@PathVariable Long id, Model model) {
-        Course course = courseRepository.findById(id).orElseThrow();
+        Course course = courseService.findById(id).orElseThrow();
         model.addAttribute("course", course);
         return "course";
     }
@@ -104,8 +167,8 @@ public class CourseController {
     public String getIndex (Model model, HttpSession session) {
         model.addAttribute("pagetitle", "Inicio");
         model.addAttribute("isLoggedIn", session.getAttribute("user") != null);
-        model.addAttribute("allCourses", courseRepository.findAll());
-        model.addAttribute("recomendCourses", courseRepository.findTop4ByOrderByRatingDesc());
+        model.addAttribute("allCourses", courseService.findAll());
+        model.addAttribute("recomendCourses", courseService.findTop4ByOrderByRatingDesc());
         model.addAttribute("topic", "Prueba");
         return "index";
     }
