@@ -10,8 +10,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-import es.daw.demo.repository.CourseRepository;
-import es.daw.demo.repository.UserRepository;
+
 import es.daw.demo.service.CourseService;
 import es.daw.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;

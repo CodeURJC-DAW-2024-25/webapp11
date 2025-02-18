@@ -28,6 +28,7 @@ public class DataBaseInitializer{
     @Autowired
     private UserRepository userRepository;
 
+    //@PostConstruct Añadir cuando esté todo implementado
     public void initializeDatabase() throws IOException {
 
         User user1 = new User("Pepe", "García", "pepegarcia@gmail.com", "1234", "Informática");

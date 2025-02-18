@@ -42,12 +42,14 @@ public class WebSecurityConfig {
 						// PUBLIC PAGES
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/signUp/**").permitAll() // Allow access to static resources
-						.requestMatchers("/books/**").permitAll()
+						.requestMatchers("/course/**").permitAll()
+                        .requestMatchers("/error").permitAll()
+						.requestMatchers("/css/**").permitAll()
 						// PRIVATE PAGES
-						.requestMatchers("/newbook").hasAnyRole("USER")
-						.requestMatchers("/editbook").hasAnyRole("USER")
-						.requestMatchers("/editbook/*").hasAnyRole("USER")
-						.requestMatchers("/removebook/*").hasAnyRole("ADMIN"))
+						.requestMatchers("/new_course").hasAnyRole("USER")
+						.requestMatchers("/profile").hasAnyRole("USER")
+						.requestMatchers("/course/*/statistics").hasAnyRole("USER") //Ns como hacer que solo el profesor/admin pueda ver las estadisticas
+						.requestMatchers("/profile_admin/*").hasAnyRole("ADMIN"))
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
 						.failureUrl("/loginerror")

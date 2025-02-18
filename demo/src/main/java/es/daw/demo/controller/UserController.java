@@ -3,6 +3,7 @@ package es.daw.demo.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,13 +68,6 @@ public class UserController {
         return "redirect:/login";
     }
 
-
-    // Change view to the log in page
-    @GetMapping("/logIn")
-    public String showLogInPage() {
-        return "login"; 
-    }
-
     // Change view to the sign up page
     @GetMapping("/signUp")
     public String showSignUpPage() {
@@ -85,6 +79,7 @@ public class UserController {
     public String showLoginPage() {
         return "login"; 
     }
+
 
     // Upload a profile image
     @GetMapping("/profileImage/{id}")
