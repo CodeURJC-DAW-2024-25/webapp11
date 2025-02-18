@@ -43,13 +43,14 @@ public class User {
         //Used by JPA
     }
 
-    public User(String firstName, String lastName, String email, String password, String topic) {
+    public User(String firstName, String lastName, String email, String password, String topic, String... roles) {
         super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.topic = topic;
+        this.roles = List.of(roles);
     }
 
 
@@ -58,12 +59,16 @@ public class User {
 
 
     // Getters and setters
-    public void setImageFile(Blob imageFile) {
-		this.profileImage = imageFile;
-	}
-
     public List<String> getRoles() {
 		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
+    public void setImageFile(Blob imageFile) {
+		this.profileImage = imageFile;
 	}
 
     public long getId() {

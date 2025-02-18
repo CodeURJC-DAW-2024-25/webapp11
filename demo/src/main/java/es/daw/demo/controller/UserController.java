@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -28,6 +29,10 @@ public class UserController {
     
     @Autowired 
     private UserService userService;
+
+
+    @Autowired
+	private PasswordEncoder passwordEncoder;
 
     // Create a new user
     @PostMapping("/newUser")
@@ -54,18 +59,19 @@ public class UserController {
             model.addAttribute("errorMessage", "El usuario ya existe");
             return "error";
         }
-        User user = new User(firstName, lastName, email, password, topic);
+        password = passwordEncoder.encode(password);
+        User user = new User(firstName, lastName, email, password, topic, "USER");
         userService.save(user, profileImage);
 
         //Save user in session
         session.setAttribute("loggedInUser", user);
 
-        //model.addAttribute("pagetitle", "Perfil");
-        //model.addAttribute("isLoggedIn", true);
-        //model.addAttribute("topic", topic);
+        model.addAttribute("pagetitle", "Perfil");
+        model.addAttribute("isLoggedIn", true);
+        model.addAttribute("topic", topic);
         //model.addAttribute("user", user);
-        //Redirección al índice no funciona todavía, falta añadir los atributos al modelo
-        return "redirect:/login";
+        //No se deberia de hacer un redirect a la pagina de index?
+        return "index";
     }
 
     // Change view to the sign up page

@@ -34,8 +34,8 @@ public class DataBaseInitializer{
         User user1 = new User("Pepe", "García", "pepegarcia@gmail.com", "1234", "Informática");
         User user2 = new User("Juan", "López", "juanlopez@gmail.com", "2345", "Informática");
 
-        userRepository.save(user1);
-        userRepository.save(user2);
+        //userRepository.save(user1);
+        //userRepository.save(user2);
 
         Resource image1 = new ClassPathResource("/static/images/img1.png");
         Resource image2 = new ClassPathResource("/static/images/img2.jpg");
