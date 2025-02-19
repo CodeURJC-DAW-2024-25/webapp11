@@ -9,7 +9,8 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import es.daw.demo.service.CourseService;
 import es.daw.demo.service.UserService;
@@ -163,12 +164,19 @@ public class CourseController {
 
     // Show all courses
     @GetMapping("/")
-    public String getIndex (Model model, HttpSession session) {
+    public String getIndex (Model model, @AuthenticationPrincipal UserDetails user) {
+
+        if (user != null) {
+            model.addAttribute("user", user);
+            model.addAttribute("isLoggedIn", true);
+        } else {
+            model.addAttribute("isLoggedIn", false);
+        }
+
         model.addAttribute("pagetitle", "Inicio");
-        model.addAttribute("isLoggedIn", session.getAttribute("user") != null);
         model.addAttribute("allCourses", courseService.findAll());
         model.addAttribute("recomendCourses", courseService.findTop4ByOrderByRatingDesc());
-        model.addAttribute("topic", "Prueba");
+        model.addAttribute("topic", "Recomendados");
         return "index";
     }
 }

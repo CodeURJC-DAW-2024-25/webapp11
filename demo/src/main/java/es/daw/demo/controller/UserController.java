@@ -64,14 +64,14 @@ public class UserController {
         userService.save(user, profileImage);
 
         //Save user in session
-        session.setAttribute("loggedInUser", user);
+        //session.setAttribute("loggedInUser", user);
 
-        model.addAttribute("pagetitle", "Perfil");
-        model.addAttribute("isLoggedIn", true);
-        model.addAttribute("topic", topic);
+        //model.addAttribute("pagetitle", "Perfil");
+        //model.addAttribute("isLoggedIn", true);
+        //model.addAttribute("topic", topic);
         //model.addAttribute("user", user);
         //No se deberia de hacer un redirect a la pagina de index?
-        return "index";
+        return "redirect:/";
     }
 
     // Change view to the sign up page
@@ -85,7 +85,6 @@ public class UserController {
     public String showLoginPage() {
         return "login"; 
     }
-
 
     // Upload a profile image
     @GetMapping("/profileImage/{id}")
