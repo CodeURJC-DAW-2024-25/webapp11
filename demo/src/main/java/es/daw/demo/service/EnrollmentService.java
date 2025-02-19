@@ -31,17 +31,17 @@ public class EnrollmentService {
     public Enrollment enrollUserToCourse(Long userId, Long courseId) {
         // check user
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         // check course
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Course not found"));
 
         // check if the user is already enrolled in the course
         List<Enrollment> existingEnrollments = enrollmentRepository.findByUser(user);
         for (Enrollment enrollment : existingEnrollments) {
             if (enrollment.getCourse().equals(course)) {
-                throw new RuntimeException("El usuario ya está inscrito en este curso.");
+                throw new RuntimeException("User already enrolled in the course");
             }
         }
         // enrollment creation
@@ -54,7 +54,7 @@ public class EnrollmentService {
     public void cancelEnrollment(Long enrollmentId) {
         // search the enrollment
         Enrollment enrollment = enrollmentRepository.findById(enrollmentId)
-                .orElseThrow(() -> new RuntimeException("Inscripción no encontrada"));
+                .orElseThrow(() -> new RuntimeException("Enrollment not found"));
 
         // delet the enrollment
         enrollmentRepository.delete(enrollment);
@@ -62,14 +62,14 @@ public class EnrollmentService {
 
     public List<Enrollment> findEnrollmentsByUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         return enrollmentRepository.findByUser(user);
     }
 
     public List<Enrollment> findEnrollmentsByCourse(Long courseId) {
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Course not found"));
 
         return enrollmentRepository.findByCourse(course);
     }
