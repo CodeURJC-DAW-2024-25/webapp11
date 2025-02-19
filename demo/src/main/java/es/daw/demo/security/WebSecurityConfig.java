@@ -52,10 +52,12 @@ public class WebSecurityConfig {
 						.requestMatchers("/course/*/statistics").hasAnyRole("USER") //Ns como hacer que solo el profesor/admin pueda ver las estadisticas
 						.requestMatchers("/profile_admin/*").hasAnyRole("ADMIN"))
 				.formLogin(formLogin -> formLogin
-						.loginPage("/login")
-						.failureUrl("/loginerror")
-						.defaultSuccessUrl("/")
-						.permitAll())
+					.loginPage("/login")
+					.failureHandler((request, response, exception) -> {
+						response.sendRedirect("/error-login");
+					})
+					.defaultSuccessUrl("/")
+					.permitAll())
 				.logout(logout -> logout
 						.logoutUrl("/logout")
 						.logoutSuccessUrl("/")

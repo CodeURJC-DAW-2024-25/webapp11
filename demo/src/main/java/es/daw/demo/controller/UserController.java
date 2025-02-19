@@ -1,11 +1,12 @@
 package es.daw.demo.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +18,12 @@ import es.daw.demo.service.UserService;
 import es.daw.demo.model.User;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Optional;
 
-
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -34,6 +36,26 @@ public class UserController {
     @Autowired
 	private PasswordEncoder passwordEncoder;
 
+    @ModelAttribute
+    public void addAttributes(Model model, HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        if (principal != null) {
+            model.addAttribute("isLoggedIn", true);
+            model.addAttribute("user", userService.findByEmail(principal.getName()));
+        } else {
+            model.addAttribute("isLoggedIn", false);
+        }
+    }
+
+    @GetMapping("/error-login")
+    public String loginError(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("errorTitle", "Error de Autenticación");
+        redirectAttributes.addFlashAttribute("errorMessage", "Usuario o contraseña incorrectos");
+        return "redirect:/error";
+    }
+
+
+
     // Create a new user
     @PostMapping("/newUser")
     public String newUser(@RequestParam String firstName,
@@ -43,8 +65,7 @@ public class UserController {
                           @RequestParam String topic,
                           @RequestParam String password,
                           @RequestParam String repeatPassword,
-                          Model model,
-                          HttpSession session
+                          Model model
                         ) throws Exception {
         // Check if the passwords match
         if (!password.equals(repeatPassword)) {

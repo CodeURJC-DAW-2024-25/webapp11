@@ -176,7 +176,6 @@ public class CourseController {
         model.addAttribute("pagetitle", "Inicio");
         model.addAttribute("allCourses", courseService.findAll());
         model.addAttribute("recomendCourses", courseService.findTop4ByOrderByRatingDesc());
-        model.addAttribute("topic", "Recomendados");
         return "index";
     }
 }

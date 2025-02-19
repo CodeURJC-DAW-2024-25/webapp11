@@ -45,8 +45,8 @@ public class DataBaseInitializer{
         Blob imgU2 = BlobProxy.generateProxy(image2.getInputStream(), image2.contentLength());
         Blob imgU3 = BlobProxy.generateProxy(image3.getInputStream(), image3.contentLength());
         
-        courseRepository.save(new Course("Desarrollo Web Completo", "Aprende desarrollo web desde cero con HTML, CSS, JavaScript, Node.js, y más.", "Informática", imgU1, user1, 4));
-        courseRepository.save(new Course("React JS desde Cero", "Domina React JS y crea aplicaciones web modernas y reactivas. Incluye proyectos prácticos.", "Informática", imgU2, user2, 4));
-        courseRepository.save(new Course("PHP y MySQL Profesional", "Aprende a crear aplicaciones web dinámicas con PHP y MySQL. Incluye integración con APIs.", "Informática", imgU3, user1, 4));
+        //courseRepository.save(new Course("Desarrollo Web Completo", "Aprende desarrollo web desde cero con HTML, CSS, JavaScript, Node.js, y más.", "Informática", imgU1, user1, 4));
+        //courseRepository.save(new Course("React JS desde Cero", "Domina React JS y crea aplicaciones web modernas y reactivas. Incluye proyectos prácticos.", "Informática", imgU2, user2, 4));
+        //courseRepository.save(new Course("PHP y MySQL Profesional", "Aprende a crear aplicaciones web dinámicas con PHP y MySQL. Incluye integración con APIs.", "Informática", imgU3, user1, 4));
     }
 }
