@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
@@ -41,17 +40,17 @@ public class UserController {
         Principal principal = request.getUserPrincipal();
         if (principal != null) {
             model.addAttribute("isLoggedIn", true);
-            model.addAttribute("user", userService.findByEmail(principal.getName()));
+            model.addAttribute("user", userService.findByEmail(principal.getName()).get());
         } else {
             model.addAttribute("isLoggedIn", false);
         }
     }
 
     @GetMapping("/error-login")
-    public String loginError(RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("errorTitle", "Error de Autenticación");
-        redirectAttributes.addFlashAttribute("errorMessage", "Usuario o contraseña incorrectos");
-        return "redirect:/error";
+    public String loginError(Model model) {
+        model.addAttribute("errorTitle", "Error de Autenticación");
+        model.addAttribute("errorMessage", "Usuario o contraseña incorrectos");
+        return "/error";
     }
 
 
@@ -123,6 +122,20 @@ public class UserController {
 		}
     }
     
+
+    // Change view to the profile page
+    @GetMapping("/profile")
+    public String showProfilePage(Model model, HttpServletRequest request) throws InterruptedException {
+        Principal principal = request.getUserPrincipal();   
+        if (principal != null) {
+            model.addAttribute("pagetitle", "Perfil");
+            return "profile";
+        } else {
+            model.addAttribute("errorTitle", "Error al acceder al perfil");
+            model.addAttribute("errorMessage", "No se ha iniciado sesión");
+            return "error";
+        }
+    }
 
 
 
