@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.io.IOException;
 import java.sql.Blob;
 
+import es.daw.demo.model.Course;
 import es.daw.demo.model.User;
 import es.daw.demo.repository.CourseRepository;
 
@@ -27,9 +28,6 @@ public class DataBaseInitializer{
     @Autowired
 	private PasswordEncoder passwordEncoder;
 
-    @Autowired
-	private PasswordEncoder passwordEncoder;
-
     @PostConstruct
     public void initializeDatabase() throws IOException {
 
@@ -40,8 +38,6 @@ public class DataBaseInitializer{
         userService.save(user2);
         //userRepository.save(user1);
         //userRepository.save(user2);
-        userRepository.save(user1);
-        userRepository.save(user2);
 
         Course course1 = new Course("Desarrollo Web Completo", "Aprende desarrollo web desde cero con HTML, CSS, JavaScript, Node.js, y más.", "Informática",user1);
         Course course2 = new Course("React JS desde Cero", "Domina React JS y crea aplicaciones web modernas y reactivas. Incluye proyectos prácticos.", "Informática", user2);
