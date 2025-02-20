@@ -72,12 +72,12 @@ public class CourseController {
     @GetMapping("/image/{id}")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
         Optional<Course> course = courseService.findById(id);
-		if (course.isPresent() && course.get().getImage() != null) {
+		if (course.isPresent() && course.get().getImageFile() != null) {
 
-			Resource file = new InputStreamResource(course.get().getImage().getBinaryStream());
+			Resource file = new InputStreamResource(course.get().getImageFile().getBinaryStream());
 
 			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-					.contentLength(course.get().getImage().length()).body(file);
+					.contentLength(course.get().getImageFile().length()).body(file);
 
 		} else {
 			return ResponseEntity.notFound().build();

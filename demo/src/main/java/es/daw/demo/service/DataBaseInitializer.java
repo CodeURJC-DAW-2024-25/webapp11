@@ -1,14 +1,12 @@
 package es.daw.demo.service;
 import jakarta.annotation.PostConstruct;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.core.io.Resource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.IOException;
@@ -29,6 +27,9 @@ public class DataBaseInitializer{
     @Autowired
 	private PasswordEncoder passwordEncoder;
 
+    @Autowired
+	private PasswordEncoder passwordEncoder;
+
     @PostConstruct
     public void initializeDatabase() throws IOException {
 
@@ -39,17 +40,27 @@ public class DataBaseInitializer{
         userService.save(user2);
         //userRepository.save(user1);
         //userRepository.save(user2);
+        userRepository.save(user1);
+        userRepository.save(user2);
 
-        //Resource image1 = new ClassPathResource("/static/images/img1.png");
-        //Resource image2 = new ClassPathResource("/static/images/img2.jpg");
-        //Resource image3 = new ClassPathResource("/static/images/img3.png");
+        Course course1 = new Course("Desarrollo Web Completo", "Aprende desarrollo web desde cero con HTML, CSS, JavaScript, Node.js, y más.", "Informática",user1);
+        Course course2 = new Course("React JS desde Cero", "Domina React JS y crea aplicaciones web modernas y reactivas. Incluye proyectos prácticos.", "Informática", user2);
+        Course course3 = new Course("PHP y MySQL Profesional", "Aprende a crear aplicaciones web dinámicas con PHP y MySQL. Incluye integración con APIs.", "Informática",user1);
 
-        //Blob imgU1 = BlobProxy.generateProxy(image1.getInputStream(), image1.contentLength());
-        //Blob imgU2 = BlobProxy.generateProxy(image2.getInputStream(), image2.contentLength());
-        //Blob imgU3 = BlobProxy.generateProxy(image3.getInputStream(), image3.contentLength());
+        setCourseImage(course1, "/static/images/img1.png");
+        setCourseImage(course2, "/static/images/img2.png");
+        setCourseImage(course3, "/static/images/img3.png");
         
-        //courseRepository.save(new Course("Desarrollo Web Completo", "Aprende desarrollo web desde cero con HTML, CSS, JavaScript, Node.js, y más.", "Informática", imgU1, user1, 4));
-        //courseRepository.save(new Course("React JS desde Cero", "Domina React JS y crea aplicaciones web modernas y reactivas. Incluye proyectos prácticos.", "Informática", imgU2, user2, 4));
-        //courseRepository.save(new Course("PHP y MySQL Profesional", "Aprende a crear aplicaciones web dinámicas con PHP y MySQL. Incluye integración con APIs.", "Informática", imgU3, user1, 4));
+        courseRepository.save(course1);
+        courseRepository.save(course2);
+        courseRepository.save(course3);
+
+
     }
+
+    public void setCourseImage(Course course, String classpathResource) throws IOException {
+		course.setImage(true);
+		Resource image = new ClassPathResource(classpathResource);
+		course.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
+	}
 }
