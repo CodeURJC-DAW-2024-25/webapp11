@@ -24,7 +24,9 @@ public class Course {
     private String topic;
 
     @Lob
-    private Blob image;
+    private Blob imageFile;
+
+    private boolean image;
 
     @Lob
     private Blob notes;
@@ -58,7 +60,7 @@ public class Course {
     }
 
     public void setImageFile(Blob imageFile) {
-		this.image = imageFile;
+		this.imageFile = imageFile;
 	}
     public void setNoteFile(Blob noteFile) {
 		this.notes = noteFile;
@@ -92,11 +94,15 @@ public class Course {
         this.topic = topic;
     }
 
-    public Blob getImage() {
+    public Blob getImageFile() {
+		return imageFile;
+	}
+
+    public boolean getImage() {
         return image;
     }
 
-    public void setImage(Blob image) {
+    public void setImage(boolean image) {
         this.image = image;
     }
 

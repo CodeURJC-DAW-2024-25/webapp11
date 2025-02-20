@@ -5,8 +5,6 @@ import java.io.IOException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import es.daw.demo.service.DataBaseInitializer;
-
 @SpringBootApplication
 public class Application {
 
