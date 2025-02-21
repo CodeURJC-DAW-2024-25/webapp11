@@ -80,7 +80,7 @@ public class UserController {
             return "error";
         }
         password = passwordEncoder.encode(password);
-        User user = new User(firstName, lastName, email, password, topic, "USER");
+        User user = new User(firstName, lastName, email, password, topic, false, "USER");
         userService.save(user, profileImage);
 
         //Save user in session

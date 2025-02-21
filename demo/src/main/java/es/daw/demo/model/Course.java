@@ -52,6 +52,7 @@ public class Course {
         this.description = description;
         this.topic = topic;
         this.instructor = instructor;
+        this.rating = 0;
     }
 
     // Getters y Setters

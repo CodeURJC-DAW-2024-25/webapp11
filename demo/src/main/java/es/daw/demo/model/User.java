@@ -26,7 +26,7 @@ public class User {
     private String email;
     private String password;
     private String topic;
-
+    private Boolean isBanned;
     @ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
 
@@ -43,13 +43,14 @@ public class User {
         //Used by JPA
     }
 
-    public User(String firstName, String lastName, String email, String password, String topic, String... roles) {
+    public User(String firstName, String lastName, String email, String password, String topic, Boolean isBanned, String... roles) {
         super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.topic = topic;
+        this.isBanned = isBanned;
         this.roles = List.of(roles);
     }
 
@@ -59,6 +60,14 @@ public class User {
 
 
     // Getters and setters
+    public Boolean getIsBanned () {
+        return isBanned;
+    }
+
+    public void setIsBanned (Boolean isBanned) {
+        this.isBanned = isBanned;
+    }
+
     public List<String> getRoles() {
 		return roles;
 	}

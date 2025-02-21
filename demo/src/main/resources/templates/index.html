@@ -6,13 +6,13 @@
         {{#recomendCourses}}
             <div class="col-md-3 mb-4">
                 <div class="card">
-                    <img src="{{image}}" class="card-img-top">
+                    <img src="/image/{{id}}" class="card-img-top">
                     <div class="card-body">
                         <strong class="d-inline-block mb-2 text-primary">{{topic}}</strong>
                         <h5 class="card-title">{{title}}</h5>
                         <div class="mb-1 text-muted">{{rating}}</div>
                         <p class="card-text">{{description}}</p>
-                        <a href="/curso/{{id}}" class="btn btn-primary">Ver curso</a>
+                        <a href="/showCourse/{{id}}" class="btn btn-primary">Ver curso</a>
                     </div>
                 </div>
             </div>
@@ -34,9 +34,9 @@
                         </h3>
                         <div class="mb-1 text-muted">{{rating}}</div>
                         <p class="card-text mb-auto">{{description}}</p>
-                        <a href="/curso/{{id}}">Ver curso</a>
+                        <a href="/showCourse/{{id}}">Ver curso</a>
                     </div>
-                    <img class="card-img-right flex-auto d-none d-md-block d-lg-block" src="{{image}}" style="width: 200px; height: 250px; object-fit: cover;">
+                    <img class="card-img-right flex-auto d-none d-md-block d-lg-block" src="/image/{{id}}" style="width: 200px; height: 250px; object-fit: cover;">
                 </div>
             </div>
         {{/allCourses}}

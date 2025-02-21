@@ -22,6 +22,9 @@ import java.util.Optional;
 import java.security.Principal;
 import java.sql.Blob;
 import java.sql.SQLException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -34,21 +37,23 @@ public class CourseController {
     private UserService userService;
 
     // new course
-    @PostMapping("/newCourse/{id}")
-    public String newCourse(@PathVariable Long id,
-                            @RequestParam String title,
+    @PostMapping("/newCourse")
+    public String newCourse(@RequestParam String title,
                             @RequestParam String description,
                             @RequestParam String topic,
                             @RequestParam MultipartFile image,
                             @RequestParam MultipartFile notes,
-                            Model model) throws Exception {
-        Course course = new Course(title, description, topic, userService.findById(id).orElseThrow());
+                            Model model,
+                            HttpServletRequest request
+                            ) throws Exception {
+        User instructor = userService.findByEmail(request.getUserPrincipal().getName()).get();
+        Course course = new Course(title, description, topic, instructor);
         courseService.save(course, image, notes);
     
         model.addAttribute("pagetitle", title);
         model.addAttribute("isTeacher", true);
         model.addAttribute("course", course);
-        return "redirect:/course/" + course.getId();
+        return "redirect:/showCourse/" + course.getId();
     }
 
 
@@ -83,6 +88,8 @@ public class CourseController {
 			return ResponseEntity.notFound().build();
 		}
     }
+
+    
 
     // Upload course notes
     @GetMapping("/notes/{id}")
@@ -137,10 +144,10 @@ public class CourseController {
             return "error";
         }
     }
+    
     // Change view to the new course page
-    @PostMapping("/createCourse")
-    public String showNewCoursePage(@PathVariable Long id, Model model) {
-        model.addAttribute("instructorId", id);
+    @GetMapping("/createCourse")
+    public String showNewCoursePage( Model model) {
         return "new_course";
     }
 
@@ -158,7 +165,11 @@ public class CourseController {
     @GetMapping("/showCourse/{id}")
     public String showCourse(@PathVariable Long id, Model model) {
         Course course = courseService.findById(id).orElseThrow();
+        String teacher = course.getInstructor().getFirstName() + " " +  course.getInstructor().getLastName();
+        model.addAttribute("pagetitle", "Curso");
+        model.addAttribute("teacher", teacher);
         model.addAttribute("course", course);
+        //Falta configurar los comentarios, isTeacher.
         return "course";
     }
 

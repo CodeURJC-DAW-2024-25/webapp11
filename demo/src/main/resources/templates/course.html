@@ -1,7 +1,7 @@
 {{>header}}
 <main class="container mt-4">
     <img src="/image/{{course.id}}" alt="Imagen del curso" class="img-fluid mb-3">
-    <h2>{{course.nombre}}</h2>
+    <h2>{{course.title}}</h2>
     <h5>Profesor: {{teacher}}</h5>
     <p><strong>Temática:</strong> {{course.topic}}</p>
     <p>Descripción: {{course.description}}</p>
@@ -23,7 +23,7 @@
                 </object>
             </div>
         </div>
-    {{/isIEnrolled}}
+    {{/isEnrolled}}
     
     {{#isTeacher}}
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -96,9 +96,9 @@
         </div>
     {{/course.comments}}
 
-    {{^comments}}
+    {{^course.comments}}
         <p>No hay comentarios aún.</p>
-    {{/comments}}
+    {{/course.comments}}
 
     {{#isEnrolled}}
         <form action="/course/{{course.id}}/comment" method="post">

@@ -27,8 +27,9 @@ public class CourseService {
 			course.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
 		}
         if(!noteFile.isEmpty()) {
-			course.setImageFile(BlobProxy.generateProxy(noteFile.getInputStream(), noteFile.getSize()));
-		}
+			course.setNoteFile(BlobProxy.generateProxy(noteFile.getInputStream(), noteFile.getSize()));
+		} else {
+        }
 		this.save(course);
 	}
 

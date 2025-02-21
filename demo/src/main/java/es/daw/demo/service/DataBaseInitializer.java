@@ -31,8 +31,8 @@ public class DataBaseInitializer{
     @PostConstruct
     public void initializeDatabase() throws IOException {
 
-        User user1 = new User("Pepe", "García", "user1@gmail.com", passwordEncoder.encode("1234"), "Informática", "USER");
-        User user2 = new User("Ana", "López", "admin@gmail.com", passwordEncoder.encode("1234"), "Informática", "ADMIN");
+        User user1 = new User("Pepe", "García", "user1@gmail.com", passwordEncoder.encode("1234"), "Informática", false, "USER");
+        User user2 = new User("Ana", "López", "admin@gmail.com", passwordEncoder.encode("1234"), "Informática", false, "ADMIN");
 
         userService.save(user1);
         userService.save(user2);
