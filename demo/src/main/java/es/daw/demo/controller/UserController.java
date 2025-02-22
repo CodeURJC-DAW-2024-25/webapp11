@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import es.daw.demo.service.EmailService;
 import es.daw.demo.service.UserService;
 import es.daw.demo.model.User;
 import org.springframework.core.io.Resource;
@@ -32,6 +33,8 @@ public class UserController {
     @Autowired 
     private UserService userService;
 
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
 	private PasswordEncoder passwordEncoder;
@@ -158,6 +161,13 @@ public class UserController {
 
     @PostMapping("/admin/users/delete/{id}")
     public String banearUsuario(@PathVariable Long id, Model model) {
+        Optional <User> usuario = userService.findById(id);
+
+        // Enviar el correo de notificación
+        String subject = "Notificación: Tu cuenta ha sido eliminada";
+        String message = "Estimado usuario,\n\nTu cuenta ha sido eliminada de forma permanente. Si crees que esto es un error, por favor contacta con el soporte.";
+
+        emailService.sendEmail(usuario.get().getEmail(), subject, message);
         userService.deleteById(id);
         model.addAttribute("pagetitle", "Perfil");
         return "admin";
