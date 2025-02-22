@@ -36,6 +36,8 @@ public class DataBaseInitializer{
 
         userService.save(user1);
         userService.save(user2);
+        setProfileImage(user1, "/static/images/perfil_1.jpg");
+        setProfileImage(user2, "/static/images/perfil_2.jpg");
         //userRepository.save(user1);
         //userRepository.save(user2);
 
@@ -58,5 +60,10 @@ public class DataBaseInitializer{
 		course.setImage(true);
 		Resource image = new ClassPathResource(classpathResource);
 		course.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
+	}
+
+    public void setProfileImage(User user, String classpathResource) throws IOException {
+		Resource image = new ClassPathResource(classpathResource);
+		user.setProfileImage(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
 	}
 }

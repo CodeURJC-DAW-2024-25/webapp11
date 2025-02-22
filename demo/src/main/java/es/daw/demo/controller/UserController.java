@@ -20,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 
 import java.security.Principal;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -129,7 +130,11 @@ public class UserController {
         Principal principal = request.getUserPrincipal();   
         if (principal != null) {
             model.addAttribute("pagetitle", "Perfil");
-            return "profile";
+            if (request.isUserInRole("ADMIN")) {
+                return "admin";
+            } else {
+                return "profile";
+            }
         } else {
             model.addAttribute("errorTitle", "Error al acceder al perfil");
             model.addAttribute("errorMessage", "No se ha iniciado sesión");
@@ -137,9 +142,26 @@ public class UserController {
         }
     }
 
+    @GetMapping("/admin/users")
+    public String listUsers(@RequestParam(required = false) String name, Model model) {
+        List<User> users;
+        if (name != null && !name.isEmpty()) {
+            users = userService.findByFirstNameContainingIgnoreCase(name);
+        } else {
+            users = userService.findAll();
+        }
+        model.addAttribute("users", users);
+        model.addAttribute("pagetitle", "Perfil");
+        return "admin";
 
+    }
 
-
+    @PostMapping("/admin/users/delete/{id}")
+    public String banearUsuario(@PathVariable Long id, Model model) {
+        userService.deleteById(id);
+        model.addAttribute("pagetitle", "Perfil");
+        return "admin";
+    }
 
     /* 
     // Find a user by email and Password

@@ -11,4 +11,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List <User> findByFirstName (String firstName);
     //User findById (long id);
     boolean existsByEmail(String email); // Check if the user exists by email
+    List<User> findByFirstNameContainingIgnoreCase(String firstNname);
 }

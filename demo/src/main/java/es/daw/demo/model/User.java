@@ -76,7 +76,7 @@ public class User {
 		this.roles = roles;
 	}
 
-    public void setImageFile(Blob imageFile) {
+    public void setProfileImage(Blob imageFile) {
 		this.profileImage = imageFile;
 	}
 

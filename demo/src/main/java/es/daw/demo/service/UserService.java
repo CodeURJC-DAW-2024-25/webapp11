@@ -1,6 +1,7 @@
 package es.daw.demo.service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -22,7 +23,7 @@ public class UserService {
 
     public void save(User user, MultipartFile imageFile) throws IOException{
 		if(!imageFile.isEmpty()) {
-			user.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+			user.setProfileImage(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
 		}
 		this.save(user);
 	}
@@ -37,5 +38,17 @@ public class UserService {
 
     public Optional<User> findById (long id) {
         return userRepository.findById(id);
+    }
+
+    public List <User> findAll () {
+        return userRepository.findAll();
+    }
+
+    public List <User> findByFirstNameContainingIgnoreCase (String firstName) {
+        return userRepository.findByFirstNameContainingIgnoreCase (firstName);
+    }
+
+    public void deleteById (Long id) {
+        userRepository.deleteById(id);
     }
 }

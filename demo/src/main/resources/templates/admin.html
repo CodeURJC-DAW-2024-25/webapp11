@@ -1,0 +1,80 @@
+{{> header}}
+<main class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center p-4 border rounded">
+            <img id="profile-img" src="/profileImage/{{user.id}}" class="rounded-circle img-fluid mb-3" alt="Foto de perfil">
+            <input type="file" class="form-control-file d-none" id="upload-photo">
+            
+            <p id="user-name"><strong>{{user.firstName}} {{user.lastName}}</strong></p>
+            <p><strong>Email:</strong> <span id="user-email">{{user.email}}</span></p>
+            
+            <button class="btn btn-primary" onclick="enableEdit()">Editar perfil</button>
+            <!-- Formulario de edición ?????? -->
+            <form id="edit-form" class="mt-3 d-none">
+                <div class="form-group">
+                    <label for="edit-name">Nombre</label>
+                    <input type="text" class="form-control" id="edit-name" value="{{user.firstName}}">
+                </div>
+                <div class="form-group">
+                    <label for="edit-email">Email</label>
+                    <input type="email" class="form-control" id="edit-email" value="usuario@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="upload-photo">Foto de perfil</label>
+                    <input type="file" class="form-control-file" id="upload-photo">
+                </div>
+                <button type="button" class="btn btn-success" onclick="saveChanges()">Guardar cambios</button>
+                <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancelar</button>
+            </form>
+            <!--   -->
+        </div>
+    </div>
+
+    <hr>
+        
+    <h3 class="text-center">Revisiones pendientes</h3>    <!-- Falta implementar esto -->
+    <div class="comment mb-3">
+        <strong>Ana López</strong>
+        <p>Excelente curso, muy bien explicado.</p>
+        <button class="btn btn-link btn-sm">Eliminar comentario</button>
+        <button class="btn btn-link btn-sm" style="color: red;">Eliminar usuario</button>
+    </div>
+    <hr>
+    <h3 class="text-center">Eliminar usuario</h3>
+    <form action="/admin/users" method="get" class="d-flex align-items-center mr-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-3">
+            <circle cx="10.5" cy="10.5" r="7.5"></circle>
+            <line x1="21" y1="21" x2="15.8" y2="15.8"></line>
+        </svg>
+        <input type="text" class="form-control border-0 bg-transparent"  name="name" placeholder="Buscar usuario" aria-label="Buscar un curso">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#users}}
+            <tr>
+                <td>{{FirstName}}</td>
+                <td>
+                    <form method="post" action="/admin/users/delete/{{id}}">
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        <input type="hidden" name="_csrf" value="{{token}}" />
+                    </form>
+                </td>
+            </tr>
+            {{/users}}
+            {{^users}}
+            <tr>
+                <td colspan="2" class="text-center">No se encontraron usuarios</td>
+            </tr>
+            {{/users}}
+        </tbody>
+    </table>
+ </main>
+ {{> footer}}
