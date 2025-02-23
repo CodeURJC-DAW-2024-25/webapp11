@@ -49,7 +49,11 @@
     {{/isTeacher}}
 
     {{^isEnrolled}}
-        <button class="btn btn-success mt-3">Inscribirse al curso</button>
+        <form method="post" action="/course/enroll">
+            <button type="submit" class="btn btn-success mt-3">Inscribirse al curso</button>
+            <input type="hidden" name="_csrf" value="{{token}}" />
+            <input type="hidden" name="idCourse" value="{{course.id}}" />
+        </form>
     {{/isEnrolled}}
 
     <h4>Comentarios</h4>

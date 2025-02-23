@@ -28,27 +28,35 @@ public class EnrollmentService {
         return enrollmentRepository.save(enrollment);
     }
 
-    public Enrollment enrollUserToCourse(Long userId, Long courseId) {
+    public String enrollUserToCourse(Long userId, Long courseId) {
         // check user
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElse(null);
+        if (user == null) {
+            return "Usuario no encontrado";
+        }
 
         // check course
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
+                .orElse(null);
+        if (course == null) {
+            return "Curso no encontrado";
+        }
 
         // check if the user is already enrolled in the course
         List<Enrollment> existingEnrollments = enrollmentRepository.findByUser(user);
         for (Enrollment enrollment : existingEnrollments) {
             if (enrollment.getCourse().equals(course)) {
-                throw new RuntimeException("User already enrolled in the course");
+                return "Ya está inscrito en este curso";
             }
         }
+
         // enrollment creation
         Enrollment enrollment = new Enrollment(user, course);
 
         // save the enrollment
-        return save(enrollment); // call the save method
+        enrollmentRepository.save(enrollment);
+        return "success"; // Indicating successful enrollment
     }
 
     public void cancelEnrollment(Long enrollmentId) {
@@ -76,5 +84,28 @@ public class EnrollmentService {
 
     public Optional<Enrollment> findById(Long enrollmentId) {
         return enrollmentRepository.findById(enrollmentId);
+    }
+
+    public Boolean isUserEnrolledInCourse(Long userId, Long courseId) {
+        User user = userRepository.findById(userId)
+                .orElse(null);
+        if (user == null) {
+            return false;
+        }
+
+        Course course = courseRepository.findById(courseId)
+                .orElse(null);
+        if (course == null) {
+            return false;
+        }
+
+        List<Enrollment> existingEnrollments = enrollmentRepository.findByUser(user);
+        for (Enrollment enrollment : existingEnrollments) {
+            if (enrollment.getCourse().equals(course)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

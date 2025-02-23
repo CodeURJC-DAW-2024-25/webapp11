@@ -17,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import es.daw.demo.service.CourseService;
+import es.daw.demo.service.EnrollmentService;
 import es.daw.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -41,6 +42,9 @@ public class CourseController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EnrollmentService enrollmentService;
 
     // new course
     @PostMapping("/newCourse")
@@ -169,13 +173,28 @@ public class CourseController {
 
     // Show course
     @GetMapping("/showCourse/{id}")
-    public String showCourse(@PathVariable Long id, Model model) {
+    public String showCourse(@PathVariable Long id, Model model, HttpServletRequest request) {
         Course course = courseService.findById(id).orElseThrow();
         String teacher = course.getInstructor().getFirstName() + " " +  course.getInstructor().getLastName();
         model.addAttribute("pagetitle", "Curso");
         model.addAttribute("teacher", teacher);
         model.addAttribute("course", course);
         //Falta configurar los comentarios, isTeacher.
+        if (request.getUserPrincipal() != null) {
+            Optional<User> optionalUser = userService.findByEmail(request.getUserPrincipal().getName());
+    
+            if (optionalUser.isPresent()) {
+                Long idUser = optionalUser.get().getId();
+    
+                // 🔹 Verifica si el usuario está inscrito en el curso
+                model.addAttribute("isEnrolled", enrollmentService.isUserEnrolledInCourse(id, idUser));
+            } else {
+                model.addAttribute("isEnrolled", false);
+            }
+        } else {
+            // 🔹 Si no ha iniciado sesión, no está inscrito
+            model.addAttribute("isEnrolled", false);
+        }
         return "course";
     }
 

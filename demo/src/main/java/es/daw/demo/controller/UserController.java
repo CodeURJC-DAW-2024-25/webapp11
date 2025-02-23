@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import es.daw.demo.service.EmailService;
+import es.daw.demo.service.EnrollmentService;
 import es.daw.demo.service.UserService;
 import es.daw.demo.model.User;
 import org.springframework.core.io.Resource;
@@ -25,6 +26,8 @@ import java.util.List;
 import java.util.Optional;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller
@@ -38,6 +41,9 @@ public class UserController {
 
     @Autowired
 	private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EnrollmentService enrollmentService;
 
     @ModelAttribute
     public void addAttributes(Model model, HttpServletRequest request) {
@@ -173,6 +179,36 @@ public class UserController {
         return "admin";
     }
 
+
+    @PostMapping("/course/enroll")
+    public String enrollToCourse(@RequestParam Long idCourse, HttpServletRequest request, Model model) {
+        // Verificar si el usuario está autenticado
+        if (request.getUserPrincipal() == null) {
+            return "redirect:/login";  // Redirigir al login si no está autenticado
+        }
+
+        // Obtener el ID del usuario autenticado
+        Long idUser = userService.findByEmail(request.getUserPrincipal().getName()).get().getId();
+
+        // Inscripción al curso
+        String result = enrollmentService.enrollUserToCourse(idUser, idCourse);
+        
+        if (result.equals("success")) {
+            return "redirect:/showCourse/" + idCourse;
+        } else {
+            model.addAttribute("errorTitle", "Error al inscribirse al curso");
+            model.addAttribute("errorMessage", result);
+            return "error";
+        }
+    }
+
+
+    public String postMethodName(@RequestBody String entity) {
+        //TODO: process POST request
+        
+        return entity;
+    }
+    
     /* 
     // Find a user by email and Password
     @PostMapping("/findUser")
