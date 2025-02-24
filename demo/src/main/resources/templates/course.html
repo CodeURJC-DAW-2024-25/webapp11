@@ -6,7 +6,7 @@
     <p><strong>Temática:</strong> {{course.topic}}</p>
     <p>Descripción: {{course.description}}</p>
 
-    {{#isEnrolled}}
+    {{#isEnrolled}}     <!-- If is enrolled-->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="content-tab" data-bs-toggle="tab" data-bs-target="#content" type="button" role="tab" aria-controls="content" aria-selected="true">Contenidos</button>
@@ -25,7 +25,7 @@
         </div>
     {{/isEnrolled}}
     
-    {{#isTeacher}}
+    {{#isTeacher}}   <!-- If is the teacher-->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="content-tab" data-bs-toggle="tab" data-bs-target="#content" type="button" role="tab" aria-controls="content" aria-selected="true">Contenidos</button>
@@ -48,12 +48,14 @@
 
     {{/isTeacher}}
 
-    {{^isEnrolled}}
-        <form method="post" action="/course/enroll">
-            <button type="submit" class="btn btn-success mt-3">Inscribirse al curso</button>
-            <input type="hidden" name="_csrf" value="{{token}}" />
-            <input type="hidden" name="idCourse" value="{{course.id}}" />
-        </form>
+    {{^isEnrolled}}  <!-- If is not enrolled and is not the teacher-->
+        {{^isTeacher}}
+            <form method="post" action="/course/enroll">
+                <button type="submit" class="btn btn-success mt-3">Inscribirse al curso</button>
+                <input type="hidden" name="_csrf" value="{{token}}" />
+                <input type="hidden" name="idCourse" value="{{course.id}}" />
+            </form>
+        {{/isTeacher}}
     {{/isEnrolled}}
 
     <h4>Comentarios</h4>
@@ -104,18 +106,26 @@
         <p>No hay comentarios aún.</p>
     {{/course.comments}}
 
-    {{#isEnrolled}}
+    {{#isEnrolled}}      <!-- If is enrolled-->
         <form action="/course/{{course.id}}/comment" method="post">
             <textarea class="form-control mb-2" name="contenido" placeholder="Añadir un comentario..."></textarea>
             <button class="btn btn-primary">Comentar</button>
         </form>
     {{/isEnrolled}}
-    
+    {{#isTeacher}}      <!-- If is teacher-->
+        <form action="/course/{{course.id}}/comment" method="post">
+            <textarea class="form-control mb-2" name="contenido" placeholder="Añadir un comentario..."></textarea>
+            <button class="btn btn-primary">Comentar</button>
+        </form>
+    {{/isTeacher}}
 
-    {{^isEnrolled}}
+    {{^isEnrolled}}     <!-- If is not enrolled or is not the teacher-->
         {{^isTeacher}}
-            <p><a href="/login">Inicia sesión</a> para dejar un comentario.</p>
+            <p><a href="/login">Inscribete al curso</a> para dejar un comentario.</p>
         {{/isTeacher}}
     {{/isEnrolled}}
+    <div class="text-center mt-4">
+        <a href="/" class="btn btn-primary">Back to Courses</a>
+    </div>
 </main>
 {{>footer}}
