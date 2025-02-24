@@ -244,4 +244,10 @@ public class CourseController {
 
         return "coursesPage";
     }
+
+    @GetMapping("/deleteCourse/{id}")
+    public String deleteCourse(@PathVariable Long id) {
+        courseRepository.deleteById(id);
+        return "redirect:/index";
+    }
 }
