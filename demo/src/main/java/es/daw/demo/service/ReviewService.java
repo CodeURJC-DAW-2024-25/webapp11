@@ -24,17 +24,12 @@ public class ReviewService {
     @Autowired
     private UserRepository userRepository;
 
-    public Review createReview(String text, String rating, Long userId, Long courseId) {
-        Optional<User> user = userRepository.findById(userId);
-        Optional<Course> course = courseRepository.findById(courseId);
-
-        if (user.isPresent() && course.isPresent()) {
-            Review review = new Review(text, rating, user.get(), course.get(), null);
-            return reviewRepository.save(review); // use the save method
-        } else {
-            throw new RuntimeException("User or course does not exist"); // Aquí faltaba el punto y coma
-        }
-    } // Aquí cerramos correctamente el método createReview
+    public Review createReview(String text, User user, Course course, Review parentReview) {
+        // Crear la nueva reseña
+        Review review = new Review(text, user, course, parentReview);
+        // Guardar la reseña en la base de datos
+        return reviewRepository.save(review);
+    }
 
     public List<Review> findReviewsByCourse(Long courseId) {
         Optional<Course> course = courseRepository.findById(courseId);
@@ -62,7 +57,7 @@ public class ReviewService {
         if (reviewOptional.isPresent()) {
             Review review = reviewOptional.get();
             review.setText(newText);
-            review.setRating(newRating);
+            //review.setRating(newRating);
             return reviewRepository.save(review); // El save también se usa aquí
         } else {
             throw new RuntimeException("Review not found");
@@ -81,6 +76,10 @@ public class ReviewService {
 
     public Optional<Review> findReviewById(Long reviewId) {
         return reviewRepository.findById(reviewId);
+    }
+
+    public Optional<Review> getParentReview(Long parentId) {
+        return reviewRepository.findById(parentId);
     }
 
     public Review save(Review review) {

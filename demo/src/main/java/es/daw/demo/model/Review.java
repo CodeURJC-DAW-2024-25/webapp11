@@ -17,8 +17,7 @@ public class Review {
     private long id;
 
     private String text;
-    private String rating;
-
+    private Boolean pending;
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
@@ -35,16 +34,24 @@ public class Review {
         // Used by JPA
     }
 
-    public Review(String text, String rating, User user, Course course, Review parent) {
+    public Review(String text, User user, Course course, Review parent) {
         super();
         this.text = text;
-        this.rating = rating;
         this.user = user;
         this.course = course;
         this.parent = parent;
+        this.pending = false;
     }
 
     // Getters and setters
+    public Boolean getState () {
+        return pending;
+    }
+
+    public void setState (Boolean pending) {
+        this.pending = pending;
+    }
+
     public long getId() {
         return id;
     }
@@ -59,14 +66,6 @@ public class Review {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
     }
 
     public User getUser() {

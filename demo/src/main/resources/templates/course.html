@@ -59,10 +59,10 @@
     {{/isEnrolled}}
 
     <h4>Comentarios</h4>
-    {{#course.comments}}
+    {{#reviews}}
         <div class="comment mb-3">
-            <strong>{{author}}</strong>
-            <p>{{content}}</p>
+            <strong>{{user.firstName}} {{user.lastName}}</strong>
+            <p>{{text}}</p>
             {{#isEnrolled}}
                 <form action="/course/{{course.id}}/comment" method="post">
                     <input type="hidden" name="parentId" value="{{id}}">
@@ -100,21 +100,25 @@
                 {{/isTeacher}}
             {{/replies}}
         </div>
-    {{/course.comments}}
+    {{/reviews}}
 
     {{^course.comments}}
         <p>No hay comentarios aún.</p>
     {{/course.comments}}
 
     {{#isEnrolled}}      <!-- If is enrolled-->
-        <form action="/course/{{course.id}}/comment" method="post">
-            <textarea class="form-control mb-2" name="contenido" placeholder="Añadir un comentario..."></textarea>
+        <form action="/course/newReview" method="post">
+            <input type="hidden" name="courseId" value="{{course.id}}">
+            <input type="hidden" name="_csrf" value="{{token}}" />
+            <textarea class="form-control mb-2" name="text" placeholder="Añadir un comentario..."></textarea>
             <button class="btn btn-primary">Comentar</button>
         </form>
     {{/isEnrolled}}
     {{#isTeacher}}      <!-- If is teacher-->
-        <form action="/course/{{course.id}}/comment" method="post">
-            <textarea class="form-control mb-2" name="contenido" placeholder="Añadir un comentario..."></textarea>
+        <form action="/course/newReview" method="post">
+            <input type="hidden" name="courseId" value="{{course.id}}">
+            <input type="hidden" name="_csrf" value="{{token}}" />
+            <textarea class="form-control mb-2" name="text" placeholder="Añadir un comentario..."></textarea>
             <button class="btn btn-primary">Comentar</button>
         </form>
     {{/isTeacher}}

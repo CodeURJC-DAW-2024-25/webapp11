@@ -18,12 +18,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import es.daw.demo.service.CourseService;
 import es.daw.demo.service.EnrollmentService;
+import es.daw.demo.service.ReviewService;
 import es.daw.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import es.daw.demo.model.User;
 import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.model.Course;
+import es.daw.demo.model.Review;
+
+import java.util.List;
 import java.util.Optional;
 import java.security.Principal;
 import java.sql.Blob;
@@ -45,6 +49,9 @@ public class CourseController {
 
     @Autowired
     private EnrollmentService enrollmentService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     // new course
     @PostMapping("/newCourse")
@@ -179,7 +186,8 @@ public class CourseController {
         model.addAttribute("pagetitle", "Curso");
         model.addAttribute("teacher", teacher);
         model.addAttribute("course", course);
-
+        List<Review> reviews = reviewService.findReviewsByCourse(id);
+        model.addAttribute("reviews", reviews);
         //Falta configurar los comentarios.
         
         if (request.getUserPrincipal() != null) {

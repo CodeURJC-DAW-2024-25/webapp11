@@ -34,7 +34,7 @@ public class EnrollmentController {
         if (user.isPresent() && course.isPresent()) {
             Enrollment enrollment = new Enrollment(user.get(), course.get());
             enrollmentRepository.save(enrollment);
-            model.addAttribute("message", "Enrollment created successfully");
+            model.addAttribute("message", "Enrollment created successfully");       //??????
             return "index";
         } else {
             model.addAttribute("errorTitle", "Error creating enrollment");
