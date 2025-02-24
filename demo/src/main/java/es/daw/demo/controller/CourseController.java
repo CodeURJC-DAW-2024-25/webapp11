@@ -181,19 +181,27 @@ public class CourseController {
         model.addAttribute("course", course);
 
         //Falta configurar los comentarios.
-
-
-        if (request.isUserInRole("ADMIN")) {
-            model.addAttribute("isEnrolled", false);
-            model.addAttribute("isTeacher", true);
-        } else if (request.getUserPrincipal() != null) {
+        
+        if (request.getUserPrincipal() != null) {
             Optional<User> optionalUser = userService.findByEmail(request.getUserPrincipal().getName());
             if (optionalUser.isPresent()) {
                 Long idUser = optionalUser.get().getId();
                 // Checks if the user is the instructor of the course
-                model.addAttribute("isTeacher", courseService.isUserInstructor(id, idUser));
+                
                 // Checks if the user is enrolled to the course
-                model.addAttribute("isEnrolled", enrollmentService.isUserEnrolledInCourse(id, idUser));  //NO FUNCIONA
+                //model.addAttribute("isEnrolled", enrollmentService.isUserEnrolledInCourse(id, idUser));
+                System.out.println("nigga " + enrollmentService.isUserEnrolledInCourse(id, idUser));
+
+                if (request.isUserInRole("USER")){
+                    model.addAttribute("isEnrolled", enrollmentService.isUserEnrolledInCourse(idUser, id));
+                }
+                else if (request.isUserInRole("ADMIN")) {
+                    model.addAttribute("isEnrolled", false);
+                    model.addAttribute("isTeacher", true);
+                }
+                else if(request.isUserInRole("TEACHER")){
+                    model.addAttribute("isTeacher", courseService.isUserInstructor(id, idUser));
+                }
             } else {
                 model.addAttribute("isEnrolled", false);
                 model.addAttribute("isTeacher", false);

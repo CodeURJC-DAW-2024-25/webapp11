@@ -1,5 +1,4 @@
 var currentPage = 0;
-var total = 5;
 
 function loadCourses() {
     $.ajax({
@@ -14,8 +13,8 @@ function loadCourses() {
 
             if ($htmlData.length > 0) {
                 $('#coursesContainer').append($htmlData);
+                $('#spinner').hide();
                 $('#loadMoreBtn').show();
-                console.log($htmlData.length)
                 if ($htmlData.length < 7) {
                     $('#loadMoreBtn').hide();
                 }
@@ -28,10 +27,12 @@ function loadCourses() {
 }
 
     $('#loadMoreBtn').on('click', function () {
+        $('#spinner').show();
         currentPage++;
         loadCourses();
     });
 
     $(document).ready(function () {
+        $('#spinner').hide();
         loadCourses();
     });
