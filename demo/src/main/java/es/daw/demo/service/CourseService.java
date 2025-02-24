@@ -52,4 +52,9 @@ public class CourseService {
     public void deleteById (long id) {
         courseRepository.deleteById(id);
     }
+
+    public boolean isUserInstructor(Long courseId, Long userId) {
+        Course course = courseRepository.findById(courseId).orElse(null);
+        return course != null && course.getInstructor() != null && course.getInstructor().getId() == userId;
+    }
 }

@@ -179,21 +179,35 @@ public class CourseController {
         model.addAttribute("pagetitle", "Curso");
         model.addAttribute("teacher", teacher);
         model.addAttribute("course", course);
-        //Falta configurar los comentarios, isTeacher.
-        if (request.getUserPrincipal() != null) {
+
+
+
+
+
+        //Falta configurar los comentarios.
+
+
+        
+        if (request.isUserInRole("ADMIN")) {
+            model.addAttribute("isEnrolled", false);
+            model.addAttribute("isTeacher", true);
+        } else if (request.getUserPrincipal() != null) {
             Optional<User> optionalUser = userService.findByEmail(request.getUserPrincipal().getName());
-    
             if (optionalUser.isPresent()) {
                 Long idUser = optionalUser.get().getId();
-    
-                // 🔹 Verifica si el usuario está inscrito en el curso
+                
+                // Checks if the user is the instructor of the course
+                model.addAttribute("isTeacher", courseService.isUserInstructor(id, idUser));
+                // Checks if the user is enrolled to the course
                 model.addAttribute("isEnrolled", enrollmentService.isUserEnrolledInCourse(id, idUser));
             } else {
                 model.addAttribute("isEnrolled", false);
+                model.addAttribute("isTeacher", false);
             }
         } else {
-            // 🔹 Si no ha iniciado sesión, no está inscrito
+            // If is an anonymus user
             model.addAttribute("isEnrolled", false);
+            model.addAttribute("isTeacher", false);
         }
         return "course";
     }
