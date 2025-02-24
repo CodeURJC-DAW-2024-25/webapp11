@@ -189,18 +189,13 @@ public class CourseController {
                 // Checks if the user is the instructor of the course
                 
                 // Checks if the user is enrolled to the course
-                //model.addAttribute("isEnrolled", enrollmentService.isUserEnrolledInCourse(id, idUser));
-                System.out.println("nigga " + enrollmentService.isUserEnrolledInCourse(id, idUser));
-
                 if (request.isUserInRole("USER")){
                     model.addAttribute("isEnrolled", enrollmentService.isUserEnrolledInCourse(idUser, id));
+                    model.addAttribute("isTeacher", courseService.isUserInstructor(id, idUser));
                 }
                 else if (request.isUserInRole("ADMIN")) {
                     model.addAttribute("isEnrolled", false);
                     model.addAttribute("isTeacher", true);
-                }
-                else if(request.isUserInRole("TEACHER")){
-                    model.addAttribute("isTeacher", courseService.isUserInstructor(id, idUser));
                 }
             } else {
                 model.addAttribute("isEnrolled", false);
