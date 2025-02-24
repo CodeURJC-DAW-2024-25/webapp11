@@ -34,12 +34,12 @@ public class DataBaseInitializer{
         User user1 = new User("Pepe", "García", "user1@gmail.com", passwordEncoder.encode("1234"), "Desarrollo web", false, "USER");
         User user2 = new User("Ana", "López", "admin@gmail.com", passwordEncoder.encode("1234"), "Desarrollo web", false, "ADMIN");
 
-        userService.save(user1);
-        userService.save(user2);
+        //userService.save(user1);
+        //userService.save(user2);
         setProfileImage(user1, "/static/images/perfil_1.jpg");
         setProfileImage(user2, "/static/images/perfil_2.jpg");
-        //userRepository.save(user1);
-        //userRepository.save(user2);
+        userService.save(user1);
+        userService.save(user2);
 
         Course course1 = new Course("Desarrollo Web Completo", "Aprende desarrollo web desde cero con HTML, CSS, JavaScript, Node.js, y más.", "Desarrollo web",user1);
         Course course2 = new Course("React JS desde Cero", "Domina React JS y crea aplicaciones web modernas y reactivas. Incluye proyectos prácticos.", "Desarrollo web", user2);

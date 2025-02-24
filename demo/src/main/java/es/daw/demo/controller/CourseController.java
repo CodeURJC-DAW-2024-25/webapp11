@@ -180,14 +180,9 @@ public class CourseController {
         model.addAttribute("teacher", teacher);
         model.addAttribute("course", course);
 
-
-
-
-
         //Falta configurar los comentarios.
 
 
-        
         if (request.isUserInRole("ADMIN")) {
             model.addAttribute("isEnrolled", false);
             model.addAttribute("isTeacher", true);
@@ -195,11 +190,10 @@ public class CourseController {
             Optional<User> optionalUser = userService.findByEmail(request.getUserPrincipal().getName());
             if (optionalUser.isPresent()) {
                 Long idUser = optionalUser.get().getId();
-                
                 // Checks if the user is the instructor of the course
                 model.addAttribute("isTeacher", courseService.isUserInstructor(id, idUser));
                 // Checks if the user is enrolled to the course
-                model.addAttribute("isEnrolled", enrollmentService.isUserEnrolledInCourse(id, idUser));
+                model.addAttribute("isEnrolled", enrollmentService.isUserEnrolledInCourse(id, idUser));  //NO FUNCIONA
             } else {
                 model.addAttribute("isEnrolled", false);
                 model.addAttribute("isTeacher", false);
