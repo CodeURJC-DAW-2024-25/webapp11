@@ -147,7 +147,7 @@ public class ReviewController {
         if (reviewOptional.isPresent()) {
             reviewService.deleteReview(reviewId);
             model.addAttribute("message", "review deleted successfully");
-            return "reviews";
+            return "redirect:/profile";
         } else {
             model.addAttribute("errorTitle", "error deleting review");
             model.addAttribute("errorMessage", "review not found");
