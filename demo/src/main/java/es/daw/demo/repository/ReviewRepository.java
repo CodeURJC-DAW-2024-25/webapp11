@@ -8,6 +8,6 @@ import es.daw.demo.model.User;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByCourse(Course course); // search all reviews of a course
-
+    List<Review> findByCourseIdAndParentIsNull(Long courseId);
     List<Review> findByUser(User user); // search all reviews of a user
 }

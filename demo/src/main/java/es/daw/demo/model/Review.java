@@ -10,6 +10,8 @@ import jakarta.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Review {
     @Id
@@ -85,6 +87,11 @@ public class Review {
     }
 
     public List<Review> getHijos() {
+        return hijos;
+    }
+
+    @JsonIgnore
+    public List<Review> getReplies() {
         return hijos;
     }
 
