@@ -33,8 +33,6 @@ import java.security.Principal;
 import java.sql.Blob;
 import java.sql.SQLException;
 
-
-
 @Controller
 public class CourseController {
 
@@ -56,74 +54,69 @@ public class CourseController {
     // new course
     @PostMapping("/newCourse")
     public String newCourse(@RequestParam String title,
-                            @RequestParam String description,
-                            @RequestParam String topic,
-                            @RequestParam MultipartFile image,
-                            @RequestParam MultipartFile notes,
-                            Model model,
-                            HttpServletRequest request
-                            ) throws Exception {
+            @RequestParam String description,
+            @RequestParam String topic,
+            @RequestParam MultipartFile image,
+            @RequestParam MultipartFile notes,
+            Model model,
+            HttpServletRequest request) throws Exception {
         User instructor = userService.findByEmail(request.getUserPrincipal().getName()).get();
         Course course = new Course(title, description, topic, instructor);
         courseService.save(course, image, notes);
-    
+
         model.addAttribute("pagetitle", title);
         model.addAttribute("isTeacher", true);
         model.addAttribute("course", course);
         return "redirect:/showCourse/" + course.getId();
     }
 
-
     @ModelAttribute
-	public void addAttributes(Model model, HttpServletRequest request) {
+    public void addAttributes(Model model, HttpServletRequest request) {
 
-		Principal principal = request.getUserPrincipal();
+        Principal principal = request.getUserPrincipal();
 
-		if (principal != null) {
+        if (principal != null) {
 
-			model.addAttribute("isLoggedIn", true);
-			model.addAttribute("userName", principal.getName());
-			model.addAttribute("admin", request.isUserInRole("ADMIN"));
+            model.addAttribute("isLoggedIn", true);
+            model.addAttribute("userName", principal.getName());
+            model.addAttribute("admin", request.isUserInRole("ADMIN"));
 
-		} else {
-			model.addAttribute("isLoggedIn", false);
-		}
-	}
+        } else {
+            model.addAttribute("isLoggedIn", false);
+        }
+    }
 
     // Upload course image
     @GetMapping("/image/{id}")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
         Optional<Course> course = courseService.findById(id);
-		if (course.isPresent() && course.get().getImageFile() != null) {
+        if (course.isPresent() && course.get().getImageFile() != null) {
 
-			Resource file = new InputStreamResource(course.get().getImageFile().getBinaryStream());
+            Resource file = new InputStreamResource(course.get().getImageFile().getBinaryStream());
 
-			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-					.contentLength(course.get().getImageFile().length()).body(file);
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(course.get().getImageFile().length()).body(file);
 
-		} else {
-			return ResponseEntity.notFound().build();
-		}
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-
-    
 
     // Upload course notes
     @GetMapping("/notes/{id}")
     public ResponseEntity<Object> downloadNotes(@PathVariable long id) throws SQLException {
         Optional<Course> course = courseService.findById(id);
-		if (course.isPresent() && course.get().getNotes() != null) {
+        if (course.isPresent() && course.get().getNotes() != null) {
 
-			Resource file = new InputStreamResource(course.get().getNotes().getBinaryStream());
+            Resource file = new InputStreamResource(course.get().getNotes().getBinaryStream());
 
-			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "application/pdf")
-					.contentLength(course.get().getNotes().length()).body(file);
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "application/pdf")
+                    .contentLength(course.get().getNotes().length()).body(file);
 
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-    }   
-    
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     // search courses by title ????
     @GetMapping("/searchCourse")
@@ -161,10 +154,10 @@ public class CourseController {
             return "error";
         }
     }
-    
+
     // Change view to the new course page
     @GetMapping("/createCourse")
-    public String showNewCoursePage( Model model) {
+    public String showNewCoursePage(Model model) {
         return "new_course";
     }
 
@@ -174,7 +167,7 @@ public class CourseController {
         Course oldCourse = courseService.findById(id).orElseThrow();
         updatedCourse.setId(id);
 
-        oldCourse.getComments().forEach(comment -> updatedCourse.addComment(comment));
+        oldCourse.getReviews().forEach(review -> updatedCourse.addReviews(review));
         return "redirect:/showCourse/" + id;
     }
 
@@ -182,26 +175,25 @@ public class CourseController {
     @GetMapping("/showCourse/{id}")
     public String showCourse(@PathVariable Long id, Model model, HttpServletRequest request) {
         Course course = courseService.findById(id).orElseThrow();
-        String teacher = course.getInstructor().getFirstName() + " " +  course.getInstructor().getLastName();
+        String teacher = course.getInstructor().getFirstName() + " " + course.getInstructor().getLastName();
         model.addAttribute("pagetitle", "Curso");
         model.addAttribute("teacher", teacher);
         model.addAttribute("course", course);
         List<Review> reviews = reviewService.findReviewsByCourse(id);
         model.addAttribute("reviews", reviews);
-        //Falta configurar los comentarios.
-        
+        // Falta configurar los comentarios.
+
         if (request.getUserPrincipal() != null) {
             Optional<User> optionalUser = userService.findByEmail(request.getUserPrincipal().getName());
             if (optionalUser.isPresent()) {
                 Long idUser = optionalUser.get().getId();
                 // Checks if the user is the instructor of the course
-                
+
                 // Checks if the user is enrolled to the course
-                if (request.isUserInRole("USER")){
+                if (request.isUserInRole("USER")) {
                     model.addAttribute("isEnrolled", enrollmentService.isUserEnrolledInCourse(idUser, id));
                     model.addAttribute("isTeacher", courseService.isUserInstructor(id, idUser));
-                }
-                else if (request.isUserInRole("ADMIN")) {
+                } else if (request.isUserInRole("ADMIN")) {
                     model.addAttribute("isEnrolled", false);
                     model.addAttribute("isTeacher", true);
                 }
@@ -219,7 +211,7 @@ public class CourseController {
 
     // Show all courses
     @GetMapping("/")
-    public String getIndex (Model model, @AuthenticationPrincipal UserDetails user) {
+    public String getIndex(Model model, @AuthenticationPrincipal UserDetails user) {
 
         if (user != null) {
             model.addAttribute("user", user);
@@ -235,7 +227,8 @@ public class CourseController {
     }
 
     @GetMapping("/getCourses")
-    public String getCourses(Model model, HttpServletRequest request, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "4") int pageSize) {
+    public String getCourses(Model model, HttpServletRequest request, @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "4") int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
 
         Page<Course> coursesPage = courseRepository.findAll(pageable);

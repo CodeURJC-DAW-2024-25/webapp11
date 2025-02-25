@@ -36,7 +36,19 @@
     <div class="comment mb-3">
         <strong>Ana López</strong>
         <p>Excelente curso, muy bien explicado.</p>
-        <button class="btn btn-link btn-sm">Eliminar comentario</button>
+        <!--form to edit review-->
+        <form action="/editReview" method="post">
+            <input type="hidden" name="reviewId" value="{{review.id}}">
+            <input type="hidden" name="_csrf" value="{{token}}" />
+            <textarea class="form-control mb-2" name="newText" placeholder="Editar comentario..."></textarea>
+            <button class="btn btn-primary" type="submit">Editar comentario</button>
+        </form>
+        <!--form to delete review-->
+        <form action="/deleteReview" method="post" style="display: inline;">
+            <input type="hidden" name="reviewId" value="{{review.id}}">
+            <input type="hidden" name="_csrf" value="{{token}}" />
+            <button class="btn btn-link btn-sm" type="submit" style="color: red;">Eliminar comentario</button>
+        </form>
         <button class="btn btn-link btn-sm" style="color: red;">Eliminar usuario</button>
     </div>
     <hr>
