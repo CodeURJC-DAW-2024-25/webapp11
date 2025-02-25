@@ -179,8 +179,8 @@ public class CourseController {
         model.addAttribute("pagetitle", "Curso");
         model.addAttribute("teacher", teacher);
         model.addAttribute("course", course);
-        List<Review> reviews = reviewService.findReviewsByCourse(id);
-        model.addAttribute("reviews", reviews);
+        List<Review> parentReviews = reviewService.findParentReviewsByCourse(id);
+        model.addAttribute("reviews", parentReviews);
         // Falta configurar los comentarios.
 
         if (request.getUserPrincipal() != null) {

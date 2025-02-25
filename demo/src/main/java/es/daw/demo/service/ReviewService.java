@@ -31,14 +31,8 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 
-    public List<Review> findReviewsByCourse(Long courseId) {
-        Optional<Course> course = courseRepository.findById(courseId);
-
-        if (course.isPresent()) {
-            return reviewRepository.findByCourse(course.get());
-        } else {
-            throw new RuntimeException("Course not found");
-        }
+    public List<Review> findParentReviewsByCourse(Long courseId) {
+        return reviewRepository.findByCourseIdAndParentIsNull(courseId);
     }
 
     public List<Review> findReviewsByUser(Long userId) {

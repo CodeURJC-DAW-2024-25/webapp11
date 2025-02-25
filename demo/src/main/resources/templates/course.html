@@ -21,57 +21,49 @@
                     <div class="comment mb-3">
                         <strong>{{user.firstName}} {{user.lastName}}</strong>
                         <p>{{text}}</p>
+                        {{#replies}}
+                            <div class="comment ml-3">
+                                <strong>{{user.firstName}} {{user.lastName}}</strong>
+                                <p>{{text}}</p>
+                            </div>
+                            {{#isTeacher}}
+                                <form action="/course/newReview" method="post">
+                                    <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button> 
+                                    <input type="hidden" name="parentId" value="{{id}}">
+                                    <input type="hidden" name="_csrf" value="{{token}}" />
+                                </form>
+                                
+                            {{/isTeacher}}
+                        {{/replies}}
                         {{#isEnrolled}}
-                            <form action="/course/{{course.id}}/comment" method="post">
+                            <form action="/course/newReview" method="post">
+                                <input type="hidden" name="courseId" value="{{course.id}}">
                                 <input type="hidden" name="parentId" value="{{id}}">
                                 <input type="hidden" name="_csrf" value="{{token}}" />
-                                <textarea class="form-control mb-2" name="content" placeholder="Responder..."></textarea>
-                                <input type="submit" class="btn btn-link btn-sm" placeholder="Responder">
+                                <textarea class="form-control mb-2" name="text" placeholder="Responder..."></textarea>
+                                <input type="submit" class="btn btn-link btn-sm" value="Responder">
                             </form>
                         {{/isEnrolled}}
                         {{#isTeacher}}
-                        {{#isTeacher}}
-                        <form action="/course/{{course.id}}/comment" method="post">
-                            <input type="hidden" name="parentId" value="{{id}}">
+                            <form action="/course/newReview" method="post">
+                                <input type="hidden" name="parentId" value="{{id}}">
+                                <input type="hidden" name="courseId" value="{{course.id}}">
                                 <input type="hidden" name="_csrf" value="{{token}}" />
-                            <textarea class="form-control mb-2" name="content" placeholder="Responder..." style="resize: none; width: 100%;"></textarea>
-                            <div class="d-flex align-items-center">
-                                <input type="submit" class="btn btn-link btn-sm" placeholder="Responder">
-                                <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button> <!-- Falta funcionalidad -->
-                            </div>
-                        </form>
-                    {{/isTeacher}}
-                    
+                                <textarea class="form-control mb-2" name="text" placeholder="Responder..." style="resize: none; width: 100%;"></textarea>
+                                <div class="d-flex align-items-center">
+                                    <input type="submit" class="btn btn-link btn-sm" value="Responder">
+                                    <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button> <!-- Falta funcionalidad -->
+                                </div>
+                            </form>
                         {{/isTeacher}}
 
-                        {{#replies}}
-                            <div class="comment ml-3">
-                                <strong>{{author}}</strong>
-                                <p>{{content}}</p>
-                            </div>
-                            {{#isEnrolled}}
-                                <form action="/course/{{course.id}}/comment" method="post">
-                                    <input type="hidden" name="parentId" value="{{id}}">
-                                    <input type="hidden" name="_csrf" value="{{token}}" />
-                                    <textarea class="form-control mb-2" name="content" placeholder="Responder..."></textarea>
-                                    <input type="submit" class="btn btn-link btn-sm" placeholder="Responder">
-                                </form>
-                            {{/isEnrolled}}
-                            {{#isTeacher}}
-                                <form action="/course/{{course.id}}/comment" method="post">
-                                    <input type="hidden" name="parentId" value="{{id}}">
-                                    <input type="hidden" name="_csrf" value="{{token}}" />
-                                    <textarea class="form-control mb-2" name="content" placeholder="Responder..."></textarea>
-                                    <input type="submit" class="btn btn-link btn-sm" placeholder="Responder">
-                                </form>
-                                <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button>   //Falta funcionalidad
-                            {{/isTeacher}}
-                        {{/replies}}
+                        
                     </div>
                 {{/reviews}}
-                {{^course.comments}}
+                {{^reviews}}
                     <p><br>No hay comentarios aún.</p>
-                {{/course.comments}}
+                {{/reviews}}
+                <hr>
                 {{#isEnrolled}}      <!-- If is enrolled-->
                     <form action="/course/newReview" method="post">
                         <input type="hidden" name="courseId" value="{{course.id}}">

@@ -43,39 +43,53 @@ public class ReviewController {
 
     @PostMapping("/course/newReview")
     public String newReview(@RequestParam String text,
-                            @RequestParam Long courseId,
+                            @RequestParam(required = false) Long courseId,
                             @RequestParam(required = false) Long parentId,
                             HttpServletRequest request,
                             Model model) {
         // Obtener el usuario autenticado
-        System.out.println("Hola");
         Optional<User> userOpt = userService.findByEmail(request.getUserPrincipal().getName());
         if (userOpt.isEmpty()) {
             model.addAttribute("errorTitle", "Error creating review");
             model.addAttribute("errorMessage", "User not found");
             return "error";
         }
-
-        // Obtener el curso
-        Optional<Course> courseOpt = courseService.findById(courseId);
-        if (courseOpt.isEmpty()) {
-            model.addAttribute("errorTitle", "Error creating review");
-            model.addAttribute("errorMessage", "Course does not exist");
-            return "error";
+        System.out.println("Hola1");
+        Course course = null;
+        if (courseId != null) {
+            Optional<Course> courseOpt = courseService.findById(courseId);
+            if (courseOpt.isEmpty()) {
+                model.addAttribute("errorTitle", "Error creating review");
+                model.addAttribute("errorMessage", "Course does not exist");
+                return "error";
+            }
+            course = courseOpt.get();
         }
-
+        System.out.println("Hola2");
         // Obtener la reseña padre si se proporciona un ID válido
         Review parentReview = null;
         if (parentId != null) {
             Optional<Review> parentReviewOpt = reviewService.getParentReview(parentId);
-            parentReview = parentReviewOpt.orElse(null);
+            if (parentReviewOpt.isEmpty()) {
+                model.addAttribute("errorTitle", "Error creating review");
+                model.addAttribute("errorMessage", "Parent review does not exist");
+                return "error";
+            }
+            parentReview = parentReviewOpt.get();
+            course = parentReview.getCourse(); // Asegurar que la respuesta pertenezca al mismo curso
         }
-
+        System.out.println("Hola3");
+        if (course == null) {
+            model.addAttribute("errorTitle", "Error creating review");
+            model.addAttribute("errorMessage", "Either a courseId or a valid parentId must be provided");
+            return "error";
+        }
+    
         // Crear y guardar la nueva reseña utilizando el servicio
-        reviewService.createReview(text, userOpt.get(), courseOpt.get(), parentReview);
-
+        reviewService.createReview(text, userOpt.get(), course, parentReview);
+        System.out.println("Hola4");
         // Redirigir al curso donde se hizo el comentario
-        return "redirect:/showCourse/" + courseId;
+        return "redirect:/showCourse/" + course.getId();
     }
 
     // search reviews by user
