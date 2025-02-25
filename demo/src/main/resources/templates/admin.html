@@ -33,24 +33,26 @@
     <hr>
         
     <h3 class="text-center">Revisiones pendientes</h3>    <!-- Falta implementar esto -->
-    <div class="comment mb-3">
-        <strong>Ana López</strong>
-        <p>Excelente curso, muy bien explicado.</p>
-        <!--form to edit review-->
-        <form action="/editReview" method="post">
-            <input type="hidden" name="reviewId" value="{{review.id}}">
-            <input type="hidden" name="_csrf" value="{{token}}" />
-            <textarea class="form-control mb-2" name="newText" placeholder="Editar comentario..."></textarea>
-            <button class="btn btn-primary" type="submit">Editar comentario</button>
-        </form>
-        <!--form to delete review-->
-        <form action="/deleteReview" method="post" style="display: inline;">
-            <input type="hidden" name="reviewId" value="{{review.id}}">
-            <input type="hidden" name="_csrf" value="{{token}}" />
-            <button class="btn btn-link btn-sm" type="submit" style="color: red;">Eliminar comentario</button>
-        </form>
-        <button class="btn btn-link btn-sm" style="color: red;">Eliminar usuario</button>
-    </div>
+    {{#reviews}}
+        <div class="comment mb-3">
+            <strong>{{user.firstName}} {{user.lastName}}</strong>
+            <p>{{text}}</p>
+            <!--form to delete review-->
+            <form action="/deleteReview" method="post" style="display: inline;">
+                <input type="hidden" name="reviewId" value="{{id}}">
+                <input type="hidden" name="_csrf" value="{{token}}" />
+                <button class="btn btn-link btn-sm" type="submit" style="color: red;">Eliminar comentario</button>
+            </form>
+            <!--form to delete user-->
+            <form method="post" action="/admin/users/delete/{{user.id}}">
+                <button type="submit" class="btn btn-danger btn-sm">Eliminar usuario</button>
+                <input type="hidden" name="_csrf" value="{{token}}" />
+            </form>
+        </div>
+    {{/reviews}}
+    {{^reviews}}
+        <p>No hay reseñas pendientes.</p>
+    {{/reviews}}
     <hr>
     <h3 class="text-center">Eliminar usuario</h3>
     <form action="/admin/users" method="get" class="d-flex align-items-center mr-2">

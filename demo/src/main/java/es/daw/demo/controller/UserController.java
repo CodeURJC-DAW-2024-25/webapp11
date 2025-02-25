@@ -68,6 +68,7 @@ public class UserController {
     @Autowired
     private EnrollmentService enrollmentService;
 
+
     @ModelAttribute
     public void addAttributes(Model model, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
@@ -163,6 +164,8 @@ public class UserController {
         if (principal != null) {
             model.addAttribute("pagetitle", "Perfil");
             if (request.isUserInRole("ADMIN")) {
+                List<Review> pendingReviews = reviewRepository.findByPendingTrue();
+                model.addAttribute("reviews", pendingReviews);
                 return "admin";
             } else {
                 return "profile";

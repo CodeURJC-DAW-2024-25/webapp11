@@ -54,7 +54,6 @@ public class ReviewController {
             model.addAttribute("errorMessage", "User not found");
             return "error";
         }
-        System.out.println("Hola1");
         Course course = null;
         if (courseId != null) {
             Optional<Course> courseOpt = courseService.findById(courseId);
@@ -65,7 +64,6 @@ public class ReviewController {
             }
             course = courseOpt.get();
         }
-        System.out.println("Hola2");
         // Obtener la reseña padre si se proporciona un ID válido
         Review parentReview = null;
         if (parentId != null) {
@@ -78,7 +76,6 @@ public class ReviewController {
             parentReview = parentReviewOpt.get();
             course = parentReview.getCourse(); // Asegurar que la respuesta pertenezca al mismo curso
         }
-        System.out.println("Hola3");
         if (course == null) {
             model.addAttribute("errorTitle", "Error creating review");
             model.addAttribute("errorMessage", "Either a courseId or a valid parentId must be provided");
@@ -87,7 +84,6 @@ public class ReviewController {
     
         // Crear y guardar la nueva reseña utilizando el servicio
         reviewService.createReview(text, userOpt.get(), course, parentReview);
-        System.out.println("Hola4");
         // Redirigir al curso donde se hizo el comentario
         return "redirect:/showCourse/" + course.getId();
     }
@@ -108,6 +104,19 @@ public class ReviewController {
         }
     }
 
+    // Mark a review for revision
+    @PostMapping("/reviews/{id}/mark-pending")
+    public String markReviewAsPending(@PathVariable Long id, Model model) {
+        Optional<Review> optionalReview = reviewService.findReviewById(id);
+
+        if (optionalReview.isPresent()) {
+            Review review = optionalReview.get();
+            review.setState(true);
+            reviewService.save(review);
+        }
+
+        return "redirect:/showCourse/" + optionalReview.get().getCourse().getId();
+    }
     // edit review
     @PostMapping("/editReview")
     public String editReview(@RequestParam Long reviewId,
@@ -145,7 +154,7 @@ public class ReviewController {
             return "error";
         }
     }
-
+    /* 
     @PostMapping("/course/{id}/comment")
     public String respondComment(   @PathVariable Long id, 
                                     @RequestParam Long parentId, 
@@ -191,5 +200,5 @@ public class ReviewController {
         /////////////////
 
         return "redirect:/showCourse/" + id;
-    }
+    }*/
 }

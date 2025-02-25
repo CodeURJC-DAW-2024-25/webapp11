@@ -27,12 +27,10 @@
                                 <p>{{text}}</p>
                             </div>
                             {{#isTeacher}}
-                                <form action="/course/newReview" method="post">
-                                    <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button> 
-                                    <input type="hidden" name="parentId" value="{{id}}">
+                                <form action="/reviews/{{id}}/mark-pending" method="post">
                                     <input type="hidden" name="_csrf" value="{{token}}" />
+                                    <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button> 
                                 </form>
-                                
                             {{/isTeacher}}
                         {{/replies}}
                         {{#isEnrolled}}
@@ -50,10 +48,11 @@
                                 <input type="hidden" name="courseId" value="{{course.id}}">
                                 <input type="hidden" name="_csrf" value="{{token}}" />
                                 <textarea class="form-control mb-2" name="text" placeholder="Responder..." style="resize: none; width: 100%;"></textarea>
-                                <div class="d-flex align-items-center">
-                                    <input type="submit" class="btn btn-link btn-sm" value="Responder">
-                                    <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button> <!-- Falta funcionalidad -->
-                                </div>
+                                <input type="submit" class="btn btn-link btn-sm" value="Responder">
+                            </form>      
+                            <form action="/reviews/{{id}}/mark-pending" method="post">
+                                <input type="hidden" name="_csrf" value="{{token}}" />
+                                <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button> 
                             </form>
                         {{/isTeacher}}
 
