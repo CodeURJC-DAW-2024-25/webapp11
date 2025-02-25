@@ -24,17 +24,19 @@
                         {{#isEnrolled}}
                             <form action="/course/{{course.id}}/comment" method="post">
                                 <input type="hidden" name="parentId" value="{{id}}">
+                                <input type="hidden" name="_csrf" value="{{token}}" />
                                 <textarea class="form-control mb-2" name="content" placeholder="Responder..."></textarea>
-                                <button class="btn btn-link btn-sm">Responder</button>
+                                <input type="submit" class="btn btn-link btn-sm" placeholder="Responder">
                             </form>
                         {{/isEnrolled}}
                         {{#isTeacher}}
                         {{#isTeacher}}
                         <form action="/course/{{course.id}}/comment" method="post">
                             <input type="hidden" name="parentId" value="{{id}}">
+                                <input type="hidden" name="_csrf" value="{{token}}" />
                             <textarea class="form-control mb-2" name="content" placeholder="Responder..." style="resize: none; width: 100%;"></textarea>
                             <div class="d-flex align-items-center">
-                                <button class="btn btn-link btn-sm">Responder</button>
+                                <input type="submit" class="btn btn-link btn-sm" placeholder="Responder">
                                 <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button> <!-- Falta funcionalidad -->
                             </div>
                         </form>
@@ -50,15 +52,17 @@
                             {{#isEnrolled}}
                                 <form action="/course/{{course.id}}/comment" method="post">
                                     <input type="hidden" name="parentId" value="{{id}}">
+                                    <input type="hidden" name="_csrf" value="{{token}}" />
                                     <textarea class="form-control mb-2" name="content" placeholder="Responder..."></textarea>
-                                    <button class="btn btn-link btn-sm">Responder</button>
+                                    <input type="submit" class="btn btn-link btn-sm" placeholder="Responder">
                                 </form>
                             {{/isEnrolled}}
                             {{#isTeacher}}
                                 <form action="/course/{{course.id}}/comment" method="post">
                                     <input type="hidden" name="parentId" value="{{id}}">
+                                    <input type="hidden" name="_csrf" value="{{token}}" />
                                     <textarea class="form-control mb-2" name="content" placeholder="Responder..."></textarea>
-                                    <button class="btn btn-link btn-sm">Responder</button>
+                                    <input type="submit" class="btn btn-link btn-sm" placeholder="Responder">
                                 </form>
                                 <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button>   //Falta funcionalidad
                             {{/isTeacher}}
