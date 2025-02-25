@@ -49,6 +49,10 @@ public class CourseService {
         return courseRepository.findByTitle(title);
     }
 
+    public List<Course> findByInstructor(User user){
+        return courseRepository.findByInstructor(user);
+    }
+
     public void deleteById (long id) {
         courseRepository.deleteById(id);
     }

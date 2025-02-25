@@ -8,7 +8,7 @@ import es.daw.demo.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
-    List <User> findByFirstName (String firstName);
+    Optional <User> findByFirstName (String firstName);
     //User findById (long id);
     boolean existsByEmail(String email); // Check if the user exists by email
     List<User> findByFirstNameContainingIgnoreCase(String firstNname);
