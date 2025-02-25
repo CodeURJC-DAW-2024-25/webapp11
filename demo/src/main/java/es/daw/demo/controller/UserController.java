@@ -6,20 +6,31 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import es.daw.demo.service.EmailService;
 import es.daw.demo.service.EnrollmentService;
+import es.daw.demo.service.ReviewService;
 import es.daw.demo.service.UserService;
+import es.daw.demo.model.Course;
+import es.daw.demo.model.Review;
 import es.daw.demo.model.User;
+import es.daw.demo.repository.CourseRepository;
+import es.daw.demo.repository.ReviewRepository;
+import es.daw.demo.repository.UserRepository;
+
 import org.springframework.core.io.Resource;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpHeaders;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
@@ -32,6 +43,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class UserController {
+
+    @Autowired 
+    private ReviewRepository reviewRepository;
+
+    @Autowired 
+    private CourseRepository courseRepository;
+
+    @Autowired 
+    private UserRepository userRepository;
+
+    @Autowired 
+    private ReviewService reviewService;
     
     @Autowired 
     private UserService userService;
@@ -40,7 +63,7 @@ public class UserController {
     private EmailService emailService;
 
     @Autowired
-	private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private EnrollmentService enrollmentService;
@@ -120,16 +143,16 @@ public class UserController {
     @GetMapping("/profileImage/{id}")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
         Optional<User> user = userService.findById(id);
-		if (user.isPresent() && user.get().getProfileImage() != null) {
+        if (user.isPresent() && user.get().getProfileImage() != null) {
 
-			Resource file = new InputStreamResource(user.get().getProfileImage().getBinaryStream());
+            Resource file = new InputStreamResource(user.get().getProfileImage().getBinaryStream());
 
-			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-					.contentLength(user.get().getProfileImage().length()).body(file);
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(user.get().getProfileImage().length()).body(file);
 
-		} else {
-			return ResponseEntity.notFound().build();
-		}
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
     
 
@@ -207,6 +230,74 @@ public class UserController {
         //TODO: process POST request
         
         return entity;
+    }
+
+    @GetMapping("/deleteAccount/{id}")
+    public String deleteUser(Model model,@PathVariable("id") Long userID) {
+
+        Optional<User> optionalUser = userRepository.findById(userID);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            List<Course> userProducts = courseRepository.findByInstructor(user);
+            for (Course eachProduct : userProducts) {
+                courseRepository.deleteById(eachProduct.getId());
+            }
+        }
+
+        /*List<Review> userReview = reviewRepository.findByUser(userID);
+        for (Review eachReview : userReview) {
+            reviewService.deleteReview(eachReview);
+        }*/
+
+        userRepository.deleteById(userID);
+
+        return "redirect:/index";
+    }
+
+    @PostMapping("/updateUser/{userID}")
+    public String updateUser(@PathVariable Long userID, Model model,
+                             @RequestParam String firstName,
+                             @RequestParam String lastName,
+                             @RequestParam String currentPassword,
+                             @RequestParam String newPassword,
+                             @RequestParam String confirmPassword,
+                             @RequestParam(required = false) MultipartFile imageFile) throws IOException, SQLException {
+
+        Optional<User> optionalUser = userRepository.findById(userID);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+			// Verify password and new password
+			/*if (!newPassword.isEmpty() && newPassword.equals(confirmPassword) && passwordEncoder.matches(currentPassword, user.getEncodedPassword())) {
+				user.setEncodedPassword(passwordEncoder.encodePassword(newPassword));
+			}*/
+			// Update user
+			if (!lastName.isEmpty()) {
+				user.setLastName(lastName);
+			}
+			// Verify and update image
+			if (imageFile.getOriginalFilename() != "" && !imageFile.isEmpty()) {
+				user.setProfileImage(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+			}
+
+			//if (!firstName.isEmpty() && !userRepository.findByFirstName(firstName).isPresent()) {
+				user.setFirstName(firstName);
+				userRepository.save(user);
+				return "redirect:/logout";
+			//}
+
+			// Save updated user
+			//userService.save(user);
+
+			// Redirect to profile
+			//return "redirect:/profile";
+		} else {
+			return "error";
+		}
     }
     
     /* 

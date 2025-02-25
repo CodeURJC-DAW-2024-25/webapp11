@@ -8,25 +8,82 @@
             <p id="user-name"><strong>{{user.firstName}} {{user.lastName}}</strong></p>
             <p><strong>Email:</strong> <span id="user-email">{{user.email}}</span></p>
             
-            <button class="btn btn-primary" onclick="enableEdit()">Editar perfil</button>
-            <!-- Formulario de edición ?????? -->
-            <form id="edit-form" class="mt-3 d-none">
-                <div class="form-group">
-                    <label for="edit-name">Nombre</label>
-                    <input type="text" class="form-control" id="edit-name" value="{{user.firstName}}">
-                </div>
-                <div class="form-group">
-                    <label for="edit-email">Email</label>
-                    <input type="email" class="form-control" id="edit-email" value="usuario@email.com">
-                </div>
-                <div class="form-group">
-                    <label for="upload-photo">Foto de perfil</label>
-                    <input type="file" class="form-control-file" id="upload-photo">
-                </div>
-                <button type="button" class="btn btn-success" onclick="saveChanges()">Guardar cambios</button>
-                <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancelar</button>
-            </form>
-            <!--   -->
+            <button class="btn btn-primary" onclick="editProfile()">Editar perfil</button>
+            <div id="Settings" class="w3-container tab" style="display:none">
+                <h2>Settings</h2>
+                  <div data-content id="settings" class="active">
+                    <form id="updateForm" class="mx-1 mx-md-4" action="/updateUser/{{user.id}}" method="post" enctype="multipart/form-data">
+                      <div class="row">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input class="form-control" id="firstName" type="text" name="firstName" placeholder="Nuevo nombre"/>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input class="form-control" id="lastName" type="text" name="lastName" placeholder="Nuevo apellido"/>
+                              </div>
+                              <div class="delete">
+                                <a type="button" class="btn btn-primary btn-lg red" href="/deleteAccount/{{user.id}}" >Eliminar</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-6 mb-3">
+                          <div class="mb-2"><b>Change Password</b></div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input class="form-control" id="currentPassword" type="password" name="currentPassword" placeholder="••••••"/>
+                              </div>
+                            </div>
+                          </div>
+                          {{#error}}
+                          <div class="form-outline mb-4 w-50 mx-auto">
+                              <p class="text-danger">Las contraseñas no coinciden</p>
+                          </div>
+                          {{/error}}
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input class="form-control" id="newPassword" type="password" name="newPassword" placeholder="••••••"/>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input class="form-control" id="confirmPassword" type="password" name="confirmPassword" placeholder="••••••"/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <div class="mb-2"><b>Change Photo</b>
+                          <input class="form-control" name='imageFile' type="file" id="imageFile" accept="image/*"/>
+                        </div>
+                        </div>
+                        </div>
+                      <div class="row">
+                        <div class="col d-flex justify-content-end">
+                          <button class="btn btn-primary" type="submit">Save Changes</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </form>
+              </div>
         </div>
     </div>
 
