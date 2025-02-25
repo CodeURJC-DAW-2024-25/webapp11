@@ -9,7 +9,6 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,6 @@ import es.daw.demo.service.EnrollmentService;
 import es.daw.demo.service.ReviewService;
 import es.daw.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import es.daw.demo.model.User;
 import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.model.Course;
@@ -30,7 +28,6 @@ import es.daw.demo.model.Review;
 import java.util.List;
 import java.util.Optional;
 import java.security.Principal;
-import java.sql.Blob;
 import java.sql.SQLException;
 
 @Controller

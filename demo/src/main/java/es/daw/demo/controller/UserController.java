@@ -10,11 +10,11 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import es.daw.demo.service.CourseService;
 import es.daw.demo.service.EmailService;
 import es.daw.demo.service.EnrollmentService;
 import es.daw.demo.service.ReviewService;
@@ -22,12 +22,8 @@ import es.daw.demo.service.UserService;
 import es.daw.demo.model.Course;
 import es.daw.demo.model.Review;
 import es.daw.demo.model.User;
-import es.daw.demo.repository.CourseRepository;
-import es.daw.demo.repository.ReviewRepository;
-import es.daw.demo.repository.UserRepository;
 
 import org.springframework.core.io.Resource;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpHeaders;
 
 import java.io.IOException;
@@ -45,13 +41,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class UserController {
 
     @Autowired 
-    private ReviewRepository reviewRepository;
-
-    @Autowired 
-    private CourseRepository courseRepository;
-
-    @Autowired 
-    private UserRepository userRepository;
+    private CourseService courseService;
 
     @Autowired 
     private ReviewService reviewService;
@@ -235,22 +225,21 @@ public class UserController {
     @GetMapping("/deleteAccount/{id}")
     public String deleteUser(Model model,@PathVariable("id") Long userID) {
 
-        Optional<User> optionalUser = userRepository.findById(userID);
+        Optional<User> optionalUser = userService.findById(userID);
 
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            List<Course> userProducts = courseRepository.findByInstructor(user);
+            List<Course> userProducts = courseService.findByInstructor(user);
             for (Course eachProduct : userProducts) {
-                courseRepository.deleteById(eachProduct.getId());
+                courseService.deleteById(eachProduct.getId());
+            }
+            List<Review> userReview = reviewService.findReviewsByUser(userID);
+            for (Review eachReview : userReview) {
+                reviewService.deleteReview(eachReview.getId());
             }
         }
 
-        /*List<Review> userReview = reviewRepository.findByUser(userID);
-        for (Review eachReview : userReview) {
-            reviewService.deleteReview(eachReview);
-        }*/
-
-        userRepository.deleteById(userID);
+        userService.deleteById(userID);
 
         return "redirect:/index";
     }
@@ -264,17 +253,13 @@ public class UserController {
                              @RequestParam String confirmPassword,
                              @RequestParam(required = false) MultipartFile imageFile) throws IOException, SQLException {
 
-        Optional<User> optionalUser = userRepository.findById(userID);
-
+        Optional<User> optionalUser = userService.findById(userID);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-
-			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
 			// Verify password and new password
-			/*if (!newPassword.isEmpty() && newPassword.equals(confirmPassword) && passwordEncoder.matches(currentPassword, user.getEncodedPassword())) {
-				user.setEncodedPassword(passwordEncoder.encodePassword(newPassword));
-			}*/
+			if (!newPassword.isEmpty() && newPassword.equals(confirmPassword) && passwordEncoder.matches(currentPassword, user.getPassword())) {
+				user.setPassword(passwordEncoder.encode(newPassword));
+			}
 			// Update user
 			if (!lastName.isEmpty()) {
 				user.setLastName(lastName);
@@ -284,17 +269,17 @@ public class UserController {
 				user.setProfileImage(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
 			}
 
-			//if (!firstName.isEmpty() && !userRepository.findByFirstName(firstName).isPresent()) {
+			if (!firstName.isEmpty() && !userService.findByFirstName(firstName).isPresent()) {
 				user.setFirstName(firstName);
-				userRepository.save(user);
-				return "redirect:/logout";
-			//}
+				userService.save(user);
+				return "redirect:/profile";
+			}
 
 			// Save updated user
-			//userService.save(user);
+			userService.save(user);
 
 			// Redirect to profile
-			//return "redirect:/profile";
+			return "redirect:/profile";
 		} else {
 			return "error";
 		}

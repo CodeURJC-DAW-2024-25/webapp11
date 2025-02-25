@@ -7,10 +7,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.core.io.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.IOException;
-import java.sql.Blob;
 
 import es.daw.demo.model.Course;
 import es.daw.demo.model.User;
