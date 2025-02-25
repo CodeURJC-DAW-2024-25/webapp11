@@ -40,7 +40,7 @@ public class Course {
     private int rating;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "course", orphanRemoval = true)
-    private List<Review> comments = new ArrayList<>();
+    private List<Review> reviews = new ArrayList<>();
 
     public Course() {
         // Used by JPA
@@ -61,11 +61,12 @@ public class Course {
     }
 
     public void setImageFile(Blob imageFile) {
-		this.imageFile = imageFile;
-	}
+        this.imageFile = imageFile;
+    }
+
     public void setNoteFile(Blob noteFile) {
-		this.notes = noteFile;
-	}
+        this.notes = noteFile;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -96,8 +97,8 @@ public class Course {
     }
 
     public Blob getImageFile() {
-		return imageFile;
-	}
+        return imageFile;
+    }
 
     public boolean getImage() {
         return image;
@@ -131,22 +132,22 @@ public class Course {
         this.rating = rating;
     }
 
-    public List<Review> getComments() {
-        return comments;
+    public List<Review> getReviews() {
+        return reviews;
     }
 
-    public void setComments(List<Review> comments) {
-        this.comments = comments;
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
-    public void addComment(Review comment) {
-        this.comments.add(comment);
-        comment.setCourse(this);
+    public void addReviews(Review review) {
+        this.reviews.add(review);
+        review.setCourse(this);
     }
 
-    public void removeComment(Review comment) {
-        this.comments.remove(comment);
-        comment.setCourse(null);
+    public void removeReview(Review review) {
+        this.reviews.remove(review);
+        review.setCourse(null);
     }
 
 }
