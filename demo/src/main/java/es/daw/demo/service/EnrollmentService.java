@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class EnrollmentService {
@@ -106,5 +109,22 @@ public class EnrollmentService {
             }
         }
         return false;
+    }
+
+    public String getMostFrequentTopic(User user) {
+        List<Enrollment> enrollments = enrollmentRepository.findByUser(user);
+        
+        if (enrollments.isEmpty()) {
+            return user.getTopic();
+        }
+
+        Map<String, Long> topicCount = enrollments.stream()
+            .map(e -> e.getCourse().getTopic())
+            .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+        return topicCount.entrySet().stream()
+            .max(Map.Entry.comparingByValue())
+            .map(Map.Entry::getKey)
+            .orElse(null);
     }
 }

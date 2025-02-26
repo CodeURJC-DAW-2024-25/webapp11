@@ -208,20 +208,29 @@ public class CourseController {
 
     // Show all courses
     @GetMapping("/")
-    public String getIndex(Model model, @AuthenticationPrincipal UserDetails user) {
-
-        if (user != null) {
-            model.addAttribute("user", user);
-            model.addAttribute("isLoggedIn", true);
+    public String getIndex(Model model, HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        
+        if (principal != null) { // Verifica si el usuario está autenticado
+            Optional<User> user = userService.findByEmail(principal.getName());
+            if (user.isPresent()) {
+                model.addAttribute("isLoggedIn", true);
+                List<Course> courses = courseService.getTopRatedCoursesByTopic(user.get().getTopic());
+                model.addAttribute("recomendCourses", courses);
+            } else {
+                model.addAttribute("isLoggedIn", false);
+                model.addAttribute("recomendCourses", courseService.findTop4ByOrderByRatingDesc());
+            }
         } else {
             model.addAttribute("isLoggedIn", false);
+            model.addAttribute("recomendCourses", courseService.findTop4ByOrderByRatingDesc());
         }
 
         model.addAttribute("pagetitle", "Inicio");
         model.addAttribute("allCourses", courseService.findAll());
-        model.addAttribute("recomendCourses", courseService.findTop4ByOrderByRatingDesc());
         return "index";
     }
+
 
     @GetMapping("/getCourses")
     public String getCourses(Model model, HttpServletRequest request, @RequestParam(defaultValue = "0") int page,
@@ -240,4 +249,6 @@ public class CourseController {
         courseRepository.deleteById(id);
         return "redirect:/index";
     }
+
+    
 }

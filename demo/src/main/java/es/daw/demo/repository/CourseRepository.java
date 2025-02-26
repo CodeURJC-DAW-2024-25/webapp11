@@ -13,7 +13,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     //Course findById(long id);
 
     List<Course> findTop4ByOrderByRatingDesc();
-
+    List<Course> findTop4ByTopicOrderByRatingDesc(String topic);
     //List<Course> findByTitleContainingIgnoreCaseOrfindByTopicContainingIgnoreCase(String name);
 
     List<Course> findByInstructor(User user);

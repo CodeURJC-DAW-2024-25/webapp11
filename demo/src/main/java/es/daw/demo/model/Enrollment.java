@@ -27,6 +27,8 @@ public class Enrollment {
     @Temporal(TemporalType.DATE)
     private Date date;
 
+    private int rating;
+
     public Enrollment() {
         // Used by JPA
     }
@@ -39,6 +41,14 @@ public class Enrollment {
     }
 
     // getters and setters
+    public int getRating () {
+        return rating;
+    }
+    
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     public long getId() {
         return id;
     }

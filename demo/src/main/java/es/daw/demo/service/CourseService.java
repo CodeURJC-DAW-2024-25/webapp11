@@ -10,13 +10,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.daw.demo.model.Course;
+import es.daw.demo.model.Enrollment;
 import es.daw.demo.model.User;
 import es.daw.demo.repository.CourseRepository;
+import es.daw.demo.repository.EnrollmentRepository;
 
 @Service
 public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private EnrollmentRepository enrollmentRepository;
 
     public void save(Course course) {
         courseRepository.save(course);
@@ -60,5 +65,35 @@ public class CourseService {
     public boolean isUserInstructor(Long courseId, Long userId) {
         Course course = courseRepository.findById(courseId).orElse(null);
         return course != null && course.getInstructor() != null && course.getInstructor().getId() == userId;
+    }
+
+    public List<Course> getTopRatedCoursesByTopic(String topic) {
+        return courseRepository.findTop4ByTopicOrderByRatingDesc(topic);
+    }
+
+    public void updateCourseRating(Long courseId) {
+        // Get the course
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        // Get all inscription for this course with rating != 0
+        List<Enrollment> enrollments = enrollmentRepository.findByCourseIdAndRatingIsNotNull(courseId);
+
+        if (enrollments.isEmpty()) {
+            course.setRating(0);
+        } else {
+            // Calcule the new average
+            double totalRating = enrollments.stream()
+                    .mapToDouble(Enrollment::getRating)
+                    .sum();
+
+            int newAverageRating = (int) totalRating / enrollments.size();
+
+            // Update course rate
+            course.setRating(newAverageRating);
+        }
+
+        // Save changes
+        courseRepository.save(course);
     }
 }
