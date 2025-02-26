@@ -154,7 +154,7 @@ public class UserController {
         if (principal != null) {
             model.addAttribute("pagetitle", "Perfil");
             if (request.isUserInRole("ADMIN")) {
-                List<Review> pendingReviews = reviewRepository.findByPendingTrue();
+                List<Review> pendingReviews = reviewService.findByPendingTrue();
                 model.addAttribute("reviews", pendingReviews);
                 return "admin";
             } else {

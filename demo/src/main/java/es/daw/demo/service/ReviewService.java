@@ -79,4 +79,8 @@ public class ReviewService {
     public Review save(Review review) {
         return reviewRepository.save(review); // save review, new or edited
     }
+
+    public List<Review> findByPendingTrue() {
+        return reviewRepository.findByPendingTrue();
+    }
 }
