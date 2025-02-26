@@ -72,9 +72,10 @@
                         <div class="form-group">
                           <div class="mb-2"><b>Change Photo</b>
                           <input class="form-control" name='imageFile' type="file" id="imageFile" accept="image/*"/>
+                          </div>
                         </div>
-                        </div>
-                        </div>
+                      </div>
+                      <input type="hidden" name="_csrf" value="{{token}}" />
                       <div class="row">
                         <div class="col d-flex justify-content-end">
                           <button class="btn btn-primary" type="submit">Save Changes</button>

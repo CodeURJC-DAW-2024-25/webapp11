@@ -1,13 +1,8 @@
 var currentPage = 0;
 
 function editProfile() {
-    var i;
-    var x = document.getElementsByClassName("tab");
-    for (i = 0; i < x.length; i++) {
-      x[i].style.display = "none";  
-    }
     document.getElementById("Settings").style.display = "block";  
-  }
+}
 
 function loadCourses() {
     $.ajax({

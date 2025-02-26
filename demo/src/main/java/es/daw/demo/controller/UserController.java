@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -248,13 +249,19 @@ public class UserController {
     }
 
     @PostMapping("/updateUser/{userID}")
-    public String updateUser(@PathVariable Long userID, Model model,
+    public String updateUser(HttpServletRequest request,
+                             @PathVariable Long userID, Model model,
                              @RequestParam String firstName,
                              @RequestParam String lastName,
                              @RequestParam String currentPassword,
                              @RequestParam String newPassword,
                              @RequestParam String confirmPassword,
                              @RequestParam(required = false) MultipartFile imageFile) throws IOException, SQLException {
+
+        // Obtener el token CSRF
+        CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+        // Agregar el token al modelo
+        model.addAttribute("token", csrfToken.getToken());
 
         Optional<User> optionalUser = userService.findById(userID);
         if (optionalUser.isPresent()) {
