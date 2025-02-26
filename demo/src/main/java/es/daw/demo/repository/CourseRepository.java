@@ -1,6 +1,9 @@
 package es.daw.demo.repository;
 
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import es.daw.demo.model.Course;
 import es.daw.demo.model.User;
@@ -17,4 +20,5 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     //List<Course> findByTitleContainingIgnoreCaseOrfindByTopicContainingIgnoreCase(String name);
 
     List<Course> findByInstructor(User user);
+    Page<Course> findAllByOrderByRatingDesc(Pageable pageable);
 }

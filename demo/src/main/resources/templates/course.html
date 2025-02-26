@@ -12,6 +12,7 @@
         <div class="tab-pane fade show active" id="content" role="tabpanel" aria-labelledby="content-tab">
             <img src="/image/{{course.id}}" alt="Imagen del curso" class="img-fluid mb-3" style="max-height: 300px; object-fit: cover;">
             <h2>{{course.title}}</h2>
+            <h6>Valoración: {{course.rating}} ⭐</h6>
             <h5>Profesor: {{teacher}}</h5>
             <p><strong>Temática:</strong> {{course.topic}}</p>
             <p>Descripción: {{course.description}}</p>
@@ -109,14 +110,38 @@
             {{/isTeacher}}
         </div>
         {{^isEnrolled}}  <!-- If is not enrolled and is not the teacher-->
-                {{^isTeacher}}
-                    <form method="post" action="/course/enroll">
-                        <button type="submit" class="btn btn-success mt-3">Inscribirse al curso</button>
-                        <input type="hidden" name="_csrf" value="{{token}}" />
-                        <input type="hidden" name="idCourse" value="{{course.id}}" />
-                    </form>
+            {{^isTeacher}}
+                <form method="post" action="/course/enroll">
+                    <button type="submit" class="btn btn-success mt-3">Inscribirse al curso</button>
+                    <input type="hidden" name="_csrf" value="{{token}}" />
+                    <input type="hidden" name="idCourse" value="{{course.id}}" />
+                </form>
                 {{/isTeacher}}
-            {{/isEnrolled}}
+        {{/isEnrolled}}
+        {{#isEnrolled}}  <!-- If is enrolled and has´t give a -->
+            <hr>
+            <h4>Califica el curso</h4>
+            <form method="post" action="/enrollment/rate" class="p-3  bg-light">
+                <div class="d-flex align-items-center gap-3">
+                    <select id="rating" name="rating" class="form-select" style="height: 38px; width: auto;">
+                        <option value="0">0 ⭐</option>
+                        <option value="1">1 ⭐</option>
+                        <option value="2">2 ⭐</option>
+                        <option value="3">3 ⭐</option>
+                        <option value="4">4 ⭐</option>
+                        <option value="5">5 ⭐</option>
+                    </select>
+                    <button type="submit" class="btn btn-success ml-2">
+                        <i class="bi bi-star-fill"></i> Valorar
+                    </button>
+                </div>
+            
+                <input type="hidden" name="_csrf" value="{{token}}" />
+                <input type="hidden" name="courseId" value="{{course.id}}" />
+            </form>
+            
+
+        {{/isEnrolled}}
         <div class="text-center mt-4">
             <a href="/" class="btn btn-primary">Back to Courses</a>
         </div>

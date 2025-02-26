@@ -127,4 +127,14 @@ public class EnrollmentService {
             .map(Map.Entry::getKey)
             .orElse(null);
     }
+
+    public Enrollment findByUserAndCourse(Long userId, Long courseId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        return enrollmentRepository.findByUserAndCourse(user, course)
+                .orElseThrow(() -> new RuntimeException("Enrollment not found"));
+    }
 }

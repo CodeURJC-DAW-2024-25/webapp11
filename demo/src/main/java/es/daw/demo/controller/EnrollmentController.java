@@ -1,10 +1,16 @@
 package es.daw.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import es.daw.demo.repository.EnrollmentRepository;
 import es.daw.demo.repository.UserRepository;
+import es.daw.demo.service.CourseService;
+import es.daw.demo.service.EnrollmentService;
+import es.daw.demo.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.model.Enrollment;
 import es.daw.demo.model.User;
@@ -12,8 +18,7 @@ import es.daw.demo.model.Course;
 import java.util.Optional;
 import java.util.List;
 
-@RestController
-@RequestMapping("/enrollments")
+@Controller
 public class EnrollmentController {
 
     @Autowired
@@ -25,6 +30,15 @@ public class EnrollmentController {
     @Autowired
     private CourseRepository courseRepository;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private EnrollmentService enrollmentService;
+
+    @Autowired
+    private CourseService courseService;
+    
     // Create new enrollment
     @PostMapping("/newEnrollment")
     public String newEnrollment(@RequestParam Long userId, @RequestParam Long courseId, Model model) {
@@ -90,4 +104,47 @@ public class EnrollmentController {
             return "error";
         }
     }
+
+    // Update/crete rating of a course
+    @PostMapping("/enrollment/rate")
+    public String rateCourse(@RequestParam Long courseId, 
+                            @RequestParam int rating,
+                            HttpServletRequest request,
+                            Model model) {
+        Optional<User> user = userService.findByEmail(request.getUserPrincipal().getName());
+        
+        Enrollment enrollment = enrollmentService.findByUserAndCourse(user.get().getId(), courseId);
+        if (enrollment == null) {
+            model.addAttribute("errorTitle", "Error al crear la valoración");
+            model.addAttribute("errorMessage", "No existe su inscripción al curso");
+            return "error";
+        }
+
+        // Actualizar el rating en la inscripción
+        enrollment.setRating(rating);
+        enrollmentService.save(enrollment);
+
+        // Recalcular la media de ratings del curso
+        Optional<Course> optionalCourse = courseService.findById(courseId);
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            List<Enrollment> enrollments = enrollmentService.findEnrollmentsByCourse(courseId);
+    
+            int totalRating = enrollments.stream()
+                                         .mapToInt(Enrollment::getRating)
+                                         .sum();
+            int newAverageRating = enrollments.isEmpty() ? 0 : totalRating / enrollments.size();
+    
+            // Actualizar el rating del curso
+            course.setRating(newAverageRating);
+            courseService.save(course);
+        } else {
+            model.addAttribute("errorTitle", "Error al crear la valoración");
+            model.addAttribute("errorMessage", "Curso no encontrado");
+            return "error";
+        }
+
+        return "redirect:/showCourse/" + courseId; // Redirige de vuelta a la página del curso
+    }
+
 }

@@ -12,9 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import es.daw.demo.service.CourseService;
 import es.daw.demo.service.EnrollmentService;
 import es.daw.demo.service.ReviewService;
@@ -227,7 +224,7 @@ public class CourseController {
         }
 
         model.addAttribute("pagetitle", "Inicio");
-        model.addAttribute("allCourses", courseService.findAll());
+        //model.addAttribute("allCourses", courseService.findAllByOrderByRatingDesc());
         return "index";
     }
 
@@ -237,7 +234,7 @@ public class CourseController {
             @RequestParam(defaultValue = "4") int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
 
-        Page<Course> coursesPage = courseRepository.findAll(pageable);
+        Page<Course> coursesPage = courseRepository.findAllByOrderByRatingDesc(pageable);
 
         model.addAttribute("courses", coursesPage.getContent());
 

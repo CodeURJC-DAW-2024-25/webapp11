@@ -14,7 +14,8 @@ import es.daw.demo.model.Enrollment;
 import es.daw.demo.model.User;
 import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.repository.EnrollmentRepository;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 @Service
 public class CourseService {
     @Autowired
@@ -23,8 +24,8 @@ public class CourseService {
     @Autowired
     private EnrollmentRepository enrollmentRepository;
 
-    public void save(Course course) {
-        courseRepository.save(course);
+    public void save(Course c) {
+        courseRepository.save(c);
     }
 
     public void save(Course course, MultipartFile imageFile, MultipartFile noteFile) throws IOException{
@@ -42,8 +43,9 @@ public class CourseService {
         return courseRepository.findById(id);
     }
 
-    public List<Course> findAll () {
-        return courseRepository.findAll();
+    public Page<Course> getCoursesOrderedByRating(Pageable pageable) {
+        // Devuelve los cursos ordenados por rating y paginados
+        return courseRepository.findAllByOrderByRatingDesc(pageable);
     }
 
     public List<Course> findTop4ByOrderByRatingDesc () {
