@@ -37,6 +37,22 @@
         <div class="comment mb-3">
             <strong>{{user.firstName}} {{user.lastName}}</strong>
             <p>{{text}}</p>
+            <!-- edition button -->
+        <button class="btn btn-primary btn-sm" onclick="showEditForm('{{id}}', '{{text}}')">
+            Editar comentario
+        </button>
+
+        <!-- hidden edit form  -->
+        <form id="edit-form-{{id}}" action="/editReview" method="post" class="mt-2 d-none">
+            <input type="hidden" name="reviewId" value="{{id}}">
+            <input type="hidden" name="_csrf" value="{{token}}"> <!-- CSRF Token -->
+            
+            <div class="form-group">
+                <textarea name="newText" class="form-control">{{text}}</textarea>
+            </div>
+            <button type="submit" class="btn btn-success btn-sm">Guardar cambios</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="hideEditForm('{{id}}')">Cancelar</button>
+        </form>
             <!--form to delete review-->
             <form action="/deleteReview" method="post" style="display: inline;">
                 <input type="hidden" name="reviewId" value="{{id}}">
@@ -91,4 +107,14 @@
         </tbody>
     </table>
  </main>
+ <script>
+    function showEditForm(reviewId, currentText) {
+        document.getElementById("edit-form-" + reviewId).classList.remove("d-none");
+    }
+
+    function hideEditForm(reviewId) {
+        document.getElementById("edit-form-" + reviewId).classList.add("d-none");
+    }
+</script>
+
  {{> footer}}
