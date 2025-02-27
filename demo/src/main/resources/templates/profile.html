@@ -92,7 +92,7 @@
 
     <h3 class="text-center">Cursos Matriculados</h3>
     <div class="row" id="courses-list">
-        {{#user.enrolledCourses}}
+        {{#enrolledCourses}}
             <div class="col-md-4">
                 <div class="card">
                     <img src="/image/{{id}}" class="card-img-top" alt="Curso">
@@ -119,12 +119,12 @@
             </div>
         </div>
     </div>
-    {{/user.enrolledCourses}}
-    {{^user.enrolledCourses}}
-            <div class="col-md-12 text-center">
-                <p>No tienes cursos matriculados</p>
-            </div>
-        {{/user.enrolledCourses}}
+    {{/enrolledCourses}}
+    {{^enrolledCourses}}
+          <div class="col-md-12 text-center">
+              <p>No tienes cursos matriculados</p>
+          </div>
+    {{/enrolledCourses}}
     <hr>
 
     <div class="d-flex align-items-center justify-content-between col-12">

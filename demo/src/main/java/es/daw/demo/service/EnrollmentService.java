@@ -137,4 +137,11 @@ public class EnrollmentService {
         return enrollmentRepository.findByUserAndCourse(user, course)
                 .orElseThrow(() -> new RuntimeException("Enrollment not found"));
     }
+
+    public List<Course> getCoursesByUser(User user) {
+        return enrollmentRepository.findByUser(user)
+                .stream()
+                .map(Enrollment::getCourse)
+                .collect(Collectors.toList());
+    }
 }
