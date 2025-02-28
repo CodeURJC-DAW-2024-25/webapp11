@@ -231,7 +231,7 @@ public class CourseController {
 
     @GetMapping("/getCourses")
     public String getCourses(Model model, HttpServletRequest request, @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "4") int pageSize) {
+            @RequestParam(defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
 
         Page<Course> coursesPage = courseRepository.findAllByOrderByRatingDesc(pageable);
@@ -239,6 +239,18 @@ public class CourseController {
         model.addAttribute("courses", coursesPage.getContent());
 
         return "coursesPage";
+    }
+
+    @GetMapping("/getTaughtCourses")
+    public String getTaughtCourses(Model model, HttpServletRequest request, @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Principal principal = request.getUserPrincipal();
+        Page<Course> coursesPage = courseRepository.findByInstructor(userService.findByEmail(principal.getName()).get(), pageable);
+
+        model.addAttribute("taughtCourses", coursesPage.getContent());
+
+        return "taughtCourses";
     }
 
     @GetMapping("/deleteCourse/{id}")
