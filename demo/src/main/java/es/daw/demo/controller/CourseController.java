@@ -253,11 +253,32 @@ public class CourseController {
         return "taughtCourses";
     }
 
+    @GetMapping("/getCoursesByTopic")
+    public String getCoursesByTopic(Model model,
+                                    HttpServletRequest request,
+                                    @RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int pageSize,
+                                    @RequestParam String topic) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Course> coursesPage = courseRepository.findByTopicOrderByRatingDesc(topic, pageable);
+
+        model.addAttribute("courses", coursesPage.getContent());
+
+        return "coursesPage";
+    }
+
     @GetMapping("/deleteCourse/{id}")
     public String deleteCourse(@PathVariable Long id) {
         courseRepository.deleteById(id);
         return "redirect:/";
     }
 
-    
+    //Change view to courses by topic
+    @GetMapping("/showCourses/{topic}")
+    public String showCourses(@PathVariable String topic, Model model) {
+        model.addAttribute("pagetitle", "Curso");
+        model.addAttribute("topic", topic);
+        return "courses";
+    }
+
 }

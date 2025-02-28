@@ -23,4 +23,5 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     Page<Course> findByInstructor(User user, Pageable page);
 
     Page<Course> findAllByOrderByRatingDesc(Pageable pageable);
+    Page<Course> findByTopicOrderByRatingDesc(String topic, Pageable pageable);
 }
