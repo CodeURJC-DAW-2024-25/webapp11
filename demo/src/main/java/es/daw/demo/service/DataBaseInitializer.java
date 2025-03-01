@@ -40,10 +40,10 @@ public class DataBaseInitializer{
         userService.save(user2);
 
         
-        Course course1 = new Course("Desarrollo Android desde cero", "Aprende a desarrollar aplicaciones móviles para Android.", "Desarrollo móvil", user1);
-        Course course2 = new Course("iOS para principiantes", "Introducción al desarrollo de apps para iPhone y iPad.", "Desarrollo móvil", user1);
-        Course course3 = new Course("Flutter y Dart", "Crea aplicaciones multiplataforma con Flutter y Dart.", "Desarrollo móvil", user1);
-        Course course4 = new Course("React Native avanzado", "Domina React Native para crear aplicaciones móviles híbridas.", "Desarrollo móvil", user1);
+        Course course1 = new Course("Desarrollo Android desde cero", "Aprende a desarrollar aplicaciones móviles para Android.", "Desarrollo móvil", user2);
+        Course course2 = new Course("iOS para principiantes", "Introducción al desarrollo de apps para iPhone y iPad.", "Desarrollo móvil", user2);
+        Course course3 = new Course("Flutter y Dart", "Crea aplicaciones multiplataforma con Flutter y Dart.", "Desarrollo móvil", user2);
+        Course course4 = new Course("React Native avanzado", "Domina React Native para crear aplicaciones móviles híbridas.", "Desarrollo móvil", user2);
 
         Course course5 = new Course("Introducción al desarrollo de videojuegos", "Aprende los fundamentos del desarrollo de videojuegos.", "Desarrollo de videojuegos", user1);
         Course course6 = new Course("Unity desde cero", "Crea videojuegos en 2D y 3D con Unity.", "Desarrollo de videojuegos", user1);
@@ -97,7 +97,38 @@ public class DataBaseInitializer{
         setCourseImage(course12, "/static/images/emp4.jpg");
 
         setCourseNotes(course1, "/static/images/ejemplo.pdf");
-        
+        setCourseNotes(course2, "/static/images/ejemplo.pdf");
+        setCourseNotes(course3, "/static/images/ejemplo.pdf");
+        setCourseNotes(course4, "/static/images/ejemplo.pdf");
+        setCourseNotes(course5, "/static/images/ejemplo.pdf");
+        setCourseNotes(course6, "/static/images/ejemplo.pdf");
+        setCourseNotes(course7, "/static/images/ejemplo.pdf");
+        setCourseNotes(course8, "/static/images/ejemplo.pdf");
+        setCourseNotes(course9, "/static/images/ejemplo.pdf");
+        setCourseNotes(course10, "/static/images/ejemplo.pdf");
+        setCourseNotes(course11, "/static/images/ejemplo.pdf");
+        setCourseNotes(course12, "/static/images/ejemplo.pdf");
+        setCourseNotes(course13, "/static/images/ejemplo.pdf");
+        setCourseNotes(course14, "/static/images/ejemplo.pdf");
+        setCourseNotes(course15, "/static/images/ejemplo.pdf");
+        setCourseNotes(course16, "/static/images/ejemplo.pdf");
+        setCourseNotes(course17, "/static/images/ejemplo.pdf");
+        setCourseNotes(course18, "/static/images/ejemplo.pdf");
+        setCourseNotes(course19, "/static/images/ejemplo.pdf");
+        setCourseNotes(course20, "/static/images/ejemplo.pdf");
+        setCourseNotes(course21, "/static/images/ejemplo.pdf");
+        setCourseNotes(course22, "/static/images/ejemplo.pdf");
+        setCourseNotes(course23, "/static/images/ejemplo.pdf");
+        setCourseNotes(course24, "/static/images/ejemplo.pdf");
+        setCourseNotes(course25, "/static/images/ejemplo.pdf");
+        setCourseNotes(course26, "/static/images/ejemplo.pdf");
+        setCourseNotes(course27, "/static/images/ejemplo.pdf");
+        setCourseNotes(course28, "/static/images/ejemplo.pdf");
+        setCourseNotes(course29, "/static/images/ejemplo.pdf");
+        setCourseNotes(course30, "/static/images/ejemplo.pdf");
+        setCourseNotes(course31, "/static/images/ejemplo.pdf");
+        setCourseNotes(course32, "/static/images/ejemplo.pdf");
+        setCourseNotes(course33, "/static/images/ejemplo.pdf");
 
         courseRepository.save(course1);
         courseRepository.save(course2);

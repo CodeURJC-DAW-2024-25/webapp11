@@ -200,36 +200,12 @@ public class UserController {
         return "admin";
     }
 
-
-    @PostMapping("/course/enroll")
-    public String enrollToCourse(@RequestParam Long idCourse, HttpServletRequest request, Model model) {
-        // Verificar si el usuario está autenticado
-        if (request.getUserPrincipal() == null) {
-            return "redirect:/login";  // Redirigir al login si no está autenticado
-        }
-
-        // Obtener el ID del usuario autenticado
-        Long idUser = userService.findByEmail(request.getUserPrincipal().getName()).get().getId();
-
-        // Inscripción al curso
-        String result = enrollmentService.enrollUserToCourse(idUser, idCourse);
-        
-        if (result.equals("success")) {
-            return "redirect:/showCourse/" + idCourse;
-        } else {
-            model.addAttribute("errorTitle", "Error al inscribirse al curso");
-            model.addAttribute("errorMessage", result);
-            return "error";
-        }
-    }
-
-
     public String postMethodName(@RequestBody String entity) {
         //TODO: process POST request
         
         return entity;
     }
-
+    /*
     @GetMapping("/deleteAccount/{id}")
     public String deleteUser(Model model,@PathVariable("id") Long userID) {
 
@@ -250,7 +226,7 @@ public class UserController {
         userService.deleteById(userID);
 
         return "redirect:/index";
-    }
+    }*/
 
     @PostMapping("/updateUser/{userID}")
     public String updateUser(HttpServletRequest request,

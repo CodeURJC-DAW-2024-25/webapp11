@@ -40,6 +40,7 @@ public class EnrollmentController {
     private CourseService courseService;
     
     // Create new enrollment
+    /*
     @PostMapping("/newEnrollment")
     public String newEnrollment(@RequestParam Long userId, @RequestParam Long courseId, Model model) {
         Optional<User> user = userRepository.findById(userId);
@@ -48,11 +49,33 @@ public class EnrollmentController {
         if (user.isPresent() && course.isPresent()) {
             Enrollment enrollment = new Enrollment(user.get(), course.get());
             enrollmentRepository.save(enrollment);
-            model.addAttribute("message", "Enrollment created successfully");       //??????
+            model.addAttribute("message", "Enrollment created successfully");    
             return "index";
         } else {
             model.addAttribute("errorTitle", "Error creating enrollment");
             model.addAttribute("errorMessage", "User or course does not exist");
+            return "error";
+        }
+    }
+    */
+    @PostMapping("/course/enroll")
+    public String enrollToCourse(@RequestParam Long idCourse, HttpServletRequest request, Model model) {
+        // Verificar si el usuario está autenticado
+        if (request.getUserPrincipal() == null) {
+            return "redirect:/login";  // Redirigir al login si no está autenticado
+        }
+
+        // Obtener el ID del usuario autenticado
+        Long idUser = userService.findByEmail(request.getUserPrincipal().getName()).get().getId();
+
+        // Inscripción al curso
+        String result = enrollmentService.enrollUserToCourse(idUser, idCourse);
+        
+        if (result.equals("success")) {
+            return "redirect:/showCourse/" + idCourse;
+        } else {
+            model.addAttribute("errorTitle", "Error al inscribirse al curso");
+            model.addAttribute("errorMessage", result);
             return "error";
         }
     }

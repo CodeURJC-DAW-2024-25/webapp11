@@ -57,9 +57,31 @@ public class EnrollmentService {
         // enrollment creation
         Enrollment enrollment = new Enrollment(user, course);
 
+        // Update the topic of the user
+        updateUserTopic(user);
+
         // save the enrollment
         enrollmentRepository.save(enrollment);
         return "success"; // Indicating successful enrollment
+    }
+
+    private void updateUserTopic(User user) {
+        // Contar cuántos cursos tiene en cada categoría
+        List<Enrollment> enrollments = enrollmentRepository.findByUser(user);
+        
+        Map<String, Long> topicCount = enrollments.stream()
+            .collect(Collectors.groupingBy(e -> e.getCourse().getTopic(), Collectors.counting()));
+
+        // Obtener el tema con mayor cantidad de cursos
+        String mostFrequentTopic = topicCount.entrySet().stream()
+            .max(Map.Entry.comparingByValue())
+            .map(Map.Entry::getKey)
+            .orElse(null);
+
+        if (mostFrequentTopic != null) {
+            user.setTopic(mostFrequentTopic);
+            userRepository.save(user);
+        }
     }
 
     public void cancelEnrollment(Long enrollmentId) {

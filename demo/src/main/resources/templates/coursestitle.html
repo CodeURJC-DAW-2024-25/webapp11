@@ -1,0 +1,17 @@
+{{>header}}
+<div class="container">
+    <h2 class="text-dark">Resultados de: {{title}}</h2>
+    <div class="row mb-2" id="coursesContainer">
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status" id="spinner">
+          <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <a class="btn btn-primary" id="MoreByTitle">Cargar más</a>
+    </div>
+</div>
+{{>footer}}

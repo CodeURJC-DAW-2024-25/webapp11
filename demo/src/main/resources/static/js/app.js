@@ -37,11 +37,6 @@ $('#loadMoreBtn').on('click', function () {
     loadCourses();
 });
 
-/*
-$(document).ready(function () {
-    $('#spinner').hide();
-    loadCourses();
-});*/
 
 function loadCoursesByTopic() {
     $.ajax({
@@ -104,6 +99,66 @@ function loadTaughtCourses() {
         }
     });
 }
+$('#loadTaughtCourses').on('click', function () {
+    $('#loadTaughtCourses').hide();
+    $('#spinner').show();
+    currentPage++;
+    loadTaughtCourses();
+});
+
+
+
+
+
+function loadCoursesByTitle() {
+    $.ajax({
+        url:'/getCoursesByTitle',
+        method: 'GET',
+        data: {
+            page: currentPage,
+            pageSize: 10,
+            title: decodeURIComponent(window.location.pathname.split("/").pop())
+        },
+        
+        success: function (htmlData) {
+            var $htmlData = $(htmlData); // htmlData to jQuery
+
+            if ($htmlData.length > 0) {
+                $('#coursesContainer').append($htmlData);
+                $('#spinner').hide();
+                $('#MoreByTitle').show();
+                if ($htmlData.length < 19) {
+                    $('#MoreByTitle').hide();
+                }
+            }
+        },
+        error: function () {
+            console.log('Error occurred while loading courses');
+        }
+    });
+
+}
+$('#MoreByTitle').on('click', function () {
+    $('#MoreByTitle').hide();
+    $('#spinner').show();
+    currentPage++;
+    loadCoursesByTitle();
+});
+
+function searchCourse(event) {
+    event.preventDefault(); // Evita el envío del formulario por defecto
+    let title = document.getElementById("findCourse").value.trim();
+    
+    if (title) {
+        window.location.href = "/findCourses/" + encodeURIComponent(title);
+    }
+}
+
+document.getElementById("findCourse").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        searchCourse(event);
+    }
+});
 
 $(document).ready(function () {
     if (window.location.pathname === "/profile") { 
@@ -115,12 +170,9 @@ $(document).ready(function () {
     } else if (window.location.pathname.startsWith("/showCourses/")) {
         $('#spinner').hide();
         loadCoursesByTopic();
+    } else if (window.location.pathname.startsWith("/findCourses/")) {
+        $('#spinner').hide();
+        loadCoursesByTitle();
     }
 });
 
-$('#loadTaughtCourses').on('click', function () {
-    $('#loadTaughtCourses').hide();
-    $('#spinner').show();
-    currentPage++;
-    loadTaughtCourses();
-});

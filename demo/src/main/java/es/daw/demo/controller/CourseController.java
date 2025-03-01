@@ -281,4 +281,27 @@ public class CourseController {
         return "courses";
     }
 
+
+    @GetMapping("/getCoursesByTitle")
+    public String getCoursesByTitle(Model model,
+                                    HttpServletRequest request,
+                                    @RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int pageSize,
+                                    @RequestParam String title) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Course> coursesPage = courseRepository.searchCourses(title, pageable);
+
+        model.addAttribute("courses", coursesPage.getContent());
+
+        return "coursesPage";
+    }
+
+    //Change view to courses by title
+    @GetMapping("/findCourses/{title}")
+    public String showCoursesTitle(@PathVariable String title, Model model) {
+        model.addAttribute("pagetitle", "Curso");
+        model.addAttribute("title", title);
+        return "coursestitle";
+    }
+
 }
