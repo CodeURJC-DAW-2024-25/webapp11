@@ -17,6 +17,9 @@ public class WebSecurityConfig {
 	@Autowired
 	RepositoryUserDetailsService userDetailsService;
 
+	@Autowired
+	CourseStatisticsAuthorizationManager courseStatisticsAuth; // Inyectamos el Custom Authorization Manager
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -43,21 +46,30 @@ public class WebSecurityConfig {
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/signUp/**").permitAll() // Allow access to static resources
 						.requestMatchers("/course/**").permitAll()
-                        .requestMatchers("/error").permitAll()
+						.requestMatchers("/courses/**").permitAll()
+						.requestMatchers("/coursesPage/**").permitAll()
+						.requestMatchers("/index/**").permitAll()
+						.requestMatchers("/error").permitAll()
 						.requestMatchers("/css/**").permitAll()
-						.requestMatchers("/**").permitAll()	//Esto hay que quitarlo, pero sin esto no funciona
+						.requestMatchers("/**").permitAll() // Esto hay que quitarlo, pero sin esto no
+						// funciona
 						// PRIVATE PAGES
 						.requestMatchers("/new_course").hasAnyRole("USER")
+						.requestMatchers("/edit_course/*").hasAnyRole("USER")
 						.requestMatchers("/profile").hasAnyRole("USER")
-						.requestMatchers("/course/*/statistics").hasAnyRole("USER") //Ns como hacer que solo el profesor/admin pueda ver las estadisticas
-						.requestMatchers("/profile_admin/*").hasAnyRole("ADMIN"))
+						.requestMatchers("/profile/taughtCourses/**").hasAnyRole("USER")
+						// .requestMatchers("/course/*/statistics").access(courseStatisticsAuth) // usa
+						// la lógica personalizada
+						.requestMatchers("/course/*/statistics").hasAnyRole("USER") // Ns como hacer
+						// que solo el profesor/admin pueda ver las estadisticas
+						.requestMatchers("/admin/*").hasAnyRole("ADMIN"))
 				.formLogin(formLogin -> formLogin
-					.loginPage("/login")
-					.failureHandler((request, response, exception) -> {
-						response.sendRedirect("/error-login");
-					})
-					.defaultSuccessUrl("/")
-					.permitAll())
+						.loginPage("/login")
+						.failureHandler((request, response, exception) -> {
+							response.sendRedirect("/error");
+						})
+						.defaultSuccessUrl("/")
+						.permitAll())
 				.logout(logout -> logout
 						.logoutUrl("/logout")
 						.logoutSuccessUrl("/")
@@ -66,4 +78,3 @@ public class WebSecurityConfig {
 		return http.build();
 	}
 }
-
