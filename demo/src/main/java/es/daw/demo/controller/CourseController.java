@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -12,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfToken;
+
 import es.daw.demo.service.CourseService;
 import es.daw.demo.service.EnrollmentService;
 import es.daw.demo.service.ReviewService;
@@ -119,21 +122,6 @@ public class CourseController {
         return "courses";
     }
 
-    // edit course
-    @PostMapping("/editCourse")
-    public String editCourse(@ModelAttribute Course editedCourse, Model model) {
-        Optional<Course> courseOptional = courseService.findById(editedCourse.getId());
-        if (courseOptional.isPresent()) {
-            courseService.save(editedCourse);
-            model.addAttribute("message", "Course edited successfully");
-            return "courseDetails";
-        } else {
-            model.addAttribute("errorTitle", "error editing course");
-            model.addAttribute("errorMessage", "course does not exist");
-            return "error";
-        }
-    }
-
     // delete course
     @PostMapping("/deleteCourse")
     public String deleteCourse(@RequestParam Long id, Model model) {
@@ -156,13 +144,57 @@ public class CourseController {
     }
 
     // Update course
-    @PostMapping("/updateCourse")
-    public String updateCourse(Model model, Course updatedCourse, @PathVariable Long id) {
-        Course oldCourse = courseService.findById(id).orElseThrow();
-        updatedCourse.setId(id);
+    @GetMapping("/editCourse/{id}")
+    public String editCourse(Model model, @PathVariable Long id) {
+        model.addAttribute("id", id);
+        return "edit_course";
+    }
 
-        oldCourse.getReviews().forEach(review -> updatedCourse.addReviews(review));
-        return "redirect:/showCourse/" + id;
+    @PostMapping("/updateCourse/{id}")
+    public String updateCourse( @PathVariable Long id,
+            @RequestParam String title,
+            @RequestParam String description,
+            @RequestParam String topic,
+            @RequestParam MultipartFile imageFile,
+            @RequestParam MultipartFile notes,
+            Model model,
+            HttpServletRequest request) throws Exception {
+
+        // Obtener el token CSRF
+        CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+        // Agregar el token al modelo
+        model.addAttribute("token", csrfToken.getToken());
+
+        Optional<Course> optionalCourse = courseService.findById(id);
+
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+			// Update course
+			if (!title.isEmpty()) {
+				course.setTitle(title);
+			}
+            if (!description.isEmpty()) {
+				course.setDescription(description);
+			}
+            if (!topic.isEmpty()) {
+				course.setTopic(topic);
+			}
+			// Verify and update image
+			if (imageFile.getOriginalFilename() != "" && !imageFile.isEmpty()) {
+				course.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+			}
+
+            if(!notes.isEmpty()) {
+                course.setNotes(BlobProxy.generateProxy(notes.getInputStream(), notes.getSize()));
+            }
+
+			// Save updated course
+			courseService.save(course);
+
+			return "redirect:/showCourse/" + course.getId();
+		} else {
+			return "error";
+		}
     }
 
     // Show course

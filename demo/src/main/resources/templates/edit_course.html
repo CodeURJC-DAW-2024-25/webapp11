@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Añadir Curso - Cognite</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body class="text-center body-sign">
+    <div class="container">
+        <div class="header-logo text-dark">Cognite</div>
+        
+        <form method="POST" action="/updateCourse/{{id}}" enctype="multipart/form-data">    
+            <!-- Title -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa-solid fa-font"></i></span>
+                </div>
+                <input type="text" name="title" class="form-control" placeholder="Título del curso" required>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa-solid fa-align-left"></i></span>
+                </div>
+                <textarea name="description" class="form-control" rows="3" maxlength="200" placeholder="Breve descripción del curso..." required></textarea>
+            </div>
+
+            <!-- Upload Image -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa-solid fa-image"></i></span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" name="imageFile" class="custom-file-input" accept="image/*" required>
+                    <label class="custom-file-label">Selecciona una imagen...</label>
+                </div>
+            </div>
+
+            <!-- Topic -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa-solid fa-book"></i></span>
+                </div>
+                <select name="topic" class="form-control" required>
+                    <option value="" disabled selected>Elige una temática...</option>
+                    <option value="desarrollo-web">Desarrollo web</option>
+                    <option value="desarrollo-movil">Desarrollo móvil</option>
+                    <option value="desarrollo-videojuegos">Desarrollo de videojuegos</option>
+                    <option value="emprendimiento">Emprendimiento</option>
+                    <option value="finanzas">Finanzas</option>
+                    <option value="marketing-digital">Marketing digital</option>
+                    <option value="liderazgo">Liderazgo</option>
+                    <option value="comunicacion">Comunicación</option>
+                </select>
+            </div>
+
+            <!-- Upload PDF file -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa-solid fa-file-pdf"></i></span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" name="notes" class="custom-file-input" accept=".pdf" required>
+                    <label class="custom-file-label">Selecciona un archivo PDF...</label>
+                </div>
+            </div>
+            <input type="hidden" name="_csrf" value="{{token}}" />
+            <!-- Submit -->
+            <div class="d-flex justify-content-between mt-4">
+                <button type="button" class="btn btn-secondary" onclick="location.href='/'; return false;">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar curso</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+</body>
+</html>
+    
