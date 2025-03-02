@@ -33,9 +33,6 @@ import java.util.List;
 import java.util.Optional;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 @Controller
 public class UserController {
@@ -74,8 +71,6 @@ public class UserController {
         return "/error";
     }
 
-
-
     // Create a new user
     @PostMapping("/newUser")
     public String newUser(@RequestParam String firstName,
@@ -103,15 +98,6 @@ public class UserController {
         password = passwordEncoder.encode(password);
         User user = new User(firstName, lastName, email, password, topic, "USER");
         userService.save(user, profileImage);
-
-        //Save user in session
-        //session.setAttribute("loggedInUser", user);
-
-        //model.addAttribute("pagetitle", "Perfil");
-        //model.addAttribute("isLoggedIn", true);
-        //model.addAttribute("topic", topic);
-        //model.addAttribute("user", user);
-        //No se deberia de hacer un redirect a la pagina de index?
         return "redirect:/";
     }
 
@@ -168,6 +154,7 @@ public class UserController {
         }
     }
 
+    //List users
     @GetMapping("/admin/users")
     public String listUsers(@RequestParam(required = false) String name, Model model) {
         List<User> users;
@@ -182,11 +169,12 @@ public class UserController {
 
     }
 
+    // Delete user
     @PostMapping("/admin/users/delete/{id}")
     public String banearUsuario(@PathVariable Long id, Model model) {
         Optional <User> usuario = userService.findById(id);
 
-        // Enviar el correo de notificación
+        // Send email of notification
         String subject = "Notificación: Tu cuenta ha sido eliminada";
         String message = "Estimado usuario,\n\nTu cuenta ha sido eliminada de forma permanente. Si crees que esto es un error, por favor contacta con el soporte.";
 
@@ -196,34 +184,7 @@ public class UserController {
         return "admin";
     }
 
-    public String postMethodName(@RequestBody String entity) {
-        //TODO: process POST request
-        
-        return entity;
-    }
-    /*
-    @GetMapping("/deleteAccount/{id}")
-    public String deleteUser(Model model,@PathVariable("id") Long userID) {
-
-        Optional<User> optionalUser = userService.findById(userID);
-
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            List<Course> userProducts = courseService.findByInstructor(user);
-            for (Course eachProduct : userProducts) {
-                courseService.deleteById(eachProduct.getId());
-            }
-            List<Review> userReview = reviewService.findReviewsByUser(userID);
-            for (Review eachReview : userReview) {
-                reviewService.deleteReview(eachReview.getId());
-            }
-        }
-
-        userService.deleteById(userID);
-
-        return "redirect:/index";
-    }*/
-
+    // Update user
     @PostMapping("/updateUser/{userID}")
     public String updateUser(HttpServletRequest request,
                              @PathVariable Long userID, Model model,
@@ -234,9 +195,8 @@ public class UserController {
                              @RequestParam String confirmPassword,
                              @RequestParam(required = false) MultipartFile imageFile) throws IOException, SQLException {
 
-        // Obtener el token CSRF
         CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-        // Agregar el token al modelo
+
         model.addAttribute("token", csrfToken.getToken());
 
         Optional<User> optionalUser = userService.findById(userID);
@@ -271,52 +231,4 @@ public class UserController {
 		}
     }
     
-    /* 
-    // Find a user by email and Password
-    @PostMapping("/findUser")
-    public String findUser(@RequestParam String email,
-                           @RequestParam String password,
-                           HttpSession session,
-                           Model model) {
-        User user = userRepository.findByEmail(email);
-        if (user == null || !user.getPassword().equals(password)) {
-            model.addAttribute("errorTitle", "Error al iniciar sesión");
-            model.addAttribute("errorMessage", "Email o contraseña incorrectos");
-            return "error";
-        }
-        session.setAttribute("user", user);
-        return "index";
-    }
-
-
-    //Edit user
-    @PostMapping("/editUser")
-    public String editUser (Model model, User editedUser) {
-        Optional<User> userOptional = userRepository.findById(editedUser.getId());
-        if (userOptional.isPresent()) {
-            userRepository.save(editedUser);
-            model.addAttribute("user", editedUser);
-            return "profile";
-        } else {
-            model.addAttribute("errorTitle", "Error al editar el usuario");
-            model.addAttribute("errorMessage", "El usuario no existe");
-            return "error";
-        }
-    }
-
-    //Delete user
-    @PostMapping("/deleteUser")
-    public String deleteUser (Model model, User deletedUser) {
-        Optional<User> userOptional = userRepository.findById(deletedUser.getId());
-        if (userOptional.isPresent()) {
-            userRepository.delete(deletedUser);
-            model.addAttribute("errorTitle", "Usuario eliminado");
-            model.addAttribute("errorMessage", "El usuario ha sido eliminado");
-            return "error";
-        } else {
-            model.addAttribute("errorTitle", "Error al eliminar el usuario");
-            model.addAttribute("errorMessage", "El usuario no existe");
-            return "error";
-        }
-    }*/
 }

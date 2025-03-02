@@ -12,7 +12,6 @@ import es.daw.demo.model.Review;
 import es.daw.demo.model.User;
 import es.daw.demo.model.Course;
 import java.util.Optional;
-import java.util.List;
 
 @Controller
 public class ReviewController {
@@ -26,13 +25,14 @@ public class ReviewController {
     @Autowired
     private UserService userService;
 
+    // Create a review
     @PostMapping("/course/newReview")
     public String newReview(@RequestParam String text,
             @RequestParam(required = false) Long courseId,
             @RequestParam(required = false) Long parentId,
             HttpServletRequest request,
             Model model) {
-        // Obtener el usuario autenticado
+        // Get the user
         Optional<User> userOpt = userService.findByEmail(request.getUserPrincipal().getName());
         if (userOpt.isEmpty()) {
             model.addAttribute("errorTitle", "Error creating review");
@@ -49,7 +49,7 @@ public class ReviewController {
             }
             course = courseOpt.get();
         }
-        // Obtener la reseña padre si se proporciona un ID válido
+        // Get the parent review if it`s attached
         Review parentReview = null;
         if (parentId != null) {
             Optional<Review> parentReviewOpt = reviewService.getParentReview(parentId);
@@ -59,7 +59,7 @@ public class ReviewController {
                 return "error";
             }
             parentReview = parentReviewOpt.get();
-            course = parentReview.getCourse(); // Asegurar que la respuesta pertenezca al mismo curso
+            course = parentReview.getCourse();
         }
         if (course == null) {
             model.addAttribute("errorTitle", "Error creating review");
@@ -67,27 +67,11 @@ public class ReviewController {
             return "error";
         }
 
-        // Crear y guardar la nueva reseña utilizando el servicio
+        // Create and save the new review
         reviewService.createReview(text, userOpt.get(), course, parentReview);
-        // Redirigir al curso donde se hizo el comentario
+        
         return "redirect:/showCourse/" + course.getId();
     }
-    /* 
-    // search reviews by user
-    @GetMapping("/searchReviewsByUser")
-    public String searchReviewsByUser(@RequestParam Long userId, Model model) {
-        Optional<User> user = userService.findById(userId);
-
-        if (user.isPresent()) {
-            List<Review> reviews = reviewService.findReviewsByUser(userId);
-            model.addAttribute("reviews", reviews);
-            return "reviews";       //ESTA PLANTILLA NO EXISTE
-        } else {
-            model.addAttribute("errorTitle", "error searching reviews");
-            model.addAttribute("errorMessage", "user not found");
-            return "error";
-        }
-    }*/
 
     // Mark a review for revision
     @PostMapping("/reviews/{id}/mark-pending")
@@ -117,6 +101,7 @@ public class ReviewController {
         return "redirect:/profile";
     }
 
+    // Edit review
     @PostMapping("/editReview")
     public String editReview(@RequestParam Long reviewId,
             @RequestParam String newText,
@@ -162,7 +147,7 @@ public class ReviewController {
         
     }
 
-    // delete review
+    // Delete review
     @PostMapping("/deleteReview")
     public String deleteReview(@RequestParam Long reviewId, Model model) {
         Optional<Review> reviewOptional = reviewService.findReviewById(reviewId);
@@ -176,57 +161,5 @@ public class ReviewController {
             return "error";
         }
     }
-    /*
-     * @PostMapping("/course/{id}/comment")
-     * public String respondComment( @PathVariable Long id,
-     * 
-     * @RequestParam Long parentId,
-     * 
-     * @RequestParam String content,
-     * Model model,
-     * HttpServletRequest request){
-     * System.out.println("workinga" + id);
-     * 
-     * /////////////////
-     * Optional<User> userOpt =
-     * userService.findByEmail(request.getUserPrincipal().getName());
-     * if (userOpt.isEmpty()) {
-     * model.addAttribute("errorTitle", "Error creating review");
-     * model.addAttribute("errorMessage", "User not found");
-     * return "error";
-     * }
-     * 
-     * // Obtener el curso
-     * Optional<Course> courseOpt = courseService.findById(id);
-     * if (courseOpt.isEmpty()) {
-     * model.addAttribute("errorTitle", "Error creating review");
-     * model.addAttribute("errorMessage", "Course does not exist");
-     * return "error";
-     * }
-     * 
-     * //Obtener el comentario
-     * Optional<Review> reviewOpt = reviewService.findReviewById(parentId);
-     * if(reviewOpt.isEmpty()){
-     * model.addAttribute("errorTitle", "Error creating review");
-     * model.addAttribute("errorTitle", "Comment does not exist");
-     * return "error";
-     * }
-     * 
-     * // Obtener la reseña padre si se proporciona un ID válido
-     * Review parentReview = null;
-     * if (parentId != null) {
-     * Optional<Review> parentReviewOpt = reviewService.getParentReview(parentId);
-     * parentReview = parentReviewOpt.orElse(null);
-     * }
-     * 
-     * // Guardar la respuesta al comentario en la lista de respuestas del
-     * comentario
-     * Review childReview = reviewService.createReview(content, userOpt.get(),
-     * courseOpt.get(), parentReview);
-     * parentReview.addHijo(childReview);
-     * /////////////////
-     * 
-     * return "redirect:/showCourse/" + id;
-     * }
-     */
+
 }

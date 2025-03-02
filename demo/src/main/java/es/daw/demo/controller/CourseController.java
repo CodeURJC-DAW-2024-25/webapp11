@@ -111,35 +111,13 @@ public class CourseController {
         }
     }
 
-    // search courses by title ????
-    @GetMapping("/searchCourse")
-    public String searchCourses(@RequestParam String title, Model model) {
-        model.addAttribute("courses", courseService.findByTitle(title));
-        return "courses";
-    }
-
-    // delete course
-    @PostMapping("/deleteCourse")
-    public String deleteCourse(@RequestParam Long id, Model model) {
-        Optional<Course> courseOptional = courseService.findById(id);
-        if (courseOptional.isPresent()) {
-            courseService.deleteById(id);
-            model.addAttribute("message", "course deleted successfully");
-            return "index";
-        } else {
-            model.addAttribute("errorTitle", "error deleting course");
-            model.addAttribute("errorMessage", "course does not exist");
-            return "error";
-        }
-    }
-
     // Change view to the new course page
     @GetMapping("/createCourse")
     public String showNewCoursePage(Model model) {
         return "new_course";
     }
 
-    // Update course
+    // Change view to edit course
     @GetMapping("/editCourse/{id}")
     public String editCourse(Model model, @PathVariable Long id) {
         model.addAttribute("id", id);
@@ -252,7 +230,6 @@ public class CourseController {
         }
 
         model.addAttribute("pagetitle", "Inicio");
-        //model.addAttribute("allCourses", courseService.findAllByOrderByRatingDesc());
         return "index";
     }
 

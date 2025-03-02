@@ -29,15 +29,15 @@ public class EnrollmentController {
     // Create new enrollment
     @PostMapping("/course/enroll")
     public String enrollToCourse(@RequestParam Long idCourse, HttpServletRequest request, Model model) {
-        // Verificar si el usuario está autenticado
+        // Check if the user in log in
         if (request.getUserPrincipal() == null) {
-            return "redirect:/login";  // Redirigir al login si no está autenticado
+            return "redirect:/login"; 
         }
 
-        // Obtener el ID del usuario autenticado
+        // Get id of the user
         Long idUser = userService.findByEmail(request.getUserPrincipal().getName()).get().getId();
 
-        // Inscripción al curso
+        // Enroll to the course
         String result = enrollmentService.enrollUserToCourse(idUser, idCourse);
         
         if (result.equals("success")) {
@@ -45,54 +45,6 @@ public class EnrollmentController {
         } else {
             model.addAttribute("errorTitle", "Error al inscribirse al curso");
             model.addAttribute("errorMessage", result);
-            return "error";
-        }
-    }
-
-    // Search enrollments by user
-    @GetMapping("/searchByUser")
-    public String searchEnrollmentsByUser(@RequestParam Long userId, Model model) {
-        Optional<User> user = userService.findById(userId);
-
-        if (user.isPresent()) {
-            List<Enrollment> enrollments = enrollmentService.findByUser(user.get());
-            model.addAttribute("enrollments", enrollments);
-            return "enrollments";       //ESTA PLANTILLA NO EXISTE
-        } else {
-            model.addAttribute("errorTitle", "Error searching enrollments");
-            model.addAttribute("errorMessage", "User not found");
-            return "error";
-        }
-    }
-
-    // Search enrollments by course
-    @GetMapping("/searchByCourse")
-    public String searchEnrollmentsByCourse(@RequestParam Long courseId, Model model) {
-        Optional<Course> course = courseService.findById(courseId);
-
-        if (course.isPresent()) {
-            List<Enrollment> enrollments = enrollmentService.findByCourse(course.get());
-            model.addAttribute("enrollments", enrollments);
-            return "enrollments";
-        } else {
-            model.addAttribute("errorTitle", "Error searching enrollments");
-            model.addAttribute("errorMessage", "Course not found");
-            return "error";
-        }
-    }
-
-    // Delete enrollment
-    @PostMapping("/deleteEnrollment")
-    public String deleteEnrollment(@RequestParam Long enrollmentId, Model model) {
-        Optional<Enrollment> enrollmentOptional = enrollmentService.findById(enrollmentId);
-
-        if (enrollmentOptional.isPresent()) {
-            enrollmentService.delete(enrollmentOptional.get());
-            model.addAttribute("message", "Enrollment deleted successfully");
-            return "enrollments";
-        } else {
-            model.addAttribute("errorTitle", "Error deleting enrollment");
-            model.addAttribute("errorMessage", "Enrollment not found");
             return "error";
         }
     }
@@ -112,11 +64,11 @@ public class EnrollmentController {
             return "error";
         }
 
-        // Actualizar el rating en la inscripción
+        // Update the rating
         enrollment.setRating(rating);
         enrollmentService.save(enrollment);
 
-        // Recalcular la media de ratings del curso
+        // Calculate course rating
         Optional<Course> optionalCourse = courseService.findById(courseId);
         if (optionalCourse.isPresent()) {
             Course course = optionalCourse.get();
@@ -127,7 +79,7 @@ public class EnrollmentController {
                                          .sum();
             int newAverageRating = enrollments.isEmpty() ? 0 : totalRating / enrollments.size();
     
-            // Actualizar el rating del curso
+            // Update course rating
             course.setRating(newAverageRating);
             courseService.save(course);
         } else {
@@ -136,7 +88,7 @@ public class EnrollmentController {
             return "error";
         }
 
-        return "redirect:/showCourse/" + courseId; // Redirige de vuelta a la página del curso
+        return "redirect:/showCourse/" + courseId;
     }
 
 }
