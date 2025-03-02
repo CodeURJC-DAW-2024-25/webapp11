@@ -10,7 +10,7 @@
 
 ## Aspectos principales:
 - **Entidades**: usuario, inscripción, curso, comentario
-  ![Diagrama E-R](images/ERDiagram)
+  ![Diagrama E-R](images/diagrama_ER.png)
 - **Permisos de usuario**:
   - Usuario registrado: Impartir o recibir cursos, ver y añadir comentarios.
   - Usuario anónimo o no registrado: Ver cursos impartidos, y acceder a las reseñas.
@@ -41,3 +41,10 @@
 - **Verde:** Administrador.
 - **Nota:** desde cualquier página puedes llegar a la página de error
 ![Diagrama de navegación](images/diagrama_navegacion.png)
+
+## Diagrama con las entidades de la base de datos:
+![Diagrama de entidades](images/diagrama_entidades.png)
+
+## Diagrama de clases y templates:
+![Diagrama de clases y templates](images/diagrama_clases.PNG)
+## Participación:
