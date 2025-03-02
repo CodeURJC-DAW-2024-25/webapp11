@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
 
@@ -213,7 +214,6 @@ public class CourseController {
     @GetMapping("/")
     public String getIndex(Model model, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
-        
         if (principal != null) { // Verifica si el usuario está autenticado
             Optional<User> user = userService.findByEmail(principal.getName());
             if (user.isPresent()) {
@@ -307,6 +307,17 @@ public class CourseController {
         model.addAttribute("pagetitle", "Curso");
         model.addAttribute("title", title);
         return "coursestitle";
+    }
+
+    @GetMapping("/charts")
+	public String charts(Model model, HttpServletRequest request) {
+		model.addAttribute("pagetitle", "Top 5 categorías más populares");
+		return "chart";
+	}
+
+    @GetMapping("/mostInscribedCathegories") // should return a json with a list of the most read genres and their count
+    public ResponseEntity<List<Object[]>> mostInscribedCathegories() {
+        return new ResponseEntity<>(courseService.getMostCoursesCathegoriesNameAndCount(), HttpStatus.OK);
     }
 
 }

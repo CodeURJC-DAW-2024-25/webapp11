@@ -114,4 +114,8 @@ public class CourseService {
     public Page<Course> searchCourses(String title, Pageable pageable) {
         return courseRepository.searchCourses(title, pageable);
     }
+
+    public List<Object[]> getMostCoursesCathegoriesNameAndCount(){
+        return courseRepository.getMostCoursesCathegoriesNameAndCount();
+    }
 }

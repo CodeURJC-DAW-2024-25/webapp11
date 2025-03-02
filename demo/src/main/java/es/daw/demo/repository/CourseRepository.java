@@ -28,4 +28,9 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query("SELECT c FROM Course c WHERE LOWER(c.title) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(c.topic) LIKE LOWER(CONCAT('%', :query, '%'))")
     Page<Course> searchCourses(@Param("query") String query, Pageable pageable);
 
+    /*@Query("SELECT c.topic, COUNT(b.topic) FROM User u JOIN u.inscribedCourses c GROUP BY c.topic ORDER BY COUNT(c.topic) DESC")
+    */
+    @Query("SELECT c.topic, COUNT(c) FROM Course c GROUP BY c.topic ORDER BY COUNT(c) DESC")
+    List<Object[]> getMostCoursesCathegoriesNameAndCount();
+
 }
