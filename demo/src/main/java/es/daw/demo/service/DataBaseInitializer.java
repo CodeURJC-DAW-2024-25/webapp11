@@ -9,10 +9,16 @@ import org.springframework.core.io.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 import es.daw.demo.model.Course;
 import es.daw.demo.model.User;
+import es.daw.demo.model.Enrollment;
 import es.daw.demo.repository.CourseRepository;
+import es.daw.demo.repository.EnrollmentRepository;
 import es.daw.demo.repository.UserRepository;
 
 @Service
@@ -25,8 +31,12 @@ public class DataBaseInitializer{
     private UserRepository userRepository;
 
     @Autowired
+    private EnrollmentRepository enrollmentRepository;
+
+    @Autowired
 	private PasswordEncoder passwordEncoder;
 
+    private final Random random = new Random();
     @PostConstruct
     public void initializeDatabase() throws IOException {
 
@@ -213,7 +223,53 @@ public class DataBaseInitializer{
         courseRepository.save(course31);
         courseRepository.save(course32);
         courseRepository.save(course33);
+        
+        Enrollment enrollment1 = new Enrollment(user4, course1);
+        Enrollment enrollment2 = new Enrollment(user3, course1);
+        Enrollment enrollment3 = new Enrollment(user2, course1);
+        Enrollment enrollment4 = new Enrollment(user5, course1);
+        Enrollment enrollment5 = new Enrollment(user1, course2);
+        Enrollment enrollment6 = new Enrollment(user5, course2);
+        Enrollment enrollment7 = new Enrollment(user6, course2);
+        Enrollment enrollment8 = new Enrollment(user7, course2);
+        Enrollment enrollment9 = new Enrollment(user1, course7);
+        Enrollment enrollment10 = new Enrollment(user5, course7);
+        Enrollment enrollment11 = new Enrollment(user6, course7);
+        Enrollment enrollment12 = new Enrollment(user3, course7);
+        enrollment1.setRating(4);
+        enrollment2.setRating(2);
+        enrollment3.setRating(3);
+        enrollment4.setRating(4);
+        enrollment5.setRating(4);
+        enrollment6.setRating(1);
+        enrollment7.setRating(4);
+        enrollment8.setRating(3);
+        enrollment9.setRating(4);
+        enrollment10.setRating(2);
+        enrollment11.setRating(3);
+        enrollment12.setRating(1);
 
+        enrollmentRepository.save(enrollment1);
+        enrollmentRepository.save(enrollment2);
+        enrollmentRepository.save(enrollment3);
+        enrollmentRepository.save(enrollment4);
+        enrollmentRepository.save(enrollment5);
+        enrollmentRepository.save(enrollment6);
+        enrollmentRepository.save(enrollment7);
+        enrollmentRepository.save(enrollment8);
+        enrollmentRepository.save(enrollment9);
+        enrollmentRepository.save(enrollment10);
+        enrollmentRepository.save(enrollment11);
+        enrollmentRepository.save(enrollment12);
+
+        updateCourseRatings();
+        updateUserTopic(user1);
+        updateUserTopic(user2);
+        updateUserTopic(user3);
+        updateUserTopic(user4);
+        updateUserTopic(user5);
+        updateUserTopic(user6);
+        updateUserTopic(user7);        
     }
 
     public void setCourseImage(Course course, String classpathResource) throws IOException {
@@ -231,4 +287,35 @@ public class DataBaseInitializer{
 		Resource image = new ClassPathResource(classpathResource);
 		user.setProfileImage(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
 	}
+
+    private void updateCourseRatings() {
+        List<Course> courses = courseRepository.findAll();
+        for (Course course : courses) {
+            List<Enrollment> enrollments = enrollmentRepository.findByCourse(course);
+            if (!enrollments.isEmpty()) {
+                int totalRating = enrollments.stream()
+                                             .mapToInt(Enrollment::getRating)
+                                             .sum();
+                int newAverageRating = totalRating / enrollments.size();
+                course.setRating(newAverageRating);
+                courseRepository.save(course);
+            }
+        }
+    }
+        private void updateUserTopic(User user) {
+        List<Enrollment> enrollments = enrollmentRepository.findByUser(user);
+        
+        Map<String, Long> topicCount = enrollments.stream()
+            .collect(Collectors.groupingBy(e -> e.getCourse().getTopic(), Collectors.counting()));
+
+        String mostFrequentTopic = topicCount.entrySet().stream()
+            .max(Map.Entry.comparingByValue())
+            .map(Map.Entry::getKey)
+            .orElse(null);
+
+        if (mostFrequentTopic != null) {
+            user.setTopic(mostFrequentTopic);
+            userRepository.save(user);
+        }
+    }
 }
