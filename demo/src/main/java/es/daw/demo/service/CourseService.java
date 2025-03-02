@@ -115,7 +115,11 @@ public class CourseService {
         return courseRepository.searchCourses(title, pageable);
     }
 
-    public List<Object[]> getMostCoursesCathegoriesNameAndCount(){
-        return courseRepository.getMostCoursesCathegoriesNameAndCount();
+    public List<Object[]> getMostCoursesCategoriesNameAndCount(){
+        return courseRepository.getMostCoursesCategoriesNameAndCount();
+    }
+
+    public List<Object[]> getMostInscribedCategoriesNameAndCount(){
+        return courseRepository.getMostInscribedCategoriesNameAndCount();
     }
 }

@@ -57,12 +57,22 @@ public class User {
 
     @ManyToMany
     @JoinTable(name = "user_inscribed_course",
-            joinColumns = @JoinColumn(name = "username"),
+            joinColumns = @JoinColumn(name = "firstName"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> inscribedCourses = new ArrayList<>();
 
 
     // Getters and setters
+
+    public void addInscribedCourses(Course course) {
+        if (!this.inscribedCourses.contains(course)) {
+            this.inscribedCourses.add(course);
+        }
+    }
+
+    public List<Course> getInscribedCourses() {
+        return this.inscribedCourses;
+    }
 
     public List<String> getRoles() {
 		return roles;

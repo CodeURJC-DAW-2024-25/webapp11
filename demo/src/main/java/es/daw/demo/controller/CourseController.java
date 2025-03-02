@@ -315,9 +315,14 @@ public class CourseController {
 		return "chart";
 	}
 
-    @GetMapping("/mostInscribedCathegories") // should return a json with a list of the most read genres and their count
-    public ResponseEntity<List<Object[]>> mostInscribedCathegories() {
-        return new ResponseEntity<>(courseService.getMostCoursesCathegoriesNameAndCount(), HttpStatus.OK);
+    @GetMapping("/mostCoursesCategories") 
+    public ResponseEntity<List<Object[]>> mostCoursesCategories() {
+        return new ResponseEntity<>(courseService.getMostCoursesCategoriesNameAndCount(), HttpStatus.OK);
+    }
+
+    @GetMapping("/mostInscribedCategories") 
+    public ResponseEntity<List<Object[]>> mostInscribedCategories() {
+        return new ResponseEntity<>(courseService.getMostInscribedCategoriesNameAndCount(), HttpStatus.OK);
     }
 
 }

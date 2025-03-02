@@ -39,6 +39,9 @@ public class EnrollmentController {
 
         // Enroll to the course
         String result = enrollmentService.enrollUserToCourse(idUser, idCourse);
+
+        // add course to inscribed courses
+        userService.findById(idUser).get().addInscribedCourses(courseService.findById(idCourse).get());
         
         if (result.equals("success")) {
             return "redirect:/showCourse/" + idCourse;
