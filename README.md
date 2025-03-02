@@ -46,5 +46,5 @@
 ![Diagrama de entidades](images/diagrama_entidades.png)
 
 ## Diagrama de clases y templates:
-![Diagrama de clases y templates](images/diagrama_clases.png)
+![Diagrama de clases y templates](images/diagrama_clases.PNG)
 ## Participación:
