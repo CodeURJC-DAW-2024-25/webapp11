@@ -72,7 +72,7 @@ public class ReviewController {
         // Redirigir al curso donde se hizo el comentario
         return "redirect:/showCourse/" + course.getId();
     }
-
+    /* 
     // search reviews by user
     @GetMapping("/searchReviewsByUser")
     public String searchReviewsByUser(@RequestParam Long userId, Model model) {
@@ -87,7 +87,7 @@ public class ReviewController {
             model.addAttribute("errorMessage", "user not found");
             return "error";
         }
-    }
+    }*/
 
     // Mark a review for revision
     @PostMapping("/reviews/{id}/mark-pending")
@@ -103,13 +103,26 @@ public class ReviewController {
         return "redirect:/showCourse/" + optionalReview.get().getCourse().getId();
     }
 
+    // Desmark a review for revision
+    @PostMapping("/reviews/{id}/desmark-pending")
+    public String markReviewAsNoPending(@PathVariable Long id, Model model) {
+        Optional<Review> optionalReview = reviewService.findReviewById(id);
+
+        if (optionalReview.isPresent()) {
+            Review review = optionalReview.get();
+            review.setState(false);
+            reviewService.save(review);
+        }
+
+        return "redirect:/profile";
+    }
+
     @PostMapping("/editReview")
     public String editReview(@RequestParam Long reviewId,
             @RequestParam String newText,
-            @RequestParam("_csrf") String csrfToken, // Recibir el token CSRF
             HttpServletRequest request,
             Model model) {
-        // Obtener el usuario autenticado
+        // Get the user
         String currentUserEmail = request.getUserPrincipal().getName();
         Optional<User> userOpt = userService.findByEmail(currentUserEmail);
 
@@ -119,7 +132,7 @@ public class ReviewController {
             return "error";
         }
 
-        // Buscar la reseña en la base de datos
+        // Look for the review
         Optional<Review> reviewOptional = reviewService.findReviewById(reviewId);
 
         if (reviewOptional.isEmpty()) {
@@ -130,26 +143,23 @@ public class ReviewController {
 
         Review review = reviewOptional.get();
 
-        // Verificar que el usuario autenticado es el dueño de la reseña
-        if (!review.getUser().getEmail().equals(currentUserEmail)) {
+        // Check that the user is the author of the review or the admin
+        if (!review.getUser().getEmail().equals(currentUserEmail) && !request.isUserInRole("ADMIN")) {
             model.addAttribute("errorTitle", "Error editing review");
             model.addAttribute("errorMessage", "Unauthorized action");
             return "error";
         }
 
-        // Validar el token CSRF
-        String sessionCsrfToken = (String) request.getSession().getAttribute("_csrf");
-        if (!csrfToken.equals(sessionCsrfToken)) {
-            model.addAttribute("errorTitle", "Error editing review");
-            model.addAttribute("errorMessage", "Invalid CSRF token");
-            return "error";
-        }
-
-        // Actualizar el texto de la reseña
+        // Update the review
         review.setText(newText);
         reviewService.save(review);
 
-        return "redirect:/admin"; // Redirige a la página de administración después de editar
+        if (request.isUserInRole("ADMIN")) {
+            return "redirect:/profile";
+        } else {
+            return "redirect:/showCourse/" + review.getCourse().getId();
+        }
+        
     }
 
     // delete review
@@ -159,7 +169,6 @@ public class ReviewController {
 
         if (reviewOptional.isPresent()) {
             reviewService.deleteReview(reviewId);
-            model.addAttribute("message", "review deleted successfully");
             return "redirect:/profile";
         } else {
             model.addAttribute("errorTitle", "error deleting review");

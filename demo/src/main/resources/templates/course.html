@@ -44,14 +44,14 @@
                             </form>
                         {{/isEnrolled}}
                         {{#isTeacher}}
-                            <form action="/course/newReview" method="post">
+                            <form action="/course/newReview" method="post" style="display: inline;">
                                 <input type="hidden" name="parentId" value="{{id}}">
                                 <input type="hidden" name="courseId" value="{{course.id}}">
                                 <input type="hidden" name="_csrf" value="{{token}}" />
                                 <textarea class="form-control mb-2" name="text" placeholder="Responder..." style="resize: none; width: 100%;"></textarea>
                                 <input type="submit" class="btn btn-link btn-sm" value="Responder">
                             </form>      
-                            <form action="/reviews/{{id}}/mark-pending" method="post">
+                            <form action="/reviews/{{id}}/mark-pending" method="post" style="display: inline;">
                                 <input type="hidden" name="_csrf" value="{{token}}" />
                                 <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button> 
                             </form>
