@@ -32,37 +32,41 @@
 
     <hr>
         
-    <h3 class="text-center">Revisiones pendientes</h3>    <!-- Falta implementar esto -->
+    <h3 class="text-center">Revisiones pendientes</h3>
     {{#reviews}}
         <div class="comment mb-3">
             <strong>{{user.firstName}} {{user.lastName}}</strong>
             <p>{{text}}</p>
             <!-- edition button -->
-        <button class="btn btn-primary btn-sm" onclick="showEditForm('{{id}}', '{{text}}')">
-            Editar comentario
-        </button>
+            <button id="button-form-{{id}}" class="btn btn-link btn-sm" onclick="showEditForm('{{id}}', '{{text}}')">
+                Editar comentario
+            </button>
 
-        <!-- hidden edit form  -->
-        <form id="edit-form-{{id}}" action="/editReview" method="post" class="mt-2 d-none">
-            <input type="hidden" name="reviewId" value="{{id}}">
-            <input type="hidden" name="_csrf" value="{{token}}"> <!-- CSRF Token -->
-            
-            <div class="form-group">
-                <textarea name="newText" class="form-control">{{text}}</textarea>
-            </div>
-            <button type="submit" class="btn btn-success btn-sm">Guardar cambios</button>
-            <button type="button" class="btn btn-secondary btn-sm" onclick="hideEditForm('{{id}}')">Cancelar</button>
-        </form>
+            <!-- hidden edit form  -->
+            <form id="edit-form-{{id}}" action="/editReview" method="post" class="mt-2 d-none">
+                <input type="hidden" name="reviewId" value="{{id}}">
+                <input type="hidden" name="_csrf" value="{{token}}"> <!-- CSRF Token -->
+                
+                <div class="form-group">
+                    <textarea name="newText" class="form-control">{{text}}</textarea>
+                </div>
+                <button type="submit" class="btn btn-success btn-sm">Guardar cambios</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="hideEditForm('{{id}}')">Cancelar</button>
+            </form>
             <!--form to delete review-->
             <form action="/deleteReview" method="post" style="display: inline;">
                 <input type="hidden" name="reviewId" value="{{id}}">
                 <input type="hidden" name="_csrf" value="{{token}}" />
                 <button class="btn btn-link btn-sm" type="submit" style="color: red;">Eliminar comentario</button>
             </form>
-            <!--form to delete user-->
-            <form method="post" action="/admin/users/delete/{{user.id}}">
-                <button type="submit" class="btn btn-danger btn-sm">Eliminar usuario</button>
+            <form action="/reviews/{{id}}/desmark-pending" method="post" class="d-inline">
                 <input type="hidden" name="_csrf" value="{{token}}" />
+                <button type="submit" class="btn btn-link btn-sm text-warning">Ignorar</button>
+            </form>
+            
+            <form method="post" action="/admin/users/delete/{{user.id}}" class="d-inline">
+                <input type="hidden" name="_csrf" value="{{token}}" />
+                <button type="submit" class="btn btn-link btn-sm text-danger">Eliminar usuario</button>
             </form>
         </div>
     {{/reviews}}
@@ -110,10 +114,12 @@
  <script>
     function showEditForm(reviewId, currentText) {
         document.getElementById("edit-form-" + reviewId).classList.remove("d-none");
+        document.getElementById("button-form-" + reviewId).classList.add("d-none");
     }
 
     function hideEditForm(reviewId) {
         document.getElementById("edit-form-" + reviewId).classList.add("d-none");
+        document.getElementById("button-form-" + reviewId).classList.remove("d-none");
     }
 </script>
 
