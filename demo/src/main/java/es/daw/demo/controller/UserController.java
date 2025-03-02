@@ -15,7 +15,6 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
-import es.daw.demo.service.CourseService;
 import es.daw.demo.service.EmailService;
 import es.daw.demo.service.EnrollmentService;
 import es.daw.demo.service.ReviewService;
@@ -40,9 +39,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class UserController {
-
-    @Autowired 
-    private CourseService courseService;
 
     @Autowired 
     private ReviewService reviewService;

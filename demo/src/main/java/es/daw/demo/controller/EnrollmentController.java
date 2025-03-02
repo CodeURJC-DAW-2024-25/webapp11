@@ -1,17 +1,13 @@
 package es.daw.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import es.daw.demo.repository.EnrollmentRepository;
-import es.daw.demo.repository.UserRepository;
 import es.daw.demo.service.CourseService;
 import es.daw.demo.service.EnrollmentService;
 import es.daw.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.model.Enrollment;
 import es.daw.demo.model.User;
 import es.daw.demo.model.Course;
@@ -20,15 +16,6 @@ import java.util.List;
 
 @Controller
 public class EnrollmentController {
-
-    @Autowired
-    private EnrollmentRepository enrollmentRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private CourseRepository courseRepository;
 
     @Autowired
     private UserService userService;
@@ -40,24 +27,6 @@ public class EnrollmentController {
     private CourseService courseService;
     
     // Create new enrollment
-    /*
-    @PostMapping("/newEnrollment")
-    public String newEnrollment(@RequestParam Long userId, @RequestParam Long courseId, Model model) {
-        Optional<User> user = userRepository.findById(userId);
-        Optional<Course> course = courseRepository.findById(courseId);
-
-        if (user.isPresent() && course.isPresent()) {
-            Enrollment enrollment = new Enrollment(user.get(), course.get());
-            enrollmentRepository.save(enrollment);
-            model.addAttribute("message", "Enrollment created successfully");    
-            return "index";
-        } else {
-            model.addAttribute("errorTitle", "Error creating enrollment");
-            model.addAttribute("errorMessage", "User or course does not exist");
-            return "error";
-        }
-    }
-    */
     @PostMapping("/course/enroll")
     public String enrollToCourse(@RequestParam Long idCourse, HttpServletRequest request, Model model) {
         // Verificar si el usuario está autenticado
@@ -83,12 +52,12 @@ public class EnrollmentController {
     // Search enrollments by user
     @GetMapping("/searchByUser")
     public String searchEnrollmentsByUser(@RequestParam Long userId, Model model) {
-        Optional<User> user = userRepository.findById(userId);
+        Optional<User> user = userService.findById(userId);
 
         if (user.isPresent()) {
-            List<Enrollment> enrollments = enrollmentRepository.findByUser(user.get());
+            List<Enrollment> enrollments = enrollmentService.findByUser(user.get());
             model.addAttribute("enrollments", enrollments);
-            return "enrollments";
+            return "enrollments";       //ESTA PLANTILLA NO EXISTE
         } else {
             model.addAttribute("errorTitle", "Error searching enrollments");
             model.addAttribute("errorMessage", "User not found");
@@ -99,10 +68,10 @@ public class EnrollmentController {
     // Search enrollments by course
     @GetMapping("/searchByCourse")
     public String searchEnrollmentsByCourse(@RequestParam Long courseId, Model model) {
-        Optional<Course> course = courseRepository.findById(courseId);
+        Optional<Course> course = courseService.findById(courseId);
 
         if (course.isPresent()) {
-            List<Enrollment> enrollments = enrollmentRepository.findByCourse(course.get());
+            List<Enrollment> enrollments = enrollmentService.findByCourse(course.get());
             model.addAttribute("enrollments", enrollments);
             return "enrollments";
         } else {
@@ -115,10 +84,10 @@ public class EnrollmentController {
     // Delete enrollment
     @PostMapping("/deleteEnrollment")
     public String deleteEnrollment(@RequestParam Long enrollmentId, Model model) {
-        Optional<Enrollment> enrollmentOptional = enrollmentRepository.findById(enrollmentId);
+        Optional<Enrollment> enrollmentOptional = enrollmentService.findById(enrollmentId);
 
         if (enrollmentOptional.isPresent()) {
-            enrollmentRepository.delete(enrollmentOptional.get());
+            enrollmentService.delete(enrollmentOptional.get());
             model.addAttribute("message", "Enrollment deleted successfully");
             return "enrollments";
         } else {

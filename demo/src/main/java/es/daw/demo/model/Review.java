@@ -27,7 +27,7 @@ public class Review {
     private Course course;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parent", orphanRemoval = true)
-    private List<Review> hijos;
+    private List<Review> sons;
 
     @ManyToOne
     private Review parent;
@@ -86,17 +86,17 @@ public class Review {
         this.course = course;
     }
 
-    public List<Review> getHijos() {
-        return hijos;
+    public List<Review> getSons() {
+        return sons;
     }
 
     @JsonIgnore
     public List<Review> getReplies() {
-        return hijos;
+        return sons;
     }
 
-    public void setHijos(List<Review> hijos) {
-        this.hijos = hijos;
+    public void setSons(List<Review> hijos) {
+        this.sons = hijos;
     }
 
     public Review getParent() {
@@ -108,10 +108,10 @@ public class Review {
     }
 
     public void addHijo(Review hijo) {
-        if (hijos == null) {
-            hijos = new ArrayList<>();
+        if (sons == null) {
+            sons = new ArrayList<>();
         }
-        hijos.add(hijo);
+        sons.add(hijo);
     }
     /*
      * Creo que va en el service

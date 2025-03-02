@@ -4,7 +4,6 @@ import es.daw.demo.model.Course;
 import es.daw.demo.model.Review;
 import es.daw.demo.model.User;
 import es.daw.demo.repository.ReviewRepository;
-import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +16,6 @@ public class ReviewService {
 
     @Autowired
     private ReviewRepository reviewRepository;
-
-    @Autowired
-    private CourseRepository courseRepository;
 
     @Autowired
     private UserRepository userRepository;

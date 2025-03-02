@@ -33,7 +33,7 @@ public class User {
     private Blob profileImage;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") 
-    private List<Enrollment> enrollement = new ArrayList<>();
+    private List<Enrollment> enrollements = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "instructor")
     private List<Course> taughtCourses = new ArrayList<>();

@@ -13,6 +13,7 @@ import java.io.IOException;
 import es.daw.demo.model.Course;
 import es.daw.demo.model.User;
 import es.daw.demo.repository.CourseRepository;
+import es.daw.demo.repository.UserRepository;
 
 @Service
 public class DataBaseInitializer{
@@ -21,7 +22,7 @@ public class DataBaseInitializer{
     private CourseRepository courseRepository;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
 	private PasswordEncoder passwordEncoder;
@@ -51,16 +52,16 @@ public class DataBaseInitializer{
         setProfileImage(user8, "/static/images/perfil_2.jpg");
         setProfileImage(user9, "/static/images/perfil_2.jpg");
         setProfileImage(admin, "/static/images/perfil_2.jpg");
-        userService.save(user1);
-        userService.save(user2);
-        userService.save(user3);
-        userService.save(user4);
-        userService.save(user5);
-        userService.save(user6);
-        userService.save(user7);
-        userService.save(user8);
-        userService.save(user9);
-        userService.save(admin);
+        userRepository.save(user1);
+        userRepository.save(user2);
+        userRepository.save(user3);
+        userRepository.save(user4);
+        userRepository.save(user5);
+        userRepository.save(user6);
+        userRepository.save(user7);
+        userRepository.save(user8);
+        userRepository.save(user9);
+        userRepository.save(admin);
 
         
         Course course1 = new Course("Desarrollo Android desde cero", "Aprende a desarrollar aplicaciones móviles para Android.", "Desarrollo móvil", user1);

@@ -166,4 +166,16 @@ public class EnrollmentService {
                 .map(Enrollment::getCourse)
                 .collect(Collectors.toList());
     }
+
+    public List<Enrollment> findByUser(User user) {
+        return enrollmentRepository.findByUser(user);
+    }
+
+    public List<Enrollment> findByCourse(Course course) {
+        return enrollmentRepository.findByCourse(course);
+    }
+
+    public void delete(Enrollment enrollment) {
+        enrollmentRepository.delete(enrollment);
+    }
 }

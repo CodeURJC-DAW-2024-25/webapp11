@@ -98,4 +98,20 @@ public class CourseService {
         // Save changes
         courseRepository.save(course);
     }
+
+    public Page<Course> findAllByOrderByRatingDesc(Pageable pageable) {
+        return courseRepository.findAllByOrderByRatingDesc(pageable);
+    }
+
+    public Page<Course> findByInstructor(User user, Pageable pageable) {
+        return courseRepository.findByInstructor(user, pageable);
+    }
+
+    public Page<Course> findByTopicOrderByRatingDesc(String topic, Pageable pageable) {
+        return courseRepository.findByTopicOrderByRatingDesc(topic, pageable);
+    }
+
+    public Page<Course> searchCourses(String title, Pageable pageable) {
+        return courseRepository.searchCourses(title, pageable);
+    }
 }

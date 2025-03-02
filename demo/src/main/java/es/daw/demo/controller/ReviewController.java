@@ -3,9 +3,6 @@ package es.daw.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.*;
 import es.daw.demo.service.CourseService;
 import es.daw.demo.service.ReviewService;
@@ -19,15 +16,6 @@ import java.util.List;
 
 @Controller
 public class ReviewController {
-
-    // @Autowired
-    // private ReviewRepository reviewRepository;
-
-    // @Autowired
-    // private UserRepository userRepository;
-
-    // @Autowired
-    // private CourseRepository courseRepository;
 
     @Autowired
     private ReviewService reviewService;
@@ -93,7 +81,7 @@ public class ReviewController {
         if (user.isPresent()) {
             List<Review> reviews = reviewService.findReviewsByUser(userId);
             model.addAttribute("reviews", reviews);
-            return "reviews";
+            return "reviews";       //ESTA PLANTILLA NO EXISTE
         } else {
             model.addAttribute("errorTitle", "error searching reviews");
             model.addAttribute("errorMessage", "user not found");

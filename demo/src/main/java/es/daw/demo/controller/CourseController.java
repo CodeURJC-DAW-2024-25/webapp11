@@ -21,7 +21,6 @@ import es.daw.demo.service.ReviewService;
 import es.daw.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import es.daw.demo.model.User;
-import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.model.Course;
 import es.daw.demo.model.Review;
 
@@ -35,9 +34,6 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
-
-    @Autowired
-    private CourseRepository courseRepository;
 
     @Autowired
     private UserService userService;
@@ -266,7 +262,7 @@ public class CourseController {
             @RequestParam(defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
 
-        Page<Course> coursesPage = courseRepository.findAllByOrderByRatingDesc(pageable);
+        Page<Course> coursesPage = courseService.findAllByOrderByRatingDesc(pageable);
 
         model.addAttribute("courses", coursesPage.getContent());
 
@@ -278,7 +274,7 @@ public class CourseController {
             @RequestParam(defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Principal principal = request.getUserPrincipal();
-        Page<Course> coursesPage = courseRepository.findByInstructor(userService.findByEmail(principal.getName()).get(), pageable);
+        Page<Course> coursesPage = courseService.findByInstructor(userService.findByEmail(principal.getName()).get(), pageable);
 
         model.addAttribute("taughtCourses", coursesPage.getContent());
 
@@ -292,7 +288,7 @@ public class CourseController {
                                     @RequestParam(defaultValue = "10") int pageSize,
                                     @RequestParam String topic) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        Page<Course> coursesPage = courseRepository.findByTopicOrderByRatingDesc(topic, pageable);
+        Page<Course> coursesPage = courseService.findByTopicOrderByRatingDesc(topic, pageable);
 
         model.addAttribute("courses", coursesPage.getContent());
 
@@ -301,7 +297,7 @@ public class CourseController {
 
     @GetMapping("/deleteCourse/{id}")
     public String deleteCourse(@PathVariable Long id) {
-        courseRepository.deleteById(id);
+        courseService.deleteById(id);
         return "redirect:/";
     }
 
@@ -321,7 +317,7 @@ public class CourseController {
                                     @RequestParam(defaultValue = "10") int pageSize,
                                     @RequestParam String title) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        Page<Course> coursesPage = courseRepository.searchCourses(title, pageable);
+        Page<Course> coursesPage = courseService.searchCourses(title, pageable);
 
         model.addAttribute("courses", coursesPage.getContent());
 
