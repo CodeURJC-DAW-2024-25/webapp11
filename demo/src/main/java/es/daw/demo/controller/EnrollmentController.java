@@ -1,6 +1,8 @@
 package es.daw.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -92,6 +94,18 @@ public class EnrollmentController {
         }
 
         return "redirect:/showCourse/" + courseId;
+    }
+
+    @GetMapping("/statistics/{id}")
+	public String charts(@PathVariable Long id, Model model, HttpServletRequest request) {
+		model.addAttribute("pagetitle", "Gráfica de valoraciones");
+        model.addAttribute("id", id);
+		return "chartCourse";
+	}
+
+    @GetMapping("/puntuationChart/{course_id}") 
+    public ResponseEntity<List<Object[]>> punctuationChart(@PathVariable Long course_id) {
+        return new ResponseEntity<>(enrollmentService.getMostPunctuation(course_id), HttpStatus.OK);
     }
 
 }
