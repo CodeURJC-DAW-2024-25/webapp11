@@ -16,8 +16,6 @@ async function loadChart1() {
             // hide spinner
             $("#mostCoursesCategoriesSpinner").hide();
             $("#mostCoursesCategoriesChart").show();
-            // response is an array of objects (cathegory and number of courses) (get only the top 5)
-            console.log(response)
             response.forEach((cathegory) => {
                 mostCoursesCathegoriesData.push(cathegory[0])
                 mostCoursesCathegoriesLabels.push(cathegory[1])

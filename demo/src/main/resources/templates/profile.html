@@ -18,15 +18,40 @@
                           <div class="row">
                             <div class="col">
                               <div class="form-group">
-                                <label for="firstName">First Name</label>
+                                <label for="firstName">Nombre</label>
                                 <input class="form-control" id="firstName" type="text" name="firstName" placeholder="Nuevo nombre"/>
                               </div>
                             </div>
                             <div class="col">
                               <div class="form-group">
-                                <label for="lastName">Last Name</label>
+                                <label for="lastName">Apellidos</label>
                                 <input class="form-control" id="lastName" type="text" name="lastName" placeholder="Nuevo apellido"/>
                               </div>
+
+                              <div class="col">
+                                <div class="form-group">
+                                  <label for="lastName">Email</label>
+                                  <input type="email" id="email" name="email" class="form-control" placeholder="Email"/>
+                                </div>
+                              </div>
+              
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label for="lastName">Categoría preferida</label>
+                                    <select id="topic" name="topic" class="form-control">
+                                      <option value="" disabled selected>Me gustaría aprender sobre...</option>
+                                      <option value="Desarrollo web">Desarrollo web</option>
+                                      <option value="Desarrollo móvil">Desarrollo móvil</option>
+                                      <option value="Desarrollo de videojuegos">Desarrollo de videojuegos</option>
+                                      <option value="Emprendimiento">Emprendimiento</option>
+                                      <option value="Finanzas">Finanzas</option>
+                                      <option value="Marketing digital">Marketing digital</option>
+                                      <option value="Liderazgo">Liderazgo</option>
+                                      <option value="Comunicación">Comunicación</option>
+                                  </select>
+                                  </div>
+                                </div>
+
                               <div class="delete">
                                 <a type="button" class="btn btn-primary btn-lg red" href="/deleteAccount/{{user.id}}" >Eliminar</a>
                               </div>
