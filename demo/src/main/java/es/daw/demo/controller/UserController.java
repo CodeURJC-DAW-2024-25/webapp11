@@ -190,8 +190,8 @@ public class UserController {
                              @PathVariable Long userID, Model model,
                              @RequestParam String firstName,
                              @RequestParam String lastName,
-                             @RequestParam String email,
-                             @RequestParam String topic,
+                             //@RequestParam String email,
+                             //@RequestParam String topic,
                              @RequestParam String currentPassword,
                              @RequestParam String newPassword,
                              @RequestParam String confirmPassword,
@@ -211,13 +211,13 @@ public class UserController {
 			// Update user
 			if (!lastName.isEmpty()) {
 				user.setLastName(lastName);
-			}
-            if (!email.isEmpty()) {
+            }
+            /*if (!email.isEmpty()) {               //Por qué se ha añadido si no funciona??
 				user.setEmail(email);
 			}
             if (!topic.isEmpty()) {
 				user.setTopic(topic);
-			}
+			}*/
 			// Verify and update image
 			if (imageFile.getOriginalFilename() != "" && !imageFile.isEmpty()) {
 				user.setProfileImage(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
