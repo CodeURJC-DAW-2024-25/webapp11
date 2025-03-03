@@ -178,4 +178,8 @@ public class EnrollmentService {
     public void delete(Enrollment enrollment) {
         enrollmentRepository.delete(enrollment);
     }
+
+    public List<Object[]> getMostPunctuation(Long course_id){
+        return enrollmentRepository.getMostPunctuation(course_id);
+    }
 }
