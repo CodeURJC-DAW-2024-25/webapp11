@@ -88,7 +88,10 @@ public class WebSecurityConfig {
 						.requestMatchers("/deleteCourse/*").hasAnyRole("USER")
 						.requestMatchers("/profile/**").hasAnyRole("USER")
 						.requestMatchers("/updateUser/*").hasAnyRole("USER")
-						.requestMatchers("/admin/*").hasAnyRole("ADMIN"))
+						.requestMatchers("/admin/*").hasAnyRole("ADMIN")
+
+						.requestMatchers("/statistics/*").hasAnyRole("USER")
+						.requestMatchers("/puntuationChart/*").hasAnyRole("USER"))
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
 						.failureHandler((request, response, exception) -> {

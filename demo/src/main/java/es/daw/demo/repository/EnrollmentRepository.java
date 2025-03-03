@@ -19,6 +19,6 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
     Optional<Enrollment> findByUserAndCourse(User user, Course course);
 
-    @Query("SELECT e.rating, COUNT(e) FROM Enrollment e WHERE e.course.id=?1 GROUP BY e.rating ORDER BY COUNT(e) DESC")
+    @Query("SELECT e.rating, COUNT(e) FROM Enrollment e WHERE e.course.id=?1 GROUP BY e.rating ORDER BY e.rating")
     List<Object[]> getMostPunctuation(Long course_id);
 }

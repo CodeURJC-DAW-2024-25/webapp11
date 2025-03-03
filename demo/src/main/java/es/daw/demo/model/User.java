@@ -64,16 +64,6 @@ public class User {
 
     // Getters and setters
 
-    public void addInscribedCourses(Course course) {
-        if (!this.inscribedCourses.contains(course)) {
-            this.inscribedCourses.add(course);
-        }
-    }
-
-    public List<Course> getInscribedCourses() {
-        return this.inscribedCourses;
-    }
-
     public List<String> getRoles() {
 		return roles;
 	}
