@@ -20,10 +20,10 @@ public class Review {
 
     private String text;
     private Boolean pending;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Course course;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parent", orphanRemoval = true)
