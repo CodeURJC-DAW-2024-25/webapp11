@@ -46,11 +46,11 @@ public class Review {
     }
 
     // Getters and setters
-    public Boolean getState () {
+    public Boolean getState() {
         return pending;
     }
 
-    public void setState (Boolean pending) {
+    public void setState(Boolean pending) {
         this.pending = pending;
     }
 
@@ -114,7 +114,7 @@ public class Review {
         sons.add(hijo);
     }
     /*
-     * Creo que va en el service
+     * I think it goes in service if necessary
      * public void removeHijo(Comment hijo) {
      * if (hijos != null) {
      * hijos.remove(hijo);

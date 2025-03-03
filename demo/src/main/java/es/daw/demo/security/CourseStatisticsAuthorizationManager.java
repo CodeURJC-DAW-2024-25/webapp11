@@ -29,22 +29,22 @@ public class CourseStatisticsAuthorizationManager implements AuthorizationManage
             return new AuthorizationDecision(false);
         }
 
-        // Extraer el ID del curso de la URL "/course/{id}/statistics"
+        // Extract course ID from the following URL "/course/{id}/statistics"
         String path = request.getRequestURI();
         String[] segments = path.split("/");
 
         if (segments.length < 3) {
-            return new AuthorizationDecision(false); // Ruta incorrecta
+            return new AuthorizationDecision(false); // incorrect path
         }
 
         Long courseId;
         try {
-            courseId = Long.parseLong(segments[2]); // Extraer el ID del curso
+            courseId = Long.parseLong(segments[2]); // Extract course ID
         } catch (NumberFormatException e) {
             return new AuthorizationDecision(false);
         }
 
-        // Obtener el usuario autenticado
+        // Get authenticated user
         Object principal = auth.getPrincipal();
         if (!(principal instanceof User)) {
             return new AuthorizationDecision(false);
@@ -52,12 +52,12 @@ public class CourseStatisticsAuthorizationManager implements AuthorizationManage
 
         User user = (User) principal;
 
-        // Si el usuario es ADMIN, siempre tiene acceso
+        // If user is admin, he will always access
         if (user.getRoles().contains("ROLE_ADMIN")) {
             return new AuthorizationDecision(true);
         }
 
-        // Buscar el curso en la base de datos
+        // Search course in the database
         Optional<Course> optionalCourse = courseRepository.findById(courseId);
         if (optionalCourse.isEmpty()) {
             return new AuthorizationDecision(false);
@@ -65,7 +65,7 @@ public class CourseStatisticsAuthorizationManager implements AuthorizationManage
 
         Course course = optionalCourse.get();
 
-        // Verificar si el usuario es el profesor del curso
+        // Verify if the user is the teacher of the course
         boolean isProfessor = course.getInstructor() != null &&
                 Long.valueOf(user.getId()).equals(course.getInstructor().getId());
 
