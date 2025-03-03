@@ -64,9 +64,16 @@ public class WebSecurityConfig {
 						.requestMatchers("/image/*").permitAll()
 						.requestMatchers("/charts").permitAll()
 						.requestMatchers("/mostInscribedCathegories").permitAll()
-						
-						
+
 						// PRIVATE PAGES
+						.requestMatchers("/course/enroll").hasAnyRole("USER")
+						.requestMatchers("/enrollment/rate").hasAnyRole("USER")
+						.requestMatchers("/course/newReview").hasAnyRole("USER")
+						.requestMatchers("/reviews/{id}/mark-pending").hasAnyRole("USER")
+						.requestMatchers("/reviews/{id}/desmark-pending").hasAnyRole("USER")
+						.requestMatchers("/editReview").hasAnyRole("ADMIN")
+						.requestMatchers("/deleteReview").hasAnyRole("ADMIN")
+
 						.requestMatchers("/newCourse").hasAnyRole("USER")
 						.requestMatchers("/notes/*").hasAnyRole("USER")
 						.requestMatchers("/createCourse").hasAnyRole("USER")
