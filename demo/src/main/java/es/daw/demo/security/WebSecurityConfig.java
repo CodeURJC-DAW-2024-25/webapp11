@@ -44,22 +44,36 @@ public class WebSecurityConfig {
 				.authorizeHttpRequests(authorize -> authorize
 						// PUBLIC PAGES
 						.requestMatchers("/").permitAll()
-						.requestMatchers("/signUp/**").permitAll() // Allow access to static resources
+						.requestMatchers("/signUp/**").permitAll()
 						.requestMatchers("/course/**").permitAll()
 						.requestMatchers("/courses/**").permitAll()
 						.requestMatchers("/coursesPage/**").permitAll()
 						.requestMatchers("/index/**").permitAll()
 						.requestMatchers("/error").permitAll()
 						.requestMatchers("/css/**").permitAll()
-						.requestMatchers("/**").permitAll() // Esto hay que quitarlo, pero sin esto no
-						// funciona
+						.requestMatchers("/js/**").permitAll()
+						.requestMatchers("/getCourses").permitAll()
+						.requestMatchers("/getCoursesByTopic").permitAll()
+						.requestMatchers("/showCourse/*").permitAll()
+						.requestMatchers("/showCourses/*").permitAll()
+						.requestMatchers("/getCoursesByTitle").permitAll()
+						.requestMatchers("/findCourses/*").permitAll()
+						.requestMatchers("/image/*").permitAll()
+						.requestMatchers("/charts").permitAll()
+						.requestMatchers("/mostInscribedCathegories").permitAll()
+						
+						
 						// PRIVATE PAGES
-						.requestMatchers("/new_course").hasAnyRole("USER")
+						.requestMatchers("/newCourse").hasAnyRole("USER")
+						.requestMatchers("/notes/*").hasAnyRole("USER")
+						.requestMatchers("/createCourse").hasAnyRole("USER")
+						.requestMatchers("/editCourse/*").hasAnyRole("USER")
+						.requestMatchers("/updateCourse/*").hasAnyRole("USER")
+						.requestMatchers("/getTaughtCourses").hasAnyRole("USER")
+						.requestMatchers("/deleteCourse/*").hasAnyRole("USER")
+
 						.requestMatchers("/edit_course/*").hasAnyRole("USER")
-						.requestMatchers("/profile").hasAnyRole("USER")
-						.requestMatchers("/profile/taughtCourses/**").hasAnyRole("USER")
-						// .requestMatchers("/course/*/statistics").access(courseStatisticsAuth) // usa
-						// la lógica personalizada
+						.requestMatchers("/profile/**").hasAnyRole("USER")
 						.requestMatchers("/course/*/statistics").hasAnyRole("USER") // Ns como hacer
 						// que solo el profesor/admin pueda ver las estadisticas
 						.requestMatchers("/admin/*").hasAnyRole("ADMIN"))
