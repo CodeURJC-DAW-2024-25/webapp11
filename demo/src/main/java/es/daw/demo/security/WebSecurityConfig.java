@@ -48,11 +48,14 @@ public class WebSecurityConfig {
 						// PUBLIC PAGES
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/signUp/**").permitAll()
+						.requestMatchers("/login").permitAll()
 						.requestMatchers("/course/**").permitAll()
 						.requestMatchers("/courses/**").permitAll()
 						.requestMatchers("/coursesPage/**").permitAll()
 						.requestMatchers("/index/**").permitAll()
 						.requestMatchers("/error").permitAll()
+						.requestMatchers("/error-login").permitAll()
+						.requestMatchers("/newUser").permitAll()
 						.requestMatchers("/css/**").permitAll()
 						.requestMatchers("/js/**").permitAll()
 						.requestMatchers("/getCourses").permitAll()
@@ -68,6 +71,14 @@ public class WebSecurityConfig {
 						.requestMatchers("/mostInscribedCategories").permitAll()
 						
 						// PRIVATE PAGES
+						.requestMatchers("/course/enroll").hasAnyRole("USER")
+						.requestMatchers("/enrollment/rate").hasAnyRole("USER")
+						.requestMatchers("/course/newReview").hasAnyRole("USER")
+						.requestMatchers("/reviews/{id}/mark-pending").hasAnyRole("USER")
+						.requestMatchers("/reviews/{id}/desmark-pending").hasAnyRole("USER")
+						.requestMatchers("/editReview").hasAnyRole("ADMIN")
+						.requestMatchers("/deleteReview").hasAnyRole("ADMIN")
+
 						.requestMatchers("/newCourse").hasAnyRole("USER")
 						.requestMatchers("/notes/*").hasAnyRole("USER")
 						.requestMatchers("/createCourse").hasAnyRole("USER")
@@ -75,9 +86,8 @@ public class WebSecurityConfig {
 						.requestMatchers("/updateCourse/*").hasAnyRole("USER")
 						.requestMatchers("/getTaughtCourses").hasAnyRole("USER")
 						.requestMatchers("/deleteCourse/*").hasAnyRole("USER")
-
-						.requestMatchers("/edit_course/*").hasAnyRole("USER")
 						.requestMatchers("/profile/**").hasAnyRole("USER")
+						.requestMatchers("/updateUser/*").hasAnyRole("USER")
 						.requestMatchers("/admin/*").hasAnyRole("ADMIN"))
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")

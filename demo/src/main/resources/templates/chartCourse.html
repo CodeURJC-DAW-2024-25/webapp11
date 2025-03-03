@@ -1,0 +1,20 @@
+{{>header}}
+<main class="container mt-4">
+    <h1>Valoraciones</h1>
+    <div id="mostInscribedCategoriesChartContainer">
+        <div id="mostInscribedCategoriesSpinner" class="loader-green" role="status">
+        </div>
+        <canvas id="mostValuedChart"></canvas>
+    </div>
+    <input type="hidden" id="course_id" value={{id}}></input>
+</main>
+
+    <footer class="footer mt-4 p-3 bg-light text-center">
+        <p>Cognite &copy; 2025 <br> Grupo 11</p>
+        <p><a href="#">Back to top</a></p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.js"></script>
+    <script src="/js/chartsCourse.js"></script>
+</body>
+</html>
