@@ -64,7 +64,8 @@ public class WebSecurityConfig {
 						.requestMatchers("/image/*").permitAll()
 						.requestMatchers("/charts").permitAll()
 						.requestMatchers("/mostInscribedCathegories").permitAll()
-						
+						.requestMatchers("/mostCoursesCategories").permitAll()
+						.requestMatchers("/mostInscribedCategories").permitAll()
 						
 						// PRIVATE PAGES
 						.requestMatchers("/newCourse").hasAnyRole("USER")

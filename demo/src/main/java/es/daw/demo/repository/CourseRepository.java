@@ -31,7 +31,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query("SELECT c.topic, COUNT(c) FROM Course c GROUP BY c.topic ORDER BY COUNT(c) DESC")
     List<Object[]> getMostCoursesCategoriesNameAndCount();
 
-    @Query("SELECT c.topic, COUNT(c.topic) FROM User u JOIN u.inscribedCourses c GROUP BY c.topic ORDER BY COUNT(c.topic) DESC")
+    @Query("SELECT c.topic, COUNT(e) FROM Enrollment e JOIN e.course c GROUP BY c.topic")
     List<Object[]> getMostInscribedCategoriesNameAndCount();
 
 }
