@@ -14,26 +14,24 @@ import org.springframework.stereotype.Service;
 import es.daw.demo.model.User;
 import es.daw.demo.repository.UserRepository;
 
-
-
 @Service
 public class RepositoryUserDetailsService implements UserDetailsService {
-    
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Override		//////////////////Copiar tal cual
+	@Override ////////////////// Copy as it is
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-		User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		User user = userRepository.findByEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
 		List<GrantedAuthority> roles = new ArrayList<>();
 		for (String role : user.getRoles()) {
 			roles.add(new SimpleGrantedAuthority("ROLE_" + role));
 		}
 
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), 
+		return new org.springframework.security.core.userdetails.User(user.getEmail(),
 				user.getPassword(), roles);
 
 	}

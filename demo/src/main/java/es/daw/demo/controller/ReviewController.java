@@ -35,16 +35,16 @@ public class ReviewController {
         // Get the user
         Optional<User> userOpt = userService.findByEmail(request.getUserPrincipal().getName());
         if (userOpt.isEmpty()) {
-            model.addAttribute("errorTitle", "Error creating review");
-            model.addAttribute("errorMessage", "User not found");
+            model.addAttribute("errorTitle", "Error al crear reseña");
+            model.addAttribute("errorMessage", "Usuario no encontrado");
             return "error";
         }
         Course course = null;
         if (courseId != null) {
             Optional<Course> courseOpt = courseService.findById(courseId);
             if (courseOpt.isEmpty()) {
-                model.addAttribute("errorTitle", "Error creating review");
-                model.addAttribute("errorMessage", "Course does not exist");
+                model.addAttribute("errorTitle", "Error al crear reseña");
+                model.addAttribute("errorMessage", "Curso no existe");
                 return "error";
             }
             course = courseOpt.get();
@@ -54,22 +54,22 @@ public class ReviewController {
         if (parentId != null) {
             Optional<Review> parentReviewOpt = reviewService.getParentReview(parentId);
             if (parentReviewOpt.isEmpty()) {
-                model.addAttribute("errorTitle", "Error creating review");
-                model.addAttribute("errorMessage", "Parent review does not exist");
+                model.addAttribute("errorTitle", "Error al crear reseña");
+                model.addAttribute("errorMessage", "Reseña padre no existe");
                 return "error";
             }
             parentReview = parentReviewOpt.get();
             course = parentReview.getCourse();
         }
         if (course == null) {
-            model.addAttribute("errorTitle", "Error creating review");
-            model.addAttribute("errorMessage", "Either a courseId or a valid parentId must be provided");
+            model.addAttribute("errorTitle", "Error al crear reseña");
+            model.addAttribute("errorMessage", "O el id del curso o el de la reseña padre deben estar presentes");
             return "error";
         }
 
         // Create and save the new review
         reviewService.createReview(text, userOpt.get(), course, parentReview);
-        
+
         return "redirect:/showCourse/" + course.getId();
     }
 
@@ -112,8 +112,8 @@ public class ReviewController {
         Optional<User> userOpt = userService.findByEmail(currentUserEmail);
 
         if (userOpt.isEmpty()) {
-            model.addAttribute("errorTitle", "Error editing review");
-            model.addAttribute("errorMessage", "User not found");
+            model.addAttribute("errorTitle", "Error al editar reseña");
+            model.addAttribute("errorMessage", "Reseña no encontrada");
             return "error";
         }
 
@@ -121,8 +121,8 @@ public class ReviewController {
         Optional<Review> reviewOptional = reviewService.findReviewById(reviewId);
 
         if (reviewOptional.isEmpty()) {
-            model.addAttribute("errorTitle", "Error editing review");
-            model.addAttribute("errorMessage", "Review not found");
+            model.addAttribute("errorTitle", "Error al editar reseña");
+            model.addAttribute("errorMessage", "Reseña no encontrada");
             return "error";
         }
 
@@ -130,8 +130,8 @@ public class ReviewController {
 
         // Check that the user is the author of the review or the admin
         if (!review.getUser().getEmail().equals(currentUserEmail) && !request.isUserInRole("ADMIN")) {
-            model.addAttribute("errorTitle", "Error editing review");
-            model.addAttribute("errorMessage", "Unauthorized action");
+            model.addAttribute("errorTitle", "Error al editar reseña");
+            model.addAttribute("errorMessage", "Acción no autorizada");
             return "error";
         }
 
@@ -144,7 +144,7 @@ public class ReviewController {
         } else {
             return "redirect:/showCourse/" + review.getCourse().getId();
         }
-        
+
     }
 
     // Delete review
@@ -156,8 +156,8 @@ public class ReviewController {
             reviewService.deleteReview(reviewId);
             return "redirect:/profile";
         } else {
-            model.addAttribute("errorTitle", "error deleting review");
-            model.addAttribute("errorMessage", "review not found");
+            model.addAttribute("errorTitle", "Error al borrar reseña");
+            model.addAttribute("errorMessage", "Reseña no encontrada");
             return "error";
         }
     }
