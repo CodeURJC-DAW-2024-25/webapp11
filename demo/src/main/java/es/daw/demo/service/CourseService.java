@@ -16,6 +16,7 @@ import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.repository.EnrollmentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 @Service
 public class CourseService {
     @Autowired
@@ -28,39 +29,39 @@ public class CourseService {
         courseRepository.save(c);
     }
 
-    public void save(Course course, MultipartFile imageFile, MultipartFile noteFile) throws IOException{
-		if(!imageFile.isEmpty()) {
-			course.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-		}
-        if(!noteFile.isEmpty()) {
-			course.setNoteFile(BlobProxy.generateProxy(noteFile.getInputStream(), noteFile.getSize()));
-		} else {
+    public void save(Course course, MultipartFile imageFile, MultipartFile noteFile) throws IOException {
+        if (!imageFile.isEmpty()) {
+            course.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
-		this.save(course);
-	}
+        if (!noteFile.isEmpty()) {
+            course.setNoteFile(BlobProxy.generateProxy(noteFile.getInputStream(), noteFile.getSize()));
+        } else {
+        }
+        this.save(course);
+    }
 
-    public Optional<Course> findById (long id) {
+    public Optional<Course> findById(long id) {
         return courseRepository.findById(id);
     }
 
     public Page<Course> getCoursesOrderedByRating(Pageable pageable) {
-        // Devuelve los cursos ordenados por rating y paginados
+        // Return courses by rating and paged
         return courseRepository.findAllByOrderByRatingDesc(pageable);
     }
 
-    public List<Course> findTop4ByOrderByRatingDesc () {
+    public List<Course> findTop4ByOrderByRatingDesc() {
         return courseRepository.findTop4ByOrderByRatingDesc();
     }
 
-    public List<Course> findByTitle (String title) {
+    public List<Course> findByTitle(String title) {
         return courseRepository.findByTitle(title);
     }
 
-    public List<Course> findByInstructor(User user){
+    public List<Course> findByInstructor(User user) {
         return courseRepository.findByInstructor(user);
     }
 
-    public void deleteById (long id) {
+    public void deleteById(long id) {
         courseRepository.deleteById(id);
     }
 
@@ -115,7 +116,11 @@ public class CourseService {
         return courseRepository.searchCourses(title, pageable);
     }
 
-    public List<Object[]> getMostCoursesCathegoriesNameAndCount(){
-        return courseRepository.getMostCoursesCathegoriesNameAndCount();
+    public List<Object[]> getMostCoursesCategoriesNameAndCount() {
+        return courseRepository.getMostCoursesCategoriesNameAndCount();
+    }
+
+    public List<Object[]> getMostInscribedCategoriesNameAndCount() {
+        return courseRepository.getMostInscribedCategoriesNameAndCount();
     }
 }

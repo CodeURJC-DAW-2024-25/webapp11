@@ -66,17 +66,17 @@ public class EnrollmentService {
     }
 
     private void updateUserTopic(User user) {
-        // Contar cuántos cursos tiene en cada categoría
+        // Count how many courses are for each category
         List<Enrollment> enrollments = enrollmentRepository.findByUser(user);
-        
-        Map<String, Long> topicCount = enrollments.stream()
-            .collect(Collectors.groupingBy(e -> e.getCourse().getTopic(), Collectors.counting()));
 
-        // Obtener el tema con mayor cantidad de cursos
+        Map<String, Long> topicCount = enrollments.stream()
+                .collect(Collectors.groupingBy(e -> e.getCourse().getTopic(), Collectors.counting()));
+
+        // Get topic with the highest count of courses
         String mostFrequentTopic = topicCount.entrySet().stream()
-            .max(Map.Entry.comparingByValue())
-            .map(Map.Entry::getKey)
-            .orElse(null);
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
 
         if (mostFrequentTopic != null) {
             user.setTopic(mostFrequentTopic);
@@ -87,7 +87,7 @@ public class EnrollmentService {
     public void cancelEnrollment(Long enrollmentId) {
         // search the enrollment
         Enrollment enrollment = enrollmentRepository.findById(enrollmentId)
-                .orElseThrow(() -> new RuntimeException("Enrollment not found"));
+                .orElseThrow(() -> new RuntimeException("Inscripción no encontrada"));
 
         // delet the enrollment
         enrollmentRepository.delete(enrollment);
@@ -95,14 +95,14 @@ public class EnrollmentService {
 
     public List<Enrollment> findEnrollmentsByUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         return enrollmentRepository.findByUser(user);
     }
 
     public List<Enrollment> findEnrollmentsByCourse(Long courseId) {
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
+                .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
 
         return enrollmentRepository.findByCourse(course);
     }
@@ -135,29 +135,29 @@ public class EnrollmentService {
 
     public String getMostFrequentTopic(User user) {
         List<Enrollment> enrollments = enrollmentRepository.findByUser(user);
-        
+
         if (enrollments.isEmpty()) {
             return user.getTopic();
         }
 
         Map<String, Long> topicCount = enrollments.stream()
-            .map(e -> e.getCourse().getTopic())
-            .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+                .map(e -> e.getCourse().getTopic())
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
         return topicCount.entrySet().stream()
-            .max(Map.Entry.comparingByValue())
-            .map(Map.Entry::getKey)
-            .orElse(null);
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 
     public Enrollment findByUserAndCourse(Long userId, Long courseId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
+                .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
 
         return enrollmentRepository.findByUserAndCourse(user, course)
-                .orElseThrow(() -> new RuntimeException("Enrollment not found"));
+                .orElseThrow(() -> new RuntimeException("Inscripción no encontrada"));
     }
 
     public List<Course> getCoursesByUser(User user) {

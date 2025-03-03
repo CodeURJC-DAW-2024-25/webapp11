@@ -126,7 +126,7 @@ public class CourseController {
     }
 
     @PostMapping("/updateCourse/{id}")
-    public String updateCourse( @PathVariable Long id,
+    public String updateCourse(@PathVariable Long id,
             @RequestParam String title,
             @RequestParam String description,
             @RequestParam String topic,
@@ -135,41 +135,41 @@ public class CourseController {
             Model model,
             HttpServletRequest request) throws Exception {
 
-        // Obtener el token CSRF
+        // obtain CSRF token
         CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-        // Agregar el token al modelo
+        // add token to model
         model.addAttribute("token", csrfToken.getToken());
 
         Optional<Course> optionalCourse = courseService.findById(id);
 
         if (optionalCourse.isPresent()) {
             Course course = optionalCourse.get();
-			// Update course
-			if (!title.isEmpty()) {
-				course.setTitle(title);
-			}
+            // Update course
+            if (!title.isEmpty()) {
+                course.setTitle(title);
+            }
             if (!description.isEmpty()) {
-				course.setDescription(description);
-			}
+                course.setDescription(description);
+            }
             if (!topic.isEmpty()) {
-				course.setTopic(topic);
-			}
-			// Verify and update image
-			if (imageFile.getOriginalFilename() != "" && !imageFile.isEmpty()) {
-				course.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-			}
+                course.setTopic(topic);
+            }
+            // Verify and update image
+            if (imageFile.getOriginalFilename() != "" && !imageFile.isEmpty()) {
+                course.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            }
 
-            if(!notes.isEmpty()) {
+            if (!notes.isEmpty()) {
                 course.setNotes(BlobProxy.generateProxy(notes.getInputStream(), notes.getSize()));
             }
 
-			// Save updated course
-			courseService.save(course);
+            // Save updated course
+            courseService.save(course);
 
-			return "redirect:/showCourse/" + course.getId();
-		} else {
-			return "error";
-		}
+            return "redirect:/showCourse/" + course.getId();
+        } else {
+            return "error";
+        }
     }
 
     // Show course
@@ -182,7 +182,7 @@ public class CourseController {
         model.addAttribute("course", course);
         List<Review> parentReviews = reviewService.findParentReviewsByCourse(id);
         model.addAttribute("reviews", parentReviews);
-        // Falta configurar los comentarios.
+        // coments not configurated yet
 
         if (request.getUserPrincipal() != null) {
             Optional<User> optionalUser = userService.findByEmail(request.getUserPrincipal().getName());
@@ -214,7 +214,7 @@ public class CourseController {
     @GetMapping("/")
     public String getIndex(Model model, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
-        if (principal != null) { // Verifica si el usuario está autenticado
+        if (principal != null) { // verify if user is logged in
             Optional<User> user = userService.findByEmail(principal.getName());
             if (user.isPresent()) {
                 model.addAttribute("isLoggedIn", true);
@@ -233,7 +233,6 @@ public class CourseController {
         return "index";
     }
 
-
     @GetMapping("/getCourses")
     public String getCourses(Model model, HttpServletRequest request, @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int pageSize) {
@@ -251,7 +250,8 @@ public class CourseController {
             @RequestParam(defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Principal principal = request.getUserPrincipal();
-        Page<Course> coursesPage = courseService.findByInstructor(userService.findByEmail(principal.getName()).get(), pageable);
+        Page<Course> coursesPage = courseService.findByInstructor(userService.findByEmail(principal.getName()).get(),
+                pageable);
 
         model.addAttribute("taughtCourses", coursesPage.getContent());
 
@@ -260,10 +260,10 @@ public class CourseController {
 
     @GetMapping("/getCoursesByTopic")
     public String getCoursesByTopic(Model model,
-                                    HttpServletRequest request,
-                                    @RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "10") int pageSize,
-                                    @RequestParam String topic) {
+            HttpServletRequest request,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam String topic) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<Course> coursesPage = courseService.findByTopicOrderByRatingDesc(topic, pageable);
 
@@ -278,7 +278,7 @@ public class CourseController {
         return "redirect:/";
     }
 
-    //Change view to courses by topic
+    // Change view to courses by topic
     @GetMapping("/showCourses/{topic}")
     public String showCourses(@PathVariable String topic, Model model) {
         model.addAttribute("pagetitle", "Curso");
@@ -286,13 +286,12 @@ public class CourseController {
         return "courses";
     }
 
-
     @GetMapping("/getCoursesByTitle")
     public String getCoursesByTitle(Model model,
-                                    HttpServletRequest request,
-                                    @RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "10") int pageSize,
-                                    @RequestParam String title) {
+            HttpServletRequest request,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam String title) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<Course> coursesPage = courseService.searchCourses(title, pageable);
 
@@ -301,7 +300,7 @@ public class CourseController {
         return "coursesPage";
     }
 
-    //Change view to courses by title
+    // Change view to courses by title
     @GetMapping("/findCourses/{title}")
     public String showCoursesTitle(@PathVariable String title, Model model) {
         model.addAttribute("pagetitle", "Curso");
@@ -310,14 +309,19 @@ public class CourseController {
     }
 
     @GetMapping("/charts")
-	public String charts(Model model, HttpServletRequest request) {
-		model.addAttribute("pagetitle", "Top 5 categorías más populares");
-		return "chart";
-	}
+    public String charts(Model model, HttpServletRequest request) {
+        model.addAttribute("pagetitle", "Top 5 categorías más populares");
+        return "chart";
+    }
 
-    @GetMapping("/mostInscribedCathegories") // should return a json with a list of the most read genres and their count
-    public ResponseEntity<List<Object[]>> mostInscribedCathegories() {
-        return new ResponseEntity<>(courseService.getMostCoursesCathegoriesNameAndCount(), HttpStatus.OK);
+    @GetMapping("/mostCoursesCategories")
+    public ResponseEntity<List<Object[]>> mostCoursesCategories() {
+        return new ResponseEntity<>(courseService.getMostCoursesCategoriesNameAndCount(), HttpStatus.OK);
+    }
+
+    @GetMapping("/mostInscribedCategories")
+    public ResponseEntity<List<Object[]>> mostInscribedCategories() {
+        return new ResponseEntity<>(courseService.getMostInscribedCategoriesNameAndCount(), HttpStatus.OK);
     }
 
 }

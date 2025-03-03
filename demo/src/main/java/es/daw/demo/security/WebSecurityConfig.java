@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+//import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+//import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 
 @Configuration
 @EnableWebSecurity
@@ -17,8 +19,9 @@ public class WebSecurityConfig {
 	@Autowired
 	RepositoryUserDetailsService userDetailsService;
 
-	@Autowired
-	CourseStatisticsAuthorizationManager courseStatisticsAuth; // Inyectamos el Custom Authorization Manager
+	// @Autowired
+	// AuthorizationManager<RequestAuthorizationContext> courseStatisticsAuth; //
+	// Custom Authorization Manager inyected
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -74,8 +77,6 @@ public class WebSecurityConfig {
 
 						.requestMatchers("/edit_course/*").hasAnyRole("USER")
 						.requestMatchers("/profile/**").hasAnyRole("USER")
-						.requestMatchers("/course/*/statistics").hasAnyRole("USER") // Ns como hacer
-						// que solo el profesor/admin pueda ver las estadisticas
 						.requestMatchers("/admin/*").hasAnyRole("ADMIN"))
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")

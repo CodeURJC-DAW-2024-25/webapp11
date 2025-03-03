@@ -19,7 +19,7 @@ public class EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(to);
             helper.setSubject(subject);
-            helper.setText(text, true); // 'true' para que sea HTML si es necesario
+            helper.setText(text, true); // 'true' to be html if needed
 
             javaMailSender.send(message);
         } catch (MessagingException e) {

@@ -21,9 +21,9 @@ public class ReviewService {
     private UserRepository userRepository;
 
     public Review createReview(String text, User user, Course course, Review parentReview) {
-        // Crear la nueva reseña
+        // Crete new review
         Review review = new Review(text, user, course, parentReview);
-        // Guardar la reseña en la base de datos
+        // Save review in the database
         return reviewRepository.save(review);
     }
 
@@ -37,7 +37,7 @@ public class ReviewService {
         if (user.isPresent()) {
             return reviewRepository.findByUser(user.get());
         } else {
-            throw new RuntimeException("User not found");
+            throw new RuntimeException("Usuario no encontrado");
         }
     }
 
@@ -47,10 +47,10 @@ public class ReviewService {
         if (reviewOptional.isPresent()) {
             Review review = reviewOptional.get();
             review.setText(newText);
-            //review.setRating(newRating);
-            return reviewRepository.save(review); // El save también se usa aquí
+            // review.setRating(newRating);
+            return reviewRepository.save(review); // Save is also used here
         } else {
-            throw new RuntimeException("Review not found");
+            throw new RuntimeException("Reseña no enocntrada");
         }
     }
 
@@ -60,7 +60,7 @@ public class ReviewService {
         if (reviewOptional.isPresent()) {
             reviewRepository.delete(reviewOptional.get());
         } else {
-            throw new RuntimeException("Review not found");
+            throw new RuntimeException("Reseña no encontrada");
         }
     }
 
@@ -73,7 +73,7 @@ public class ReviewService {
     }
 
     public Review save(Review review) {
-        return reviewRepository.save(review); // save review, new or edited
+        return reviewRepository.save(review); // Save review, new or edited
     }
 
     public List<Review> findByPendingTrue() {
