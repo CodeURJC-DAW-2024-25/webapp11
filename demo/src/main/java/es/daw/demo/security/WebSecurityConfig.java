@@ -51,8 +51,6 @@ public class WebSecurityConfig {
 						.requestMatchers("/index/**").permitAll()
 						.requestMatchers("/error").permitAll()
 						.requestMatchers("/css/**").permitAll()
-						.requestMatchers("/**").permitAll() // Esto hay que quitarlo, pero sin esto no
-						// funciona
 						// PRIVATE PAGES
 						.requestMatchers("/new_course").hasAnyRole("USER")
 						.requestMatchers("/edit_course/*").hasAnyRole("USER")
