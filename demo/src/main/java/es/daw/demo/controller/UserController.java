@@ -10,6 +10,7 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -204,39 +206,59 @@ public class UserController {
         Optional<User> optionalUser = userService.findById(userID);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-			// Verify password and new password
-			if (!newPassword.isEmpty() && newPassword.equals(confirmPassword) && passwordEncoder.matches(currentPassword, user.getPassword())) {
-				user.setPassword(passwordEncoder.encode(newPassword));
-			}
-			// Update user
-			if (!lastName.isEmpty()) {
-				user.setLastName(lastName);
+            // Verify password and new password
+            if (!newPassword.isEmpty() && newPassword.equals(confirmPassword) && passwordEncoder.matches(currentPassword, user.getPassword())) {
+                user.setPassword(passwordEncoder.encode(newPassword));
+            }
+            // Update user
+            if (!lastName.isEmpty()) {
+                user.setLastName(lastName);
             }
             /*if (!email.isEmpty()) {               //Por qué se ha añadido si no funciona??
-				user.setEmail(email);
-			}
+                user.setEmail(email);
+            }
             if (!topic.isEmpty()) {
-				user.setTopic(topic);
-			}*/
-			// Verify and update image
-			if (imageFile.getOriginalFilename() != "" && !imageFile.isEmpty()) {
-				user.setProfileImage(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-			}
+                user.setTopic(topic);
+            }*/
+            // Verify and update image
+            if (imageFile.getOriginalFilename() != "" && !imageFile.isEmpty()) {
+                user.setProfileImage(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            }
 
-			if (!firstName.isEmpty() && !userService.findByFirstName(firstName).isPresent()) {
-				user.setFirstName(firstName);
-				userService.save(user);
-				return "redirect:/profile";
-			}
+            if (!firstName.isEmpty() && !userService.findByFirstName(firstName).isPresent()) {
+                user.setFirstName(firstName);
+                userService.save(user);
+                return "redirect:/profile";
+            }
 
-			// Save updated user
-			userService.save(user);
+            // Save updated user
+            userService.save(user);
 
-			// Redirect to profile
-			return "redirect:/profile";
-		} else {
-			return "error";
-		}
+            // Redirect to profile
+            return "redirect:/profile";
+        } else {
+            return "error";
+        }
+    }
+
+    @GetMapping("/deleteAccount/{userID}")
+    public String deleteAccount(HttpServletRequest request,
+                             @PathVariable Long userID, Model model,
+                             @RequestParam(required = false) MultipartFile imageFile) throws IOException, SQLException, ServletException {
+        
+        Optional <User> usuario = userService.findById(userID);
+
+        // Send email of notification
+        String subject = "Notificación: Tu cuenta ha sido eliminada";
+        String message = "Estimado usuario,\n\nTal y como solicitó, su cuenta ha sido eliminada de forma permanente.";
+                        
+        emailService.sendEmail(usuario.get().getEmail(), subject, message);
+        userService.deleteById(userID);
+        model.addAttribute("pagetitle", "Perfil");
+
+        request.logout();
+
+        return "redirect:/";
     }
     
 }
