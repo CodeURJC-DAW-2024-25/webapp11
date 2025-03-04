@@ -133,17 +133,7 @@
 
     </div>
     <br>
-    <div class="row">
-        <!-- Gráfico 3 -->
-        <div class="col-md-12 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Mi progreso</h5>
-                    <canvas id="tendenciaInscripciones" width="100%" height="30"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
+  
     {{/enrolledCourses}}
     {{^enrolledCourses}}
           <div class="col-md-12 text-center">
@@ -171,28 +161,5 @@
     </div>   
   </div>
 </main>
-<script>
-
-
-   
-
-    // Gráfico de Tendencia de Inscripciones
-    var ctx3 = document.getElementById('tendenciaInscripciones').getContext('2d');
-    var tendenciaInscripcionesChart = new Chart(ctx3, {
-        type: 'line',
-        data: {
-            labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
-            datasets: [{
-                label: 'Inscripciones',
-                data: [5, 7, 3, 6],
-                
-                fill: false,
-                borderColor: '#4bc0c0',
-                tension: 0.1
-            }]
-        }
-    });
-
-</script>
 
 {{> footer}}
