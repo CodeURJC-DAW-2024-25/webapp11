@@ -120,9 +120,26 @@ public class CourseController {
 
     // Change view to edit course
     @GetMapping("/editCourse/{id}")
-    public String editCourse(Model model, @PathVariable Long id) {
-        model.addAttribute("id", id);
-        return "edit_course";
+    public String editCourse(Model model, @PathVariable Long id, HttpServletRequest request) {
+        Optional<User> optionalUser = userService.findByEmail(request.getUserPrincipal().getName());
+        if (!optionalUser.isPresent()) {
+            model.addAttribute("errorTitle", "Error al editar el curso");
+            model.addAttribute("errorMessage", "Usuario no encontrado");
+            return "error";
+        } else if (optionalUser.get() != courseService.findById(id).get().getInstructor() && !request.isUserInRole("ADMIN")) {
+            model.addAttribute("errorTitle", "Error al editar el curso");
+            model.addAttribute("errorMessage", "El usuario no tiene permisos");
+            return "error";
+        }
+        Optional<Course> course = courseService.findById(id);
+        if (course.isPresent()) {
+            model.addAttribute("course",course.get());
+            return "edit_course";
+        } else {
+            model.addAttribute("errorTitle", "Error al editar el curso");
+            model.addAttribute("errorMessage", "Curso no encontrado");
+            return "error";
+        }
     }
 
     @PostMapping("/updateCourse/{id}")
@@ -134,11 +151,6 @@ public class CourseController {
             @RequestParam MultipartFile notes,
             Model model,
             HttpServletRequest request) throws Exception {
-
-        // obtain CSRF token
-        CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-        // add token to model
-        model.addAttribute("token", csrfToken.getToken());
 
         Optional<Course> optionalCourse = courseService.findById(id);
 
