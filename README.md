@@ -68,3 +68,7 @@
   |EmailService|[Ver archivo](demo/src/main/java/es/daw/demo/service/EmailService.java)|
   |UserService|[Ver archivo](demo/src/main/java/es/daw/demo/service/UserService.java)|
   |DataBaseInitializer|[Ver archivo](demo/src/main/java/es/daw/demo/service/DataBaseInitializer.java)|
+
+  - Olga Somalo Serrano.
+
+  Entre las tareas desarrolladas cabe destacar: inicialización de la base de datos, implementación del botón de cargar más elementos (tanto en la página principal como en el perfil). Implementación de las funcionalidades de borrar y editar cursos, así como borrar y editar perfil. Implemetación de las gráficas: top 5 categorías con más cursos, top 5 categorías con más incripciones y valoraciones de los cursos.
