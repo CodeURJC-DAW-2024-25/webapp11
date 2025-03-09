@@ -17,8 +17,8 @@
   - Administrador: Puede añadir, borrar o editar cursos y comentarios.
 - **Imágenes**: Del perfil de los usuarios, y de los cursos impartidos.
 - **Gráficos**: De las cursos recibidos e impartidos por el usuario y de las valoraciones.
-- **Tecnología complementaria**: Envío  de correos a los usuarios indicándoles que  han sido registrados correctamente.
-- **Algoritmo o consulta avanzada**: Mostrar cursos de interés o afines al usuario(Si se dispone de  tiempo: Filtrar cursos por valoraciónes).
+- **Tecnología complementaria**: Envío  de correos a los usuarios indicándoles que  han sido eliminados.
+- **Algoritmo o consulta avanzada**: Mostrar cursos de interés o afines al usuario, ordenados por valoración.
 
 ## Capturas de pantalla:
 - **Página de inicio**:
@@ -48,3 +48,24 @@
 ## Diagrama de clases y templates:
 ![Diagrama de clases y templates](images/diagrama_clases.PNG)
 ## Participación:
+- Eloy de Sande.
+
+  Entre las tareas desarrolladas cabe destacar: creación de las plantillas mustache, inicialización de la base de datos para contar con ejemplos de demostración, implementación del perfil y sus funciones asociadas (listar usuarios, listar comentarios pendientes de revisión, eliminar usuarios, ...), destacando la creación de `EmailService` para notificar a los usuarios que su cuenta ha sido eliminada. Implementación del algoritmo de consulta avanzada, que consiste en mostrar a los usuarios cursos relacionados con su temática de prefencia, atributo que se va actualizando acorde a las inscripciones del usuario.
+  
+  | Principales Commit | Descripción  | Enlace al Commit |
+  |-------------------------|------------------|------------------|
+  | Commit 1               |Creación de plantillas HTML en el directorio `demo/src/main/resources/templates` utilizando el motor de plantillas Mustache| [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/eb4dbab69e28da30e0a3144e63682c826ad11da2) |
+  | Commit 2              |Se añade la clase `SecurityConfiguration` en el paquete `es.daw.demo.security`, que configura la seguridad de la aplicación utilizando Spring Security. | [Ver commit]([https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/COMMIT_ID_1](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/59548aba488c7f58f3f4e80db7143c0ea88d68df)) |
+  
+  | Commit 3               |Se añade funcionalidad de notificación por correo electrónico de la eliminación de cuentas de usuario en la aplicación web| [Ver commit]([https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/COMMIT_ID_3](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/911b4e7e2efa6a91869b452f7d507f0c7ae2a749)) |
+  | Commit 4               |Se introducen mejoras en los servicios EnrollmentService y ReviewService. Se añaden nuevas funcionalidades o mejoras en la lógica de negocio de estos servicios para la gestión de inscripciones y revisiones dentro de la aplicación. | [Ver commit]([https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/COMMIT_ID_4](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/a003aa65ebb25bfe120f271ff668d4c341d86847)) |
+  | Commit 5               |Se introducen funcionalidades de administración, permitiendo a los usuarios con rol de administrador acceder a una vista específica (`admin`) desde su perfil. Se añade una nueva ruta `/admin/users` que muestra una lista de usuarios, con la opción de filtrar por nombre, y se implementa la capacidad de eliminar usuarios mediante la ruta `/admin/users/delete/{id}`| [Ver commit]([https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/COMMIT_ID_5](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/cb1b624b6b906ee91eb8eab60d9a83abb49cabb0)) |
+
+  
+  | Principales archivos | Enlace al archivo |
+  |----------------------|-------------------|
+  |EnrollmentController|[Ver archivo](demo/src/main/java/es/daw/demo/controller/EnrollmentController.java)|
+  |User|[Ver archivo](demo/src/main/java/es/daw/demo/model/User.java)|
+  |EmailService|[Ver archivo](demo/src/main/java/es/daw/demo/service/EmailService.java)|
+  |UserService|[Ver archivo](demo/src/main/java/es/daw/demo/service/UserService.java)|
+  |DataBaseInitializer|[Ver archivo](demo/src/main/java/es/daw/demo/service/DataBaseInitializer.java)|
