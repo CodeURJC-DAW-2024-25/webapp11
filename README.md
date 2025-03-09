@@ -46,7 +46,7 @@
 ![Diagrama de entidades](images/diagrama_entidades.png)
 
 ## Diagrama de clases y templates:
-![Diagrama de clases y templates](images/diagrama_clases.PNG)
+![Diagrama de clases y templates](images/diagrama_clases.png)
 ## Participación:
 - Eloy de Sande.
 
