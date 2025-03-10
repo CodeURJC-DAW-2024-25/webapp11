@@ -79,7 +79,11 @@
 3. ## Ingresa la URL del repositorio (puedes copiarla desde GitHub haciendo clic en el botón "Code" > "HTTPS" o "SSH").
 4. ## Selecciona la carpeta donde quieres clonar el proyecto.
 5. ## Una vez clonado, VS Code te preguntará si quieres abrir el repositorio. Haz clic en "Open".
-
+   **Requisitos técnicos**
+   - Java JDK 21
+   - MySQL v.8.0.33
+   - Maven v4.0.0
+   - Spring Boot v3.4.2
 ## 2. Configurar MySQL y Base de Datos 
 1. ## Descarga e instala **MySQL Workbench** si no lo tienes.  
 2. ## Abre MySQL Workbench y conéctate con:  
