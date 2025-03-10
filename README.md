@@ -69,6 +69,45 @@
 
 ## Diagrama de clases y templates:
 ![Diagrama de clases y templates](images/diagrama_clases.png)
+
+
+## Instrucciones de Ejecución:  
+
+## 1. Clonar el Repositorio y Configurar el Proyecto en VS Code  
+1. ## Abre VS Code 
+2. ## Clona el repositorio desde GitHub a través de VsCode (Git: Clone (Clone a repository from the internet)).
+3. ## Ingresa la URL del repositorio (puedes copiarla desde GitHub haciendo clic en el botón "Code" > "HTTPS" o "SSH").
+4. ## Selecciona la carpeta donde quieres clonar el proyecto.
+5. ## Una vez clonado, VS Code te preguntará si quieres abrir el repositorio. Haz clic en "Open".
+
+## 2. Configurar MySQL y Base de Datos 
+1. ## Descarga e instala **MySQL Workbench** si no lo tienes.  
+2. ## Abre MySQL Workbench y conéctate con:  
+   - **Usuario**: `root`  
+   - **Contraseña**: `password`  
+   - **Puerto**: `3306`  
+3. ## Crea el esquema ejecutando este comando en MySQL:  
+   ```sql
+   CREATE SCHEMA cognite;
+   ```
+
+## 3. Configurar y Ejecutar Docker
+Si el proyecto utiliza **Docker**, sigue estos pasos para ejecutarlo:  
+1. ## Asegúrate de tener Docker instalado (puedes descargarlo desde [Docker](https://www.docker.com/)).  
+2. ## Abre el docker desktop** y correlo 
+
+
+## 4. Ejecutar la Aplicación desde Spring Dashboard en VS Code 
+Si el proyecto es una aplicación **Spring Boot**, puedes correrlo directamente desde **Spring Boot Dashboard** en VS Code:  
+1. ## Asegúrate de tener instalada la extensión `Spring Boot Extension Pack` en VS Code.  
+2. ## Abre la pestaña "Spring Boot Dashboard" en la barra lateral izquierda de VS Code.  
+3. ## Selecciona la aplicación en la lista y haz clic en el botón ▶ (Run).  
+
+## 5. Acceder a la Aplicación
+Una vez ejecutado el servidor, accede desde el navegador a:  
+🔗 **[https://localhost:8443/](https://localhost:8443/)**  
+
+
 ## Participación:
 - Eloy de Sande.
 
