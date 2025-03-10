@@ -74,7 +74,7 @@ public class WebSecurityConfig {
 						.requestMatchers("/course/enroll").hasAnyRole("USER")
 						.requestMatchers("/enrollment/rate").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/course/newReview").hasAnyRole("USER", "ADMIN")
-						.requestMatchers("/reviews/{id}/mark-pending").hasAnyRole("USER")
+						.requestMatchers("/reviews/{id}/mark-pending").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/reviews/{id}/desmark-pending").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/editReview").hasAnyRole("ADMIN")
 						.requestMatchers("/deleteReview").hasAnyRole("ADMIN")
