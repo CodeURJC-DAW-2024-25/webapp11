@@ -32,6 +32,7 @@
   Se trata de otro formulario en el cual el usuario ya registrado introducirá sus credenciales de acceso para acceder a su cuenta.
 - **Página de perfil de usuario:**
   ![Pagina de perfil](images/profile.png)
+  ![Pagina de perfil](images/editProfile.png)
   En esta página el usuario registrado podrá editar su perfil, acceder a los cursos en los que se ha inscrito y los que ha subido, cerrar sesión y volver a la página de inicio.
 - **Página de administrador:**
   ![Pagina de administrador](images/admin.png)
@@ -44,7 +45,10 @@
   - Vista de profesor: El profesor tiene acceso a todos los materiales del curso. Puede editar, eliminar y ver las estadísticas del curso. Tiene la opción de añadir, responder o reportar comentarios.
   - Vista de alumno: El alumno tiene acceso a todos los materiales del curso. Puede añadir, responder comentarios y ańadir valoraciones.
   - Vista de usuario no inscrito: Solo tiene acceso a la información del curso, no a los materiales.
-- **Página de estadísticas:** Se muestran estadísticas sobre un curso en concreto, por ejemplo la calificación promedio de un curso o el número de inscritos.
+- **Página de estadísticas:**
+  ![Pagina de estadisticas](images/charts.png)
+  ![Pagina de estadísticas de un curso](images/chartsCourse.png)
+  Se muestran estadísticas sobre un curso en concreto, por ejemplo la calificación promedio de un curso o el número de inscritos.
 - **Página de error:** Se muestra cuando sucede algún tipo de error, mostrando un mensaje para informar al usuario de lo sucedido.
 - **Página de categoría:**
   ![Pagina de categoría](images/showcourses.png)
