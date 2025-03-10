@@ -147,3 +147,25 @@ Entre las contribuciones realizadas por mi, cabe destacar la creación de contro
   |ReviewController|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/repository/EnrollmentRepository.java)|
   |WebSecurityConfig|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/security/WebSecurityConfig.java)|
   |Review|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/model/Review.java)|
+
+
+-Gonzalo Fernández González
+
+Entre las tareas realizadas cabe destacar: implementación del CourseRepository, implementación del CourseController, implementación del ReviewController, implementación del Enrollment service, implementación del Review service, implementación de botón para mejor navegabilidad, implementación para editar y borrar reseñas y agregación de formularios para editar y eliminar revisiones, refactorizar el personal de revisión en el curso y revisar controladores, corrección del botón Back to Courses.
+
+   | Principales Commit | Descripción  | Enlace al Commit |
+|--------------------|-------------|------------------|
+| **Commit 1** |CourseController added (demo/src/main/java/es/daw/demo/controller/CourseController.java) |
+| **Commit 2** |Enrollment service added (demo/src/main/java/es/daw/demo/service/EnrollmentService.java) |
+| **Commit 3** |Review service added (demo/src/main/java/es/daw/demo/service/ReviewService.java) |
+| **Commit 4** |ReviewController added (demo/src/main/java/es/daw/demo/controller/ReviewController.java) |
+| **Commit 5** |add forms to edit and delete review, refactor review staff in course and review controllers (demo/src/main/java/es/daw/demo/controller/CourseController.java)(demo/src/main/java/es/daw/demo/model/Course.java) (demo/src/main/resources/templates/admin.html) |
+
+
+| Principales archivos | Enlace al archivo |
+  |----------------------|-------------------|
+  |ReviewController|[Ver archivo](demo/src/main/java/es/daw/demo/controller/ReviewController.java)|
+  |CourseController|[Ver archivo](demo/src/main/java/es/daw/demo/controller/CourseController.java)|
+  |Admin|[Ver archivo](demo/src/main/resources/templates/admin.html)|
+  |Enrollment service|[Ver archivo](demo/src/main/java/es/daw/demo/service/EnrollmentService.java)|
+  |Review service|[Ver archivo](demo/src/main/java/es/daw/demo/service/ReviewService.java)|
