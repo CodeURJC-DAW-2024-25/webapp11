@@ -116,30 +116,18 @@
     <hr>
 
     <h3 class="text-center">Cursos Matriculados</h3>
-    <div class="row" id="courses-list">
-        {{#enrolledCourses}}
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="/image/{{id}}" class="card-img-top" alt="Curso">
-                    <div class="card-body">
-                        <strong class="d-inline-block mb-2 text-primary">{{topic}}</strong>
-                        <h5 class="card-title">{{title}}</h5>
-                        <div class="mb-1 text-muted">{{rating}}</div>
-                        <p class="card-text">{{description}}</p>
-                        <a href="/showCourse/{{id}}" class="btn btn-primary">Ver curso</a>
-                    </div>
-                </div>
-            </div>
-
+    <div class="container">
+      <div class="row g-4" id="my-enroll-list">
+      </div>  
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status" id="spinner-enroll">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>   
+      <div class="text-center">
+        <a class="btn btn-primary" id="loadEnrollCourses">Cargar más</a>
+      </div>   
     </div>
-    <br>
-  
-    {{/enrolledCourses}}
-    {{^enrolledCourses}}
-          <div class="col-md-12 text-center">
-              <p>No tienes cursos matriculados</p>
-          </div>
-    {{/enrolledCourses}}
     <hr>
 
     <div class="d-flex align-items-center justify-content-between col-12">

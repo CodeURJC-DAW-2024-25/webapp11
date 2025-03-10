@@ -85,6 +85,7 @@ public class WebSecurityConfig {
 						.requestMatchers("/editCourse/**").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/updateCourse/**").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/getTaughtCourses").hasAnyRole("USER", "ADMIN")
+						.requestMatchers("/getEnrollCourses").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/deleteCourse/**").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/deleteAccount/**").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/profile/**").hasAnyRole("USER", "ADMIN")

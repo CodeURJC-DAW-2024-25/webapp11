@@ -270,6 +270,18 @@ public class CourseController {
         return "taughtCourses";
     }
 
+    @GetMapping("/getEnrollCourses")
+    public String getEnrollCourses(Model model, HttpServletRequest request, @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Principal principal = request.getUserPrincipal();
+        Page<Course> coursesPage = enrollmentService.getCoursesByUser(userService.findByEmail(principal.getName()).get(), pageable);
+
+        model.addAttribute("taughtCourses", coursesPage.getContent());
+
+        return "taughtCourses";
+    }
+
     @GetMapping("/getCoursesByTopic")
     public String getCoursesByTopic(Model model,
             HttpServletRequest request,

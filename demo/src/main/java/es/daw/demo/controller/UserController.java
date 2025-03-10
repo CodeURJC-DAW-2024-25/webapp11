@@ -143,10 +143,10 @@ public class UserController {
                 model.addAttribute("reviews", pendingReviews);
                 return "admin";
             } else {
-                List <Course> courses = enrollmentService.getCoursesByUser(userService.findByEmail(principal.getName()).get());
-                System.out.println("Este es un mensaje de info");
-                System.out.println(courses);
-                model.addAttribute("enrolledCourses", enrollmentService.getCoursesByUser(userService.findByEmail(principal.getName()).get()));
+                //List <Course> courses = enrollmentService.getCoursesByUser(userService.findByEmail(principal.getName()).get());
+                //System.out.println("Este es un mensaje de info");
+                //System.out.println(courses);
+                //model.addAttribute("enrolledCourses", enrollmentService.getCoursesByUser(userService.findByEmail(principal.getName()).get()));
                 return "profile";
             }
         } else {

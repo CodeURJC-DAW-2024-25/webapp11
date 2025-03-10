@@ -7,6 +7,9 @@ import es.daw.demo.repository.EnrollmentRepository;
 import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -160,11 +163,18 @@ public class EnrollmentService {
                 .orElseThrow(() -> new RuntimeException("Inscripción no encontrada"));
     }
 
-    public List<Course> getCoursesByUser(User user) {
-        return enrollmentRepository.findByUser(user)
+    public Page<Course> getCoursesByUser(User user, Pageable pageable) {
+        List<Course> courses = enrollmentRepository.findByUser(user)
                 .stream()
                 .map(Enrollment::getCourse)
                 .collect(Collectors.toList());
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), courses.size());
+        
+        List<Course> pagedCourses = courses.subList(start, end);
+
+        return new PageImpl<>(pagedCourses, pageable, courses.size());
     }
 
     public List<Enrollment> findByUser(User user) {

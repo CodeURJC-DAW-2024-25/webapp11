@@ -108,6 +108,47 @@ $('#loadTaughtCourses').on('click', function () {
 
 
 
+function loadEnrollCourses() {
+    $.ajax({
+        url: '/getEnrollCourses',
+        method: 'GET',
+        data: {
+            page: currentPage,
+            pageSize: 10
+        },
+        success: function (htmlData) {
+            var $htmlData = $(htmlData); // htmlData to jQuery
+
+            if ($htmlData.length > 0) {
+                $('#my-enroll-list').append($htmlData);
+                $('#spinner-enroll').hide();
+                $('#loadEnrollCourses').show();
+                if ($htmlData.length < 10) {
+                    $('#loadEnrollCourses').hide();
+                }
+            }
+        },
+        error: function () {
+            console.log('Error occurred while loading courses');
+        }
+    });
+}
+$('#loadEnrollCourses').on('click', function () {
+    $('#loadEnrollCourses').hide();
+    $('#spinner-enroll').show();
+    currentPage++;
+    loadEnrollCourses();
+});
+
+
+
+
+
+
+
+
+
+
 
 
 function loadCoursesByTitle() {
@@ -163,7 +204,9 @@ document.getElementById("findCourse").addEventListener("keypress", function(even
 $(document).ready(function () {
     if (window.location.pathname === "/profile") { 
         $('#spinner').hide();
+        $('#spinner-enroll').hide();
         loadTaughtCourses();
+        loadEnrollCourses();
     } else if (window.location.pathname === "/") { 
         $('#spinner').hide();
         loadCourses();
