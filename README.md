@@ -22,11 +22,23 @@
 
 ## Capturas de pantalla:
 - **Página de inicio**:
-  **Descripción:** Es la pantalla principal. Desde ella se podrán observar los cursos disponibles, acceder a la pantalla de registro de usuarios y la de login.
-- **Página de registro de usuarios:** Se trata de una página compuesta de un formulario en el cual los usuarios no registrados se darán de alta para poder inscribirse a cursos y hacer un uso más completo de la aplicación.
-- **Página de login:** Se trata de otro formulario en el cual el usuario ya registrado introducirá sus credenciales de acceso para acceder a su cuenta.
-- **Página de perfil de usuario:** En esta página el usuario registrado podrá editar su perfil, acceder a los cursos en los que se ha inscrito y los que ha subido, cerrar sesión y volver a la página de inicio.
-- **Formulario nuevo curso:** Formulario para que los usuarios registrados puedan añadir y crear un nuevo curso. Incluye subida de imágenes y ficheros.
+  ![Pagina de inicio](images/index.png)
+  Es la pantalla principal. Desde ella se podrán observar los cursos disponibles, acceder a la pantalla de registro de usuarios y la de login.
+- **Página de registro de usuarios:**
+  ![Pagina de registro](images/signup.png)
+  Se trata de una página compuesta de un formulario en el cual los usuarios no registrados se darán de alta para poder inscribirse a cursos y hacer un uso más completo de la aplicación.
+- **Página de login:**
+  ![Pagina de login](images/login.png)
+  Se trata de otro formulario en el cual el usuario ya registrado introducirá sus credenciales de acceso para acceder a su cuenta.
+- **Página de perfil de usuario:**
+  ![Pagina de perfil](images/profile.png)
+  En esta página el usuario registrado podrá editar su perfil, acceder a los cursos en los que se ha inscrito y los que ha subido, cerrar sesión y volver a la página de inicio.
+- **Página de administrador:**
+  ![Pagina de administrador](images/admin.png)
+  En esta página, solo de acceso al administrador, podrá ver los comentarios reportados por los profesores y actuar frente a estos. También podrá buscar a un usuario para eleiminarle.
+- **Formulario nuevo curso:**
+  ![Pagina de nuevo curso](images/createCourse.png)
+  Formulario para que los usuarios registrados puedan añadir y crear un nuevo curso. Incluye subida de imágenes y ficheros.
 - **Página de curso:**
   - Vista de administrador: El administrador tiene acceso a todos los materiales del curso. Puede editar, eliminar y ver las estadísticas del curso. También puede eliminar comentarios o banear usuarios.
   - Vista de profesor: El profesor tiene acceso a todos los materiales del curso. Puede editar, eliminar y ver las estadísticas del curso. Tiene la opción de añadir, responder o reportar comentarios.
@@ -34,7 +46,13 @@
   - Vista de usuario no inscrito: Solo tiene acceso a la información del curso, no a los materiales.
 - **Página de estadísticas:** Se muestran estadísticas sobre un curso en concreto, por ejemplo la calificación promedio de un curso o el número de inscritos.
 - **Página de error:** Se muestra cuando sucede algún tipo de error, mostrando un mensaje para informar al usuario de lo sucedido.
-
+- **Página de categoría:**
+  ![Pagina de categoría](images/showcourses.png)
+  Se muestran los cursos de una determinada categoría.
+- **Página de búsqueda:**
+  ![Pagina de búsqueda](images/findcourses.png)
+  Se muestras los cursos que contienen en su título y/o categoría la(s) palabra(s) buscadas.
+  
 ## Diagrama de navegación:
 - **Azul:** Todos los usuarios.
 - **Amarillo:** Usuarios Registrados.
