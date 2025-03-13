@@ -33,5 +33,4 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     @Query("SELECT c.topic, COUNT(e) FROM Enrollment e JOIN e.course c GROUP BY c.topic")
     List<Object[]> getMostInscribedCategoriesNameAndCount();
-
 }

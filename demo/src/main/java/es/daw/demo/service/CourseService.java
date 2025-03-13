@@ -75,30 +75,20 @@ public class CourseService {
     }
 
     public void updateCourseRating(Long courseId) {
-        // Get the course
+        // Obtener el curso
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
-
-        // Get all inscription for this course with rating != 0
-        List<Enrollment> enrollments = enrollmentRepository.findByCourseIdAndRatingIsNotNull(courseId);
-
-        if (enrollments.isEmpty()) {
-            course.setRating(0);
-        } else {
-            // Calcule the new average
-            double totalRating = enrollments.stream()
-                    .mapToDouble(Enrollment::getRating)
-                    .sum();
-
-            int newAverageRating = (int) totalRating / enrollments.size();
-
-            // Update course rate
-            course.setRating(newAverageRating);
-        }
-
-        // Save changes
+    
+        // Obtener el promedio directamente de la base de datos
+        Double averageRating = enrollmentRepository.findAverageRatingByCourseId(courseId);
+    
+        // Si no hay calificaciones, establecer en 0; si hay, redondear a entero
+        course.setRating((averageRating != null) ? averageRating.intValue() : 0);
+    
+        // Guardar cambios
         courseRepository.save(course);
     }
+    
 
     public Page<Course> findAllByOrderByRatingDesc(Pageable pageable) {
         return courseRepository.findAllByOrderByRatingDesc(pageable);

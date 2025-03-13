@@ -69,23 +69,15 @@ public class EnrollmentService {
     }
 
     private void updateUserTopic(User user) {
-        // Count how many courses are for each category
-        List<Enrollment> enrollments = enrollmentRepository.findByUser(user);
-
-        Map<String, Long> topicCount = enrollments.stream()
-                .collect(Collectors.groupingBy(e -> e.getCourse().getTopic(), Collectors.counting()));
-
-        // Get topic with the highest count of courses
-        String mostFrequentTopic = topicCount.entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .orElse(null);
-
+        String mostFrequentTopic = enrollmentRepository.findMostFrequentTopicByUser(user);
+        
         if (mostFrequentTopic != null) {
             user.setTopic(mostFrequentTopic);
             userRepository.save(user);
         }
     }
+    
+    
 
     public void cancelEnrollment(Long enrollmentId) {
         // search the enrollment
@@ -115,43 +107,15 @@ public class EnrollmentService {
     }
 
     public Boolean isUserEnrolledInCourse(Long userId, Long courseId) {
-        User user = userRepository.findById(userId)
-                .orElse(null);
-        if (user == null) {
-            return false;
-        }
-
-        Course course = courseRepository.findById(courseId)
-                .orElse(null);
-        if (course == null) {
-            return false;
-        }
-
-        List<Enrollment> existingEnrollments = enrollmentRepository.findByUser(user);
-        for (Enrollment enrollment : existingEnrollments) {
-            if (enrollment.getCourse().equals(course)) {
-                return true;
-            }
-        }
-        return false;
+        return enrollmentRepository.existsByUserIdAndCourseId(userId, courseId);
     }
+    
 
     public String getMostFrequentTopic(User user) {
-        List<Enrollment> enrollments = enrollmentRepository.findByUser(user);
-
-        if (enrollments.isEmpty()) {
-            return user.getTopic();
-        }
-
-        Map<String, Long> topicCount = enrollments.stream()
-                .map(e -> e.getCourse().getTopic())
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-
-        return topicCount.entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .orElse(null);
+        String mostFrequentTopic = enrollmentRepository.findMostFrequentTopicByUser(user);
+        return (mostFrequentTopic != null) ? mostFrequentTopic : user.getTopic();
     }
+    
 
     public Enrollment findByUserAndCourse(Long userId, Long courseId) {
         User user = userRepository.findById(userId)

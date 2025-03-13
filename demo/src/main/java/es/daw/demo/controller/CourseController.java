@@ -347,5 +347,6 @@ public class CourseController {
     public ResponseEntity<List<Object[]>> mostInscribedCategories() {
         return new ResponseEntity<>(courseService.getMostInscribedCategoriesNameAndCount(), HttpStatus.OK);
     }
+    
 
 }
