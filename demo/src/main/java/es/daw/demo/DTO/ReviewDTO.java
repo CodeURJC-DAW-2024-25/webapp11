@@ -9,7 +9,7 @@ public class ReviewDTO {
     private Long parentId;
 
     public ReviewDTO() {
-        // Constructor vacío para serialización/deserialización
+        // Empty constructor for serialization/deserialization
     }
 
     public ReviewDTO(long id, String text, Boolean pending, Long userId, Long courseId, Long parentId) {
