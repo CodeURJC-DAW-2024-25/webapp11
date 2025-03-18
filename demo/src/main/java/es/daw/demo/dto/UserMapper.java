@@ -1,4 +1,4 @@
-package es.daw.demo.dto;
+package es.daw.demo.DTO;
 
 import java.util.Collection;
 import java.util.List;
