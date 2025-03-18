@@ -19,7 +19,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     List<Course> findTop4ByOrderByRatingDesc();
     List<Course> findTop4ByTopicOrderByRatingDesc(String topic);
-    List<Course> findByInstructor(User user);
+    List<Course> findByInstructor(Long id);
 
     Page<Course> findByInstructor(User user, Pageable page);
     Page<Course> findAllByOrderByRatingDesc(Pageable pageable);

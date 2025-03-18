@@ -23,9 +23,12 @@ import es.daw.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import es.daw.demo.model.User;
 import es.daw.demo.dto.CourseDTO;
+import es.daw.demo.dto.ReviewDTO;
+import es.daw.demo.dto.UserDTO;
 import es.daw.demo.model.Course;
 import es.daw.demo.model.Review;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +36,7 @@ import java.security.Principal;
 import java.sql.SQLException;
 
 @Controller
-public class CourseController {
+public class CourseWebController {
 
     @Autowired
     private CourseService courseService;
@@ -56,14 +59,14 @@ public class CourseController {
             @RequestParam MultipartFile notes,
             Model model,
             HttpServletRequest request) throws Exception {
-        User instructor = userService.findByEmail(request.getUserPrincipal().getName()).get();
-        Course course = new Course(title, description, topic, instructor);
-        courseService.save(course, image, notes);
+        UserDTO instructor = userService.findByEmail(request.getUserPrincipal().getName());
+        CourseDTO course = new CourseDTO(null, title, description, topic, instructor, 0);
+        courseService.createCourse(course, image, notes);
 
         model.addAttribute("pagetitle", title);
         model.addAttribute("isTeacher", true);
         model.addAttribute("course", course);
-        return "redirect:/showCourse/" + course.getId();
+        return "redirect:/showCourse/" + course.id();
     }
 
     @ModelAttribute
@@ -83,35 +86,27 @@ public class CourseController {
     }
 
     // Upload course image
-    @GetMapping("/image/{id}")
-    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
-        Optional<Course> course = courseService.findById(id);
-        if (course.isPresent() && course.get().getImageFile() != null) {
+    @GetMapping("/course/{id}/image")
+    public ResponseEntity<Object> getCourseImage(@PathVariable long id) throws SQLException, IOException {
+        Resource courseImage = courseService.getCourseImage(id);
 
-            Resource file = new InputStreamResource(course.get().getImageFile().getBinaryStream());
+		return ResponseEntity
+				.ok()
+				.header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+				.body(courseImage);
 
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-                    .contentLength(course.get().getImageFile().length()).body(file);
-
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     // Upload course notes
-    @GetMapping("/notes/{id}")
-    public ResponseEntity<Object> downloadNotes(@PathVariable long id) throws SQLException {
-        Optional<Course> course = courseService.findById(id);
-        if (course.isPresent() && course.get().getNotes() != null) {
+    @GetMapping("/course/{id}/notes")
+    public ResponseEntity<Object> getCourseNotes(@PathVariable long id) throws SQLException, IOException {
+        Resource courseNotes = courseService.getCourseNotes(id);
 
-            Resource file = new InputStreamResource(course.get().getNotes().getBinaryStream());
+		return ResponseEntity
+				.ok()
+				.header(HttpHeaders.CONTENT_TYPE, "application/pdf")
+				.body(courseNotes);
 
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "application/pdf")
-                    .contentLength(course.get().getNotes().length()).body(file);
-
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     // Change view to the new course page
@@ -123,19 +118,19 @@ public class CourseController {
     // Change view to edit course
     @GetMapping("/editCourse/{id}")
     public String editCourse(Model model, @PathVariable Long id, HttpServletRequest request) {
-        Optional<User> optionalUser = userService.findByEmail(request.getUserPrincipal().getName());
-        if (!optionalUser.isPresent()) {
+        UserDTO user = userService.findByEmail(request.getUserPrincipal().getName());
+        if (user == null) {
             model.addAttribute("errorTitle", "Error al editar el curso");
             model.addAttribute("errorMessage", "Usuario no encontrado");
             return "error";
-        } else if (optionalUser.get() != courseService.findById(id).get().getInstructor() && !request.isUserInRole("ADMIN")) {
+        } else if (courseService.isUserInstructor(id, user.id()) && !request.isUserInRole("ADMIN")) {
             model.addAttribute("errorTitle", "Error al editar el curso");
             model.addAttribute("errorMessage", "El usuario no tiene permisos");
             return "error";
         }
-        Optional<Course> course = courseService.findById(id);
-        if (course.isPresent()) {
-            model.addAttribute("course",course.get());
+        CourseDTO course = courseService.getCourse(id);
+        if (course != null) {
+            model.addAttribute("course",course);
             return "edit_course";
         } else {
             model.addAttribute("errorTitle", "Error al editar el curso");
@@ -156,59 +151,26 @@ public class CourseController {
 
 
             courseService.updateCourse(id, title, description, topic, imageFile, notes);
-        /*        
-        Optional<Course> optionalCourse = courseService.findById(id);
-
-        if (optionalCourse.isPresent()) {
-            Course course = optionalCourse.get();
-            // Update course
-            if (!title.isEmpty()) {
-                course.setTitle(title);
-            }
-            if (!description.isEmpty()) {
-                course.setDescription(description);
-            }
-            if (!topic.isEmpty()) {
-                course.setTopic(topic);
-            }
-            // Verify and update image
-            if (imageFile.getOriginalFilename() != "" && !imageFile.isEmpty()) {
-                course.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
-            }
-
-            if (!notes.isEmpty()) {
-                course.setNotes(BlobProxy.generateProxy(notes.getInputStream(), notes.getSize()));
-            }
-
-            // Save updated course
-            courseService.save(course);
-
-            return "redirect:/showCourse/" + course.getId();
-        } else {
-            return "error";
-        }
-        */
             return "redirect:/showCourse/" + id;
     }
 
     // Show course
-    @GetMapping("/showCourse/{id}")
+    @GetMapping("/courses/{id}")
     public String showCourse(@PathVariable Long id, Model model, HttpServletRequest request) {
-        Course course = courseService.findById(id).orElseThrow();
-        String teacher = course.getInstructor().getFirstName() + " " + course.getInstructor().getLastName();
+        CourseDTO course = courseService.getCourse(id);
+        String teacher = course.instructor().firstName() + " " + course.instructor().lastName();
         model.addAttribute("pagetitle", "Curso");
         model.addAttribute("teacher", teacher);
         model.addAttribute("course", course);
-        List<Review> parentReviews = reviewService.findParentReviewsByCourse(id);
+        Collection<ReviewDTO> parentReviews = reviewService.findParentReviewsByCourse(id);
         model.addAttribute("reviews", parentReviews);
         // coments not configurated yet
 
         if (request.getUserPrincipal() != null) {
-            Optional<User> optionalUser = userService.findByEmail(request.getUserPrincipal().getName());
-            if (optionalUser.isPresent()) {
-                Long idUser = optionalUser.get().getId();
+            UserDTO user = userService.findByEmail(request.getUserPrincipal().getName());
+            if (user != null) {
+                Long idUser = user.id();
                 // Checks if the user is the instructor of the course
-
                 // Checks if the user is enrolled to the course
                 if (request.isUserInRole("USER")) {
                     model.addAttribute("isEnrolled", enrollmentService.isUserEnrolledInCourse(idUser, id));
@@ -231,11 +193,11 @@ public class CourseController {
 
     // Show all courses
     @GetMapping("/")
-    public String getIndex(Model model, HttpServletRequest request) {
+    public String showCourses(Model model, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         if (principal != null) { // verify if user is logged in
-            Optional<User> user = userService.findByEmail(principal.getName());
-            if (user.isPresent()) {
+            UserDTO user = userService.findByEmail(principal.getName());
+            if (user != null) {
                 model.addAttribute("isLoggedIn", true);
                 Collection<CourseDTO> courses = courseService.getTopRatedCoursesByTopic(user.get().getTopic());
                 model.addAttribute("recomendCourses", courses);

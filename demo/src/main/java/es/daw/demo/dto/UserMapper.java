@@ -1,5 +1,6 @@
 package es.daw.demo.dto;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.mapstruct.Mapper;
@@ -12,7 +13,7 @@ public interface UserMapper {
 
     UserDTO toDTO(User user);
 
-    List<UserDTO> toDTO(List<User> users);
+    List<UserDTO> toDTO(Collection<User> users);
 
     @Mapping(target = "profileImage", ignore = true)
     @Mapping(target = "taughtCourses", ignore = true)

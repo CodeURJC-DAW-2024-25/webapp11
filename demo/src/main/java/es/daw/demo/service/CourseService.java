@@ -1,35 +1,47 @@
 package es.daw.demo.service;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.daw.demo.dto.CourseDTO;
+import es.daw.demo.dto.UserDTO;
+import es.daw.demo.dto.CourseMapper;
 import es.daw.demo.model.Course;
-import es.daw.demo.model.Enrollment;
 import es.daw.demo.model.User;
 import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.repository.EnrollmentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.InputStreamResource;
+
+// FALTA CAMBIAR LOS PAGEABLES DE LAS FUNCIONES QUE DEVUELVEN PAGE<Course>
+
 
 @Service
 public class CourseService {
+
     @Autowired
     private CourseRepository courseRepository;
 
     @Autowired
     private EnrollmentRepository enrollmentRepository;
 
-    public void save(Course c) {
-        courseRepository.save(c);
-    }
+    @Autowired
+    private CourseMapper courseMapper;
 
-    public void save(Course course, MultipartFile imageFile, MultipartFile noteFile) throws IOException {
+    public void createCourse(CourseDTO courseDTO, MultipartFile imageFile, MultipartFile noteFile) throws IOException {
+        if (courseDTO.id() != null) {
+            throw new IllegalArgumentException();
+        }
+
+        Course course = toDomain(courseDTO);
         if (!imageFile.isEmpty()) {
             course.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
@@ -37,11 +49,11 @@ public class CourseService {
             course.setNoteFile(BlobProxy.generateProxy(noteFile.getInputStream(), noteFile.getSize()));
         } else {
         }
-        this.save(course);
+        courseRepository.save(course);
     }
 
-    public Optional<Course> findById(long id) {
-        return courseRepository.findById(id);
+    public CourseDTO getCourse(long id) {
+        return toDTO(courseRepository.findById(id).orElseThrow());
     }
 
     public Page<Course> getCoursesOrderedByRating(Pageable pageable) {
@@ -49,19 +61,19 @@ public class CourseService {
         return courseRepository.findAllByOrderByRatingDesc(pageable);
     }
 
-    public List<Course> findTop4ByOrderByRatingDesc() {
-        return courseRepository.findTop4ByOrderByRatingDesc();
+    public Collection<CourseDTO> findTop4ByOrderByRatingDesc() {
+        return toDTOs(courseRepository.findTop4ByOrderByRatingDesc());
     }
 
-    public List<Course> findByTitle(String title) {
-        return courseRepository.findByTitle(title);
+    public Collection<CourseDTO> findByTitle(String title) {
+        return toDTOs(courseRepository.findByTitle(title));
     }
 
-    public List<Course> findByInstructor(User user) {
-        return courseRepository.findByInstructor(user);
+    public Collection<CourseDTO> findByInstructor(UserDTO user) {
+        return toDTOs(courseRepository.findByInstructor(user.id()));
     }
 
-    public void deleteById(long id) {
+    public void deleteCourse(long id) {
         courseRepository.deleteById(id);
     }
 
@@ -70,25 +82,70 @@ public class CourseService {
         return course != null && course.getInstructor() != null && course.getInstructor().getId() == userId;
     }
 
-    public List<Course> getTopRatedCoursesByTopic(String topic) {
-        return courseRepository.findTop4ByTopicOrderByRatingDesc(topic);
+    public Collection<CourseDTO> getTopRatedCoursesByTopic(String topic) {
+        return toDTOs(courseRepository.findTop4ByTopicOrderByRatingDesc(topic));
     }
 
     public void updateCourseRating(Long courseId) {
-        // Obtener el curso
+        // Get the course
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
     
-        // Obtener el promedio directamente de la base de datos
+        // Get the average from the BBDD
         Double averageRating = enrollmentRepository.findAverageRatingByCourseId(courseId);
     
-        // Si no hay calificaciones, establecer en 0; si hay, redondear a entero
+        // Set the rating
         course.setRating((averageRating != null) ? averageRating.intValue() : 0);
     
-        // Guardar cambios
+        // Save the changes
         courseRepository.save(course);
     }
+
+    public Resource getCourseImage(Long courseId) {
+        Course course = courseRepository.findById(courseId).orElseThrow();
+        try {
+            return new InputStreamResource(course.getImageFile().getBinaryStream());
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving course image", e);
+        }
+    }
     
+    public Resource getCourseNotes (Long courseId) {
+        Course course = courseRepository.findById(courseId).orElseThrow();
+        try {
+            return new InputStreamResource(course.getNotes().getBinaryStream());
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving course notes", e);
+        }
+    }
+
+    public void updateCourse(Long id, String title, String description, String topic, MultipartFile imageFile, MultipartFile noteFile) throws IOException {
+        Course course = courseRepository.findById(id).orElseThrow();
+        if (course == null) {
+            throw new IllegalArgumentException();
+        }
+        // Update course
+        if (!title.isEmpty()) {
+            course.setTitle(title);
+        }
+        if (!description.isEmpty()) {
+            course.setDescription(description);
+        }
+        if (!topic.isEmpty()) {
+            course.setTopic(topic);
+        }
+        // Verify and update image
+        if (imageFile.getOriginalFilename() != "" && !imageFile.isEmpty()) {
+            course.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+        }
+
+        if (!noteFile.isEmpty()) {
+            course.setNotes(BlobProxy.generateProxy(noteFile.getInputStream(), noteFile.getSize()));
+        }
+
+        // Save updated course
+        courseRepository.save(course);
+    }
 
     public Page<Course> findAllByOrderByRatingDesc(Pageable pageable) {
         return courseRepository.findAllByOrderByRatingDesc(pageable);
@@ -113,4 +170,19 @@ public class CourseService {
     public List<Object[]> getMostInscribedCategoriesNameAndCount() {
         return courseRepository.getMostInscribedCategoriesNameAndCount();
     }
+
+
+
+    private Course toDomain(CourseDTO courseDTO) {
+        return courseMapper.toDomain(courseDTO);
+    }
+
+    private CourseDTO toDTO(Course course) {
+        return courseMapper.toDTO(course);
+    }
+
+    private Collection<CourseDTO> toDTOs(Collection<Course> courses) {
+        return courseMapper.toDTOs(courses);
+    }
+
 }

@@ -1,5 +1,7 @@
 package es.daw.demo.service;
 
+import es.daw.demo.dto.ReviewDTO;
+import es.daw.demo.dto.ReviewMapper;
 import es.daw.demo.model.Course;
 import es.daw.demo.model.Review;
 import es.daw.demo.model.User;
@@ -8,6 +10,7 @@ import es.daw.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,35 +23,37 @@ public class ReviewService {
     @Autowired
     private UserRepository userRepository;
 
-    public Review createReview(String text, User user, Course course, Review parentReview) {
+    @Autowired
+    private ReviewMapper reviewMapper;
+
+    public ReviewDTO createReview(String text, User user, Course course, Review parentReview) {
         // Crete new review
         Review review = new Review(text, user, course, parentReview);
         // Save review in the database
-        return reviewRepository.save(review);
+        return toDTO(reviewRepository.save(review));
     }
 
-    public List<Review> findParentReviewsByCourse(Long courseId) {
-        return reviewRepository.findByCourseIdAndParentIsNull(courseId);
+    public Collection<ReviewDTO> findParentReviewsByCourse(Long courseId) {
+        return toDTOs(reviewRepository.findByCourseIdAndParentIsNull(courseId));
     }
 
-    public List<Review> findReviewsByUser(Long userId) {
+    public Collection<ReviewDTO> findReviewsByUser(Long userId) {
         Optional<User> user = userRepository.findById(userId);
 
         if (user.isPresent()) {
-            return reviewRepository.findByUser(user.get());
+            return toDTOs(reviewRepository.findByUser(user.get()));
         } else {
             throw new RuntimeException("Usuario no encontrado");
         }
     }
 
-    public Review editReview(Long reviewId, String newText, String newRating) {
+    public ReviewDTO editReview(Long reviewId, String newText, String newRating) {
         Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
 
         if (reviewOptional.isPresent()) {
             Review review = reviewOptional.get();
             review.setText(newText);
-            // review.setRating(newRating);
-            return reviewRepository.save(review); // Save is also used here
+            return toDTO(reviewRepository.save(review));
         } else {
             throw new RuntimeException("Reseña no enocntrada");
         }
@@ -64,19 +69,32 @@ public class ReviewService {
         }
     }
 
-    public Optional<Review> findReviewById(Long reviewId) {
-        return reviewRepository.findById(reviewId);
+    public ReviewDTO findReviewById(Long reviewId) {
+        return toDTO(reviewRepository.findById(reviewId).orElseThrow());
     }
 
-    public Optional<Review> getParentReview(Long parentId) {
-        return reviewRepository.findById(parentId);
+    public ReviewDTO getParentReview(Long parentId) {
+        return toDTO(reviewRepository.findById(parentId).orElseThrow());
     }
 
-    public Review save(Review review) {
-        return reviewRepository.save(review); // Save review, new or edited
+    public ReviewDTO save(ReviewDTO reviewDTO) {
+        Review review = toDomain(reviewDTO); // Convert DTO to domain
+        return toDTO(reviewRepository.save(review)); // Save review, new or edited
     }
 
-    public List<Review> findByPendingTrue() {
-        return reviewRepository.findByPendingTrue();
+    public Collection<ReviewDTO> findByPendingTrue() {
+        return toDTOs(reviewRepository.findByPendingTrue());
+    }
+
+    private ReviewDTO toDTO(Review review) {
+        return reviewMapper.toDTO(review);
+    }
+
+    private Review toDomain(ReviewDTO reviewDTO) {
+        return reviewMapper.toDomain(reviewDTO);
+    }
+
+    private List<ReviewDTO> toDTOs(Collection<Review> reviews) {
+        return reviewMapper.toDTOs(reviews);
     }
 }

@@ -1,5 +1,6 @@
 package es.daw.demo.dto;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.mapstruct.Mapper;
@@ -11,12 +12,12 @@ import es.daw.demo.model.Course;
 public interface CourseMapper {
 
     CourseDTO toDTO(Course course);
-    List<CourseDTO> toDTO(List<Course> courses);
+    List<CourseDTO> toDTOs(Collection<Course> courses);
 
     @Mapping(target = "imageFile", ignore = true)
     @Mapping(target = "notes", ignore = true)
     Course toDomain(CourseDTO courseDTO);
 
-    
+
 }
 
