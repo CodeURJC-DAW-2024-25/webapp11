@@ -26,7 +26,7 @@ public class Course {
     @Lob
     private Blob imageFile;
 
-    private boolean image;
+    //private boolean image;
 
     @Lob
     private Blob notes;
@@ -100,13 +100,7 @@ public class Course {
         return imageFile;
     }
 
-    public boolean getImage() {
-        return image;
-    }
 
-    public void setImage(boolean image) {
-        this.image = image;
-    }
 
     public Blob getNotes() {
         return notes;

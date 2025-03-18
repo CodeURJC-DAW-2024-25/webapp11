@@ -273,7 +273,6 @@ public class DataBaseInitializer{
     }
 
     public void setCourseImage(Course course, String classpathResource) throws IOException {
-		course.setImage(true);
 		Resource image = new ClassPathResource(classpathResource);
 		course.setImageFile(BlobProxy.generateProxy(image.getInputStream(), image.contentLength()));
 	}
