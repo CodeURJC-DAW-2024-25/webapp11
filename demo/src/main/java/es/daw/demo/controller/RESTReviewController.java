@@ -5,6 +5,8 @@ import es.daw.demo.service.CourseService;
 import es.daw.demo.service.UserService;
 import es.daw.demo.model.Review;
 import es.daw.demo.model.User;
+import es.daw.demo.dto.ReviewDTO;
+import es.daw.demo.dto.UserDTO;
 import es.daw.demo.model.Course;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -67,10 +69,7 @@ public class RESTReviewController {
             @RequestParam(required = false) Long parentId,
             HttpServletRequest request) {
         // Obtener el usuario
-        Optional<User> userOpt = userService.findByEmail(request.getUserPrincipal().getName());
-        if (userOpt.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
-        }
+        UserDTO user = userService.findByEmail(request.getUserPrincipal().getName());
 
         // Obtener el curso
         Optional<Course> courseOpt = courseService.findById(courseId);
@@ -80,17 +79,13 @@ public class RESTReviewController {
         Course course = courseOpt.get();
 
         // Obtener la reseña padre si existe
-        Review parentReview = null;
+        ReviewDTO parentReview = null;
         if (parentId != null) {
-            Optional<Review> parentReviewOpt = reviewService.getParentReview(parentId);
-            if (parentReviewOpt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reseña padre no encontrada");
-            }
-            parentReview = parentReviewOpt.get();
+            parentReview = reviewService.getParentReview(parentId);
         }
 
         // Crear y guardar la nueva reseña
-        reviewService.createReview(text, userOpt.get(), course, parentReview);
+        reviewService.createReview(text, user, course, parentReview);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Reseña creada exitosamente");
     }
@@ -102,13 +97,10 @@ public class RESTReviewController {
     })
     @PostMapping("/{id}/mark-pending")
     public ResponseEntity<?> markReviewAsPending(@PathVariable Long id) {
-        Optional<Review> optionalReview = reviewService.findReviewById(id);
-        if (optionalReview.isPresent()) {
-            Review review = optionalReview.get();
-            review.setState(true);
-            reviewService.save(review);
-            return ResponseEntity.ok("Reseña marcada como pendiente");
-        }
+        ReviewDTO review = reviewService.findReviewById(id);
+        review.setState(true);
+        reviewService.save(review);
+        return ResponseEntity.ok("Reseña marcada como pendiente");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reseña no encontrada");
     }
 
@@ -119,13 +111,10 @@ public class RESTReviewController {
     })
     @PostMapping("/{id}/desmark-pending")
     public ResponseEntity<?> markReviewAsNoPending(@PathVariable Long id) {
-        Optional<Review> optionalReview = reviewService.findReviewById(id);
-        if (optionalReview.isPresent()) {
-            Review review = optionalReview.get();
-            review.setState(false);
-            reviewService.save(review);
-            return ResponseEntity.ok("Reseña desmarcada de pendiente");
-        }
+        ReviewDTO review = reviewService.findReviewById(id);
+        review.setState(false);
+        reviewService.save(review);
+        return ResponseEntity.ok("Reseña desmarcada de pendiente");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reseña no encontrada");
     }
 
@@ -140,23 +129,19 @@ public class RESTReviewController {
     public ResponseEntity<?> editReview(@PathVariable Long id,
             @RequestParam String newText,
             HttpServletRequest request) {
-        Optional<Review> reviewOptional = reviewService.findReviewById(id);
-        if (reviewOptional.isPresent()) {
-            Review review = reviewOptional.get();
+        ReviewDTO review = reviewService.findReviewById(id);
 
-            // Verificar que el usuario es el autor de la reseña o el admin
-            String currentUserEmail = request.getUserPrincipal().getName();
-            if (!review.getUser().getEmail().equals(currentUserEmail) && !request.isUserInRole("ADMIN")) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acción no autorizada");
-            }
-
-            // Actualizar la reseña
-            review.setText(newText);
-            reviewService.save(review);
-
-            return ResponseEntity.ok("Reseña actualizada exitosamente");
+        // Verificar que el usuario es el autor de la reseña o el admin
+        String currentUserEmail = request.getUserPrincipal().getName();
+        if (!review.getUser().getEmail().equals(currentUserEmail) && !request.isUserInRole("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acción no autorizada");
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reseña no encontrada");
+
+        // Actualizar la reseña
+        review.setText(newText);
+        reviewService.save(review);
+
+        return ResponseEntity.ok("Reseña actualizada exitosamente");
     }
 
     @Operation(summary = "Eliminar una reseña por ID")
@@ -166,11 +151,7 @@ public class RESTReviewController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteReview(@PathVariable Long id) {
-        Optional<Review> reviewOptional = reviewService.findReviewById(id);
-        if (reviewOptional.isPresent()) {
-            reviewService.deleteReview(id);
-            return ResponseEntity.ok("Reseña eliminada exitosamente");
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reseña no encontrada");
+        reviewService.deleteReview(id);
+        return ResponseEntity.ok("Reseña eliminada exitosamente")
     }
 }

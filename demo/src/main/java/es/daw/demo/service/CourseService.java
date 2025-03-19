@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -151,8 +153,8 @@ public class CourseService {
         return courseRepository.findAllByOrderByRatingDesc(pageable);
     }
 
-    public Page<Course> findByInstructor(User user, Pageable pageable) {
-        return courseRepository.findByInstructor(user, pageable);
+    public Page<Course> findByInstructor(UserDTO user, Pageable pageable) {
+        return courseRepository.findByInstructor(user.id(), pageable);
     }
 
     public Page<Course> findByTopicOrderByRatingDesc(String topic, Pageable pageable) {
@@ -183,6 +185,10 @@ public class CourseService {
 
     private Collection<CourseDTO> toDTOs(Collection<Course> courses) {
         return courseMapper.toDTOs(courses);
+    }
+
+    public Optional<Course> findById(Long courseId) {
+        return courseRepository.findById(courseId);
     }
 
 }

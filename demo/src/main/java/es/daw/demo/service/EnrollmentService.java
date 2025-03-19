@@ -1,5 +1,6 @@
 package es.daw.demo.service;
 
+import es.daw.demo.dto.UserDTO;
 import es.daw.demo.model.Course;
 import es.daw.demo.model.Enrollment;
 import es.daw.demo.model.User;
@@ -127,8 +128,8 @@ public class EnrollmentService {
                 .orElseThrow(() -> new RuntimeException("Inscripción no encontrada"));
     }
 
-    public Page<Course> getCoursesByUser(User user, Pageable pageable) {
-        List<Course> courses = enrollmentRepository.findByUser(user)
+    public Page<Course> getCoursesByUser(UserDTO user, Pageable pageable) {
+        List<Course> courses = enrollmentRepository.findByUser(user.id())
                 .stream()
                 .map(Enrollment::getCourse)
                 .collect(Collectors.toList());
@@ -141,8 +142,8 @@ public class EnrollmentService {
         return new PageImpl<>(pagedCourses, pageable, courses.size());
     }
 
-    public List<Enrollment> findByUser(User user) {
-        return enrollmentRepository.findByUser(user);
+    public List<Enrollment> findByUser(UserDTO user) {
+        return enrollmentRepository.findByUser(user.id());
     }
 
     public List<Enrollment> findByCourse(Course course) {

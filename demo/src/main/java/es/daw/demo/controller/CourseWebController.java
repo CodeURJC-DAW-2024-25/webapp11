@@ -199,7 +199,7 @@ public class CourseWebController {
             UserDTO user = userService.findByEmail(principal.getName());
             if (user != null) {
                 model.addAttribute("isLoggedIn", true);
-                Collection<CourseDTO> courses = courseService.getTopRatedCoursesByTopic(user.get().getTopic());
+                Collection<CourseDTO> courses = courseService.getTopRatedCoursesByTopic(user.topic());
                 model.addAttribute("recomendCourses", courses);
             } else {
                 model.addAttribute("isLoggedIn", false);
@@ -231,7 +231,7 @@ public class CourseWebController {
             @RequestParam(defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Principal principal = request.getUserPrincipal();
-        Page<Course> coursesPage = courseService.findByInstructor(userService.findByEmail(principal.getName()).get(),
+        Page<Course> coursesPage = courseService.findByInstructor(userService.findByEmail(principal.getName()),
                 pageable);
 
         model.addAttribute("taughtCourses", coursesPage.getContent());
@@ -244,7 +244,7 @@ public class CourseWebController {
             @RequestParam(defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Principal principal = request.getUserPrincipal();
-        Page<Course> coursesPage = enrollmentService.getCoursesByUser(userService.findByEmail(principal.getName()).get(), pageable);
+        Page<Course> coursesPage = enrollmentService.getCoursesByUser(userService.findByEmail(principal.getName()), pageable);
 
         model.addAttribute("taughtCourses", coursesPage.getContent());
 

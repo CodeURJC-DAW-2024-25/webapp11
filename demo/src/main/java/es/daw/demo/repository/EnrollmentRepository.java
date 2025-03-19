@@ -12,7 +12,7 @@ import es.daw.demo.model.User;
 import es.daw.demo.model.Course;
 
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
-    List<Enrollment> findByUser(User user);
+    List<Enrollment> findByUser(Long id);
 
     List<Enrollment> findByCourse(Course course);
 

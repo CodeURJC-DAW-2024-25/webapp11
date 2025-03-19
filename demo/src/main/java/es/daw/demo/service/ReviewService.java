@@ -2,6 +2,7 @@ package es.daw.demo.service;
 
 import es.daw.demo.dto.ReviewDTO;
 import es.daw.demo.dto.ReviewMapper;
+import es.daw.demo.dto.UserDTO;
 import es.daw.demo.model.Course;
 import es.daw.demo.model.Review;
 import es.daw.demo.model.User;
@@ -26,9 +27,9 @@ public class ReviewService {
     @Autowired
     private ReviewMapper reviewMapper;
 
-    public ReviewDTO createReview(String text, User user, Course course, Review parentReview) {
+    public ReviewDTO createReview(String text, UserDTO user, Course course, ReviewDTO parentReview) {
         // Crete new review
-        Review review = new Review(text, user, course, parentReview);
+        Review review = new Review(text, userRepository.findByFirstName(user.firstName()).get(), course, reviewRepository.findById(parentReview.id()).get());
         // Save review in the database
         return toDTO(reviewRepository.save(review));
     }
