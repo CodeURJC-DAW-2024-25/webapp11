@@ -302,7 +302,7 @@ public class DataBaseInitializer{
         }
     }
         private void updateUserTopic(User user) {
-        List<Enrollment> enrollments = enrollmentRepository.findByUser(user);
+        List<Enrollment> enrollments = enrollmentRepository.findByUser(user.getId());
         
         Map<String, Long> topicCount = enrollments.stream()
             .collect(Collectors.groupingBy(e -> e.getCourse().getTopic(), Collectors.counting()));

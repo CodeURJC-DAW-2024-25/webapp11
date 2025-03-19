@@ -15,7 +15,6 @@ import es.daw.demo.dto.CourseDTO;
 import es.daw.demo.dto.UserDTO;
 import es.daw.demo.dto.CourseMapper;
 import es.daw.demo.model.Course;
-import es.daw.demo.model.User;
 import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.repository.EnrollmentRepository;
 import org.springframework.data.domain.Page;
@@ -23,7 +22,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.InputStreamResource;
 
-// FALTA CAMBIAR LOS PAGEABLES DE LAS FUNCIONES QUE DEVUELVEN PAGE<Course>
 
 
 @Service
@@ -58,9 +56,9 @@ public class CourseService {
         return toDTO(courseRepository.findById(id).orElseThrow());
     }
 
-    public Page<Course> getCoursesOrderedByRating(Pageable pageable) {
+    public Page<CourseDTO> getCoursesOrderedByRating(Pageable pageable) {
         // Return courses by rating and paged
-        return courseRepository.findAllByOrderByRatingDesc(pageable);
+        return courseRepository.findAllByOrderByRatingDesc(pageable).map(this::toDTO);
     }
 
     public Collection<CourseDTO> findTop4ByOrderByRatingDesc() {
@@ -149,20 +147,20 @@ public class CourseService {
         courseRepository.save(course);
     }
 
-    public Page<Course> findAllByOrderByRatingDesc(Pageable pageable) {
-        return courseRepository.findAllByOrderByRatingDesc(pageable);
+    public Page<CourseDTO> findAllByOrderByRatingDesc(Pageable pageable) {
+        return courseRepository.findAllByOrderByRatingDesc(pageable).map(this::toDTO);
     }
 
-    public Page<Course> findByInstructor(UserDTO user, Pageable pageable) {
-        return courseRepository.findByInstructor(user.id(), pageable);
+    public Page<CourseDTO> findByInstructor(UserDTO user, Pageable pageable) {
+        return courseRepository.findByInstructor(user.id(), pageable).map(this::toDTO);
     }
 
-    public Page<Course> findByTopicOrderByRatingDesc(String topic, Pageable pageable) {
-        return courseRepository.findByTopicOrderByRatingDesc(topic, pageable);
+    public Page<CourseDTO> findByTopicOrderByRatingDesc(String topic, Pageable pageable) {
+        return courseRepository.findByTopicOrderByRatingDesc(topic, pageable).map(this::toDTO);
     }
 
-    public Page<Course> searchCourses(String title, Pageable pageable) {
-        return courseRepository.searchCourses(title, pageable);
+    public Page<CourseDTO> searchCourses(String title, Pageable pageable) {
+        return courseRepository.searchCourses(title, pageable).map(this::toDTO);
     }
 
     public List<Object[]> getMostCoursesCategoriesNameAndCount() {

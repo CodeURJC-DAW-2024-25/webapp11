@@ -51,7 +51,7 @@ public class EnrollmentService {
         }
 
         // check if the user is already enrolled in the course
-        List<Enrollment> existingEnrollments = enrollmentRepository.findByUser(user);
+        List<Enrollment> existingEnrollments = enrollmentRepository.findByUser(userId);
         for (Enrollment enrollment : existingEnrollments) {
             if (enrollment.getCourse().equals(course)) {
                 return "Ya está inscrito en este curso";
@@ -90,10 +90,7 @@ public class EnrollmentService {
     }
 
     public List<Enrollment> findEnrollmentsByUser(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        return enrollmentRepository.findByUser(user);
+        return enrollmentRepository.findByUser(userId);
     }
 
     public List<Enrollment> findEnrollmentsByCourse(Long courseId) {
