@@ -66,13 +66,6 @@ public class UserController {
         }
     }
 
-    @GetMapping("/error-login")
-    public String loginError(Model model) {
-        model.addAttribute("errorTitle", "Error de Autenticación");
-        model.addAttribute("errorMessage", "Usuario o contraseña incorrectos");
-        return "/error";
-    }
-
     // Create a new user
     @PostMapping("/newUser")
     public String newUser(@RequestParam String firstName,
@@ -107,12 +100,6 @@ public class UserController {
     @GetMapping("/signUp")
     public String showSignUpPage() {
         return "signup"; 
-    }
-
-    // Change view to the login page
-    @GetMapping("/login")
-    public String showLoginPage() {
-        return "login"; 
     }
 
     // Upload a profile image
