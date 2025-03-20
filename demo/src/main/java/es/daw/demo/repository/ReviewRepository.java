@@ -11,4 +11,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByCourseIdAndParentIsNull(Long courseId);
     List<Review> findByUser(User user); // search all reviews of a user
     List<Review> findByPendingTrue();
+    Review findById(long id);
 }

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import es.daw.demo.dto.CourseDTO;
 import es.daw.demo.dto.UserDTO;
 import es.daw.demo.dto.CourseMapper;
+import es.daw.demo.dto.EnrollmentDTO;
 import es.daw.demo.model.Course;
 import es.daw.demo.repository.CourseRepository;
-import es.daw.demo.repository.EnrollmentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.core.io.Resource;
@@ -31,10 +30,10 @@ public class CourseService {
     private CourseRepository courseRepository;
 
     @Autowired
-    private EnrollmentRepository enrollmentRepository;
+    private CourseMapper courseMapper;
 
     @Autowired
-    private CourseMapper courseMapper;
+    private EnrollmentService enrollmentService;
 
     public void createCourse(CourseDTO courseDTO, MultipartFile imageFile, MultipartFile noteFile) throws IOException {
         if (courseDTO.id() != null) {
@@ -53,7 +52,7 @@ public class CourseService {
     }
 
     public CourseDTO getCourse(long id) {
-        return toDTO(courseRepository.findById(id).orElseThrow());
+        return toDTO(courseRepository.findById(id));
     }
 
     public Page<CourseDTO> getCoursesOrderedByRating(Pageable pageable) {
@@ -84,21 +83,6 @@ public class CourseService {
 
     public Collection<CourseDTO> getTopRatedCoursesByTopic(String topic) {
         return toDTOs(courseRepository.findTop4ByTopicOrderByRatingDesc(topic));
-    }
-
-    public void updateCourseRating(Long courseId) {
-        // Get the course
-        Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
-    
-        // Get the average from the BBDD
-        Double averageRating = enrollmentRepository.findAverageRatingByCourseId(courseId);
-    
-        // Set the rating
-        course.setRating((averageRating != null) ? averageRating.intValue() : 0);
-    
-        // Save the changes
-        courseRepository.save(course);
     }
 
     public Resource getCourseImage(Long courseId) {
@@ -171,7 +155,22 @@ public class CourseService {
         return courseRepository.getMostInscribedCategoriesNameAndCount();
     }
 
+    public void updateCourseRating (Long courseId) {
+        Course course = courseRepository.findById(courseId).orElseThrow();
+        Collection<EnrollmentDTO> enrollments = enrollmentService.findEnrollmentsByCourse(courseId);
 
+        int totalRating = enrollments.stream()
+                                     .mapToInt(enrollmentDTO -> enrollmentDTO.rating())
+                                     .sum();
+        int newAverageRating = enrollments.isEmpty() ? 0 : totalRating / enrollments.size();
+
+        course.setRating(newAverageRating);
+        courseRepository.save(course);
+    }
+
+    public CourseDTO findById(Long courseId) {
+        return toDTO(courseRepository.findById(courseId).orElseThrow());
+    }
 
     private Course toDomain(CourseDTO courseDTO) {
         return courseMapper.toDomain(courseDTO);
@@ -185,8 +184,6 @@ public class CourseService {
         return courseMapper.toDTOs(courses);
     }
 
-    public Optional<Course> findById(Long courseId) {
-        return courseRepository.findById(courseId);
-    }
+    
 
 }

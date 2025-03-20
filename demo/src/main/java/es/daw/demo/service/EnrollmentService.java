@@ -1,5 +1,9 @@
 package es.daw.demo.service;
 
+import es.daw.demo.dto.CourseDTO;
+import es.daw.demo.dto.EnrollmentDTO;
+import es.daw.demo.dto.EnrollmentMapper;
+import es.daw.demo.dto.CourseMapper;
 import es.daw.demo.dto.UserDTO;
 import es.daw.demo.model.Course;
 import es.daw.demo.model.Enrollment;
@@ -13,6 +17,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -31,8 +36,15 @@ public class EnrollmentService {
     @Autowired
     private UserRepository userRepository;
 
-    public Enrollment save(Enrollment enrollment) {
-        return enrollmentRepository.save(enrollment);
+    @Autowired
+    private EnrollmentMapper enrollmentMapper;
+
+    @Autowired
+    private CourseMapper courseMapper;
+
+    public EnrollmentDTO createEnrollment(EnrollmentDTO enrollmentDTO) {
+        Enrollment enrollment = toDomain(enrollmentDTO);
+        return toDTO(enrollmentRepository.save(enrollment));
     }
 
     public String enrollUserToCourse(Long userId, Long courseId) {
@@ -70,7 +82,7 @@ public class EnrollmentService {
     }
 
     private void updateUserTopic(User user) {
-        String mostFrequentTopic = enrollmentRepository.findMostFrequentTopicByUser(user);
+        String mostFrequentTopic = enrollmentRepository.findMostFrequentTopicByUser(user.getId());
         
         if (mostFrequentTopic != null) {
             user.setTopic(mostFrequentTopic);
@@ -85,23 +97,20 @@ public class EnrollmentService {
         Enrollment enrollment = enrollmentRepository.findById(enrollmentId)
                 .orElseThrow(() -> new RuntimeException("Inscripción no encontrada"));
 
-        // delet the enrollment
+        // delete the enrollment
         enrollmentRepository.delete(enrollment);
     }
 
-    public List<Enrollment> findEnrollmentsByUser(Long userId) {
-        return enrollmentRepository.findByUser(userId);
+    public Collection<EnrollmentDTO> findEnrollmentsByUser(Long userId) {
+        return toDTOs(enrollmentRepository.findByUser(userId));
     }
 
-    public List<Enrollment> findEnrollmentsByCourse(Long courseId) {
-        Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
-
-        return enrollmentRepository.findByCourse(course);
+    public Collection<EnrollmentDTO> findEnrollmentsByCourse(Long courseId) {
+        return toDTOs(enrollmentRepository.findByCourse(courseId));
     }
 
-    public Optional<Enrollment> findById(Long enrollmentId) {
-        return enrollmentRepository.findById(enrollmentId);
+    public EnrollmentDTO findById(Long enrollmentId) {
+        return toDTO(enrollmentRepository.findByIdEnrollment(enrollmentId));
     }
 
     public Boolean isUserEnrolledInCourse(Long userId, Long courseId) {
@@ -109,49 +118,61 @@ public class EnrollmentService {
     }
     
 
-    public String getMostFrequentTopic(User user) {
-        String mostFrequentTopic = enrollmentRepository.findMostFrequentTopicByUser(user);
-        return (mostFrequentTopic != null) ? mostFrequentTopic : user.getTopic();
+    public String getMostFrequentTopic(UserDTO user) {
+        String mostFrequentTopic = enrollmentRepository.findMostFrequentTopicByUser(user.id());
+        return (mostFrequentTopic != null) ? mostFrequentTopic : user.topic();
     }
     
+    public void updateRating(Long enrollmentId, int rating) {
+        Enrollment enrollment = enrollmentRepository.findById(enrollmentId)
+                .orElseThrow(() -> new RuntimeException("Inscripción no encontrada"));
+        enrollment.setRating(rating);
+        enrollmentRepository.save(enrollment);
+    }
 
-    public Enrollment findByUserAndCourse(Long userId, Long courseId) {
+    public EnrollmentDTO findByUserAndCourse(Long userId, Long courseId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
 
-        return enrollmentRepository.findByUserAndCourse(user, course)
-                .orElseThrow(() -> new RuntimeException("Inscripción no encontrada"));
+        return toDTO(enrollmentRepository.findByUserAndCourse(user, course));
     }
 
-    public Page<Course> getCoursesByUser(UserDTO user, Pageable pageable) {
-        List<Course> courses = enrollmentRepository.findByUser(user.id())
-                .stream()
-                .map(Enrollment::getCourse)
-                .collect(Collectors.toList());
+    public Page<CourseDTO> getCoursesByUser(UserDTO user, Pageable pageable) {
 
-        int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), courses.size());
-        
-        List<Course> pagedCourses = courses.subList(start, end);
-
-        return new PageImpl<>(pagedCourses, pageable, courses.size());
+        return enrollmentRepository.findByUser(user.id(), pageable).map(courseMapper::toDTO);
     }
 
-    public List<Enrollment> findByUser(UserDTO user) {
-        return enrollmentRepository.findByUser(user.id());
+    public Collection<EnrollmentDTO> findByUser(UserDTO user) {
+        return toDTOs(enrollmentRepository.findByUser(user.id()));
     }
 
-    public List<Enrollment> findByCourse(Course course) {
-        return enrollmentRepository.findByCourse(course);
+    public Collection<EnrollmentDTO> findByCourse(CourseDTO course) {
+        return toDTOs(enrollmentRepository.findByCourse(course.id()));
     }
 
-    public void delete(Enrollment enrollment) {
+    public void delete(EnrollmentDTO enrollmentDTO) {
+        Enrollment enrollment = toDomain(enrollmentDTO);
         enrollmentRepository.delete(enrollment);
     }
 
     public List<Object[]> getMostPunctuation(Long course_id){
         return enrollmentRepository.getMostPunctuation(course_id);
     }
+
+    private EnrollmentDTO toDTO(Enrollment enrollment) {
+        return enrollmentMapper.toDTO(enrollment);
+    }
+
+    private Enrollment toDomain(EnrollmentDTO enrollmentDTO) {
+        return enrollmentMapper.toDomain(enrollmentDTO);
+    }
+
+    private Collection<EnrollmentDTO> toDTOs(Collection<Enrollment> enrollments) {
+        return enrollments.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
 }

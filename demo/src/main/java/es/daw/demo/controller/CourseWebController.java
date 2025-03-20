@@ -21,7 +21,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import es.daw.demo.dto.CourseDTO;
 import es.daw.demo.dto.ReviewDTO;
 import es.daw.demo.dto.UserDTO;
-import es.daw.demo.model.Course;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -238,7 +237,7 @@ public class CourseWebController {
             @RequestParam(defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
         Principal principal = request.getUserPrincipal();
-        Page<Course> coursesPage = enrollmentService.getCoursesByUser(userService.findByEmail(principal.getName()), pageable);
+        Page<CourseDTO> coursesPage = enrollmentService.getCoursesByUser(userService.findByEmail(principal.getName()), pageable);
 
         model.addAttribute("taughtCourses", coursesPage.getContent());
 

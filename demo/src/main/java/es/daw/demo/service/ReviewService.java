@@ -1,11 +1,13 @@
 package es.daw.demo.service;
 
+import es.daw.demo.dto.CourseDTO;
 import es.daw.demo.dto.ReviewDTO;
 import es.daw.demo.dto.ReviewMapper;
 import es.daw.demo.dto.UserDTO;
 import es.daw.demo.model.Course;
 import es.daw.demo.model.Review;
 import es.daw.demo.model.User;
+import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.repository.ReviewRepository;
 import es.daw.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +29,12 @@ public class ReviewService {
     @Autowired
     private ReviewMapper reviewMapper;
 
-    public ReviewDTO createReview(String text, UserDTO user, Course course, ReviewDTO parentReview) {
+    @Autowired
+    private CourseRepository courseRepository;
+
+    public ReviewDTO createReview(String text, UserDTO user, CourseDTO course, ReviewDTO parentReview) {
         // Crete new review
-        Review review = new Review(text, userRepository.findByFirstName(user.firstName()).get(), course, reviewRepository.findById(parentReview.id()).get());
+        Review review = new Review(text, userRepository.findByFirstName(user.firstName()).get(), courseRepository.findById(course.id()).orElseThrow(), reviewRepository.findById(parentReview.id()).orElse(null));
         // Save review in the database
         return toDTO(reviewRepository.save(review));
     }
@@ -48,16 +53,34 @@ public class ReviewService {
         }
     }
 
-    public ReviewDTO editReview(Long reviewId, String newText, String newRating) {
+    public void markReviewAsPending(Long reviewId) {
         Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
 
         if (reviewOptional.isPresent()) {
             Review review = reviewOptional.get();
+            review.setState(true);
+            reviewRepository.save(review);
+        } else {
+            throw new RuntimeException("Reseña no encontrada");
+        }
+    }
+
+    public void markReviewAsNoPending(Long reviewId) {
+        Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
+
+        if (reviewOptional.isPresent()) {
+            Review review = reviewOptional.get();
+            review.setState(false);
+            reviewRepository.save(review);
+        } else {
+            throw new RuntimeException("Reseña no encontrada");
+        }
+    }
+
+    public ReviewDTO editReview(Long reviewId, String newText) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow();
             review.setText(newText);
             return toDTO(reviewRepository.save(review));
-        } else {
-            throw new RuntimeException("Reseña no enocntrada");
-        }
     }
 
     public void deleteReview(Long reviewId) {
