@@ -141,9 +141,10 @@ public class EnrollmentService {
     }
 
     public Page<CourseDTO> getCoursesByUser(UserDTO user, Pageable pageable) {
-
-        return enrollmentRepository.findByUser_Id(user.id(), pageable).map(courseMapper::toDTO);
+        return enrollmentRepository.findByUser_Id(user.id(), pageable)
+                                   .map(enrollment -> courseMapper.toDTO(enrollment.getCourse())); 
     }
+    
 
     public Collection<EnrollmentDTO> findByUser(UserDTO user) {
         return toDTOs(enrollmentRepository.findByUser_Id(user.id()));

@@ -131,6 +131,7 @@ public class SecurityConfig {
 
 						// PRIVATE PAGES
 						.requestMatchers("/course/enroll").hasAnyRole("USER")
+						.requestMatchers("/user/{id}/image").hasAnyRole("USER")
 						.requestMatchers("/enrollment/rate").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/course/newReview").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/reviews/{id}/mark-pending").hasAnyRole("USER", "ADMIN")

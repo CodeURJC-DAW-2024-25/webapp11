@@ -2,7 +2,7 @@
 <main class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-6 text-center p-4 border rounded">
-            <img id="profile-img" src="/profileImage/{{user.id}}" class="rounded-circle img-fluid mb-3" alt="Foto de perfil" style="max-width: 150px;">
+            <img id="profile-img" src="/user/{{user.id}}/image" class="rounded-circle img-fluid mb-3" alt="Foto de perfil" style="max-width: 150px;">
             <input type="file" class="form-control-file d-none" id="upload-photo">
             
             <p id="user-name"><strong>{{user.firstName}} {{user.lastName}}</strong></p>
@@ -39,7 +39,7 @@
                                   <div class="form-group">
                                     <label for="topic">Categoría preferida</label>
                                     <select id="topic" name="topic" class="form-control">
-                                      <option value="" disabled selected>Me gustaría aprender sobre...</option>
+                                      <option value="{{user.topic}}" selected>Me gustaría aprender sobre...</option>
                                       <option value="Desarrollo web">Desarrollo web</option>
                                       <option value="Desarrollo móvil">Desarrollo móvil</option>
                                       <option value="Desarrollo de videojuegos">Desarrollo de videojuegos</option>

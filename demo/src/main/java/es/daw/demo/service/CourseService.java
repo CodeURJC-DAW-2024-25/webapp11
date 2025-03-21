@@ -136,7 +136,7 @@ public class CourseService {
     }
 
     public Page<CourseDTO> findByInstructor(UserDTO user, Pageable pageable) {
-        return courseRepository.findByInstructor(user.id(), pageable).map(this::toDTO);
+        return courseRepository.findByInstructor_Id(user.id(), pageable).map(this::toDTO);
     }
 
     public Page<CourseDTO> findByTopicOrderByRatingDesc(String topic, Pageable pageable) {

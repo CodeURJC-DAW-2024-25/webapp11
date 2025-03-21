@@ -63,7 +63,7 @@ public class ReviewWebController {
         // Create and save the new review
         reviewService.createReview(text, user, course, parentReview);
 
-        return "redirect:/showCourse/" + courseId;
+        return "redirect:/course/" + courseId;
     }
 
     // Mark a review for revision
@@ -73,7 +73,7 @@ public class ReviewWebController {
         if (reviewDTO != null) {
             reviewService.markReviewAsPending(id);
         }
-        return "redirect:/showCourse/" + reviewDTO.course().id();
+        return "redirect:/course/" + reviewDTO.course().id();
     }
 
     // Desmark a review for revision
@@ -124,7 +124,7 @@ public class ReviewWebController {
         if (request.isUserInRole("ADMIN")) {
             return "redirect:/profile";
         } else {
-            return "redirect:/showCourse/" + reviewDto.course().id();
+            return "redirect:/course/" + reviewDto.course().id();
         }
 
     }

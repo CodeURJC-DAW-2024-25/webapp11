@@ -15,8 +15,10 @@ import es.daw.demo.model.Course;
 
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
     List<Enrollment> findByUser_Id(Long id);
+    //Page<Enrollment> findByUser_Id(Long id, Pageable pageable);
+    Page<Enrollment> findByUser_Id(Long id, Pageable pageable);
 
-    Page<Course> findByUser_Id(Long id, Pageable page);
+    //Page<Course> findByUser_Id(Long id, Pageable page);
     Enrollment findById(long id);
 
     List<Enrollment> findByCourse_Id(Long id);

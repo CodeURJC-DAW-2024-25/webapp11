@@ -10,7 +10,6 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
@@ -173,15 +172,11 @@ public class UserWebController {
                              @RequestParam String confirmPassword,
                              @RequestParam(required = false) MultipartFile imageFile) throws IOException, SQLException {
 
-        CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-
-        model.addAttribute("token", csrfToken.getToken());
-
         UserDTO user = userService.findById(userID);
         if (user != null) {
             String password;
             // Verify password and new password
-            if (!newPassword.isEmpty() && newPassword.equals(confirmPassword)) {
+            if (newPassword.equals(confirmPassword)) {
                 password = passwordEncoder.encode(newPassword);
                 userService.updateUser(userID, firstName, lastName, email, topic, imageFile, password);
             }
