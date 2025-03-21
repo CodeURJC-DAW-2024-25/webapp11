@@ -9,4 +9,5 @@ public record UserDTO(
         String email,
         String topic,
         List <String> roles) {
+
 }

@@ -20,9 +20,8 @@ import es.daw.demo.service.EmailService;
 import es.daw.demo.service.EnrollmentService;
 import es.daw.demo.service.ReviewService;
 import es.daw.demo.service.UserService;
-import es.daw.demo.model.Course;
-import es.daw.demo.model.Review;
-import es.daw.demo.model.User;
+import es.daw.demo.dto.ReviewDTO;
+import es.daw.demo.dto.UserDTO;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -30,6 +29,7 @@ import org.springframework.http.HttpHeaders;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +37,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-public class UserController {
+public class UserWebController {
 
     @Autowired 
     private ReviewService reviewService;
@@ -51,16 +51,12 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private EnrollmentService enrollmentService;
-
-
     @ModelAttribute
     public void addAttributes(Model model, HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         if (principal != null) {
             model.addAttribute("isLoggedIn", true);
-            model.addAttribute("user", userService.findByEmail(principal.getName()).get());
+            model.addAttribute("user", userService.findByEmail(principal.getName()));
         } else {
             model.addAttribute("isLoggedIn", false);
         }
@@ -91,8 +87,8 @@ public class UserController {
             return "error";
         }
         password = passwordEncoder.encode(password);
-        User user = new User(firstName, lastName, email, password, topic, "USER");
-        userService.save(user, profileImage);
+        UserDTO user = new UserDTO(null, firstName, lastName, email, topic, List.of("USER"));
+        userService.createUser(user, profileImage, password);
         return "redirect:/";
     }
 
@@ -103,19 +99,14 @@ public class UserController {
     }
 
     // Upload a profile image
-    @GetMapping("/profileImage/{id}")
-    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
-        Optional<User> user = userService.findById(id);
-        if (user.isPresent() && user.get().getProfileImage() != null) {
+    @GetMapping("/user/{id}/image")
+    public ResponseEntity<Object> getProfileImage(@PathVariable long id) throws SQLException {
+        Resource profileImage = userService.getUserImage(id);
 
-            Resource file = new InputStreamResource(user.get().getProfileImage().getBinaryStream());
-
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
-                    .contentLength(user.get().getProfileImage().length()).body(file);
-
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+		return ResponseEntity
+				.ok()
+				.header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+				.body(profileImage);
     }
     
 
@@ -126,7 +117,7 @@ public class UserController {
         if (principal != null) {
             model.addAttribute("pagetitle", "Perfil");
             if (request.isUserInRole("ADMIN")) {
-                List<Review> pendingReviews = reviewService.findByPendingTrue();
+                Collection<ReviewDTO> pendingReviews = reviewService.findByPendingTrue();
                 model.addAttribute("reviews", pendingReviews);
                 return "admin";
             } else {
@@ -142,7 +133,7 @@ public class UserController {
     //List users
     @GetMapping("/admin/users")
     public String listUsers(@RequestParam(required = false) String name, Model model) {
-        List<User> users;
+        Collection<UserDTO> users;
         if (name != null && !name.isEmpty()) {
             users = userService.findByFirstNameContainingIgnoreCase(name);
         } else {
@@ -157,13 +148,13 @@ public class UserController {
     // Delete user
     @PostMapping("/admin/users/delete/{id}")
     public String banearUsuario(@PathVariable Long id, Model model) {
-        Optional <User> usuario = userService.findById(id);
+        UserDTO user = userService.findById(id);
 
         // Send email of notification
         String subject = "Notificación: Tu cuenta ha sido eliminada";
         String message = "Estimado usuario,\n\nTu cuenta ha sido eliminada de forma permanente. Si crees que esto es un error, por favor contacta con el soporte.";
 
-        emailService.sendEmail(usuario.get().getEmail(), subject, message);
+        emailService.sendEmail(user.email(), subject, message);
         userService.deleteById(id);
         model.addAttribute("pagetitle", "Perfil");
         return "admin";
@@ -175,8 +166,8 @@ public class UserController {
                              @PathVariable Long userID, Model model,
                              @RequestParam String firstName,
                              @RequestParam String lastName,
-                             //@RequestParam String email,
-                             //@RequestParam String topic,
+                             @RequestParam String email,
+                             @RequestParam String topic,
                              @RequestParam String currentPassword,
                              @RequestParam String newPassword,
                              @RequestParam String confirmPassword,
@@ -186,36 +177,20 @@ public class UserController {
 
         model.addAttribute("token", csrfToken.getToken());
 
-        Optional<User> optionalUser = userService.findById(userID);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+        UserDTO user = userService.findById(userID);
+        if (user != null) {
+            String password;
             // Verify password and new password
-            if (!newPassword.isEmpty() && newPassword.equals(confirmPassword) && passwordEncoder.matches(currentPassword, user.getPassword())) {
-                user.setPassword(passwordEncoder.encode(newPassword));
+            if (!newPassword.isEmpty() && newPassword.equals(confirmPassword)) {
+                password = passwordEncoder.encode(newPassword);
+                userService.updateUser(userID, firstName, lastName, email, topic, imageFile, password);
             }
-            // Update user
-            if (!lastName.isEmpty()) {
-                user.setLastName(lastName);
-            }
-            /*if (!email.isEmpty()) {               //Por qué se ha añadido si no funciona??
-                user.setEmail(email);
-            }
-            if (!topic.isEmpty()) {
-                user.setTopic(topic);
-            }*/
-            // Verify and update image
-            if (imageFile.getOriginalFilename() != "" && !imageFile.isEmpty()) {
-                user.setProfileImage(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
+            else {
+                model.addAttribute("errorTitle", "Error al actualizar el perfil");
+                model.addAttribute("errorMessage", "Las contraseñas no coinciden");
+                return "error";
             }
 
-            if (!firstName.isEmpty() && !userService.findByFirstName(firstName).isPresent()) {
-                user.setFirstName(firstName);
-                userService.save(user);
-                return "redirect:/profile";
-            }
-
-            // Save updated user
-            userService.save(user);
 
             // Redirect to profile
             return "redirect:/profile";
@@ -229,13 +204,13 @@ public class UserController {
                              @PathVariable Long userID, Model model,
                              @RequestParam(required = false) MultipartFile imageFile) throws IOException, SQLException, ServletException {
         
-        Optional <User> usuario = userService.findById(userID);
+        UserDTO user = userService.findById(userID);
 
         // Send email of notification
         String subject = "Notificación: Tu cuenta ha sido eliminada";
         String message = "Estimado usuario,\n\nTal y como solicitó, su cuenta ha sido eliminada de forma permanente.";
                         
-        emailService.sendEmail(usuario.get().getEmail(), subject, message);
+        emailService.sendEmail(user.email(), subject, message);
         userService.deleteById(userID);
         model.addAttribute("pagetitle", "Perfil");
 

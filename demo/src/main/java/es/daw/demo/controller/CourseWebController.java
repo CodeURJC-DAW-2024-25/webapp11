@@ -22,10 +22,10 @@ import es.daw.demo.dto.CourseDTO;
 import es.daw.demo.dto.ReviewDTO;
 import es.daw.demo.dto.UserDTO;
 
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.security.Principal;
 import java.sql.SQLException;
 
@@ -122,11 +122,11 @@ public class CourseWebController {
             model.addAttribute("errorMessage", "El usuario no tiene permisos");
             return "error";
         }
-        try{
-            CourseDTO course = courseService.getCourse(id);
+        CourseDTO course = courseService.getCourse(id);
+        if (course != null) {
             model.addAttribute("course",course);
             return "edit_course";
-        } catch (NoSuchElementException e) {
+        } else {
             model.addAttribute("errorTitle", "Error al editar el curso");
             model.addAttribute("errorMessage", "Curso no encontrado");
             return "error";
@@ -149,44 +149,40 @@ public class CourseWebController {
     }
 
     // Show course
-    @GetMapping("/courses/{id}")
+    @GetMapping("/course/{id}")
     public String showCourse(@PathVariable Long id, Model model, HttpServletRequest request) {
-        try{
-            CourseDTO course = courseService.getCourse(id);
-            String teacher = course.instructor().firstName() + " " + course.instructor().lastName();
-            model.addAttribute("pagetitle", "Curso");
-            model.addAttribute("teacher", teacher);
-            model.addAttribute("course", course);
-            Collection<ReviewDTO> parentReviews = reviewService.findParentReviewsByCourse(id);
-            model.addAttribute("reviews", parentReviews);
-            // coments not configurated yet
+        CourseDTO course = courseService.getCourse(id);
+        String teacher = course.instructor().firstName() + " " + course.instructor().lastName();
+        model.addAttribute("pagetitle", "Curso");
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("course", course);
+        Collection<ReviewDTO> parentReviews = reviewService.findParentReviewsByCourse(id);
+        model.addAttribute("reviews", parentReviews);
+        // coments not configurated yet
 
-            if (request.getUserPrincipal() != null) {
-                UserDTO user = userService.findByEmail(request.getUserPrincipal().getName());
-                if (user != null) {
-                    Long idUser = user.id();
-                    // Checks if the user is the instructor of the course
-                    // Checks if the user is enrolled to the course
-                    if (request.isUserInRole("USER")) {
-                        model.addAttribute("isEnrolled", enrollmentService.isUserEnrolledInCourse(idUser, id));
-                        model.addAttribute("isTeacher", courseService.isUserInstructor(id, idUser));
-                    } else if (request.isUserInRole("ADMIN")) {
-                        model.addAttribute("isEnrolled", false);
-                        model.addAttribute("isTeacher", true);
-                    }
-                } else {
+        if (request.getUserPrincipal() != null) {
+            UserDTO user = userService.findByEmail(request.getUserPrincipal().getName());
+            if (user != null) {
+                Long idUser = user.id();
+                // Checks if the user is the instructor of the course
+                // Checks if the user is enrolled to the course
+                if (request.isUserInRole("USER")) {
+                    model.addAttribute("isEnrolled", enrollmentService.isUserEnrolledInCourse(idUser, id));
+                    model.addAttribute("isTeacher", courseService.isUserInstructor(id, idUser));
+                } else if (request.isUserInRole("ADMIN")) {
                     model.addAttribute("isEnrolled", false);
-                    model.addAttribute("isTeacher", false);
+                    model.addAttribute("isTeacher", true);
                 }
             } else {
-                // If is an anonymus user
                 model.addAttribute("isEnrolled", false);
                 model.addAttribute("isTeacher", false);
             }
-            return "course";
-        } catch (NoSuchElementException e) {
-            return "error";
+        } else {
+            // If is an anonymus user
+            model.addAttribute("isEnrolled", false);
+            model.addAttribute("isTeacher", false);
         }
+        return "course";
     }
 
     // Show all courses

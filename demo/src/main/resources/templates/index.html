@@ -6,13 +6,13 @@
         {{#recomendCourses}}
             <div class="col-md-3 mb-4">
                 <div class="card">
-                    <img src="/image/{{id}}" class="card-img-top">
+                    <img src="/course/{{id}}/image" class="card-img-top">
                     <div class="card-body">
                         <strong class="d-inline-block mb-2 text-primary">{{topic}}</strong>
                         <h5 class="card-title">{{title}}</h5>
                         <div class="mb-1 text-muted">{{rating}} ⭐</div>
                         <p class="card-text">{{description}}</p>
-                        <a href="/showCourse/{{id}}" class="btn btn-primary">Ver curso</a>
+                        <a href="/course/{{id}}" class="btn btn-primary">Ver curso</a>
                     </div>
                 </div>
             </div>

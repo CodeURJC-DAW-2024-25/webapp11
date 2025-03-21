@@ -290,7 +290,7 @@ public class DataBaseInitializer{
     private void updateCourseRatings() {
         List<Course> courses = courseRepository.findAll();
         for (Course course : courses) {
-            List<Enrollment> enrollments = enrollmentRepository.findByCourse(course);
+            List<Enrollment> enrollments = enrollmentRepository.findByCourse_Id(course.getId());
             if (!enrollments.isEmpty()) {
                 int totalRating = enrollments.stream()
                                              .mapToInt(Enrollment::getRating)
@@ -302,7 +302,7 @@ public class DataBaseInitializer{
         }
     }
         private void updateUserTopic(User user) {
-        List<Enrollment> enrollments = enrollmentRepository.findByUser(user.getId());
+        List<Enrollment> enrollments = enrollmentRepository.findByUser_Id(user.getId());
         
         Map<String, Long> topicCount = enrollments.stream()
             .collect(Collectors.groupingBy(e -> e.getCourse().getTopic(), Collectors.counting()));

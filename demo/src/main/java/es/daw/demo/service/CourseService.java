@@ -69,7 +69,7 @@ public class CourseService {
     }
 
     public Collection<CourseDTO> findByInstructor(UserDTO user) {
-        return toDTOs(courseRepository.findByInstructor(user.id()));
+        return toDTOs(courseRepository.findByInstructor_Id(user.id()));
     }
 
     public void deleteCourse(long id) {

@@ -67,8 +67,8 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public Resource getUserImage(Long courseId) {
-        User user = userRepository.findById(courseId).orElseThrow();
+    public Resource getUserImage(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow();
         try {
             return new InputStreamResource(user.getProfileImage().getBinaryStream());
         } catch (SQLException e) {

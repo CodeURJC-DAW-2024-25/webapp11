@@ -33,8 +33,11 @@ public class ReviewService {
     private CourseRepository courseRepository;
 
     public ReviewDTO createReview(String text, UserDTO user, CourseDTO course, ReviewDTO parentReview) {
+
+        Review parentReviewEntity = (parentReview != null) ? 
+            reviewRepository.findById(parentReview.id()).orElse(null) : null;
         // Crete new review
-        Review review = new Review(text, userRepository.findByFirstName(user.firstName()).get(), courseRepository.findById(course.id()).orElseThrow(), reviewRepository.findById(parentReview.id()).orElse(null));
+        Review review = new Review(text, userRepository.findByFirstName(user.firstName()).get(), courseRepository.findById(course.id()).orElseThrow(), parentReviewEntity);
         // Save review in the database
         return toDTO(reviewRepository.save(review));
     }

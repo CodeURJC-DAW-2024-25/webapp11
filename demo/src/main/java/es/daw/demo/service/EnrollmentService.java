@@ -63,7 +63,7 @@ public class EnrollmentService {
         }
 
         // check if the user is already enrolled in the course
-        List<Enrollment> existingEnrollments = enrollmentRepository.findByUser(userId);
+        List<Enrollment> existingEnrollments = enrollmentRepository.findByUser_Id(userId);
         for (Enrollment enrollment : existingEnrollments) {
             if (enrollment.getCourse().equals(course)) {
                 return "Ya está inscrito en este curso";
@@ -102,15 +102,16 @@ public class EnrollmentService {
     }
 
     public Collection<EnrollmentDTO> findEnrollmentsByUser(Long userId) {
-        return toDTOs(enrollmentRepository.findByUser(userId));
+        return toDTOs(enrollmentRepository.findByUser_Id(userId));
     }
 
     public Collection<EnrollmentDTO> findEnrollmentsByCourse(Long courseId) {
-        return toDTOs(enrollmentRepository.findByCourse(courseId));
+        return toDTOs(enrollmentRepository.findByCourse_Id(courseId));
     }
 
     public EnrollmentDTO findById(Long enrollmentId) {
-        return toDTO(enrollmentRepository.findByIdEnrollment(enrollmentId));
+        return toDTO(enrollmentRepository.findById(enrollmentId)
+                .orElseThrow(() -> new RuntimeException("Inscripción no encontrada")));
     }
 
     public Boolean isUserEnrolledInCourse(Long userId, Long courseId) {
@@ -141,15 +142,15 @@ public class EnrollmentService {
 
     public Page<CourseDTO> getCoursesByUser(UserDTO user, Pageable pageable) {
 
-        return enrollmentRepository.findByUser(user.id(), pageable).map(courseMapper::toDTO);
+        return enrollmentRepository.findByUser_Id(user.id(), pageable).map(courseMapper::toDTO);
     }
 
     public Collection<EnrollmentDTO> findByUser(UserDTO user) {
-        return toDTOs(enrollmentRepository.findByUser(user.id()));
+        return toDTOs(enrollmentRepository.findByUser_Id(user.id()));
     }
 
     public Collection<EnrollmentDTO> findByCourse(CourseDTO course) {
-        return toDTOs(enrollmentRepository.findByCourse(course.id()));
+        return toDTOs(enrollmentRepository.findByCourse_Id(course.id()));
     }
 
     public void delete(EnrollmentDTO enrollmentDTO) {
