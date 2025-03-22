@@ -117,7 +117,7 @@ public class CourseWebController {
             model.addAttribute("errorTitle", "Error al editar el curso");
             model.addAttribute("errorMessage", "Usuario no encontrado");
             return "error";
-        } else if (courseService.isUserInstructor(id, user.id()) && !request.isUserInRole("ADMIN")) {
+        } else if (!courseService.isUserInstructor(id, user.id()) && !request.isUserInRole("ADMIN")) {
             model.addAttribute("errorTitle", "Error al editar el curso");
             model.addAttribute("errorMessage", "El usuario no tiene permisos");
             return "error";
@@ -145,7 +145,7 @@ public class CourseWebController {
 
 
             courseService.updateCourse(id, title, description, topic, imageFile, notes);
-            return "redirect:/showCourse/" + id;
+            return "redirect:/course/" + id;
     }
 
     // Show course
