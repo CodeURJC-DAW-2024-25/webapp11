@@ -35,7 +35,7 @@ public class CourseService {
     @Autowired
     private EnrollmentService enrollmentService;
 
-    public void createCourse(CourseDTO courseDTO, MultipartFile imageFile, MultipartFile noteFile) throws IOException {
+    public CourseDTO createCourse(CourseDTO courseDTO, MultipartFile imageFile, MultipartFile noteFile) throws IOException {
         if (courseDTO.id() != null) {
             throw new IllegalArgumentException();
         }
@@ -49,6 +49,7 @@ public class CourseService {
         } else {
         }
         courseRepository.save(course);
+        return toDTO(course);
     }
 
     public CourseDTO getCourse(long id) {

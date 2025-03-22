@@ -2,7 +2,7 @@
 <main class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-6 text-center p-4 border rounded">
-            <img id="profile-img" src="/profileImage/{{user.id}}" class="rounded-circle img-fluid mb-3" alt="Foto de perfil" style="max-width: 150px;">
+            <img id="profile-img" src="/user/{{user.id}}/image" class="rounded-circle img-fluid mb-3" alt="Foto de perfil" style="max-width: 150px;">
             <input type="file" class="form-control-file d-none" id="upload-photo">
             
             <p id="user-name"><strong>{{user.firstName}} {{user.lastName}}</strong></p>
@@ -179,7 +179,7 @@
         <tbody>
             {{#users}}
             <tr>
-                <td>{{FirstName}}</td>
+                <td>{{firstName}}</td>
                 <td>
                     <form method="post" action="/admin/users/delete/{{id}}">
                         <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>

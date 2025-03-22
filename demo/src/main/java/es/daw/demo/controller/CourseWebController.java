@@ -55,12 +55,12 @@ public class CourseWebController {
             HttpServletRequest request) throws Exception {
         UserDTO instructor = userService.findByEmail(request.getUserPrincipal().getName());
         CourseDTO course = new CourseDTO(null, title, description, topic, instructor, 0);
-        courseService.createCourse(course, image, notes);
+        course = courseService.createCourse(course, image, notes);
 
         model.addAttribute("pagetitle", title);
         model.addAttribute("isTeacher", true);
         model.addAttribute("course", course);
-        return "redirect:/showCourse/" + course.id();
+        return "redirect:/course/" + course.id();
     }
 
     @ModelAttribute
@@ -159,7 +159,7 @@ public class CourseWebController {
         Collection<ReviewDTO> parentReviews = reviewService.findParentReviewsByCourse(id);
         model.addAttribute("reviews", parentReviews);
         // coments not configurated yet
-
+        System.out.println(parentReviews);
         if (request.getUserPrincipal() != null) {
             UserDTO user = userService.findByEmail(request.getUserPrincipal().getName());
             if (user != null) {

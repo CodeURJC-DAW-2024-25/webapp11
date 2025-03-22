@@ -22,7 +22,7 @@
                     <div class="comment mb-3">
                         <strong>{{user.firstName}} {{user.lastName}}</strong>
                         <p>{{text}}</p>
-                        {{#replies}}
+                        {{#sons}}
                             <div class="comment ml-3">
                                 <strong>{{user.firstName}} {{user.lastName}}</strong>
                                 <p>{{text}}</p>
@@ -33,7 +33,7 @@
                                     <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button> 
                                 </form>
                             {{/isTeacher}}
-                        {{/replies}}
+                        {{/sons}}
                         {{#isEnrolled}}
                             <form action="/course/newReview" method="post">
                                 <input type="hidden" name="courseId" value="{{course.id}}">
@@ -90,8 +90,8 @@
         <div class="tab-pane fade" id="material" role="tabpanel" aria-labelledby="material-tab">
             <h4>Previsualización del material</h4>
             {{#isEnrolled}}     <!-- If is enrolled-->
-                <object data="/notes/{{course.id}}" type="application/pdf" width="100%" height="400px">
-                    <p>Tu navegador no admite la visualización de PDFs. <a href="/notes/{{course.id}}" target="_blank">Haz clic aquí para verlo</a>.</p>
+                <object data="/course/{{course.id}}/notes" type="application/pdf" width="100%" height="400px">
+                    <p>Tu navegador no admite la visualización de PDFs. <a href="/course/{{course.id}}/notes" target="_blank">Haz clic aquí para verlo</a>.</p>
                 </object>
             {{/isEnrolled}}
 
@@ -99,8 +99,8 @@
                 <p>Debe inscribirse al curso para poder ver el material</p>
                 {{/isEnrolled}}
             {{#isTeacher}}     <!-- If is the teacher-->
-                <object data="/notes/{{course.id}}" type="application/pdf" width="100%" height="400px">
-                    <p>Tu navegador no admite la visualización de PDFs. <a href="/notes/{{course.id}}" target="_blank">Haz clic aquí para verlo</a>.</p>
+                <object data="/course/{{course.id}}/notes" type="application/pdf" width="100%" height="400px">
+                    <p>Tu navegador no admite la visualización de PDFs. <a href="/course/{{course.id}}/notes" target="_blank">Haz clic aquí para verlo</a>.</p>
                 </object>
                 <a href="/editCourse/{{id}}">
                     <button class="btn btn-success mt-3">Editar curso</button>

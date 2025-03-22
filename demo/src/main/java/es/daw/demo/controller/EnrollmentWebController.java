@@ -41,7 +41,7 @@ public class EnrollmentWebController {
         String result = enrollmentService.enrollUserToCourse(idUser, idCourse);
         
         if (result.equals("success")) {
-            return "redirect:/showCourse/" + idCourse;
+            return "redirect:/course/" + idCourse;
         } else {
             model.addAttribute("errorTitle", "Error al inscribirse al curso");
             model.addAttribute("errorMessage", result);
@@ -68,7 +68,7 @@ public class EnrollmentWebController {
         enrollmentService.updateRating(enrollmentDTO.id(), rating);
         courseService.updateCourseRating(courseId);
 
-        return "redirect:/showCourse/" + courseId;
+        return "redirect:/course/" + courseId;
     }
 
     @GetMapping("/statistics/{id}")
