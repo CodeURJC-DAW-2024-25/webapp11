@@ -10,9 +10,12 @@ import es.daw.demo.model.User;
 import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.repository.ReviewRepository;
 import es.daw.demo.repository.UserRepository;
+
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +45,7 @@ public class ReviewService {
         return toDTO(reviewRepository.save(review));
     }
 
-    public Collection<ReviewDTO> findParentReviewsByCourse(Long courseId) {
+    public List<ReviewDTO> findParentReviewsByCourse(Long courseId) {
         return toDTOs(reviewRepository.findByCourseIdAndParentIsNull(courseId));
     }
 
@@ -123,5 +126,21 @@ public class ReviewService {
 
     private List<ReviewDTO> toDTOs(Collection<Review> reviews) {
         return reviewMapper.toDTOs(reviews);
+    }
+
+    public ReviewDTO setState(ReviewDTO review, boolean b) {
+		Review newReview = toDomain(review);
+		newReview.setState(b);
+		reviewRepository.save(newReview);
+
+		return toDTO(newReview);
+    }
+
+    public ReviewDTO setText(ReviewDTO review, String newText) {
+		Review newReview = toDomain(review);
+		newReview.setText(newText);
+		reviewRepository.save(newReview);
+
+		return toDTO(newReview);
     }
 }
