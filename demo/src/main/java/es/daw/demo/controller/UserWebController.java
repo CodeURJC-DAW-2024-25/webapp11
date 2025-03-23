@@ -155,12 +155,12 @@ public class UserWebController {
     }
 
     // Update user
-    @PostMapping("/updateUser/{userID}")
+    @PostMapping("/user/{userID}/edit")
     public String updateUser(HttpServletRequest request,
                              @PathVariable Long userID, Model model,
                              @RequestParam String firstName,
                              @RequestParam String lastName,
-                             @RequestParam String email,
+                             //@RequestParam String email,
                              @RequestParam String topic,
                              @RequestParam String currentPassword,
                              @RequestParam String newPassword,
@@ -168,19 +168,22 @@ public class UserWebController {
                              @RequestParam(required = false) MultipartFile imageFile) throws IOException, SQLException {
 
         UserDTO user = userService.findById(userID);
+        String email = user.email();
         if (user != null) {
             String password;
             // Verify password and new password
             if (newPassword.equals(confirmPassword)) {
                 password = passwordEncoder.encode(newPassword);
-                userService.updateUser(userID, firstName, lastName, email, topic, imageFile, password);
+                user = userService.updateUser(userID, firstName, lastName, email, topic, imageFile, password);
+                System.out.println("User updated");
+                System.out.println(user.email());
             }
             else {
                 model.addAttribute("errorTitle", "Error al actualizar el perfil");
                 model.addAttribute("errorMessage", "Las contraseñas no coinciden");
                 return "error";
             }
-
+            
 
             // Redirect to profile
             return "redirect:/profile";

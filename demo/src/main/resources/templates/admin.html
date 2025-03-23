@@ -13,103 +13,87 @@
             <div id="Settings" class="w3-container tab" style="display:none">
                 <h2>Settings</h2>
                   <div data-content id="settings" class="active">
-                    <form id="updateForm" class="mx-1 mx-md-4" action="/updateUser/{{user.id}}" method="post" enctype="multipart/form-data">
+                    <form id="updateForm" class="mx-1 mx-md-4" action="/user/{{user.id}}/edit" method="post" enctype="multipart/form-data">
                       <div class="row">
-                        <div class="col">
-                          <div class="row">
-                            <div class="col">
-                              <div class="form-group">
-                                <label for="firstName">Nombre</label>
-                                <input class="form-control" id="firstName" type="text" name="firstName" placeholder="Nuevo nombre"/>
-                              </div>
-                            </div>
-                            <div class="col">
-                              <div class="form-group">
-                                <label for="lastName">Apellidos</label>
-                                <input class="form-control" id="lastName" type="text" name="lastName" placeholder="Nuevo apellido"/>
-                              </div>
-
-                              <div class="col">
-                                <div class="form-group">
-                                  <label for="lastName">Email</label>
-                                  <input type="email" id="email" name="email" class="form-control" placeholder="Email"/>
-                                </div>
-                              </div>
-              
-                                <div class="col">
-                                  <div class="form-group">
-                                    <label for="topic">Categoría preferida</label>
-                                    <select id="topic" name="topic" class="form-control">
-                                      <option value="" disabled selected>Me gustaría aprender sobre...</option>
-                                      <option value="Desarrollo web">Desarrollo web</option>
-                                      <option value="Desarrollo móvil">Desarrollo móvil</option>
-                                      <option value="Desarrollo de videojuegos">Desarrollo de videojuegos</option>
-                                      <option value="Emprendimiento">Emprendimiento</option>
-                                      <option value="Finanzas">Finanzas</option>
-                                      <option value="Marketing digital">Marketing digital</option>
-                                      <option value="Liderazgo">Liderazgo</option>
-                                      <option value="Comunicación">Comunicación</option>
-                                  </select>
-                                  </div>
-                                </div>
-
-                              <div class="delete">
-                                <a type="button" class="btn btn-primary btn-lg red" href="/deleteAccount/{{user.id}}" >Eliminar</a>
-                              </div>
-                            </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="firstName">Nombre</label>
+                            <input class="form-control" id="firstName" type="text" name="firstName" value="{{user.firstName}}" placeholder="Nuevo nombre"/>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="lastName">Apellidos</label>
+                            <input class="form-control" id="lastName" type="text" name="lastName" value="{{user.lastName}}" placeholder="Nuevo apellido"/>
                           </div>
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-12 col-sm-6 mb-3">
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" value="{{user.email}}" placeholder="Email"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="topic">Categoría preferida</label>
+                            <select id="topic" name="topic" class="form-control">
+                              <option value="{{user.topic}}" selected>{{user.topic}}</option>
+                              <option value="Desarrollo web">Desarrollo web</option>
+                              <option value="Desarrollo móvil">Desarrollo móvil</option>
+                              <option value="Desarrollo de videojuegos">Desarrollo de videojuegos</option>
+                              <option value="Emprendimiento">Emprendimiento</option>
+                              <option value="Finanzas">Finanzas</option>
+                              <option value="Marketing digital">Marketing digital</option>
+                              <option value="Liderazgo">Liderazgo</option>
+                              <option value="Comunicación">Comunicación</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 text-center">
+                          <a type="button" class="btn btn-danger btn-lg" href="/deleteAccount/{{user.id}}">Eliminar</a>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 mb-3">
                           <div class="mb-2"><b>Change Password</b></div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="form-group">
-                                <label for="currentPassword">Current Password</label>
-                                <input class="form-control" id="currentPassword" type="password" name="currentPassword" placeholder="••••••"/>
-                              </div>
-                            </div>
+                          <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <input class="form-control" id="currentPassword" type="password" name="currentPassword" placeholder="••••••"/>
                           </div>
                           {{#error}}
                           <div class="form-outline mb-4 w-50 mx-auto">
-                              <p class="text-danger">Las contraseñas no coinciden</p>
+                            <p class="text-danger">Las contraseñas no coinciden</p>
                           </div>
                           {{/error}}
-                          <div class="row">
-                            <div class="col">
-                              <div class="form-group">
-                                <label for="newPassword">New Password</label>
-                                <input class="form-control" id="newPassword" type="password" name="newPassword" placeholder="••••••"/>
-                              </div>
-                            </div>
+                          <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input class="form-control" id="newPassword" type="password" name="newPassword" placeholder="••••••"/>
                           </div>
-                          <div class="row">
-                            <div class="col">
-                              <div class="form-group">
-                                <label for="confirmPassword">Confirm Password</label>
-                                <input class="form-control" id="confirmPassword" type="password" name="confirmPassword" placeholder="••••••"/>
-                              </div>
-                            </div>
+                          <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input class="form-control" id="confirmPassword" type="password" name="confirmPassword" placeholder="••••••"/>
                           </div>
                         </div>
                       </div>
                       <div class="col">
                         <div class="form-group">
-                          <div class="mb-2"><b>Change Photo</b>
+                          <div class="mb-2"><b>Change Photo</b></div>
                           <input class="form-control" name='imageFile' type="file" id="imageFile" accept="image/*"/>
-                          </div>
                         </div>
                       </div>
-                      <input type="hidden" name="_csrf" value="{{token}}" />
+                      <input type="hidden" name="_csrf" value="{{token}}"/>
                       <div class="row">
                         <div class="col d-flex justify-content-end">
                           <button class="btn btn-primary" type="submit">Save Changes</button>
                         </div>
                       </div>
                     </form>
-                  </div>
-                </form>
               </div>
              
         </div>

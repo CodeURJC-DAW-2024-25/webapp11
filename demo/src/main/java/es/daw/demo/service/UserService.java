@@ -76,7 +76,7 @@ public class UserService {
         }
     }
 
-    public void updateUser(Long id, String firstName, String lastName, String email, String topic, MultipartFile imageFile, String password) throws IOException {
+    public UserDTO updateUser(Long id, String firstName, String lastName, String email, String topic, MultipartFile imageFile, String password) throws IOException {
         User user = userRepository.findById(id).orElseThrow();
         if (user == null) {
             throw new IllegalArgumentException();
@@ -104,6 +104,7 @@ public class UserService {
 
         // Save updated user
         userRepository.save(user);
+        return toDTO(user);
     }
 
     private User toDomain(UserDTO user) {
