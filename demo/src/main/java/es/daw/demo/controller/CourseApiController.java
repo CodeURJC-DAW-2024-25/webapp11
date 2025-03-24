@@ -15,7 +15,11 @@ import es.daw.demo.dto.UserDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.net.URI;
 import java.util.List;
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
 @RequestMapping("/api/courses")
@@ -29,17 +33,39 @@ public class CourseApiController {
 
     @PostMapping("/")
     public ResponseEntity<CourseDTO> createCourse(
-            @RequestParam String title,
-            @RequestParam String description,
-            @RequestParam String topic,
-            @RequestParam MultipartFile image,
-            @RequestParam MultipartFile notes,
+            @RequestBody CourseDTO course,
             HttpServletRequest request) throws Exception {
         UserDTO instructor = userService.findByEmail(request.getUserPrincipal().getName());
-        CourseDTO course = new CourseDTO(null, title, description, topic, instructor, 0);
-        courseService.createCourse(course, image, notes);
+        course = new CourseDTO(null, course.title(), course.description(), course.topic(), instructor, 0);
+        courseService.createCourse(course, null, null);
         return ResponseEntity.status(HttpStatus.CREATED).body(course);
     }
+
+    @PostMapping("/{id}/image")
+	public ResponseEntity<Object> createCourseImage(@PathVariable long id, @RequestParam MultipartFile imageFile) throws IOException {
+		courseService.updateCourse(id, null, null, null, imageFile, null);
+
+		URI location = fromCurrentRequest().build().toUri();
+
+		return ResponseEntity.created(location).build();
+	}
+
+    
+    @PostMapping("/{id}/notes")
+	public ResponseEntity<Object> createCourseNotes(@PathVariable long id, @RequestParam MultipartFile noteFile) throws IOException {
+		courseService.updateCourse(id, null, null, null, null, noteFile);
+
+		URI location = fromCurrentRequest().build().toUri();
+
+		return ResponseEntity.created(location).build();
+	}
+
+    public String postMethodName(@RequestBody String entity) {
+        //TODO: process POST request
+        
+        return entity;
+    }
+    
 
     @GetMapping("/{id}")
     public ResponseEntity<CourseDTO> getCourse(@PathVariable Long id) {

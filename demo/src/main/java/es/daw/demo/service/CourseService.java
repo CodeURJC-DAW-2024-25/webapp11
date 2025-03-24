@@ -41,12 +41,11 @@ public class CourseService {
         }
 
         Course course = toDomain(courseDTO);
-        if (!imageFile.isEmpty()) {
+        if (imageFile != null && !imageFile.isEmpty()) {
             course.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
-        if (!noteFile.isEmpty()) {
+        if (noteFile != null && !noteFile.isEmpty()) {
             course.setNoteFile(BlobProxy.generateProxy(noteFile.getInputStream(), noteFile.getSize()));
-        } else {
         }
         courseRepository.save(course);
         return toDTO(course);
