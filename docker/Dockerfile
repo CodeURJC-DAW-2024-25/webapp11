@@ -15,42 +15,42 @@
 
 
 #################################################
-# Etapa 1: Construcción de la aplicación
+# Stage 1: Build rhe application
 #################################################
 FROM maven:3.9.6-eclipse-temurin-17 AS builder
 
-# Establecer directorio de trabajo
+# Set the working directory
 WORKDIR /cognite
 
-# Copiar solo el archivo pom.xml y descargar dependencias
+# Copy only the file  pom.xml y download dependencies
 COPY backend/pom.xml ./
 RUN mvn dependency:go-offline
 
-# Copiar el código fuente después
+# Copy the source code afterwards to avoid re-downloading dependencies
 COPY backend/src ./src
 
-# Compilar la aplicación sin ejecutar pruebas
+# Build the application without running tests 
 RUN mvn clean package -DskipTests=true
 
 
 #################################################
-# Etapa 2: Imagen final con el JAR compilado
+# Stage 2: Final image with the compiled JAR
 #################################################
 FROM openjdk:17.0.2 AS runtime
 
-# Definir variables para mayor flexibilidad
+# Define variables for greater flexibility
 ARG JAR_NAME=backend-0.0.1-SNAPSHOT.jar
 ENV APP_HOME=/cognite
 
-# Establecer directorio de trabajo
+# Set the working directory
 WORKDIR $APP_HOME
 
-# Copiar el JAR generado en la fase de construcción
+# Copy the JAR file generated during the build stage
 COPY --from=builder /cognite/target/$JAR_NAME app.jar
 
-# Exponer el puerto de la aplicación (configurable)
+# Expose the application port (configurable)
 EXPOSE 8443
 
-# Comando para ejecutar la aplicación
+# Command to run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
