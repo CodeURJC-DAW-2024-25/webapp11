@@ -1,56 +1,38 @@
-# # Usamos una imagen base de Java
-# FROM openjdk:21-jdk
-
-# # Establecemos el directorio de trabajo dentro del contenedor
-# WORKDIR /app
-
-# # Copiamos el archivo JAR desde el directorio target dentro de demo
-# COPY target/demo-0.0.1-SNAPSHOT.jar /app/app.jar
-
-# # Exponemos el puerto en el que la aplicación va a correr (por defecto 8080 para Spring Boot)
-# EXPOSE 8080
-
-# # Comando para ejecutar la aplicación
-# ENTRYPOINT ["java", "-jar", "/app/app.jar"]
-
-
 #################################################
-# Stage 1: Build rhe application
+# Base image for the build container
 #################################################
-FROM maven:3.9.6-eclipse-temurin-17 AS builder
+FROM  maven:3.9.6-eclipse-temurin-21 as builder
 
-# Set the working directory
-WORKDIR /cognite
+# Sets the working directory for commands to run
+WORKDIR /demo
 
-# Copy only the file  pom.xml y download dependencies
-COPY backend/pom.xml ./
-RUN mvn dependency:go-offline
+# Copies the project's dependencies
+COPY ../demo/pom.xml ./pom.xml
 
-# Copy the source code afterwards to avoid re-downloading dependencies
-COPY backend/src ./src
+# Downloads the project's dependencies
+#RUN mvn clean verify 
 
-# Build the application without running tests 
+# Copies the project's code
+COPY ../demo/src ./src
+
+# Compiles the project
 RUN mvn clean package -DskipTests=true
 
 
 #################################################
-# Stage 2: Final image with the compiled JAR
+# Base image for the application container
 #################################################
-FROM openjdk:17.0.2 AS runtime
+FROM openjdk:21-jdk AS runtime
 
-# Define variables for greater flexibility
-ARG JAR_NAME=backend-0.0.1-SNAPSHOT.jar
-ENV APP_HOME=/cognite
+# Sets the working directory where the JAR is located
+WORKDIR /demo
 
-# Set the working directory
-WORKDIR $APP_HOME
+# Copies the JAR from the build container
+COPY --from=builder ../demo/target/demo-0.0.1-SNAPSHOT.jar .
 
-# Copy the JAR file generated during the build stage
-COPY --from=builder /cognite/target/$JAR_NAME app.jar
-
-# Expose the application port (configurable)
+# Indicates the port that the container exposes
 EXPOSE 8443
 
-# Command to run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Command to run on docker run
+CMD ["java", "-jar", "demo-0.0.1-SNAPSHOT.jar"]
 
