@@ -20,8 +20,8 @@ public class EnrollmentApiController {
     @Autowired
     private EnrollmentService enrollmentService;
 
-    @PostMapping("/enroll")
-    public ResponseEntity<String> enrollToCourse(@RequestParam Long idCourse, @RequestParam String userEmail) {
+    @PostMapping("/{idCourse}")
+    public ResponseEntity<String> enrollToCourse(@PathVariable Long idCourse, @RequestParam String userEmail) {
         UserDTO user = userService.findByEmail(userEmail);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
