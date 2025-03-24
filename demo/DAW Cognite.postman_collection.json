@@ -574,6 +574,37 @@
 					"response": []
 				},
 				{
+					"name": "Edit Review",
+					"request": {
+					  "method": "PUT",
+					  "header": [],
+					  "url": {
+						"raw": "https://localhost:8443/api/reviews/edit",
+						"protocol": "https",
+						"host": ["localhost"],
+						"port": "8443",
+						"path": ["api", "reviews", "edit"]
+					  },
+					  "body": {
+						"mode": "formdata",
+						"formdata": [
+						  {
+							"key": "reviewId",
+							"value": "1",
+							"type": "text"
+						  },
+						  {
+							"key": "newText",
+							"value": "This is the new text for the new review.",
+							"type": "text"
+						  }
+						]
+					  }
+					},
+					"response": []
+				  },
+				  
+				{
 					"name": "Create a review",
 					"request": {
 						"auth": {
