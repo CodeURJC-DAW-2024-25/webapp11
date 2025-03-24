@@ -13,7 +13,8 @@
     <div class="container">
         <div class="header-logo text-dark">Cognite</div>
         
-        <form method="POST" action="/updateCourse/{{course.id}}" enctype="multipart/form-data">    
+        <form method="POST" action="/updateCourse" enctype="multipart/form-data"> 
+            <input type="hidden" name="courseId" value="{{course.id}}" />   
             <!-- Title -->
             <div class="form-group input-group">
                 <div class="input-group-prepend">
@@ -58,7 +59,7 @@
                     <option value="comunicacion">Comunicación</option>
                 </select>
             </div>
-
+            
             <!-- Upload PDF file -->
             <div class="form-group input-group">
                 <div class="input-group-prepend">

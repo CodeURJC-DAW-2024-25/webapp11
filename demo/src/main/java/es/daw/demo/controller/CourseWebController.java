@@ -19,6 +19,7 @@ import es.daw.demo.service.ReviewService;
 import es.daw.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import es.daw.demo.dto.CourseDTO;
+import es.daw.demo.dto.NewCourseRequestDTO;
 import es.daw.demo.dto.ReviewDTO;
 import es.daw.demo.dto.UserDTO;
 
@@ -133,20 +134,13 @@ public class CourseWebController {
         }
     }
 
-    @PostMapping("/updateCourse/{id}")
-    public String updateCourse(@PathVariable Long id,
-            @RequestParam String title,
-            @RequestParam String description,
-            @RequestParam String topic,
-            @RequestParam MultipartFile imageFile,
-            @RequestParam MultipartFile notes,
-            Model model,
-            HttpServletRequest request) throws Exception {
+    @PostMapping("/updateCourse")
+	public String editCourseProcess(Model model, long courseId, NewCourseRequestDTO newCourseRequestDTO) throws IOException, SQLException {
 
+		courseService.updateCourse(courseId, newCourseRequestDTO.title(), newCourseRequestDTO.description(), newCourseRequestDTO.topic(), newCourseRequestDTO.imageFile(), newCourseRequestDTO.notes());
 
-            courseService.updateCourse(id, title, description, topic, imageFile, notes);
-            return "redirect:/course/" + id;
-    }
+		return "redirect:/course/" + courseId;
+	}
 
     // Show course
     @GetMapping("/course/{id}")

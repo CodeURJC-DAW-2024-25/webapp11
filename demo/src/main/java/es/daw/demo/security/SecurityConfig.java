@@ -144,6 +144,7 @@ public class SecurityConfig {
 						.requestMatchers("/notes/**").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/createCourse").hasAnyRole("USER")
 						.requestMatchers("/editCourse/**").hasAnyRole("USER", "ADMIN")
+						.requestMatchers("/updateCourse").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/updateCourse/**").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/getTaughtCourses").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/getEnrollCourses").hasAnyRole("USER", "ADMIN")
