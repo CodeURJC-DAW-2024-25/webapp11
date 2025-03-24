@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "8d109e71-187a-4155-8615-b87197f8a287",
+		"_postman_id": "f7d93905-9b1b-4d0e-820e-e5fbf551a5ec",
 		"name": "DAW Cognite",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "39879168"
+		"_exporter_id": "43168738"
 	},
 	"item": [
 		{
@@ -240,6 +240,17 @@
 						"api",
 						"courses"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Course",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
 				}
 			},
 			"response": []

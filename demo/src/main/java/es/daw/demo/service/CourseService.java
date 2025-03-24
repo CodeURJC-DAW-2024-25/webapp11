@@ -72,8 +72,14 @@ public class CourseService {
         return toDTOs(courseRepository.findByInstructor_Id(user.id()));
     }
 
-    public void deleteCourse(long id) {
+    public CourseDTO deleteCourse(long id) {
+        Course course = courseRepository.findById(id);
+
+        CourseDTO courseDTO = toDTO(course);
+
         courseRepository.deleteById(id);
+
+        return courseDTO;
     }
 
     public boolean isUserInstructor(Long courseId, Long userId) {

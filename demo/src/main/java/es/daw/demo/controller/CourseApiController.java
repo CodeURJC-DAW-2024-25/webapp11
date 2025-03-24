@@ -85,9 +85,8 @@ public class CourseApiController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
-        courseService.deleteCourse(id);
-        return ResponseEntity.noContent().build();
+    public CourseDTO deleteCourse(@PathVariable Long id) {
+        return courseService.deleteCourse(id);
     }
 
     @GetMapping("/")
