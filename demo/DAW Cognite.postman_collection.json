@@ -254,6 +254,22 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "User picture",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	]
 }

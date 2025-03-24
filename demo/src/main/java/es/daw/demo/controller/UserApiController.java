@@ -54,7 +54,7 @@ public class UserApiController {
         return ResponseEntity.ok().body(profileImage);
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<UserDTO>> listUsers(@RequestParam(required = false) String name) {
         List<UserDTO> users = (name != null && !name.isEmpty()) ?
                 (List<UserDTO>) userService.findByFirstNameContainingIgnoreCase(name) : (List<UserDTO>) userService.findAll();
