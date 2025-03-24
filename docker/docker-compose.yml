@@ -1,0 +1,80 @@
+# version: '3.8'
+
+# services:
+#   db:
+#     image: mysql:5.7
+#     container_name: mysql-db
+#     environment:
+#       MYSQL_ROOT_PASSWORD: password
+#       MYSQL_DATABASE: cognite
+#       MYSQL_MAX_ALLOWED_PACKET: 16777216  # Establecer max_allowed_packet a 16MB
+#     ports:
+#       - "3306:3306"
+#     volumes:
+#       - mysql-data:/var/lib/mysql
+#     networks:
+#       - app-network
+#     command: --max_allowed_packet=16777216  # Establecer max_allowed_packet a 16MB
+
+#   app:
+#     build: .
+#     container_name: spring-boot-app
+#     ports:
+#       - "8080:8080"
+#     depends_on:
+#       - db
+#     environment:
+#       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/cognite
+#       SPRING_DATASOURCE_USERNAME: root
+#       SPRING_DATASOURCE_PASSWORD: password
+#       SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+#       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+#     networks:
+#       - app-network
+
+# networks:
+#   app-network:
+#     driver: bridge
+
+# volumes:
+#   mysql-data:
+
+
+  
+
+version: "3.9"
+
+services: 
+  web:
+    image: gonfergon/webapp11:latest  
+    build: 
+      context: ../
+      dockerfile: docker/Dockerfile
+    ports:
+      - 443:8443
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/cognite
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+    restart: on-failure
+    depends_on:
+      - db  # Ensure that the DataBase is ready before launching the app 
+    networks:
+      - app-network  # Assigns the same network as the DataBase 
+
+  db:
+    image: mysql:8.0.36
+    restart: on-failure
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=cognite
+    volumes:
+      - mysql_data:/var/lib/mysql  # Data persistency
+    networks:
+      - app-network  # Network shared  with the web app 
+
+volumes:
+  mysql_data:  # Define the volume for  MySQL
+
+networks:
+  app-network:  # Define the networl
