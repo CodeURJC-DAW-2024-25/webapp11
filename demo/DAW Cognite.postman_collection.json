@@ -554,6 +554,93 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Create a review",
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Desarrollo Android desde cero\",\r\n    \"description\": \"Aprende a desarrollar aplicaciones móviles para Android.\",\r\n    \"topic\": \"Desarrollo móvil\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8443/api/courses/",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"courses",
+								""
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "\"Desarrollo Android desde cero\"",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "\"Aprende a desarrollar aplicaciones móviles para Android\"",
+									"disabled": true
+								},
+								{
+									"key": "topic",
+									"value": "\"Desarrollo móvil\"",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -561,15 +648,94 @@
 			"name": "Enrollments",
 			"item": [
 				{
-					"name": "Statistics",
+					"name": "Enroll",
 					"request": {
-						"method": "GET",
-						"header": []
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Desarrollo Android desde cero\",\r\n    \"description\": \"Aprende a desarrollar aplicaciones móviles para Android.\",\r\n    \"topic\": \"Desarrollo móvil\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8443/api/courses/",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"courses",
+								""
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "\"Desarrollo Android desde cero\"",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "\"Aprende a desarrollar aplicaciones móviles para Android\"",
+									"disabled": true
+								},
+								{
+									"key": "topic",
+									"value": "\"Desarrollo móvil\"",
+									"disabled": true
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "Enroll",
+					"name": "Statistics",
 					"request": {
 						"method": "GET",
 						"header": []
