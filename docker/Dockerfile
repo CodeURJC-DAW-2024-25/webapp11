@@ -46,7 +46,7 @@ ENV APP_HOME=/cognite
 WORKDIR $APP_HOME
 
 # Copiar el JAR generado en la fase de construcción
-COPY --from=builder /gymguru/target/$JAR_NAME app.jar
+COPY --from=builder /cognite/target/$JAR_NAME app.jar
 
 # Exponer el puerto de la aplicación (configurable)
 EXPOSE 8443
