@@ -17,8 +17,10 @@ import java.util.stream.Collectors;
 import es.daw.demo.model.Course;
 import es.daw.demo.model.User;
 import es.daw.demo.model.Enrollment;
+import es.daw.demo.model.Review;
 import es.daw.demo.repository.CourseRepository;
 import es.daw.demo.repository.EnrollmentRepository;
+import es.daw.demo.repository.ReviewRepository;
 import es.daw.demo.repository.UserRepository;
 
 @Service
@@ -32,6 +34,9 @@ public class DataBaseInitializer{
 
     @Autowired
     private EnrollmentRepository enrollmentRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Autowired
 	private PasswordEncoder passwordEncoder;
@@ -269,7 +274,10 @@ public class DataBaseInitializer{
         updateUserTopic(user4);
         updateUserTopic(user5);
         updateUserTopic(user6);
-        updateUserTopic(user7);        
+        updateUserTopic(user7);   
+        
+        Review review1 = new Review("Muy buen curso, lo recomiendo.", user1, course2, null);
+        reviewRepository.save(review1);
     }
 
     public void setCourseImage(Course course, String classpathResource) throws IOException {
