@@ -2,6 +2,7 @@ package es.daw.demo.controller;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,12 +13,13 @@ import es.daw.demo.service.CourseService;
 import es.daw.demo.service.UserService;
 import es.daw.demo.dto.CourseDTO;
 import es.daw.demo.dto.UserDTO;
-
+import org.springframework.core.io.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URI;
+import java.sql.SQLException;
 import java.util.List;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
@@ -43,29 +45,18 @@ public class CourseApiController {
 
     @PostMapping("/{id}/image")
 	public ResponseEntity<Object> createCourseImage(@PathVariable long id, @RequestParam MultipartFile imageFile) throws IOException {
-		courseService.updateCourse(id, null, null, null, imageFile, null);
-
-		URI location = fromCurrentRequest().build().toUri();
-
+		
+        courseService.createCourseImage(id, imageFile.getInputStream(), imageFile.getSize());
+        URI location = fromCurrentRequest().build().toUri();
 		return ResponseEntity.created(location).build();
 	}
 
-    
     @PostMapping("/{id}/notes")
 	public ResponseEntity<Object> createCourseNotes(@PathVariable long id, @RequestParam MultipartFile noteFile) throws IOException {
-		courseService.updateCourse(id, null, null, null, null, noteFile);
-
+		courseService.createCourseNotes(id, noteFile.getInputStream(), noteFile.getSize());
 		URI location = fromCurrentRequest().build().toUri();
-
 		return ResponseEntity.created(location).build();
 	}
-
-    public String postMethodName(@RequestBody String entity) {
-        //TODO: process POST request
-        
-        return entity;
-    }
-    
 
     @GetMapping("/{id}")
     public ResponseEntity<CourseDTO> getCourse(@PathVariable Long id) {
@@ -73,14 +64,23 @@ public class CourseApiController {
         return (course != null) ? ResponseEntity.ok(course) : ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/{id}/image")
+    public ResponseEntity<Resource> getCourseImage(@PathVariable Long id) throws SQLException {
+        Resource image = courseService.getCourseImage(id);
+        return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(image);
+    }
+
+    @GetMapping("/{id}/notes")
+    public ResponseEntity<Resource> getCourseNotes(@PathVariable Long id) throws SQLException {
+        Resource notes = courseService.getCourseNotes(id);
+        return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_TYPE, "application/pdf").body(notes);
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<CourseDTO> updateCourse(@PathVariable Long id,
-            @RequestParam String title,
-            @RequestParam String description,
-            @RequestParam String topic,
-            @RequestParam MultipartFile imageFile,
-            @RequestParam MultipartFile notes) throws Exception {
-        courseService.updateCourse(id, title, description, topic, imageFile, notes);
+    public ResponseEntity<CourseDTO> updateCourse(@PathVariable Long id, @RequestBody CourseDTO course) throws Exception {
+        courseService.updateCourse(id, course.title(), course.description(), course.topic(), null, null);
         return ResponseEntity.ok(courseService.getCourse(id));
     }
 
