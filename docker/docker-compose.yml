@@ -51,7 +51,7 @@ services:
       context: ../
       dockerfile: docker/Dockerfile
     ports:
-      - 8443:8443
+      - 443:8443
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/cognite
       - SPRING_DATASOURCE_USERNAME=root
