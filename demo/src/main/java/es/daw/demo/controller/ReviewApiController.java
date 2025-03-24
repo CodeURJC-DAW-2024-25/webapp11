@@ -101,13 +101,9 @@ public class ReviewApiController {
     }
 
     // Eliminar reseña
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteReview(@RequestParam Long reviewId) {
-        ReviewDTO review = reviewService.findReviewById(reviewId);
-        if (review == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reseña no encontrada");
-        }
-        reviewService.deleteReview(reviewId);
-        return ResponseEntity.ok().build();
+    @DeleteMapping("/{id}")
+    public ReviewDTO deleteReview(@PathVariable Long id) {
+        ReviewDTO review = reviewService.findReviewById(id);
+        return reviewService.deleteReview(id);
     }
 }

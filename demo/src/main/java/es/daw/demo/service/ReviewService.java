@@ -89,14 +89,15 @@ public class ReviewService {
             return toDTO(reviewRepository.save(review));
     }
 
-    public void deleteReview(Long reviewId) {
-        Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
+    public ReviewDTO deleteReview(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow();
 
-        if (reviewOptional.isPresent()) {
-            reviewRepository.delete(reviewOptional.get());
-        } else {
-            throw new RuntimeException("Reseña no encontrada");
-        }
+        ReviewDTO reviewDTO = toDTO(review);
+
+        reviewRepository.delete(review);
+
+        return reviewDTO;
+        
     }
 
     public ReviewDTO findReviewById(Long reviewId) {
