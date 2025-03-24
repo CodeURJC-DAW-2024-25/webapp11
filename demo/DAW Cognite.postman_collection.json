@@ -507,33 +507,51 @@
 		{
 			"name": "Reviews",
 			"item": [
-				{
-					"name": "Get Reviews by Course",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": ""
-						}
-					},
-					"response": []
+			  {
+				"name": "Get Reviews by Course",
+				"request": {
+				  "method": "GET",
+				  "header": [],
+				  "url": {
+					"raw": "https://localhost:8443/api/reviews/course/1",
+					"protocol": "https",
+					"host": ["localhost"],
+					"port": "8443",
+					"path": ["api", "reviews", "course", "1"]
+				  }
 				},
-				{
-					"name": "Mark Review as pending",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
+				"response": []
+			  },
+			  {
+				"name": "Mark Review as Pending",
+				"request": {
+				  "method": "PUT",
+				  "header": [],
+				  "url": {
+					"raw": "https://localhost:8443/api/reviews/1/mark-pending",
+					"protocol": "https",
+					"host": ["localhost"],
+					"port": "8443",
+					"path": ["api", "reviews", "1", "mark-pending"]
+				  }
 				},
-				{
-					"name": "Desmark Review as pending",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
+				"response": []
+			  },
+			  {
+				"name": "Desmark Review as Pending",
+				"request": {
+				  "method": "PUT",
+				  "header": [],
+				  "url": {
+					"raw": "https://localhost:8443/api/reviews/1/desmark-pending",
+					"protocol": "https",
+					"host": ["localhost"],
+					"port": "8443",
+					"path": ["api", "reviews", "1", "desmark-pending"]
+				  }
 				},
+				"response": []
+			  },
 				{
 					"name": "Delete Review",
 					"request": {
