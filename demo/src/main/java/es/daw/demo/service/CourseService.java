@@ -1,9 +1,12 @@
 package es.daw.demo.service;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,21 +94,21 @@ public class CourseService {
         return toDTOs(courseRepository.findTop4ByTopicOrderByRatingDesc(topic));
     }
 
-    public Resource getCourseImage(Long courseId) {
+    public Resource getCourseImage(Long courseId) throws SQLException {
         Course course = courseRepository.findById(courseId).orElseThrow();
-        try {
+        if (course.getImageFile() != null) {
             return new InputStreamResource(course.getImageFile().getBinaryStream());
-        } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving course image", e);
+        } else {
+            throw new NoSuchElementException();
         }
     }
     
-    public Resource getCourseNotes (Long courseId) {
+    public Resource getCourseNotes (Long courseId) throws SQLException {
         Course course = courseRepository.findById(courseId).orElseThrow();
-        try {
+        if (course.getNotes() != null) {
             return new InputStreamResource(course.getNotes().getBinaryStream());
-        } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving course notes", e);
+        } else {
+            throw new NoSuchElementException();
         }
     }
 
@@ -125,15 +128,26 @@ public class CourseService {
             course.setTopic(topic);
         }
         // Verify and update image
-        if (imageFile.getOriginalFilename() != "" && !imageFile.isEmpty()) {
+        if (imageFile != null && !imageFile.isEmpty()) {
             course.setImageFile(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
 
-        if (!noteFile.isEmpty()) {
+        if (noteFile != null && !noteFile.isEmpty()) {
             course.setNotes(BlobProxy.generateProxy(noteFile.getInputStream(), noteFile.getSize()));
         }
 
         // Save updated course
+        courseRepository.save(course);
+    }
+    public void createCourseImage(long id, InputStream inputStream, long size) throws IOException {
+        Course course = courseRepository.findById(id);
+        course.setImageFile(BlobProxy.generateProxy(inputStream, size));
+        courseRepository.save(course);
+    }
+
+    public void createCourseNotes(long id, InputStream inputStream, long size) throws IOException {
+        Course course = courseRepository.findById(id);
+        course.setNotes(BlobProxy.generateProxy(inputStream, size));
         courseRepository.save(course);
     }
 
