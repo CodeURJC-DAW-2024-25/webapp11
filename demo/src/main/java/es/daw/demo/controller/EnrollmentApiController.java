@@ -21,13 +21,13 @@ public class EnrollmentApiController {
     private EnrollmentService enrollmentService;
 
     @PostMapping("/{idCourse}")
-    public ResponseEntity<String> enrollToCourse(@PathVariable Long idCourse, @RequestParam String userEmail) {
-        UserDTO user = userService.findByEmail(userEmail);
+    public ResponseEntity<String> enrollToCourse(@PathVariable Long idCourse, @RequestParam Long userId) {
+        UserDTO user = userService.findById(userId);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
         }
 
-        String result = enrollmentService.enrollUserToCourse(user.id(), idCourse);
+        String result = enrollmentService.enrollUserToCourse(userId, idCourse);
         return result.equals("success") ? ResponseEntity.ok("Inscripción exitosa") : ResponseEntity.badRequest().body(result);
     }
 

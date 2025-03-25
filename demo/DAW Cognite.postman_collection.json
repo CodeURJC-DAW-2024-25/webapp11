@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2a85bfb2-a368-40a0-b845-bed949fb1e36",
+		"_postman_id": "ded6086c-3457-4536-9d3a-4ae51ca8ffd7",
 		"name": "DAW Cognite",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "43168738"
@@ -24,12 +24,10 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/auth/login",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/auth/login",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"auth",
@@ -54,12 +52,10 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/auth/login",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/auth/login",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"auth",
@@ -75,12 +71,10 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/auth/logout",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/auth/logout",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"auth",
@@ -104,12 +98,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/?page=0&size=10",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/?page=0&size=10",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -135,12 +127,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/35/notes",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/35/notes",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -160,12 +150,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/topic/Desarrollo%20web?page=0&pageSize=10",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/topic/Desarrollo%20web?page=0&pageSize=10",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -195,12 +183,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/topic/Desarrollo%20web?page=0&pageSize=10",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/topic/Desarrollo%20web?page=0&pageSize=10",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -227,12 +213,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/1",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -248,12 +232,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/1",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -269,12 +251,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/35/image",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/35/image",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -303,12 +283,10 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/courses/34",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/34",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -337,12 +315,10 @@
 							]
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/courses/1/image",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/1/image",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -372,12 +348,10 @@
 							]
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/courses/1/notes",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/1/notes",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -443,12 +417,10 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/courses/",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -480,227 +452,261 @@
 		{
 			"name": "Users",
 			"item": [
-			  {
-				"name": "Register User",
-				"request": {
-				  "method": "POST",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/users/register",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "users", "register"]
-				  },
-				  "body": {
-					"mode": "formdata",
-					"formdata": [
-					  {
-						"key": "firstName",
-						"value": "John",
-						"type": "text"
-					  },
-					  {
-						"key": "lastName",
-						"value": "Doe",
-						"type": "text"
-					  },
-					  {
-						"key": "email",
-						"value": "john.doe@example.com",
-						"type": "text"
-					  },
-					  {
-						"key": "profileImage",
-						"type": "file"
-					  },
-					  {
-						"key": "topic",
-						"value": "Programming",
-						"type": "text"
-					  },
-					  {
-						"key": "password",
-						"value": "password123",
-						"type": "text"
-					  },
-					  {
-						"key": "repeatPassword",
-						"value": "password123",
-						"type": "text"
-					  }
-					]
-				  }
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "John",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Doe",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "john.doe@example.com",
+									"type": "text"
+								},
+								{
+									"key": "profileImage",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "topic",
+									"value": "Programming",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "text"
+								},
+								{
+									"key": "repeatPassword",
+									"value": "password123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
 				},
-				"response": []
-			  },
-			  {
-				"name": "Get User Picture",
-				"request": {
-				  "method": "GET",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/users/{id}/image",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "users", "{id}", "image"]
-				  }
+				{
+					"name": "Get User Picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{id}/image",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{id}",
+								"image"
+							]
+						}
+					},
+					"response": []
 				},
-				"response": []
-			  },
-			  {
-				"name": "Get Users",
-				"request": {
-				  "method": "GET",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/users/",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "users"]
-				  }
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
 				},
-				"response": []
-			  },
-			  {
-				"name": "Delete User",
-				"request": {
-				  "method": "DELETE",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/users/{id}",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "users", "{id}"]
-				  }
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{id}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{id}"
+							]
+						}
+					},
+					"response": []
 				},
-				"response": []
-			  },
-			  {
-				"name": "Update User",
-				"request": {
-				  "method": "PUT",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/users/{id}",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "users", "{id}"]
-				  },
-				  "body": {
-					"mode": "formdata",
-					"formdata": [
-					  {
-						"key": "firstName",
-						"value": "John",
-						"type": "text"
-					  },
-					  {
-						"key": "lastName",
-						"value": "Doe",
-						"type": "text"
-					  },
-					  {
-						"key": "email",
-						"value": "john.doe@example.com",
-						"type": "text"
-					  },
-					  {
-						"key": "topic",
-						"value": "Web Development",
-						"type": "text"
-					  },
-					  {
-						"key": "currentPassword",
-						"value": "password123",
-						"type": "text"
-					  },
-					  {
-						"key": "newPassword",
-						"value": "newPassword123",
-						"type": "text"
-					  },
-					  {
-						"key": "confirmPassword",
-						"value": "newPassword123",
-						"type": "text"
-					  },
-					  {
-						"key": "imageFile",
-						"type": "file"
-					  }
-					]
-				  }
-				},
-				"response": []
-			  }
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "John",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Doe",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "john.doe@example.com",
+									"type": "text"
+								},
+								{
+									"key": "topic",
+									"value": "Web Development",
+									"type": "text"
+								},
+								{
+									"key": "currentPassword",
+									"value": "password123",
+									"type": "text"
+								},
+								{
+									"key": "newPassword",
+									"value": "newPassword123",
+									"type": "text"
+								},
+								{
+									"key": "confirmPassword",
+									"value": "newPassword123",
+									"type": "text"
+								},
+								{
+									"key": "imageFile",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{id}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				}
 			]
-		  },
-		  
+		},
 		{
 			"name": "Reviews",
 			"item": [
-			  {
-				"name": "Get Reviews by Course",
-				"request": {
-				  "method": "GET",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/reviews/course/1",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "reviews", "course", "1"]
-				  }
+				{
+					"name": "Get Reviews by Course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reviews/course/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"course",
+								"1"
+							]
+						}
+					},
+					"response": []
 				},
-				"response": []
-			  },
-			  {
-				"name": "Mark Review as Pending",
-				"request": {
-				  "method": "PUT",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/reviews/1/mark-pending",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "reviews", "1", "mark-pending"]
-				  }
+				{
+					"name": "Mark Review as Pending",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reviews/1/mark-pending",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"1",
+								"mark-pending"
+							]
+						}
+					},
+					"response": []
 				},
-				"response": []
-			  },
-			  {
-				"name": "Desmark Review as Pending",
-				"request": {
-				  "method": "PUT",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/reviews/1/desmark-pending",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "reviews", "1", "desmark-pending"]
-				  }
+				{
+					"name": "Desmark Review as Pending",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reviews/1/desmark-pending",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"1",
+								"desmark-pending"
+							]
+						}
+					},
+					"response": []
 				},
-				"response": []
-			  },
 				{
 					"name": "Delete Review",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/1",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -713,34 +719,37 @@
 				{
 					"name": "Edit Review",
 					"request": {
-					  "method": "PUT",
-					  "header": [],
-					  "url": {
-						"raw": "https://localhost:8443/api/reviews/edit",
-						"protocol": "https",
-						"host": ["localhost"],
-						"port": "8443",
-						"path": ["api", "reviews", "edit"]
-					  },
-					  "body": {
-						"mode": "formdata",
-						"formdata": [
-						  {
-							"key": "reviewId",
-							"value": "1",
-							"type": "text"
-						  },
-						  {
-							"key": "newText",
-							"value": "This is the new text for the new review.",
-							"type": "text"
-						  }
-						]
-					  }
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "reviewId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "newText",
+									"value": "This is the new text for the new review.",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/reviews/edit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"edit"
+							]
+						}
 					},
 					"response": []
-				  },
-				  
+				},
 				{
 					"name": "Create a review",
 					"request": {
@@ -788,7 +797,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Desarrollo Android desde cero\",\r\n    \"description\": \"Aprende a desarrollar aplicaciones móviles para Android.\",\r\n    \"topic\": \"Desarrollo móvil\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -796,32 +805,27 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/courses/",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/reviews/new?text=\"Muy bueno\"&courseId=2&parentId=1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
-								"courses",
-								""
+								"reviews",
+								"new"
 							],
 							"query": [
 								{
-									"key": "title",
-									"value": "\"Desarrollo Android desde cero\"",
-									"disabled": true
+									"key": "text",
+									"value": "\"Muy bueno\""
 								},
 								{
-									"key": "description",
-									"value": "\"Aprende a desarrollar aplicaciones móviles para Android\"",
-									"disabled": true
+									"key": "courseId",
+									"value": "2"
 								},
 								{
-									"key": "topic",
-									"value": "\"Desarrollo móvil\"",
-									"disabled": true
+									"key": "parentId",
+									"value": "1"
 								}
 							]
 						}
@@ -880,7 +884,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Desarrollo Android desde cero\",\r\n    \"description\": \"Aprende a desarrollar aplicaciones móviles para Android.\",\r\n    \"topic\": \"Desarrollo móvil\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -888,32 +892,19 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/courses/",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/enrollments/1?userId=1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
-								"courses",
-								""
+								"enrollments",
+								"1"
 							],
 							"query": [
 								{
-									"key": "title",
-									"value": "\"Desarrollo Android desde cero\"",
-									"disabled": true
-								},
-								{
-									"key": "description",
-									"value": "\"Aprende a desarrollar aplicaciones móviles para Android\"",
-									"disabled": true
-								},
-								{
-									"key": "topic",
-									"value": "\"Desarrollo móvil\"",
-									"disabled": true
+									"key": "userId",
+									"value": "1"
 								}
 							]
 						}
@@ -924,7 +915,19 @@
 					"name": "Statistics",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/enrollments/statistics/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"enrollments",
+								"statistics",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
