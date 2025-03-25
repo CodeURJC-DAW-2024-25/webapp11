@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "000dbd4d-354a-44a1-8831-f4cb1bb59bdd",
+		"_postman_id": "82f63bf2-b8e8-43bc-a34d-2e8f5fb032f0",
 		"name": "DAW Cognite",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "39879168",
-		"_collection_link": "https://fb5555.postman.co/workspace/Cognite~4eda5167-7c4d-4007-8e59-72fea7804591/collection/39879168-000dbd4d-354a-44a1-8831-f4cb1bb59bdd?action=share&source=collection_link&creator=39879168"
+		"_collection_link": "https://fb5555.postman.co/workspace/Cognite~4eda5167-7c4d-4007-8e59-72fea7804591/collection/39879168-82f63bf2-b8e8-43bc-a34d-2e8f5fb032f0?action=share&source=collection_link&creator=39879168"
 	},
 	"item": [
 		{
@@ -311,7 +311,7 @@
 								{
 									"key": "imageFile",
 									"type": "file",
-									"src": "/C:/Users/eloys/Downloads/daw-main (1)/daw-main/ejemplo-practica2/src/main/resources/sample_images/la_vida_secreta_de_la_mente.jpg"
+									"src": "/C:/Users/eloys/OneDrive - Universidad Rey Juan Carlos/DAW/spring_rest/rest_ejem12_images/src/main/resources/sampledata_images/coche.jpg"
 								}
 							]
 						},
@@ -323,15 +323,8 @@
 							"path": [
 								"api",
 								"courses",
-								"32",
+								"1",
 								"image"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": null,
-									"disabled": true
-								}
 							]
 						}
 					},
@@ -458,210 +451,6 @@
 			]
 		},
 		{
-			"name": "Users",
-			"item": [
-				{
-					"name": "Create User",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"Pepe\",\r\n    \"lastName\": \"García\",\r\n    \"email\": \"us1@gmail.com\",\r\n    \"topic\": \"Desarrollo móvil\",\r\n    \"roles\": [\r\n        \"USER\"\r\n    ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "https://localhost:8443/api/users/?password=1234",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"users",
-								""
-							],
-							"query": [
-								{
-									"key": "password",
-									"value": "1234"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create/Update User Image",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "imageFile",
-									"type": "file",
-									"src": "/C:/Users/eloys/Downloads/daw-main (1)/daw-main/ejemplo-practica2/src/main/resources/sample_images/la_vida_secreta_de_la_mente.jpg"
-								}
-							]
-						},
-						"url": {
-							"raw": "https://localhost:8443/api/users/11/image",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"users",
-								"11",
-								"image"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get User Picture",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/users/11/image",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"users",
-								"11",
-								"image"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get User by Id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/users/10",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"users",
-								"10"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Users by name/all",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/users/?name=Pepe",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"users",
-								""
-							],
-							"query": [
-								{
-									"key": "name",
-									"value": "Pepe"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete User",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/users/{id}",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"users",
-								"{id}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update User",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"Pepe\",\r\n    \"lastName\": \"García\",\r\n    \"email\": \"us1@gmail.com\",\r\n    \"topic\": \"Desarrollo móvil\",\r\n    \"roles\": [\r\n        \"USER\"\r\n    ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "https://localhost:8443/api/users/9?password=1234",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"users",
-								"9"
-							],
-							"query": [
-								{
-									"key": "password",
-									"value": "1234"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		},
-		{
 			"name": "Reviews",
 			"item": [
 				{
@@ -736,7 +525,7 @@
 							],
 							"path": [
 								"api",
-								"reviews",
+								"courses",
 								"1"
 							]
 						}
@@ -944,9 +733,6 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
-						},
-						"url": {
 							"raw": "{{baseUrl}}/api/enrollments/statistics/1",
 							"host": [
 								"{{baseUrl}}"
@@ -962,12 +748,223 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Pepe\",\r\n    \"lastName\": \"García\",\r\n    \"email\": \"us1@gmail.com\",\r\n    \"topic\": \"Desarrollo móvil\",\r\n    \"roles\": [\r\n        \"USER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/?password=1234",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							],
+							"query": [
+								{
+									"key": "password",
+									"value": "1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create/Update User Image",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageFile",
+									"type": "file",
+									"src": "/C:/Users/eloys/Downloads/daw-main (1)/daw-main/ejemplo-practica2/src/main/resources/sample_images/la_vida_secreta_de_la_mente.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/11/image",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"11",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/11/image",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"11",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users by name/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/?name=Pepe",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Pepe"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{id}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Pepe\",\r\n    \"lastName\": \"García\",\r\n    \"email\": \"us1@gmail.com\",\r\n    \"topic\": \"Desarrollo móvil\",\r\n    \"roles\": [\r\n        \"USER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/9?password=1234",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"9"
+							],
+							"query": [
+								{
+									"key": "password",
+									"value": "1234"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "",
+			"value": "https://localhost:8443",
 			"type": "default"
 		}
 	]
