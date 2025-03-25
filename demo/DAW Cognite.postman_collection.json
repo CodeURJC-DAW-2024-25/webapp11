@@ -25,12 +25,10 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/auth/login",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/auth/login",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"auth",
@@ -55,12 +53,10 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/auth/login",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/auth/login",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"auth",
@@ -76,12 +72,10 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/auth/logout",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/auth/logout",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"auth",
@@ -105,12 +99,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/?page=0&size=10",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/?page=0&size=10",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -136,12 +128,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/35/notes",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/35/notes",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -161,12 +151,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/topic/Desarrollo%20web?page=0&pageSize=10",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/topic/Desarrollo%20web?page=0&pageSize=10",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -196,12 +184,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/topic/Desarrollo%20web?page=0&pageSize=10",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/topic/Desarrollo%20web?page=0&pageSize=10",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -228,12 +214,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/1",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -249,12 +233,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/1",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -270,12 +252,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/courses/35/image",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/35/image",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -304,12 +284,10 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/courses/34",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/34",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -338,12 +316,10 @@
 							]
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/courses/32/image",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/1/image",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -380,12 +356,10 @@
 							]
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/courses/1/notes",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/1/notes",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -451,12 +425,10 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/courses/",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"courses",
@@ -688,6 +660,7 @@
 				}
 			]
 		},
+		},
 		{
 			"name": "Reviews",
 			"item": [
@@ -697,17 +670,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/reviews/course/2",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/reviews/course/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"reviews",
 								"course",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -719,12 +690,10 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/reviews/1/mark-pending",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/reviews/1/mark-pending",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"reviews",
@@ -741,12 +710,10 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/reviews/1/desmark-pending",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/reviews/1/desmark-pending",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"reviews",
@@ -763,12 +730,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/reviews/1",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/courses/1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"reviews",
@@ -799,12 +764,10 @@
 							]
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/reviews/edit",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/reviews/edit",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
 								"reviews",
@@ -861,7 +824,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Desarrollo Android desde cero\",\r\n    \"description\": \"Aprende a desarrollar aplicaciones móviles para Android.\",\r\n    \"topic\": \"Desarrollo móvil\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -869,32 +832,27 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/courses/",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/reviews/new?text=\"Muy bueno\"&courseId=2&parentId=1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
-								"courses",
-								""
+								"reviews",
+								"new"
 							],
 							"query": [
 								{
-									"key": "title",
-									"value": "\"Desarrollo Android desde cero\"",
-									"disabled": true
+									"key": "text",
+									"value": "\"Muy bueno\""
 								},
 								{
-									"key": "description",
-									"value": "\"Aprende a desarrollar aplicaciones móviles para Android\"",
-									"disabled": true
+									"key": "courseId",
+									"value": "2"
 								},
 								{
-									"key": "topic",
-									"value": "\"Desarrollo móvil\"",
-									"disabled": true
+									"key": "parentId",
+									"value": "1"
 								}
 							]
 						}
@@ -953,7 +911,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Desarrollo Android desde cero\",\r\n    \"description\": \"Aprende a desarrollar aplicaciones móviles para Android.\",\r\n    \"topic\": \"Desarrollo móvil\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -961,32 +919,19 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/courses/",
-							"protocol": "https",
+							"raw": "{{baseUrl}}/api/enrollments/1?userId=1",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "8443",
 							"path": [
 								"api",
-								"courses",
-								""
+								"enrollments",
+								"1"
 							],
 							"query": [
 								{
-									"key": "title",
-									"value": "\"Desarrollo Android desde cero\"",
-									"disabled": true
-								},
-								{
-									"key": "description",
-									"value": "\"Aprende a desarrollar aplicaciones móviles para Android\"",
-									"disabled": true
-								},
-								{
-									"key": "topic",
-									"value": "\"Desarrollo móvil\"",
-									"disabled": true
+									"key": "userId",
+									"value": "1"
 								}
 							]
 						}
@@ -1000,6 +945,18 @@
 						"header": [],
 						"url": {
 							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/enrollments/statistics/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"enrollments",
+								"statistics",
+								"1"
+							]
 						}
 					},
 					"response": []
