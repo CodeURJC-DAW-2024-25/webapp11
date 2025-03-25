@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "2a85bfb2-a368-40a0-b845-bed949fb1e36",
+		"_postman_id": "000dbd4d-354a-44a1-8831-f4cb1bb59bdd",
 		"name": "DAW Cognite",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "43168738"
+		"_exporter_id": "39879168",
+		"_collection_link": "https://fb5555.postman.co/workspace/Cognite~4eda5167-7c4d-4007-8e59-72fea7804591/collection/39879168-000dbd4d-354a-44a1-8831-f4cb1bb59bdd?action=share&source=collection_link&creator=39879168"
 	},
 	"item": [
 		{
@@ -332,12 +333,12 @@
 								{
 									"key": "imageFile",
 									"type": "file",
-									"src": "/C:/Users/eloys/OneDrive - Universidad Rey Juan Carlos/DAW/spring_rest/rest_ejem12_images/src/main/resources/sampledata_images/coche.jpg"
+									"src": "/C:/Users/eloys/Downloads/daw-main (1)/daw-main/ejemplo-practica2/src/main/resources/sample_images/la_vida_secreta_de_la_mente.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "https://localhost:8443/api/courses/1/image",
+							"raw": "https://localhost:8443/api/courses/32/image",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -346,8 +347,15 @@
 							"path": [
 								"api",
 								"courses",
-								"1",
+								"32",
 								"image"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -480,222 +488,22 @@
 		{
 			"name": "Users",
 			"item": [
-			  {
-				"name": "Register User",
-				"request": {
-				  "method": "POST",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/users/register",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "users", "register"]
-				  },
-				  "body": {
-					"mode": "formdata",
-					"formdata": [
-					  {
-						"key": "firstName",
-						"value": "John",
-						"type": "text"
-					  },
-					  {
-						"key": "lastName",
-						"value": "Doe",
-						"type": "text"
-					  },
-					  {
-						"key": "email",
-						"value": "john.doe@example.com",
-						"type": "text"
-					  },
-					  {
-						"key": "profileImage",
-						"type": "file"
-					  },
-					  {
-						"key": "topic",
-						"value": "Programming",
-						"type": "text"
-					  },
-					  {
-						"key": "password",
-						"value": "password123",
-						"type": "text"
-					  },
-					  {
-						"key": "repeatPassword",
-						"value": "password123",
-						"type": "text"
-					  }
-					]
-				  }
-				},
-				"response": []
-			  },
-			  {
-				"name": "Get User Picture",
-				"request": {
-				  "method": "GET",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/users/{id}/image",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "users", "{id}", "image"]
-				  }
-				},
-				"response": []
-			  },
-			  {
-				"name": "Get Users",
-				"request": {
-				  "method": "GET",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/users/",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "users"]
-				  }
-				},
-				"response": []
-			  },
-			  {
-				"name": "Delete User",
-				"request": {
-				  "method": "DELETE",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/users/{id}",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "users", "{id}"]
-				  }
-				},
-				"response": []
-			  },
-			  {
-				"name": "Update User",
-				"request": {
-				  "method": "PUT",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/users/{id}",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "users", "{id}"]
-				  },
-				  "body": {
-					"mode": "formdata",
-					"formdata": [
-					  {
-						"key": "firstName",
-						"value": "John",
-						"type": "text"
-					  },
-					  {
-						"key": "lastName",
-						"value": "Doe",
-						"type": "text"
-					  },
-					  {
-						"key": "email",
-						"value": "john.doe@example.com",
-						"type": "text"
-					  },
-					  {
-						"key": "topic",
-						"value": "Web Development",
-						"type": "text"
-					  },
-					  {
-						"key": "currentPassword",
-						"value": "password123",
-						"type": "text"
-					  },
-					  {
-						"key": "newPassword",
-						"value": "newPassword123",
-						"type": "text"
-					  },
-					  {
-						"key": "confirmPassword",
-						"value": "newPassword123",
-						"type": "text"
-					  },
-					  {
-						"key": "imageFile",
-						"type": "file"
-					  }
-					]
-				  }
-				},
-				"response": []
-			  }
-			]
-		  },
-		  
-		{
-			"name": "Reviews",
-			"item": [
-			  {
-				"name": "Get Reviews by Course",
-				"request": {
-				  "method": "GET",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/reviews/course/1",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "reviews", "course", "1"]
-				  }
-				},
-				"response": []
-			  },
-			  {
-				"name": "Mark Review as Pending",
-				"request": {
-				  "method": "PUT",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/reviews/1/mark-pending",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "reviews", "1", "mark-pending"]
-				  }
-				},
-				"response": []
-			  },
-			  {
-				"name": "Desmark Review as Pending",
-				"request": {
-				  "method": "PUT",
-				  "header": [],
-				  "url": {
-					"raw": "https://localhost:8443/api/reviews/1/desmark-pending",
-					"protocol": "https",
-					"host": ["localhost"],
-					"port": "8443",
-					"path": ["api", "reviews", "1", "desmark-pending"]
-				  }
-				},
-				"response": []
-			  },
 				{
-					"name": "Delete Review",
+					"name": "Create User",
 					"request": {
-						"method": "DELETE",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Pepe\",\r\n    \"lastName\": \"García\",\r\n    \"email\": \"us1@gmail.com\",\r\n    \"topic\": \"Desarrollo móvil\",\r\n    \"roles\": [\r\n        \"USER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "https://localhost:8443/api/courses/1",
+							"raw": "https://localhost:8443/api/users/?password=1234",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -703,7 +511,267 @@
 							"port": "8443",
 							"path": [
 								"api",
-								"courses",
+								"users",
+								""
+							],
+							"query": [
+								{
+									"key": "password",
+									"value": "1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create/Update User Image",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageFile",
+									"type": "file",
+									"src": "/C:/Users/eloys/Downloads/daw-main (1)/daw-main/ejemplo-practica2/src/main/resources/sample_images/la_vida_secreta_de_la_mente.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:8443/api/users/11/image",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"users",
+								"11",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Picture",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8443/api/users/11/image",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"users",
+								"11",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8443/api/users/10",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"users",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users by name/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8443/api/users/?name=Pepe",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"users",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Pepe"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8443/api/users/{id}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"users",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Pepe\",\r\n    \"lastName\": \"García\",\r\n    \"email\": \"us1@gmail.com\",\r\n    \"topic\": \"Desarrollo móvil\",\r\n    \"roles\": [\r\n        \"USER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8443/api/users/9?password=1234",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"users",
+								"9"
+							],
+							"query": [
+								{
+									"key": "password",
+									"value": "1234"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Get Reviews by Course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8443/api/reviews/course/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"reviews",
+								"course",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mark Review as Pending",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8443/api/reviews/1/mark-pending",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"reviews",
+								"1",
+								"mark-pending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desmark Review as Pending",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8443/api/reviews/1/desmark-pending",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"reviews",
+								"1",
+								"desmark-pending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8443/api/reviews/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"reviews",
 								"1"
 							]
 						}
@@ -713,34 +781,39 @@
 				{
 					"name": "Edit Review",
 					"request": {
-					  "method": "PUT",
-					  "header": [],
-					  "url": {
-						"raw": "https://localhost:8443/api/reviews/edit",
-						"protocol": "https",
-						"host": ["localhost"],
-						"port": "8443",
-						"path": ["api", "reviews", "edit"]
-					  },
-					  "body": {
-						"mode": "formdata",
-						"formdata": [
-						  {
-							"key": "reviewId",
-							"value": "1",
-							"type": "text"
-						  },
-						  {
-							"key": "newText",
-							"value": "This is the new text for the new review.",
-							"type": "text"
-						  }
-						]
-					  }
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "reviewId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "newText",
+									"value": "This is the new text for the new review.",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:8443/api/reviews/edit",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"reviews",
+								"edit"
+							]
+						}
 					},
 					"response": []
-				  },
-				  
+				},
 				{
 					"name": "Create a review",
 					"request": {
@@ -924,7 +997,10 @@
 					"name": "Statistics",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}

@@ -35,7 +35,7 @@ public class ReviewApiController {
     }
 
     // Crear una reseña
-    @PostMapping("/new")
+    @PostMapping("/")
     public ResponseEntity<?> createReview(@RequestParam String text,
                                           @RequestParam(required = false) Long courseId,
                                           @RequestParam(required = false) Long parentId,

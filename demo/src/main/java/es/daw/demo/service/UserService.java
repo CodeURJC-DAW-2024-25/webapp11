@@ -1,6 +1,7 @@
 package es.daw.demo.service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,6 +13,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import es.daw.demo.model.Course;
 import es.daw.demo.model.User;
 import es.daw.demo.repository.UserRepository;
 import es.daw.demo.dto.UserDTO;
@@ -25,19 +27,26 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public void createUser(UserDTO user, MultipartFile imageFile, String password) throws IOException{
+    public UserDTO createUser(UserDTO user, MultipartFile imageFile, String password) throws IOException{
 		if (user.id() != null) {
             throw new IllegalArgumentException();
         }
 
         User newUser = toDomain(user);
         newUser.setPassword(password);
-        if (!imageFile.isEmpty()) {
+        if (imageFile != null && !imageFile.isEmpty()) {
             newUser.setProfileImage(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
         newUser.setRoles(Collections.singletonList("USER"));
         userRepository.save(newUser);
+        return toDTO(newUser);
 	}
+
+    public void createUserImage(long id, InputStream inputStream, long size) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setProfileImage(BlobProxy.generateProxy(inputStream, size));
+        userRepository.save(user);
+    }
     
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
@@ -98,7 +107,7 @@ public class UserService {
             user.setPassword(password);
         }
         // Verify and update image
-        if (imageFile.getOriginalFilename() != "" && !imageFile.isEmpty()) {
+        if (imageFile != null && !imageFile.isEmpty()) {
             user.setProfileImage(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
 

@@ -1,6 +1,7 @@
 package es.daw.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +13,10 @@ import es.daw.demo.dto.UserDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
-
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 @RestController
 @RequestMapping("/api/users")
 public class UserApiController {
@@ -28,37 +30,41 @@ public class UserApiController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestParam String firstName,
-                                               @RequestParam String lastName,
-                                               @RequestParam String email,
-                                               @RequestParam MultipartFile profileImage,
-                                               @RequestParam String topic,
-                                               @RequestParam String password,
-                                               @RequestParam String repeatPassword) throws Exception {
-        if (!password.equals(repeatPassword)) {
-            return ResponseEntity.badRequest().body("Las contraseñas no coinciden");
-        }
-        if (userService.existsByEmail(email)) {
+    @PostMapping("/")
+    public ResponseEntity<String> createUser(@RequestBody UserDTO user, String password) throws Exception {
+        if (userService.existsByEmail(user.email())) {
             return ResponseEntity.badRequest().body("El usuario ya existe");
         }
         password = passwordEncoder.encode(password);
-        UserDTO user = new UserDTO(null, firstName, lastName, email, topic, List.of("USER"));
-        userService.createUser(user, profileImage, password);
+        userService.createUser(user, null, password);
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado exitosamente");
     }
+
+    @PostMapping("/{id}/image")
+	public ResponseEntity<Object> createUserImage(@PathVariable long id, @RequestParam MultipartFile imageFile) throws IOException {
+		userService.createUserImage(id, imageFile.getInputStream(), imageFile.getSize());
+        URI location = fromCurrentRequest().build().toUri();
+		return ResponseEntity.created(location).build();
+	}
 
     @GetMapping("/{id}/image")
     public ResponseEntity<Resource> getProfileImage(@PathVariable long id) throws SQLException {
         Resource profileImage = userService.getUserImage(id);
-        return ResponseEntity.ok().body(profileImage);
+        return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(profileImage);
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<UserDTO>> listUsers(@RequestParam(required = false) String name) {
+    public ResponseEntity<List<UserDTO>> getUsers(@RequestParam(required = false) String name) {
         List<UserDTO> users = (name != null && !name.isEmpty()) ?
                 (List<UserDTO>) userService.findByFirstNameContainingIgnoreCase(name) : (List<UserDTO>) userService.findAll();
         return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
+        UserDTO user = userService.findById(id);
+        return (user != null) ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
@@ -73,24 +79,14 @@ public class UserApiController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Long id,
-                                             @RequestParam String firstName,
-                                             @RequestParam String lastName,
-                                             @RequestParam String email,
-                                             @RequestParam String topic,
-                                             @RequestParam String currentPassword,
-                                             @RequestParam String newPassword,
-                                             @RequestParam String confirmPassword,
-                                             @RequestParam(required = false) MultipartFile imageFile) throws IOException, SQLException {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id,
+                                            @RequestBody UserDTO UpdatedUser,
+                                            @RequestParam String password) throws IOException {
         UserDTO user = userService.findById(id);
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+            return ResponseEntity.notFound().build();
         }
-        if (!newPassword.equals(confirmPassword)) {
-            return ResponseEntity.badRequest().body("Las contraseñas no coinciden");
-        }
-        String password = passwordEncoder.encode(newPassword);
-        userService.updateUser(id, firstName, lastName, email, topic, imageFile, password);
-        return ResponseEntity.ok("Usuario actualizado exitosamente");
+        userService.updateUser(id, UpdatedUser.firstName(), UpdatedUser.lastName(), UpdatedUser.email(), UpdatedUser.topic(), null, passwordEncoder.encode(password));
+        return ResponseEntity.ok(userService.findById(id));
     }
 }
