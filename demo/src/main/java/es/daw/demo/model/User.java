@@ -1,6 +1,7 @@
 package es.daw.demo.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import java.sql.Blob;
@@ -52,7 +53,12 @@ public class User {
         this.email = email;
         this.password = password;
         this.topic = topic;
-        this.roles = List.of(roles);
+        if (roles == null) {
+            this.setRoles(Collections.singletonList("USER"));
+        } else {
+            this.roles = List.of(roles);
+        }
+        
     }
 
     @ManyToMany

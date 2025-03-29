@@ -13,6 +13,9 @@ import es.daw.demo.dto.CourseDTO;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collection;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -36,26 +39,19 @@ public class ReviewApiController {
 
     // Crear una reseña
     @PostMapping("/")
-    public ResponseEntity<?> createReview(@RequestParam String text,
-                                          @RequestParam(required = false) Long courseId,
-                                          @RequestParam(required = false) Long parentId,
-                                          HttpServletRequest request) {
-        UserDTO user = userService.findByEmail(request.getUserPrincipal().getName());
-        if (user == null) {
+    public ResponseEntity<?> createReview(@RequestBody ReviewDTO review) {
+        System.out.println("Recibido ReviewDTO: " + review);
+        if (review.user() == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
         }
-
-        CourseDTO course = courseId != null ? courseService.findById(courseId) : null;
-        if (courseId != null && course == null) {
+        if (courseService.findById(review.course().id()) == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Curso no encontrado");
         }
-
-        ReviewDTO parentReview = parentId != null ? reviewService.getParentReview(parentId) : null;
-        if (parentId != null && parentReview == null) {
+        if (review.parent() != null && reviewService.getParentReview(review.parent().id()) == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Reseña padre no encontrada");
         }
 
-        reviewService.createReview(text, user, course, parentReview);
+        reviewService.createReview(review.text(), review.user(), review.course(), review.parent());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -83,27 +79,26 @@ public class ReviewApiController {
 
     // Editar reseña
     @PutMapping("/edit")
-    public ResponseEntity<?> editReview(@RequestParam Long reviewId, 
-                                        @RequestParam String newText, 
-                                        HttpServletRequest request) {
-        UserDTO user = userService.findByEmail(request.getUserPrincipal().getName());
-        ReviewDTO review = reviewService.findReviewById(reviewId);
-        
+    public ResponseEntity<?> editReview(@RequestBody ReviewDTO review) {
         if (review == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reseña no encontrada");
         }
-        if (!review.user().email().equals(user.email()) && !request.isUserInRole("ADMIN")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acción no autorizada");
-        }
         
-        reviewService.editReview(reviewId, newText);
+        reviewService.editReview(review.id(), review.text());
         return ResponseEntity.ok().build();
     }
 
-    // Eliminar reseña
+    // Delete a review
     @DeleteMapping("/{id}")
     public ReviewDTO deleteReview(@PathVariable Long id) {
-        ReviewDTO review = reviewService.findReviewById(id);
         return reviewService.deleteReview(id);
     }
+
+    //Get pending reviews
+    @GetMapping("/pending")
+    public ResponseEntity<Collection<ReviewDTO>> getPendindReviews() {
+        Collection<ReviewDTO> reviews = reviewService.findByPendingTrue();
+        return ResponseEntity.ok(reviews);
+    }
+    
 }

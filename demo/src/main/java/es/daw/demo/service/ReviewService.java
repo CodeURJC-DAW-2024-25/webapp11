@@ -40,7 +40,7 @@ public class ReviewService {
         Review parentReviewEntity = (parentReview != null) ? 
             reviewRepository.findById(parentReview.id()).orElse(null) : null;
         // Crete new review
-        Review review = new Review(text, userRepository.findByFirstName(user.firstName()).get(), courseRepository.findById(course.id()).orElseThrow(), parentReviewEntity);
+        Review review = new Review(text, userRepository.findById(user.id()).get(), courseRepository.findById(course.id()).orElseThrow(), parentReviewEntity);
         // Save review in the database
         return toDTO(reviewRepository.save(review));
     }

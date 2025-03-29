@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "82f63bf2-b8e8-43bc-a34d-2e8f5fb032f0",
+		"_postman_id": "99ec3b31-6e75-4a71-b58d-6d31a1aa80e0",
 		"name": "DAW Cognite",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "39879168",
-		"_collection_link": "https://fb5555.postman.co/workspace/Cognite~4eda5167-7c4d-4007-8e59-72fea7804591/collection/39879168-82f63bf2-b8e8-43bc-a34d-2e8f5fb032f0?action=share&source=collection_link&creator=39879168"
+		"_collection_link": "https://fb5555.postman.co/workspace/Cognite~4eda5167-7c4d-4007-8e59-72fea7804591/collection/39879168-99ec3b31-6e75-4a71-b58d-6d31a1aa80e0?action=share&source=collection_link&creator=39879168"
 	},
 	"item": [
 		{
@@ -474,6 +474,25 @@
 					"response": []
 				},
 				{
+					"name": "Get Pending Reviws",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/reviews/pending",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"reviews",
+								"pending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Mark Review as Pending",
 					"request": {
 						"method": "PUT",
@@ -538,19 +557,13 @@
 						"method": "PUT",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "reviewId",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "newText",
-									"value": "This is the new text for the new review.",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2,\r\n    \"text\": \"Excelente cursooo!\",\r\n    \"user\": { \"id\": 1 },\r\n    \"course\": { \"id\": 1 }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/reviews/edit",
@@ -568,6 +581,18 @@
 				},
 				{
 					"name": "Create a review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "jwt",
@@ -613,7 +638,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"text\": \"Excelente curso!\",\r\n    \"user\": { \"id\": 1 },\r\n    \"course\": { \"id\": 1 },\r\n    \"parent\": { \"id\": 2 }\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -621,27 +646,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/reviews/new?text=\"Muy bueno\"&courseId=2&parentId=1",
+							"raw": "{{baseUrl}}/api/reviews/",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
 								"reviews",
-								"new"
+								""
 							],
 							"query": [
 								{
-									"key": "text",
-									"value": "\"Muy bueno\""
-								},
-								{
-									"key": "courseId",
-									"value": "2"
-								},
-								{
 									"key": "parentId",
-									"value": "1"
+									"value": "1",
+									"disabled": true
 								}
 							]
 						}
@@ -759,7 +777,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"Pepe\",\r\n    \"lastName\": \"García\",\r\n    \"email\": \"us1@gmail.com\",\r\n    \"topic\": \"Desarrollo móvil\",\r\n    \"roles\": [\r\n        \"USER\"\r\n    ]\r\n}",
+							"raw": "{\r\n    \"firstName\": \"Pepe\",\r\n    \"lastName\": \"García\",\r\n    \"email\": \"as1@gmail.com\",\r\n    \"topic\": \"Desarrollo móvil\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -845,14 +863,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/users/10",
+							"raw": "{{baseUrl}}/api/users/11",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
 								"users",
-								"10"
+								"11"
 							]
 						}
 					},

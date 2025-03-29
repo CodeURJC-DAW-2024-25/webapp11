@@ -31,13 +31,14 @@ public class UserService {
 		if (user.id() != null) {
             throw new IllegalArgumentException();
         }
+        
 
         User newUser = toDomain(user);
         newUser.setPassword(password);
         if (imageFile != null && !imageFile.isEmpty()) {
             newUser.setProfileImage(BlobProxy.generateProxy(imageFile.getInputStream(), imageFile.getSize()));
         }
-        newUser.setRoles(Collections.singletonList("USER"));
+        //newUser.setRoles(Collections.singletonList("USER"));
         userRepository.save(newUser);
         return toDTO(newUser);
 	}
