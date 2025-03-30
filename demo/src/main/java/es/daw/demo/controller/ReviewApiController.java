@@ -78,7 +78,7 @@ public class ReviewApiController {
     }
 
     // Editar reseña
-    @PutMapping("/edit")
+    @PutMapping("/")
     public ResponseEntity<?> editReview(@RequestBody ReviewDTO review) {
         if (review == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reseña no encontrada");

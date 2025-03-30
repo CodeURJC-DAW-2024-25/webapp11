@@ -19,9 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URI;
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
+
 
 @RestController
 @RequestMapping("/api/courses")
@@ -39,8 +41,9 @@ public class CourseApiController {
             HttpServletRequest request) throws Exception {
         UserDTO instructor = userService.findByEmail(request.getUserPrincipal().getName());
         course = new CourseDTO(null, course.title(), course.description(), course.topic(), instructor, 0);
-        courseService.createCourse(course, null, null);
-        return ResponseEntity.status(HttpStatus.CREATED).body(course);
+        course = courseService.createCourse(course, null, null);
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(course.id()).toUri();
+        return ResponseEntity.created(location).body(course);
     }
 
     @PostMapping("/{id}/image")
@@ -114,4 +117,19 @@ public class CourseApiController {
         Page<CourseDTO> coursesPage = courseService.searchCourses(title, pageable);
         return ResponseEntity.ok(coursesPage.getContent());
     }
+
+    @GetMapping("/taught")
+    public ResponseEntity<Page<CourseDTO>> getTaughtCourses(HttpServletRequest request,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Principal principal = request.getUserPrincipal();
+        Page<CourseDTO> coursesPage = courseService.findByInstructor(userService.findByEmail(principal.getName()), pageable);
+        
+        return ResponseEntity.ok(coursesPage);
+    }
+
+    
+    
 }
