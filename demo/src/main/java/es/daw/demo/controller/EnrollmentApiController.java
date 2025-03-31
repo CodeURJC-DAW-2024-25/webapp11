@@ -13,7 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import es.daw.demo.dto.CourseDTO;
 import es.daw.demo.dto.EnrollmentDTO;
 import es.daw.demo.dto.UserDTO;
-
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
+import java.net.URI;
 import java.security.Principal;
 import java.util.List;
 
@@ -28,14 +29,15 @@ public class EnrollmentApiController {
     private EnrollmentService enrollmentService;
 
     @PostMapping("/{idCourse}")
-    public ResponseEntity<String> enrollToCourse(@PathVariable Long idCourse, @RequestParam Long userId) {
+    public ResponseEntity<EnrollmentDTO> enrollToCourse(@PathVariable Long idCourse, @RequestParam Long userId) {
         UserDTO user = userService.findById(userId);
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-
-        String result = enrollmentService.enrollUserToCourse(userId, idCourse);
-        return result.equals("success") ? ResponseEntity.ok("Inscripción exitosa") : ResponseEntity.badRequest().body(result);
+        EnrollmentDTO enrollment = enrollmentService.enrollUserToCourse(userId, idCourse);
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(enrollment.id()).toUri();
+        
+        return ResponseEntity.created(location).body(enrollment);
     }
 
     @PutMapping("/{EnrollmentId}")

@@ -12,10 +12,9 @@ import es.daw.demo.dto.UserDTO;
 import es.daw.demo.dto.CourseDTO;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.net.URI;
 import java.util.Collection;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -39,20 +38,20 @@ public class ReviewApiController {
 
     // Crear una reseña
     @PostMapping("/")
-    public ResponseEntity<?> createReview(@RequestBody ReviewDTO review) {
-        System.out.println("Recibido ReviewDTO: " + review);
+    public ResponseEntity<ReviewDTO> createReview(@RequestBody ReviewDTO review) {
         if (review.user() == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         if (courseService.findById(review.course().id()) == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Curso no encontrado");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         if (review.parent() != null && reviewService.getParentReview(review.parent().id()) == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Reseña padre no encontrada");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        reviewService.createReview(review.text(), review.user(), review.course(), review.parent());
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        review = reviewService.createReview(review.text(), review.user(), review.course(), review.parent());
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(review.id()).toUri();
+        return ResponseEntity.created(location).body(review);
     }
 
     // Marcar reseña como pendiente de revisión

@@ -31,13 +31,14 @@ public class UserApiController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/")
-    public ResponseEntity<String> createUser(@RequestBody UserDTO user, String password) throws Exception {
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO user, String password) throws Exception {
         if (userService.existsByEmail(user.email())) {
-            return ResponseEntity.badRequest().body("El usuario ya existe");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         password = passwordEncoder.encode(password);
-        userService.createUser(user, null, password);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado exitosamente");
+        user = userService.createUser(user, null, password);
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(user.id()).toUri();
+        return ResponseEntity.created(location).body(user);
     }
 
     @PostMapping("/{id}/image")

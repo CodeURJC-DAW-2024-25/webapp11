@@ -47,26 +47,24 @@ public class EnrollmentService {
         return toDTO(enrollmentRepository.save(enrollment));
     }
 
-    public String enrollUserToCourse(Long userId, Long courseId) {
+    public EnrollmentDTO enrollUserToCourse(Long userId, Long courseId) {
         // check user
-        User user = userRepository.findById(userId)
-                .orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
-            return "Usuario no encontrado";
+            throw new RuntimeException("Usuario no encontrado");
         }
 
         // check course
-        Course course = courseRepository.findById(courseId)
-                .orElse(null);
+        Course course = courseRepository.findById(courseId).orElse(null);
         if (course == null) {
-            return "Curso no encontrado";
+            throw new RuntimeException("Curso no encontrado");
         }
 
         // check if the user is already enrolled in the course
         List<Enrollment> existingEnrollments = enrollmentRepository.findByUser_Id(userId);
         for (Enrollment enrollment : existingEnrollments) {
             if (enrollment.getCourse().equals(course)) {
-                return "Ya está inscrito en este curso";
+                throw new RuntimeException("Ya está inscrito en este curso");
             }
         }
 
@@ -78,7 +76,7 @@ public class EnrollmentService {
 
         // save the enrollment
         enrollmentRepository.save(enrollment);
-        return "success"; // Indicating successful enrollment
+        return toDTO(enrollment); // Indicating successful enrollment
     }
 
     private void updateUserTopic(User user) {

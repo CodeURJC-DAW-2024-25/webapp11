@@ -38,13 +38,13 @@ public class EnrollmentWebController {
         Long idUser = userService.findByEmail(request.getUserPrincipal().getName()).id();
 
         // Enroll to the course
-        String result = enrollmentService.enrollUserToCourse(idUser, idCourse);
+        EnrollmentDTO enrollment = enrollmentService.enrollUserToCourse(idUser, idCourse);
         
-        if (result.equals("success")) {
+        if (enrollment != null) {
             return "redirect:/course/" + idCourse;
         } else {
             model.addAttribute("errorTitle", "Error al inscribirse al curso");
-            model.addAttribute("errorMessage", result);
+            model.addAttribute("errorMessage", "No se pudo completar la inscripción al curso");
             return "error";
         }
     }
