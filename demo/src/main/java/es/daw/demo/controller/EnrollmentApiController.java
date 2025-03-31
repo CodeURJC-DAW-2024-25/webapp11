@@ -41,9 +41,13 @@ public class EnrollmentApiController {
     }
 
     @PutMapping("/{EnrollmentId}")
-    public ResponseEntity<String> rateCourse(@PathVariable Long EnrollmentId, 
-                                             @RequestParam int rating,
-                                             HttpServletRequest request) throws Exception{
+    public ResponseEntity<String> rateCourse(@PathVariable Long EnrollmentId,
+            @RequestParam int rating,
+            HttpServletRequest request) throws Exception {
+        // Validar si el usuario está autenticado
+        if (request.getUserPrincipal() == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no autenticado");
+        }
         UserDTO user = userService.findByEmail(request.getUserPrincipal().getName());
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
@@ -54,7 +58,7 @@ public class EnrollmentApiController {
         if (enrollmentDTO == null || enrollmentDTO.user().id() != user.id()) {
             return ResponseEntity.badRequest().body("No existe su inscripción al curso");
         }
-        
+
         enrollmentService.updateRating(EnrollmentId, rating);
         return ResponseEntity.ok("Valoración actualizada");
     }
@@ -68,10 +72,10 @@ public class EnrollmentApiController {
     public ResponseEntity<Page<CourseDTO>> getEnrollCourses(@PathVariable Long userId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int pageSize) {
-        
+
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<CourseDTO> coursesPage = enrollmentService.getCoursesByUser(userService.findById(userId), pageable);
-        
+
         return ResponseEntity.ok(coursesPage);
     }
 }
