@@ -75,6 +75,7 @@ public class SecurityConfig {
                     //.requestMatchers(HttpMethod.PUT,"/api/books/**").hasRole("USER")
                     //.requestMatchers(HttpMethod.DELETE,"/api/books/**").hasRole("ADMIN")
 					// PUBLIC ENDPOINTS
+					.requestMatchers("/v3/api-docs.yaml", "/swagger-ui/*", "/swagger-ui.html").permitAll()
 					.anyRequest().permitAll()
 			);
 		
@@ -128,7 +129,7 @@ public class SecurityConfig {
 						.requestMatchers("/mostInscribedCathegories").permitAll()
 						.requestMatchers("/mostCoursesCategories").permitAll()
 						.requestMatchers("/mostInscribedCategories").permitAll()
-
+						.requestMatchers("/v3/api-docs.yaml", "/v3/api-docs*", "/swagger-ui/*", "/swagger-ui.html").permitAll()
 						// PRIVATE PAGES
 						.requestMatchers("/course/enroll").hasAnyRole("USER")
 						.requestMatchers("/user/{id}/image").hasAnyRole("USER", "ADMIN")
