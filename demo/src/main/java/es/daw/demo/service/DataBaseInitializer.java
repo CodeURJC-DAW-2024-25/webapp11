@@ -57,16 +57,6 @@ public class DataBaseInitializer{
         User admin = new User("Ana", "López", "admin@gmail.com", passwordEncoder.encode("1234"), "Desarrollo web", "ADMIN");
 
     
-        setProfileImage(user1, "/static/images/perfil_1.jpg");
-        setProfileImage(user2, "/static/images/perfil_1.jpg");
-        setProfileImage(user3, "/static/images/perfil_1.jpg");
-        setProfileImage(user4, "/static/images/perfil_1.jpg");
-        setProfileImage(user5, "/static/images/perfil_1.jpg");
-        setProfileImage(user6, "/static/images/perfil_2.jpg");
-        setProfileImage(user7, "/static/images/perfil_2.jpg");
-        setProfileImage(user8, "/static/images/perfil_2.jpg");
-        setProfileImage(user9, "/static/images/perfil_2.jpg");
-        setProfileImage(admin, "/static/images/perfil_2.jpg");
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
@@ -120,6 +110,113 @@ public class DataBaseInitializer{
         Course course32 = new Course("Python desde cero", "Domina Python desde cero. Incluye proyectos prácticos.", "Desarrollo web", user5);
         Course course33 = new Course("Java desde", "Aprende a crear aplicaciones con Java.", "Desarrollo web",user6);
         
+        
+
+        courseRepository.save(course1);
+        courseRepository.save(course2);
+        courseRepository.save(course3);
+        courseRepository.save(course4);
+        courseRepository.save(course5);
+        courseRepository.save(course6);
+        courseRepository.save(course7);
+        courseRepository.save(course8);
+        courseRepository.save(course9);
+        courseRepository.save(course10);
+        courseRepository.save(course11);
+        courseRepository.save(course12);
+        courseRepository.save(course13);
+        courseRepository.save(course14);
+        courseRepository.save(course15);
+        courseRepository.save(course16);
+        courseRepository.save(course17);
+        courseRepository.save(course18);
+        courseRepository.save(course19);
+        courseRepository.save(course20);
+        courseRepository.save(course21);
+        courseRepository.save(course22);
+        courseRepository.save(course23);
+        courseRepository.save(course24);
+        courseRepository.save(course25);
+        courseRepository.save(course26);
+        courseRepository.save(course27);
+        courseRepository.save(course28);
+        courseRepository.save(course29);
+        courseRepository.save(course30);
+        courseRepository.save(course31);
+        courseRepository.save(course32);
+        courseRepository.save(course33);
+        
+        Enrollment enrollment1 = new Enrollment(user4, course1);
+        Enrollment enrollment2 = new Enrollment(user3, course1);
+        Enrollment enrollment3 = new Enrollment(user2, course1);
+        Enrollment enrollment4 = new Enrollment(user5, course1);
+        Enrollment enrollment5 = new Enrollment(user1, course2);
+        Enrollment enrollment6 = new Enrollment(user5, course2);
+        Enrollment enrollment7 = new Enrollment(user6, course2);
+        Enrollment enrollment8 = new Enrollment(user7, course2);
+        Enrollment enrollment9 = new Enrollment(user1, course7);
+        Enrollment enrollment10 = new Enrollment(user5, course7);
+        Enrollment enrollment11 = new Enrollment(user6, course7);
+        Enrollment enrollment12 = new Enrollment(user3, course7);
+        enrollment1.setRating(4);
+        enrollment2.setRating(2);
+        enrollment3.setRating(3);
+        enrollment4.setRating(4);
+        enrollment5.setRating(4);
+        enrollment6.setRating(1);
+        enrollment7.setRating(4);
+        enrollment8.setRating(3);
+        enrollment9.setRating(4);
+        enrollment10.setRating(2);
+        enrollment11.setRating(3);
+        enrollment12.setRating(1);
+
+        enrollmentRepository.save(enrollment1);
+        enrollmentRepository.save(enrollment2);
+        enrollmentRepository.save(enrollment3);
+        enrollmentRepository.save(enrollment4);
+        enrollmentRepository.save(enrollment5);
+        enrollmentRepository.save(enrollment6);
+        enrollmentRepository.save(enrollment7);
+        enrollmentRepository.save(enrollment8);
+        enrollmentRepository.save(enrollment9);
+        enrollmentRepository.save(enrollment10);
+        enrollmentRepository.save(enrollment11);
+        enrollmentRepository.save(enrollment12);
+
+        updateCourseRatings();
+        updateUserTopic(user1);
+        updateUserTopic(user2);
+        updateUserTopic(user3);
+        updateUserTopic(user4);
+        updateUserTopic(user5);
+        updateUserTopic(user6);
+        updateUserTopic(user7);   
+        
+        Review review1 = new Review("Muy buen curso, lo recomiendo.", user1, course2, null);
+        reviewRepository.save(review1);
+
+        setProfileImage(user1, "/static/images/perfil_1.jpg");
+        setProfileImage(user2, "/static/images/perfil_1.jpg");
+        setProfileImage(user3, "/static/images/perfil_1.jpg");
+        setProfileImage(user4, "/static/images/perfil_1.jpg");
+        setProfileImage(user5, "/static/images/perfil_1.jpg");
+        setProfileImage(user6, "/static/images/perfil_2.jpg");
+        setProfileImage(user7, "/static/images/perfil_2.jpg");
+        setProfileImage(user8, "/static/images/perfil_2.jpg");
+        setProfileImage(user9, "/static/images/perfil_2.jpg");
+        setProfileImage(admin, "/static/images/perfil_2.jpg");
+        userRepository.save(user1);
+        userRepository.save(user2);
+        userRepository.save(user3);
+        userRepository.save(user4);
+        userRepository.save(user5);
+        userRepository.save(user6);
+        userRepository.save(user7);
+        userRepository.save(user8);
+        userRepository.save(user9);
+        userRepository.save(admin);
+
         setCourseImage(course1, "/static/images/movil1.jpg");
         setCourseImage(course2, "/static/images/movil2.jpg");
         setCourseImage(course3, "/static/images/movil3.jpg");
@@ -228,56 +325,6 @@ public class DataBaseInitializer{
         courseRepository.save(course31);
         courseRepository.save(course32);
         courseRepository.save(course33);
-        
-        Enrollment enrollment1 = new Enrollment(user4, course1);
-        Enrollment enrollment2 = new Enrollment(user3, course1);
-        Enrollment enrollment3 = new Enrollment(user2, course1);
-        Enrollment enrollment4 = new Enrollment(user5, course1);
-        Enrollment enrollment5 = new Enrollment(user1, course2);
-        Enrollment enrollment6 = new Enrollment(user5, course2);
-        Enrollment enrollment7 = new Enrollment(user6, course2);
-        Enrollment enrollment8 = new Enrollment(user7, course2);
-        Enrollment enrollment9 = new Enrollment(user1, course7);
-        Enrollment enrollment10 = new Enrollment(user5, course7);
-        Enrollment enrollment11 = new Enrollment(user6, course7);
-        Enrollment enrollment12 = new Enrollment(user3, course7);
-        enrollment1.setRating(4);
-        enrollment2.setRating(2);
-        enrollment3.setRating(3);
-        enrollment4.setRating(4);
-        enrollment5.setRating(4);
-        enrollment6.setRating(1);
-        enrollment7.setRating(4);
-        enrollment8.setRating(3);
-        enrollment9.setRating(4);
-        enrollment10.setRating(2);
-        enrollment11.setRating(3);
-        enrollment12.setRating(1);
-
-        enrollmentRepository.save(enrollment1);
-        enrollmentRepository.save(enrollment2);
-        enrollmentRepository.save(enrollment3);
-        enrollmentRepository.save(enrollment4);
-        enrollmentRepository.save(enrollment5);
-        enrollmentRepository.save(enrollment6);
-        enrollmentRepository.save(enrollment7);
-        enrollmentRepository.save(enrollment8);
-        enrollmentRepository.save(enrollment9);
-        enrollmentRepository.save(enrollment10);
-        enrollmentRepository.save(enrollment11);
-        enrollmentRepository.save(enrollment12);
-
-        updateCourseRatings();
-        updateUserTopic(user1);
-        updateUserTopic(user2);
-        updateUserTopic(user3);
-        updateUserTopic(user4);
-        updateUserTopic(user5);
-        updateUserTopic(user6);
-        updateUserTopic(user7);   
-        
-        Review review1 = new Review("Muy buen curso, lo recomiendo.", user1, course2, null);
-        reviewRepository.save(review1);
     }
 
     public void setCourseImage(Course course, String classpathResource) throws IOException {
@@ -305,7 +352,7 @@ public class DataBaseInitializer{
                                              .sum();
                 int newAverageRating = totalRating / enrollments.size();
                 course.setRating(newAverageRating);
-                courseRepository.save(course);
+                courseRepository.save(course);  
             }
         }
     }
