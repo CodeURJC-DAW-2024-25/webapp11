@@ -936,13 +936,13 @@ ul.nav-tabs {
 };
     defs["PageCourseDTO"] = {
   "properties" : {
-    "totalElements" : {
-      "type" : "integer",
-      "format" : "int64"
-    },
     "totalPages" : {
       "type" : "integer",
       "format" : "int32"
+    },
+    "totalElements" : {
+      "type" : "integer",
+      "format" : "int64"
     },
     "size" : {
       "type" : "integer",
@@ -988,19 +988,19 @@ ul.nav-tabs {
     "sort" : {
       "$ref" : "#/components/schemas/SortObject"
     },
-    "paged" : {
-      "type" : "boolean"
-    },
     "unpaged" : {
       "type" : "boolean"
+    },
+    "pageNumber" : {
+      "type" : "integer",
+      "format" : "int32"
     },
     "pageSize" : {
       "type" : "integer",
       "format" : "int32"
     },
-    "pageNumber" : {
-      "type" : "integer",
-      "format" : "int32"
+    "paged" : {
+      "type" : "boolean"
     }
   }
 };
@@ -1229,7 +1229,7 @@ ul.nav-tabs {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/courses/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/courses/</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -1254,7 +1254,7 @@ ul.nav-tabs {
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: */*" \
  -H "Content-Type: application/json" \
- "http://localhost:8443/api/courses/" \
+ "http://localhost:8443/api/v1/courses/" \
  -d '{
   &quot;instructor&quot; : {
     &quot;firstName&quot; : &quot;firstName&quot;,
@@ -1635,7 +1635,7 @@ $(document).ready(function() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/courses/{id}/image</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/courses/{id}/image</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -1660,7 +1660,7 @@ $(document).ready(function() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: */*" \
  -H "Content-Type: application/json" \
- "http://localhost:8443/api/courses/{id}/image" \
+ "http://localhost:8443/api/v1/courses/{id}/image" \
  -d ''
 </code></pre>
                           </div>
@@ -2069,7 +2069,7 @@ $(document).ready(function() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/courses/{id}/notes</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/courses/{id}/notes</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -2094,7 +2094,7 @@ $(document).ready(function() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: */*" \
  -H "Content-Type: application/json" \
- "http://localhost:8443/api/courses/{id}/notes" \
+ "http://localhost:8443/api/v1/courses/{id}/notes" \
  -d ''
 </code></pre>
                           </div>
@@ -2503,7 +2503,7 @@ $(document).ready(function() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/courses/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/v1/courses/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -2527,7 +2527,7 @@ $(document).ready(function() {
                           <div class="tab-pane active" id="examples-CourseApiController-deleteCourse-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X DELETE \
  -H "Accept: */*" \
- "http://localhost:8443/api/courses/{id}"
+ "http://localhost:8443/api/v1/courses/{id}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-CourseApiController-deleteCourse-0-java">
@@ -2877,7 +2877,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/courses/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/courses/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -2901,7 +2901,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-CourseApiController-getCourse-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8443/api/courses/{id}"
+ "http://localhost:8443/api/v1/courses/{id}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-CourseApiController-getCourse-0-java">
@@ -3251,7 +3251,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/courses/{id}/image</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/courses/{id}/image</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -3275,7 +3275,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-CourseApiController-getCourseImage-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8443/api/courses/{id}/image"
+ "http://localhost:8443/api/v1/courses/{id}/image"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-CourseApiController-getCourseImage-0-java">
@@ -3625,7 +3625,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/courses/{id}/notes</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/courses/{id}/notes</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -3649,7 +3649,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-CourseApiController-getCourseNotes-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8443/api/courses/{id}/notes"
+ "http://localhost:8443/api/v1/courses/{id}/notes"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-CourseApiController-getCourseNotes-0-java">
@@ -3999,7 +3999,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/courses/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/courses/</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -4023,7 +4023,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-CourseApiController-getCourses-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8443/api/courses/?page=56&pageSize=56"
+ "http://localhost:8443/api/v1/courses/?page=56&pageSize=56"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-CourseApiController-getCourses-0-java">
@@ -4403,7 +4403,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/courses/title/{title}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/courses/title/{title}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -4427,7 +4427,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-CourseApiController-getCoursesByTitle-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8443/api/courses/title/{title}?page=56&pageSize=56"
+ "http://localhost:8443/api/v1/courses/title/{title}?page=56&pageSize=56"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-CourseApiController-getCoursesByTitle-0-java">
@@ -4845,7 +4845,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/courses/topic/{topic}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/courses/topic/{topic}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -4869,7 +4869,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-CourseApiController-getCoursesByTopic-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8443/api/courses/topic/{topic}?page=56&pageSize=56"
+ "http://localhost:8443/api/v1/courses/topic/{topic}?page=56&pageSize=56"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-CourseApiController-getCoursesByTopic-0-java">
@@ -5287,7 +5287,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/courses/taught</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/courses/taught</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -5311,7 +5311,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-CourseApiController-getTaughtCourses-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8443/api/courses/taught?page=56&pageSize=56"
+ "http://localhost:8443/api/v1/courses/taught?page=56&pageSize=56"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-CourseApiController-getTaughtCourses-0-java">
@@ -5691,7 +5691,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/courses/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/v1/courses/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -5716,7 +5716,7 @@ pub fn main() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X PUT \
  -H "Accept: */*" \
  -H "Content-Type: application/json" \
- "http://localhost:8443/api/courses/{id}" \
+ "http://localhost:8443/api/v1/courses/{id}" \
  -d '{
   &quot;instructor&quot; : {
     &quot;firstName&quot; : &quot;firstName&quot;,
@@ -6141,7 +6141,7 @@ $(document).ready(function() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/enrollments/{idCourse}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/enrollments/{idCourse}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -6165,7 +6165,7 @@ $(document).ready(function() {
                           <div class="tab-pane active" id="examples-EnrollmentApiController-enrollToCourse-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: */*" \
- "http://localhost:8443/api/enrollments/{idCourse}?userId=789"
+ "http://localhost:8443/api/v1/enrollments/{idCourse}?userId=789"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-EnrollmentApiController-enrollToCourse-0-java">
@@ -6556,7 +6556,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/enrollments/statistics/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/enrollments/statistics/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -6580,7 +6580,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-EnrollmentApiController-getCourseStatistics-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8443/api/enrollments/statistics/{id}"
+ "http://localhost:8443/api/v1/enrollments/statistics/{id}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-EnrollmentApiController-getCourseStatistics-0-java">
@@ -6930,7 +6930,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/enrollments/{userId}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/enrollments/{userId}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -6954,7 +6954,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-EnrollmentApiController-getEnrollCourses-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8443/api/enrollments/{userId}?page=56&pageSize=56"
+ "http://localhost:8443/api/v1/enrollments/{userId}?page=56&pageSize=56"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-EnrollmentApiController-getEnrollCourses-0-java">
@@ -7375,7 +7375,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/enrollments/{EnrollmentId}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/v1/enrollments/{EnrollmentId}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -7399,7 +7399,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-EnrollmentApiController-rateCourse-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X PUT \
  -H "Accept: */*" \
- "http://localhost:8443/api/enrollments/{EnrollmentId}?rating=56"
+ "http://localhost:8443/api/v1/enrollments/{EnrollmentId}?rating=56"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-EnrollmentApiController-rateCourse-0-java">
@@ -8870,7 +8870,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/reviews/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/reviews/</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -8895,7 +8895,7 @@ pub fn main() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: */*" \
  -H "Content-Type: application/json" \
- "http://localhost:8443/api/reviews/" \
+ "http://localhost:8443/api/v1/reviews/" \
  -d '{
   &quot;sons&quot; : [ null, null ],
   &quot;pending&quot; : true,
@@ -9290,7 +9290,7 @@ $(document).ready(function() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/reviews/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/v1/reviews/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -9314,7 +9314,7 @@ $(document).ready(function() {
                           <div class="tab-pane active" id="examples-ReviewApiController-deleteReview-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X DELETE \
  -H "Accept: */*" \
- "http://localhost:8443/api/reviews/{id}"
+ "http://localhost:8443/api/v1/reviews/{id}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-ReviewApiController-deleteReview-0-java">
@@ -9664,7 +9664,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/reviews/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/v1/reviews/</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -9689,7 +9689,7 @@ pub fn main() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X PUT \
  -H "Accept: */*" \
  -H "Content-Type: application/json" \
- "http://localhost:8443/api/reviews/" \
+ "http://localhost:8443/api/v1/reviews/" \
  -d '{
   &quot;sons&quot; : [ null, null ],
   &quot;pending&quot; : true,
@@ -10084,7 +10084,7 @@ $(document).ready(function() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/reviews/pending</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/reviews/pending</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -10108,7 +10108,7 @@ $(document).ready(function() {
                           <div class="tab-pane active" id="examples-ReviewApiController-getPendindReviews-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8443/api/reviews/pending"
+ "http://localhost:8443/api/v1/reviews/pending"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-ReviewApiController-getPendindReviews-0-java">
@@ -10417,7 +10417,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/reviews/course/{courseId}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/reviews/course/{courseId}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -10441,7 +10441,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-ReviewApiController-getReviewsByCourse-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8443/api/reviews/course/{courseId}"
+ "http://localhost:8443/api/v1/reviews/course/{courseId}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-ReviewApiController-getReviewsByCourse-0-java">
@@ -10791,7 +10791,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/reviews/{id}/desmark-pending</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/v1/reviews/{id}/desmark-pending</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -10815,7 +10815,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-ReviewApiController-markReviewAsNoPending-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X PUT \
  -H "Accept: */*" \
- "http://localhost:8443/api/reviews/{id}/desmark-pending"
+ "http://localhost:8443/api/v1/reviews/{id}/desmark-pending"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-ReviewApiController-markReviewAsNoPending-0-java">
@@ -11165,7 +11165,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/reviews/{id}/mark-pending</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/v1/reviews/{id}/mark-pending</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -11189,7 +11189,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-ReviewApiController-markReviewAsPending-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X PUT \
  -H "Accept: */*" \
- "http://localhost:8443/api/reviews/{id}/mark-pending"
+ "http://localhost:8443/api/v1/reviews/{id}/mark-pending"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-ReviewApiController-markReviewAsPending-0-java">
@@ -11542,7 +11542,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/users/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/users/</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -11567,7 +11567,7 @@ pub fn main() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: */*" \
  -H "Content-Type: application/json" \
- "http://localhost:8443/api/users/?password=password_example" \
+ "http://localhost:8443/api/v1/users/?password=password_example" \
  -d '{
   &quot;firstName&quot; : &quot;firstName&quot;,
   &quot;lastName&quot; : &quot;lastName&quot;,
@@ -11979,7 +11979,7 @@ $(document).ready(function() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/users/{id}/image</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/users/{id}/image</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -12004,7 +12004,7 @@ $(document).ready(function() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: */*" \
  -H "Content-Type: application/json" \
- "http://localhost:8443/api/users/{id}/image" \
+ "http://localhost:8443/api/v1/users/{id}/image" \
  -d ''
 </code></pre>
                           </div>
@@ -12413,7 +12413,7 @@ $(document).ready(function() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/users/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/v1/users/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -12437,7 +12437,7 @@ $(document).ready(function() {
                           <div class="tab-pane active" id="examples-UserApiController-deleteUser-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X DELETE \
  -H "Accept: */*" \
- "http://localhost:8443/api/users/{id}"
+ "http://localhost:8443/api/v1/users/{id}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-UserApiController-deleteUser-0-java">
@@ -12787,7 +12787,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/users/{id}/image</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/users/{id}/image</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -12811,7 +12811,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-UserApiController-getProfileImage-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8443/api/users/{id}/image"
+ "http://localhost:8443/api/v1/users/{id}/image"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-UserApiController-getProfileImage-0-java">
@@ -13161,7 +13161,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/users/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/users/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -13185,7 +13185,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-UserApiController-getUser-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8443/api/users/{id}"
+ "http://localhost:8443/api/v1/users/{id}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-UserApiController-getUser-0-java">
@@ -13535,7 +13535,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/users/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/users/</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -13559,7 +13559,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-UserApiController-getUsers-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: */*" \
- "http://localhost:8443/api/users/?name=name_example"
+ "http://localhost:8443/api/v1/users/?name=name_example"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-UserApiController-getUsers-0-java">
@@ -13905,7 +13905,7 @@ pub fn main() {
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/users/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/v1/users/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -13930,7 +13930,7 @@ pub fn main() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X PUT \
  -H "Accept: */*" \
  -H "Content-Type: application/json" \
- "http://localhost:8443/api/users/{id}?password=password_example" \
+ "http://localhost:8443/api/v1/users/{id}?password=password_example" \
  -d '{
   &quot;firstName&quot; : &quot;firstName&quot;,
   &quot;lastName&quot; : &quot;lastName&quot;,

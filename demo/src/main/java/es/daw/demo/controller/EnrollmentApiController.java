@@ -18,7 +18,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/enrollments")
+@RequestMapping("/api/v1/enrollments")
 public class EnrollmentApiController {
 
     @Autowired

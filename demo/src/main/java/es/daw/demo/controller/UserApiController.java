@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.List;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 public class UserApiController {
 
     @Autowired

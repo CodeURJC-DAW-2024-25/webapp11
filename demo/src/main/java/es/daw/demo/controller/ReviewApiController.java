@@ -13,7 +13,7 @@ import java.util.Collection;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
-@RequestMapping("/api/reviews")
+@RequestMapping("/api/v1/reviews")
 public class ReviewApiController {
 
     @Autowired

@@ -59,7 +59,7 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	@Order(1)		//FALTA CONFIGURAR
+	@Order(1)
 	public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
 		
 		http.authenticationProvider(authenticationProvider());
@@ -71,21 +71,21 @@ public class SecurityConfig {
 		http
 			.authorizeHttpRequests(authorize -> authorize
                     // PRIVATE ENDPOINTS
-                    .requestMatchers(HttpMethod.PUT,"/api/users/**").hasAnyRole("USER")
-                    .requestMatchers(HttpMethod.DELETE,"/api/users/**").hasAnyRole("USER", "ADMIN")
-					.requestMatchers(HttpMethod.GET,"/api/users/**").hasAnyRole("ADMIN", "USER")
+                    .requestMatchers(HttpMethod.PUT,"/api/v1/users/**").hasAnyRole("USER")
+                    .requestMatchers(HttpMethod.DELETE,"/api/v1/users/**").hasAnyRole("USER", "ADMIN")
+					.requestMatchers(HttpMethod.GET,"/api/v1/users/**").hasAnyRole("ADMIN", "USER")
 
-					.requestMatchers(HttpMethod.POST,"/api/reviews/**").hasAnyRole("USER")
-                    .requestMatchers(HttpMethod.PUT,"/api/reviews/**").hasAnyRole("USER", "ADMIN")
-                    .requestMatchers(HttpMethod.DELETE,"/api/reviews/**").hasAnyRole("USER", "ADMIN")
-					.requestMatchers(HttpMethod.GET,"/api/reviews/pending").hasAnyRole("ADMIN")
+					.requestMatchers(HttpMethod.POST,"/api/v1/reviews/**").hasAnyRole("USER")
+                    .requestMatchers(HttpMethod.PUT,"/api/v1/reviews/**").hasAnyRole("USER", "ADMIN")
+                    .requestMatchers(HttpMethod.DELETE,"/api/v1/reviews/**").hasAnyRole("USER", "ADMIN")
+					.requestMatchers(HttpMethod.GET,"/api/v1/reviews/pending").hasAnyRole("ADMIN")
 
-					.requestMatchers(HttpMethod.POST,"/api/enrollments/**").hasAnyRole("USER")
-                    .requestMatchers(HttpMethod.PUT,"/api/enrollments/**").hasAnyRole("USER")
+					.requestMatchers(HttpMethod.POST,"/api/v1/enrollments/**").hasAnyRole("USER")
+                    .requestMatchers(HttpMethod.PUT,"/api/v1/enrollments/**").hasAnyRole("USER")
 
-					.requestMatchers(HttpMethod.POST,"/api/courses/**").hasAnyRole("USER")
-                    .requestMatchers(HttpMethod.PUT,"/api/courses/**").hasAnyRole("USER")
-                    .requestMatchers(HttpMethod.DELETE,"/api/courses/**").hasAnyRole("USER", "ADMIN")
+					.requestMatchers(HttpMethod.POST,"/api/v1/courses/**").hasAnyRole("USER")
+                    .requestMatchers(HttpMethod.PUT,"/api/v1/courses/**").hasAnyRole("USER")
+                    .requestMatchers(HttpMethod.DELETE,"/api/v1/courses/**").hasAnyRole("USER", "ADMIN")
 
 					// PUBLIC ENDPOINTS
 					.requestMatchers("/v3/api-docs.yaml", "/swagger-ui/*", "/swagger-ui.html").permitAll()
