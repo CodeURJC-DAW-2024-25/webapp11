@@ -5,12 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import es.daw.demo.service.ReviewService;
-import es.daw.demo.service.UserService;
 import es.daw.demo.service.CourseService;
 import es.daw.demo.dto.ReviewDTO;
-import es.daw.demo.dto.UserDTO;
-import es.daw.demo.dto.CourseDTO;
-import jakarta.servlet.http.HttpServletRequest;
 
 import java.net.URI;
 import java.util.Collection;
@@ -22,9 +18,6 @@ public class ReviewApiController {
 
     @Autowired
     private ReviewService reviewService;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private CourseService courseService;

@@ -71,9 +71,22 @@ public class SecurityConfig {
 		http
 			.authorizeHttpRequests(authorize -> authorize
                     // PRIVATE ENDPOINTS
-                    //.requestMatchers(HttpMethod.POST,"/api/books/").hasRole("USER")
-                    //.requestMatchers(HttpMethod.PUT,"/api/books/**").hasRole("USER")
-                    //.requestMatchers(HttpMethod.DELETE,"/api/books/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT,"/api/users/**").hasAnyRole("USER")
+                    .requestMatchers(HttpMethod.DELETE,"/api/users/**").hasAnyRole("USER", "ADMIN")
+					.requestMatchers(HttpMethod.GET,"/api/users/**").hasAnyRole("ADMIN", "USER")
+
+					.requestMatchers(HttpMethod.POST,"/api/reviews/**").hasAnyRole("USER")
+                    .requestMatchers(HttpMethod.PUT,"/api/reviews/**").hasAnyRole("USER", "ADMIN")
+                    .requestMatchers(HttpMethod.DELETE,"/api/reviews/**").hasAnyRole("USER", "ADMIN")
+					.requestMatchers(HttpMethod.GET,"/api/reviews/pending").hasAnyRole("ADMIN")
+
+					.requestMatchers(HttpMethod.POST,"/api/enrollments/**").hasAnyRole("USER")
+                    .requestMatchers(HttpMethod.PUT,"/api/enrollments/**").hasAnyRole("USER")
+
+					.requestMatchers(HttpMethod.POST,"/api/courses/**").hasAnyRole("USER")
+                    .requestMatchers(HttpMethod.PUT,"/api/courses/**").hasAnyRole("USER")
+                    .requestMatchers(HttpMethod.DELETE,"/api/courses/**").hasAnyRole("USER", "ADMIN")
+
 					// PUBLIC ENDPOINTS
 					.requestMatchers("/v3/api-docs.yaml", "/swagger-ui/*", "/swagger-ui.html").permitAll()
 					.anyRequest().permitAll()

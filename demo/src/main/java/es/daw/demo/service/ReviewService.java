@@ -46,6 +46,7 @@ public class ReviewService {
     }
 
     public List<ReviewDTO> findParentReviewsByCourse(Long courseId) {
+        System.out.println(reviewRepository.findByCourseIdAndParentIsNull(courseId));
         return toDTOs(reviewRepository.findByCourseIdAndParentIsNull(courseId));
     }
 

@@ -15,7 +15,6 @@ import es.daw.demo.dto.EnrollmentDTO;
 import es.daw.demo.dto.UserDTO;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 import java.net.URI;
-import java.security.Principal;
 import java.util.List;
 
 @RestController
