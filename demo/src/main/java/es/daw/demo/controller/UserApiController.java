@@ -10,6 +10,8 @@ import org.springframework.core.io.Resource;
 import es.daw.demo.service.EmailService;
 import es.daw.demo.service.UserService;
 import es.daw.demo.dto.UserDTO;
+import es.daw.demo.dto.UserSignUpDTO;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -31,14 +33,15 @@ public class UserApiController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO user, String password) throws Exception {
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserSignUpDTO user) throws Exception {
         if (userService.existsByEmail(user.email())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        password = passwordEncoder.encode(password);
-        user = userService.createUser(user, null, password);
-        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(user.id()).toUri();
-        return ResponseEntity.created(location).body(user);
+        String password = passwordEncoder.encode(user.password());
+        UserDTO userDTO = new UserDTO(user.id(), user.firstName(), user.lastName(), user.email(), user.topic(), user.roles());
+        userDTO = userService.createUser(userDTO, null, password);
+        URI location = fromCurrentRequest().path("/{id}").buildAndExpand(userDTO.id()).toUri();
+        return ResponseEntity.created(location).body(userDTO);
     }
 
     @PostMapping("/{id}/image")
@@ -82,7 +85,7 @@ public class UserApiController {
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable Long id,
                                             @RequestBody UserDTO UpdatedUser,
-                                            @RequestParam String password) throws IOException {
+                                            @RequestParam(required = false) String password) throws IOException {
         UserDTO user = userService.findById(id);
         if (user == null) {
             return ResponseEntity.notFound().build();
