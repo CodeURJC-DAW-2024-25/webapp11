@@ -25,12 +25,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/auth/login",
+							"raw": "{{baseUrl}}/api/v1/auth/login",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"auth",
 								"login"
 							]
@@ -53,12 +54,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/auth/login",
+							"raw": "{{baseUrl}}/api/v1/auth/login",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"auth",
 								"login"
 							]
@@ -72,12 +74,13 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/auth/logout",
+							"raw": "{{baseUrl}}/api/v1/auth/logout",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"auth",
 								"logout"
 							]
@@ -99,12 +102,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/courses/?page=0&size=10",
+							"raw": "{{baseUrl}}/api/v1/courses/?page=0&size=10",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"courses",
 								""
 							],
@@ -128,12 +132,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/courses/35/notes",
+							"raw": "{{baseUrl}}/api/v1/courses/35/notes",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"courses",
 								"35",
 								"notes"
@@ -151,12 +156,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/courses/topic/Desarrollo%20web?page=0&pageSize=10",
+							"raw": "{{baseUrl}}/api/v1/courses/topic/Desarrollo%20web?page=0&pageSize=10",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"courses",
 								"topic",
 								"Desarrollo%20web"
@@ -184,12 +190,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/courses/topic/Desarrollo%20web?page=0&pageSize=10",
+							"raw": "{{baseUrl}}/api/v1/courses/topic/Desarrollo%20web?page=0&pageSize=10",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"courses",
 								"topic",
 								"Desarrollo%20web"
@@ -214,12 +221,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/courses/1",
+							"raw": "{{baseUrl}}/api/v1/courses/1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"courses",
 								"1"
 							]
@@ -233,12 +241,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/courses/1",
+							"raw": "{{baseUrl}}/api/v1/courses/1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"courses",
 								"1"
 							]
@@ -252,12 +261,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/courses/35/image",
+							"raw": "{{baseUrl}}/api/v1/courses/35/image",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"courses",
 								"35",
 								"image"
@@ -284,12 +294,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/courses/34",
+							"raw": "{{baseUrl}}/api/v1/courses/34",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"courses",
 								"34"
 							]
@@ -316,12 +327,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/courses/1/image",
+							"raw": "{{baseUrl}}/api/v1/courses/1/image",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"courses",
 								"1",
 								"image"
@@ -349,12 +361,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/courses/1/notes",
+							"raw": "{{baseUrl}}/api/v1/courses/1/notes",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"courses",
 								"1",
 								"notes"
@@ -418,12 +431,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/courses/",
+							"raw": "{{baseUrl}}/api/v1/courses/",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"courses",
 								""
 							],
@@ -459,15 +473,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/reviews/course/1",
+							"raw": "{{baseUrl}}/api/v1/reviews/course/2",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"reviews",
 								"course",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -479,12 +494,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/reviews/pending",
+							"raw": "{{baseUrl}}/api/v1/reviews/pending",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"reviews",
 								"pending"
 							]
@@ -498,12 +514,13 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/reviews/1/mark-pending",
+							"raw": "{{baseUrl}}/api/v1/reviews/1/mark-pending",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"reviews",
 								"1",
 								"mark-pending"
@@ -518,12 +535,13 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/reviews/1/desmark-pending",
+							"raw": "{{baseUrl}}/api/v1/reviews/1/desmark-pending",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"reviews",
 								"1",
 								"desmark-pending"
@@ -538,12 +556,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/courses/1",
+							"raw": "{{baseUrl}}/api/v1/courses/1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"courses",
 								"1"
 							]
@@ -566,12 +585,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/reviews/",
+							"raw": "{{baseUrl}}/api/v1/reviews/",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"reviews",
 								""
 							]
@@ -646,12 +666,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/reviews/",
+							"raw": "{{baseUrl}}/api/v1/reviews/",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"reviews",
 								""
 							],
@@ -726,12 +747,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/enrollments/1?userId=1",
+							"raw": "{{baseUrl}}/api/v1/enrollments/1?userId=1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"enrollments",
 								"1"
 							],
@@ -803,12 +825,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/enrollments/1",
+							"raw": "{{baseUrl}}/api/v1/enrollments/1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"enrollments",
 								"1"
 							]
@@ -871,12 +894,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/enrollments/13?rating=2",
+							"raw": "{{baseUrl}}/api/v1/enrollments/13?rating=2",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"enrollments",
 								"13"
 							],
@@ -896,12 +920,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/enrollments/statistics/1",
+							"raw": "{{baseUrl}}/api/v1/enrollments/statistics/1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"enrollments",
 								"statistics",
 								"1"
@@ -930,12 +955,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/users/?password=1234",
+							"raw": "{{baseUrl}}/api/v1/users/?password=1234",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"users",
 								""
 							],
@@ -968,12 +994,13 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/users/11/image",
+							"raw": "{{baseUrl}}/api/v1/users/11/image",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"users",
 								"11",
 								"image"
@@ -988,12 +1015,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/users/11/image",
+							"raw": "{{baseUrl}}/api/v1/users/11/image",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"users",
 								"11",
 								"image"
@@ -1008,12 +1036,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/users/11",
+							"raw": "{{baseUrl}}/api/v1/users/11",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"users",
 								"11"
 							]
@@ -1027,12 +1056,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/users/?name=Pepe",
+							"raw": "{{baseUrl}}/api/v1/users/?name=Pepe",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"users",
 								""
 							],
@@ -1052,12 +1082,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/users/{id}",
+							"raw": "{{baseUrl}}/api/v1/users/{id}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"users",
 								"{id}"
 							]
@@ -1080,12 +1111,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/users/9?password=1234",
+							"raw": "{{baseUrl}}/api/v1/users/9?password=1234",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"users",
 								"9"
 							],
