@@ -223,3 +223,25 @@ Entre las tareas realizadas cabe destacar: implementación del CourseRepository,
   |Admin|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/a9dfc042ed62f1c4b5de9aa77e264219302e75ad#diff-3af6ce49f8a0478fa6d38bcbd811f1b6688ce9c4300a28f35fa09c6e3a93526b)|
   |Enrollment service|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/beb89f56116ad569545ce3dd27376266cbdae7b4#diff-1f61c6528348e5faee4036bb781c7984d200a8297d18e1a5421722b1bcb5da1b)|
   |Review service|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/782268940673fdd43f2b2f5cb5b42df76fa0c713#diff-b2aa078e0484e59e1b3b50f7c6777685b54051d60a63ad20be3a261bff1519df)|
+
+## Participación P2:
+- Eloy de Sande.
+
+  Entre las tareas desarrolladas cabe destacar: creación de los DTOS para cada entidad (course, enrollment, review, user), implementación de la seguridad para la API Rest, creación de la documentación de la API, controladores para la API, ...
+  
+ | Principales Commit | Descripción  | Enlace al Commit |
+|--------------------|-------------|------------------|
+| **Commit 1** | Creación de documentación de la API | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/115e35f978abcef1e462aab0d3cb7b6095affd48) |
+| **Commit 2** | Creación UserApiController, ReviewApiController y EnrollmentApiController | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/eaf35ca0b31816a204cb5bb3570eee356006119d) |
+| **Commit 3** | Se añade  funcionalidad de seguridad para la API| [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/ae80df65c353fe1b75e3d64b3f2b5e1e242b549e) |
+| **Commit 4** | Modificación se servicios y controladores para funcionar con la versión web y API | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/af4b852d42f884496ccb418c7ea15c9bc3bcbded) |
+| **Commit 5** | Creación DTOs y Mappers| [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/a3d5f3961bff50f84167b855d019c79597e3ec6c) |
+
+  
+  | Principales archivos | Enlace al archivo |
+  |----------------------|-------------------|
+  |API Docs yaml|[Ver archivo](api-docs/api-docs.yaml)|
+  |CourseApiController|[Ver archivo](demo/src/main/java/es/daw/demo/controller/CourseApiController.java)|
+  |UserApiController|[Ver archivo](demo/src/main/java/es/daw/demo/controller/UserApiController.java)|
+  |ReviewApiController|[Ver archivo](demo/src/main/java/es/daw/demo/controller/ReviewApiController.java)|
+  |SecurityConfig|[Ver archivo](demo/src/main/java/es/daw/demo/security/SecurityConfig.java)|
