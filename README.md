@@ -111,8 +111,15 @@ Si el proyecto es una aplicación **Spring Boot**, puedes correrlo directamente 
 Una vez ejecutado el servidor, accede desde el navegador a:  
 🔗 **[https://localhost:8443/](https://localhost:8443/)**  
 
+## Documentación API REST:
+La API de Cognite proporciona endpoints para manejar cursos, inscripciones, reseñas y usuarios. La documentación de la API se ha generado con OpenAPI
+1. **Acceso a OpenAPI YAML file**
+    En el siguiente enlace: [OpenAPI Documentation yaml](/api-docs/api-docs.yaml).
+ 
+ 2. **Visualizar OpenAPI documentation html file**
+    En el siguiente enlace: [OpenAPI Documentation html](https://raw.githack.com/CodeURJC-DAW-2024-25/webapp11/main/api-docs/api-docs.html).
 
-## Participación:
+## Participación P1:
 - Eloy de Sande.
 
   Entre las tareas desarrolladas cabe destacar: creación de las plantillas mustache, inicialización de la base de datos para contar con ejemplos de demostración, implementación del perfil y sus funciones asociadas (listar usuarios, listar comentarios pendientes de revisión, eliminar usuarios, ...), destacando la creación de `EmailService` para notificar a los usuarios que su cuenta ha sido eliminada. Implementación del algoritmo de consulta avanzada, que consiste en mostrar a los usuarios cursos relacionados con su temática de prefencia, atributo que se va actualizando acorde a las inscripciones del usuario.
