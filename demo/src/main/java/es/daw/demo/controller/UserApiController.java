@@ -93,4 +93,11 @@ public class UserApiController {
         userService.updateUser(id, UpdatedUser.firstName(), UpdatedUser.lastName(), UpdatedUser.email(), UpdatedUser.topic(), null, passwordEncoder.encode(password));
         return ResponseEntity.ok(userService.findById(id));
     }
+
+    @PutMapping("/{id}/image")
+	public ResponseEntity<Object> updateUserImage(@PathVariable long id, @RequestParam MultipartFile imageFile) throws IOException {
+		userService.createUserImage(id, imageFile.getInputStream(), imageFile.getSize());
+        URI location = fromCurrentRequest().build().toUri();
+		return ResponseEntity.created(location).build();
+	}
 }

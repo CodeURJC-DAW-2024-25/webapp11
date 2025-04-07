@@ -129,6 +129,19 @@ public class CourseApiController {
         return ResponseEntity.ok(coursesPage);
     }
 
-    
+    @PutMapping("/{id}/image")
+	public ResponseEntity<Object> updateCourseImage(@PathVariable long id, @RequestParam MultipartFile imageFile) throws IOException {
+		
+        courseService.createCourseImage(id, imageFile.getInputStream(), imageFile.getSize());
+        URI location = fromCurrentRequest().build().toUri();
+		return ResponseEntity.created(location).build();
+	}
+
+    @PutMapping("/{id}/notes")
+	public ResponseEntity<Object> updateCourseNotes(@PathVariable long id, @RequestParam MultipartFile noteFile) throws IOException {
+		courseService.createCourseNotes(id, noteFile.getInputStream(), noteFile.getSize());
+		URI location = fromCurrentRequest().build().toUri();
+		return ResponseEntity.created(location).build();
+	}
     
 }

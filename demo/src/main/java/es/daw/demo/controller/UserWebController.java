@@ -143,7 +143,9 @@ public class UserWebController {
     @PostMapping("/admin/users/delete/{id}")
     public String banearUsuario(@PathVariable Long id, Model model) {
         UserDTO user = userService.findById(id);
-
+        for (ReviewDTO review: reviewService.findReviewsByUser(id)) {
+            reviewService.deleteReview(review.id());
+        }
         // Send email of notification
         String subject = "Notificación: Tu cuenta ha sido eliminada";
         String message = "Estimado usuario,\n\nTu cuenta ha sido eliminada de forma permanente. Si crees que esto es un error, por favor contacta con el soporte.";
@@ -194,18 +196,19 @@ public class UserWebController {
 
     @GetMapping("/deleteAccount/{userID}")
     public String deleteAccount(HttpServletRequest request,
-                             @PathVariable Long userID, Model model,
-                             @RequestParam(required = false) MultipartFile imageFile) throws IOException, SQLException, ServletException {
+                             @PathVariable Long userID, Model model) throws IOException, SQLException, ServletException {
         
         UserDTO user = userService.findById(userID);
-
+        for (ReviewDTO review: reviewService.findReviewsByUser(userID)) {
+            reviewService.deleteReview(review.id());
+        }
         // Send email of notification
         String subject = "Notificación: Tu cuenta ha sido eliminada";
         String message = "Estimado usuario,\n\nTal y como solicitó, su cuenta ha sido eliminada de forma permanente.";
                         
         emailService.sendEmail(user.email(), subject, message);
         userService.deleteById(userID);
-        model.addAttribute("pagetitle", "Perfil");
+        //model.addAttribute("pagetitle", "Perfil");
 
         request.logout();
 
