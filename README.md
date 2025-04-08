@@ -245,3 +245,24 @@ Entre las tareas realizadas cabe destacar: implementación del CourseRepository,
   |UserApiController|[Ver archivo](demo/src/main/java/es/daw/demo/controller/UserApiController.java)|
   |ReviewApiController|[Ver archivo](demo/src/main/java/es/daw/demo/controller/ReviewApiController.java)|
   |SecurityConfig|[Ver archivo](demo/src/main/java/es/daw/demo/security/SecurityConfig.java)|
+
+ - Álvaro Fernández González
+
+Durante el desarrollo del proyecto, se han realizado diversas tareas clave entre las que destacan: creación algunos DTOS (`Course`, `Enrollment`, `Review`, `User`), implementación de cierta seguridad en la la API REST, documentación de endpoints, desarrollo de controladores REST...
+
+|  Principales Commits | Descripción | Enlace |
+|--------|-------------|--------|
+| **Commit 1** | Creación de documentación de la API en Postman | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/e40c2e4cfa843a61593cef976f6ff006c2135477) |
+| **Commit 2** | Creación de RestUserController | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/436fb879a553a79d25727b85f0c23a5d9fad746e) |
+| **Commit 3** | Implementación de seguridad en EnrollmentApiController para controlar acceso de usuarios no autenticados | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/ae381e009f1d8d06312c8d9495625c34ae041b75) |
+| **Commit 4** | Refactorización de endpoints (`mark`, `desmark`, etc.) para ajustarse a los requisitos del frontend y la API | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/0f39eef0b656cd3fdeb344bb0addefc6291c7bf2) |
+| **Commit 5** | Creación de los DTOs (`ReviewDTO`, `CourseDTO`) | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/4730adf0ef4de839792ebdeebbf03aec21a7239b) |
+
+| Principales Archivos | Enlace al archivo |
+|--------|--------|
+| Documentación API (Postman Collection) | [Ver archivo](demo/DAW Cognite.postman_collection.json) |
+| UserApiController.java | [Ver archivo](demo/src/main/java/es/daw/demo/controller/UserApiController.java) |
+| ReviewDTO.java | [Ver archivo](demo/src/main/java/es/daw/demo/dto/ReviewDTO.java) |
+| EnrollmentApiController.java | [Ver archivo](demo/src/main/java/es/daw/demo/controller/EnrollmentApiController.java) |
+| CourseDTO.java | [Ver archivo](demo/src/main/java/es/daw/demo/dto/CourseDTO.java) |
+
