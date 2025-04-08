@@ -124,7 +124,6 @@ La API de Cognite proporciona endpoints para manejar cursos, inscripciones, rese
 1.  **Clonar el repositoorio**
 ```bash
 git clone https://github.com/CodeURJC-DAW-2024-25/webapp11 Cognite --branch main --depth 1
-cd ./Cognite/docker
 ```
 
 2. **Construir la imagen Docker**
