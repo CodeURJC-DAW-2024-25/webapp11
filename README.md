@@ -266,3 +266,24 @@ Durante el desarrollo del proyecto, se han realizado diversas tareas clave entre
 | EnrollmentApiController.java | [Ver archivo](demo/src/main/java/es/daw/demo/controller/EnrollmentApiController.java) |
 | CourseDTO.java | [Ver archivo](demo/src/main/java/es/daw/demo/dto/CourseDTO.java) |
 
+
+- Gonzalo Fernández González
+
+Durante esta parte de la práctica, se han realizado las siguientes tareas:  creación algunos DTOS (`Course`, `Enrollment`), implementación y trabajo de la parte relativa al Docker...
+
+|  Principales Commits | Descripción | Enlace |
+|--------|-------------|--------|
+| **Commit 1** | Creación de Enrollment DTO  | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/630b1908d4275f7c9ff1138f336344083af81110) |
+| **Commit 2** | Creación de CourseDTO | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/07981cd65507b944e6b805760990953d204296dc) |
+| **Commit 3** | Creación de la imagen de Docker | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/0c1d6f0aa5da84982e0023f300d3f0c12815cfec) |
+| **Commit 4** | Cambio de Puerto y Eliminar Docker Compose y Docker File malo  | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/085c5bc2677999533a1e93bf897b389571494117) |
+| **Commit 5** | Creación de DockerFile  | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/0c1d6f0aa5da84982e0023f300d3f0c12815cfec) |
+
+| Principales Archivos | Enlace al archivo |
+|--------|--------|
+|  Enrollment DTO.java | [Ver archivo](demo/src/main/java/es/daw/demo/DTO/EnrollmentDTO.java) |
+| Course DTO.java | [Ver archivo](demo/src/main/java/es/daw/demo/DTO/CourseDTO.java) |
+| create_image.sh | [Ver archivo](docker/create_image.sh) |
+| DockerFile | [Ver archivo](docker/Dockerfile) |
+| docker-compose.yml | [Ver archivo](docker/docker-compose.yml) |
+
