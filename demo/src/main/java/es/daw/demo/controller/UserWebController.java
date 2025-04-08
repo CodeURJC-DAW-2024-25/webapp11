@@ -172,10 +172,12 @@ public class UserWebController {
         UserDTO user = userService.findById(userID);
         String email = user.email();
         if (user != null) {
-            String password;
+            String password = "";
             // Verify password and new password
             if (newPassword.equals(confirmPassword)) {
-                password = passwordEncoder.encode(newPassword);
+                if(!newPassword.isEmpty()){
+                    password = passwordEncoder.encode(newPassword);
+                }
                 user = userService.updateUser(userID, firstName, lastName, email, topic, imageFile, password);
                 System.out.println("User updated");
                 System.out.println(user.email());
