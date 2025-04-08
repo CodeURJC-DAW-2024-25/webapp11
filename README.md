@@ -119,6 +119,28 @@ La API de Cognite proporciona endpoints para manejar cursos, inscripciones, rese
  2. **Visualizar OpenAPI documentation html file**
     En el siguiente enlace: [OpenAPI Documentation html](https://raw.githack.com/CodeURJC-DAW-2024-25/webapp11/main/api-docs/api-docs.html).
 
+###  Instalación e inicialización
+
+1.  **Clonar el repositoorio**
+```bash
+git clone https://github.com/CodeURJC-DAW-2024-25/webapp11 Cognite --branch main --depth 1
+cd ./Cognite/docker
+```
+
+2. **Construir la imagen Docker**
+```bash
+
+chmod +x docker/create_image.sh
+docker/create_image.sh 1.0
+```
+
+3. **Ejecutar el contenedor Docker**
+```bash
+docker-compose -f docker/docker-compose.yml up --build
+```
+
+---
+
 ## Participación P1:
 - Eloy de Sande.
 
