@@ -119,7 +119,7 @@ La API de Cognite proporciona endpoints para manejar cursos, inscripciones, rese
  2. **Visualizar OpenAPI documentation html file**
     En el siguiente enlace: [OpenAPI Documentation html](https://raw.githack.com/CodeURJC-DAW-2024-25/webapp11/main/api-docs/api-docs.html).
 
-###  Instalación e inicialización
+##  Instalación e inicialización
 
 1.  **Clonar el repositoorio**
 ```bash
