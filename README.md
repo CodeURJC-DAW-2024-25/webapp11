@@ -260,7 +260,7 @@ Durante el desarrollo del proyecto, se han realizado diversas tareas clave entre
 
 | Principales Archivos | Enlace al archivo |
 |--------|--------|
-| Documentación API (Postman Collection) | [Ver archivo](demo/DAW Cognite.postman_collection.json) |
+| Documentación API (Postman Collection) | [Ver archivo](demo/DAWCognite.postman_collection.json) |
 | UserApiController.java | [Ver archivo](demo/src/main/java/es/daw/demo/controller/UserApiController.java) |
 | ReviewDTO.java | [Ver archivo](demo/src/main/java/es/daw/demo/dto/ReviewDTO.java) |
 | EnrollmentApiController.java | [Ver archivo](demo/src/main/java/es/daw/demo/controller/EnrollmentApiController.java) |
