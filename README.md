@@ -365,3 +365,25 @@ Durante esta parte de la práctica, se han realizado las siguientes tareas:  cre
   |create_image.sh|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/docker/create_image.sh)|
   |DataBaseInitializer.java|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/service/DataBaseInitializer.java)|
   |UserWebController.java|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/controller/UserWebController.java)|
+
+
+  - Olga Somalo Serrano.
+
+  Entre las tareas realizadas cabe destacar: refactorizar los servicios para que usen DTOs, refactorizar los controladores web para que se adapten a la nueva interfaz de los servicios, e implementar los controladores REST y la colección Postman.
+
+
+| Principales Commit | Descripción  | Enlace al Commit |
+|--------------------|-------------|------------------|
+| **Commit 1** | Actualizar colección Postman añadiendo variable de entorno y corrigiendo errores. | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/d1f8adb2f8d05a5886316a003506634bd06e5ce9) |
+| **Commit 2** | Actualizar colección Postman añadiendo la obtención de las reseñas por curso. | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/9a3d766d5a913c2975996aabd862e50ff9df4432) |
+| **Commit 3** | Implementar los métodos para editar las reseñas. | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/99506c4f167697b61bcea712c3cffac83c90cfa1) |
+| **Commit 4** | Añadir en la colección Postman las peticiones relacionadas con la creación de las reseñas. | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/81ddd8df1bdcd5ecb6d37fbf4c404a62cd041d6f) |
+| **Commit 5** | Refactorizar los controladores del login y los cursos. | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/1f383097c876ff851779db2388e1238d2820b02a) |
+
+| Principales archivos | Enlace al archivo |
+  |----------------------|-------------------|
+  |DAW Cognite.postman_collection.json|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/DAW%20Cognite.postman_collection.json)|
+  |ReviewService.java|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blame/main/demo/src/main/java/es/daw/demo/service/ReviewService.java)|
+  |LoginWebController.java|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/controller/LoginWebController.java)|
+  |NewCourseRequestDTO.java|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/dto/NewCourseRequestDTO.java)|
+  |CourseService.java|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/service/CourseService.java)|
