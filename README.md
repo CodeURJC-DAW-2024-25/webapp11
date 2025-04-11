@@ -140,6 +140,42 @@ docker-compose -f docker/docker-compose.yml up --build
 
 ---
 
+## 🚀 Despliegue en el servidor de la ETSII
+
+Para desplegar la aplicación en el servidor de la ETSII, siga las siguientes instrucciones.
+1.  **Instalar Docker**
+[Ver documentación](https://docs.docker.com/engine/install/ubuntu/)
+
+3. **Instalar Docker Compose**
+[Ver documentación](https://docs.docker.com/compose/install/linux/#install-using-the-repository)
+```
+sudo apt install docker-compose
+```
+3. **Clonar el repositorio**
+```
+git clone https://github.com/CodeURJC-DAW-2024-25/webapp11.git
+```
+4. **Moverse a la carpeta webapp11 recién creada**
+Para acceder a la aplicación, navegar a "" o "" en el navegador o cofigura Postman para interacturar con la API.
+5. **Ejecutar el comando**
+   ```
+   sudo docker-compose -f docker/docker-compose.yml up --build
+   ```
+
+Para acceder a la aplicación, navege a `appWeb11.dawgis.etsii.urjc.es` o `10.100.139.135` en tu navegador web o establecer PostMan para interactuar con la API.
+
+Por defecto, la aplicación tiene algunos usuarios y cursos creados para interactuar con la API:
+
+> **Admin User**: 
+> - Username: `admin@gmail.com`
+> - Password: `1234`
+
+> **Regular User**:
+> - Username: `user1@gmail.com`
+> - Password: `1234`
+
+---
+
 ## Participación P1:
 - Eloy de Sande.
 
@@ -246,7 +282,7 @@ Entre las tareas realizadas cabe destacar: implementación del CourseRepository,
   |Review service|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/782268940673fdd43f2b2f5cb5b42df76fa0c713#diff-b2aa078e0484e59e1b3b50f7c6777685b54051d60a63ad20be3a261bff1519df)|
 
 ## Participación P2:
-- Eloy de Sande.
+- Eloy de Sande de las Heras
 
   Entre las tareas desarrolladas cabe destacar: creación de los DTOS para cada entidad (course, enrollment, review, user), implementación de la seguridad para la API Rest, creación de la documentación de la API, controladores para la API, ...
   
