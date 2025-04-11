@@ -146,7 +146,7 @@ Para desplegar la aplicación en el servidor de la ETSII, siga las siguientes in
 1.  **Instalar Docker**
 [Ver documentación](https://docs.docker.com/engine/install/ubuntu/)
 
-3. **Instalar Docker Compose**
+2. **Instalar Docker Compose**
 [Ver documentación](https://docs.docker.com/compose/install/linux/#install-using-the-repository)
 ```
 sudo apt install docker-compose
@@ -157,11 +157,11 @@ git clone https://github.com/CodeURJC-DAW-2024-25/webapp11.git
 ```
 4. **Moverse a la carpeta webapp11 recién creada**
    
-Para acceder a la aplicación, navegar a "" o "" en el navegador o cofigura Postman para interacturar con la API.
-6. **Ejecutar el comando**
+5. **Ejecutar el comando**
    ```
    sudo docker-compose -f docker/docker-compose.yml up --build
    ```
+
 
 Para acceder a la aplicación, navege a `appWeb11.dawgis.etsii.urjc.es` o `10.100.139.135` en tu navegador web o establecer PostMan para interactuar con la API.
 
