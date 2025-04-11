@@ -345,3 +345,23 @@ Durante esta parte de la práctica, se han realizado las siguientes tareas:  cre
 | DockerFile | [Ver archivo](docker/Dockerfile) |
 | docker-compose.yml | [Ver archivo](docker/docker-compose.yml) |
 
+- José Víctor García Llorente.
+
+  En esta práctica se han llevado a cabo funciones relacionadas con despliegue y ejecución de la aplicación en el servidor remoto de la universidad. Destacando como tareas principales la creación y configuración de la carpeta Docker (Dockerfile, docker-compose.yml, create_image.sh, ...). Creación de imagen docker y corrección de errores en el código.
+
+
+| Principales Commit | Descripción  | Enlace al Commit |
+|--------------------|-------------|------------------|
+| **Commit 1** | Creación de docker-compose.yml y Dockerfile. | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/2ae3087f21dc6ebfb1817c11020c95edaff7d60b) |
+| **Commit 2** | Despliegue: Creación de imagen en Docker Hub. | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/9dfdf96651a84abda536b8ed0a905098a6c5e0a6) |
+| **Commit 3** | Ejecución de imagen Docker: Corrección de un problema al inicializar los datos que impedía iniciar la aplicación durante el despliegue. | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/fbb9ac45e739cb4b612611a1eee45fb0d5dfb5d4) |
+| **Commit 4** | Corrección de errores al editar usuario. | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/889b4ca025590b49e337e0c8cb5a4433b7744e57) |
+| **Commit 5** | Funcionalidad de borrar usuario. | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/cbf52aec56912b6f319ffa7e340d085eb381b9c2) |
+
+| Principales archivos | Enlace al archivo |
+  |----------------------|-------------------|
+  |Dockerfile|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/docker/Dockerfile)|
+  |docker-compose.yml|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/docker/docker-compose.yml)|
+  |create_image.sh|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/docker/create_image.sh)|
+  |DataBaseInitializer.java|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/service/DataBaseInitializer.java)|
+  |UserWebController.java|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/controller/UserWebController.java)|
