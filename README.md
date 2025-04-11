@@ -156,8 +156,9 @@ sudo apt install docker-compose
 git clone https://github.com/CodeURJC-DAW-2024-25/webapp11.git
 ```
 4. **Moverse a la carpeta webapp11 recién creada**
+   
 Para acceder a la aplicación, navegar a "" o "" en el navegador o cofigura Postman para interacturar con la API.
-5. **Ejecutar el comando**
+6. **Ejecutar el comando**
    ```
    sudo docker-compose -f docker/docker-compose.yml up --build
    ```
