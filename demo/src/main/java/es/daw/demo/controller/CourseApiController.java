@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
@@ -143,5 +144,11 @@ public class CourseApiController {
 		URI location = fromCurrentRequest().build().toUri();
 		return ResponseEntity.created(location).build();
 	}
+
+    @GetMapping("/recommended")
+    public ResponseEntity<Collection<CourseDTO>> getTop4CoursesByRating() {
+        Collection<CourseDTO> courses = courseService.findTop4ByOrderByRatingDesc();
+        return ResponseEntity.ok(courses);
+    }
     
 }

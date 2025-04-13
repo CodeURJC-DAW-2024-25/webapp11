@@ -11,11 +11,19 @@ const BASE_URL = "/api/v1/courses";
     providedIn: 'root'
   })
   export class CourseService {
-    private apiUrl = 'https://localhost:8443/api/v1/courses';
   
     constructor(private http: HttpClient) {}
   
     getCourseById(id: number): Observable<CourseDto> {
-      return this.http.get<CourseDto>(`${this.apiUrl}/${id}`);
+      return this.http.get<CourseDto>(`${BASE_URL}/${id}`);
     }
+
+    getRecommendedCourses(): Observable<any[]> {
+      return this.http.get<any[]>(`${BASE_URL}/recommended`);
+    }
+  
+    getCourses(page: number, size: number): Observable<any[]> {
+      return this.http.get<any[]>(`${BASE_URL}/?page=${page}&size=${size}`);
+    }
+
   }

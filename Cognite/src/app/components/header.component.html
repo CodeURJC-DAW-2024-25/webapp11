@@ -1,0 +1,56 @@
+<div class="container">
+    <header>
+      <div class="header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+          <div class="col-4">
+            <a class="header-logo text-dark" routerLink="/">Cognite</a>
+          </div>
+          <div class="col-6 d-flex justify-content-end align-items-center">
+            <div class="btn btn-sm p-1 d-flex align-items-center" style="transition: none !important; border: 1px solid #6c757d;">
+              <form (ngSubmit)="searchCourse($event)" class="d-flex align-items-center">
+                <a class="text-muted" href="#" (click)="searchCourse($event)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-2">
+                    <circle cx="10.5" cy="10.5" r="7.5"></circle>
+                    <line x1="21" y1="21" x2="15.8" y2="15.8"></line>
+                  </svg>
+                </a>
+                <input type="text" [(ngModel)]="findCourseText" name="findCourse" class="form-control border-0 bg-transparent p-0" style="height: 21px; font-size: 16px;" placeholder="Buscar un curso...">
+              </form>
+            </div>
+  
+            <div class="statistics">
+              <a routerLink="/charts">
+                <button class="btn">
+                  <i class="bi bi-bar-chart"></i>
+                </button>
+              </a>
+            </div>
+            
+            <ng-container *ngIf="isLoggedIn; else notLoggedIn">
+              <a class="btn btn-sm btn-outline-secondary ml-2" routerLink="/">Inicio</a>
+              <a class="btn btn-sm btn-outline-secondary ml-2" routerLink="/profile">Perfil</a>
+              <button class="btn btn-sm btn-outline-secondary ml-2" (click)="logout()">Cerrar sesión</button>
+            </ng-container>
+            
+            <ng-template #notLoggedIn>
+              <a class="btn btn-sm btn-outline-secondary ml-2" routerLink="/">Inicio</a>
+              <a class="btn btn-sm btn-outline-secondary ml-2" routerLink="/login">Log in</a>
+              <a class="btn btn-sm btn-outline-secondary ml-2" routerLink="/signUp">Sign up</a>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="nav-scroller py-1 mb-2">
+        <nav class="nav d-flex justify-content-between">
+          <a class="p-2 text-muted" routerLink="/showCourses/Desarrollo web">Desarrollo web</a>
+          <a class="p-2 text-muted" routerLink="/showCourses/Desarrollo móvil">Desarrollo móvil</a>
+          <a class="p-2 text-muted" routerLink="/showCourses/Desarrollo de videojuegos">Desarrollo de videojuegos</a>
+          <a class="p-2 text-muted" routerLink="/showCourses/Emprendimiento">Emprendimiento</a>
+          <a class="p-2 text-muted" routerLink="/showCourses/Finanzas">Finanzas</a>
+          <a class="p-2 text-muted" routerLink="/showCourses/Marketing digital">Marketing digital</a>
+          <a class="p-2 text-muted" routerLink="/showCourses/Liderazgo">Liderazgo</a>
+          <a class="p-2 text-muted" routerLink="/showCourses/Comunicación">Comunicación</a>
+        </nav>                
+      </div>
+    </header>
+  </div>
