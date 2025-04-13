@@ -10,6 +10,7 @@ export class AppComponent implements OnInit {
   recomendedCourses: any[] = [];
   allCourses: any[] = [];
   loading = false;
+  recomendLoading = false;
   hasMoreCourses = true;
   currentPage = 0;
   pageSize = 10;
@@ -22,13 +23,16 @@ export class AppComponent implements OnInit {
   }
 
   loadRecommendedCourses(): void {
+    this.recomendLoading = true;
     this.courseService.getRecommendedCourses().subscribe({
       next: (courses) => {
         this.recomendedCourses= courses;
+        this.recomendLoading = false;
       },
       error: (err) => {
         console.error('Error al cargar cursos recomendados:', err);
       }
+      
     });
   }
 
