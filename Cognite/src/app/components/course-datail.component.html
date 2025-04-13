@@ -1,0 +1,10 @@
+
+<div *ngIf="course">
+    <h2>{{ course.title }}</h2>
+    <p><strong>Descripción:</strong> {{ course.description }}</p>
+    <p><strong>Tema:</strong> {{ course.topic }}</p>
+    <p><strong>Instructor:</strong> {{ course.instructor.firstName }} {{ course.instructor.lastName }}</p>
+    <p><strong>Email del instructor:</strong> {{ course.instructor.email }}</p>
+    <p><strong>Rating:</strong> {{ course.rating }}</p>
+</div>
+  
