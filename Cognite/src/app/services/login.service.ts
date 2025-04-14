@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { UserDto } from "../dtos/user.dto";
 
-const BASE_URL = "/api/auth";
+const BASE_URL = "/api/v1/auth";
 
 @Injectable({ providedIn: "root" })
 export class LoginService {
@@ -14,7 +14,7 @@ export class LoginService {
   }
 
   public reqIsLogged() {
-    this.http.get("/api/users/me", { withCredentials: true }).subscribe(
+    this.http.get("/api/v1/users/me", { withCredentials: true }).subscribe(
       (response) => {
         this.user = response as UserDto;
         this.logged = true;

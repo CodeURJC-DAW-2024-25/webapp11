@@ -73,7 +73,7 @@ public class SecurityConfig {
                     // PRIVATE ENDPOINTS
                     .requestMatchers(HttpMethod.PUT,"/api/v1/users/**").hasAnyRole("USER")
                     .requestMatchers(HttpMethod.DELETE,"/api/v1/users/**").hasAnyRole("USER", "ADMIN")
-					.requestMatchers(HttpMethod.GET,"/api/v1/users/**").hasAnyRole("ADMIN", "USER")
+					//.requestMatchers(HttpMethod.GET,"/api/v1/users/**").hasAnyRole("ADMIN", "USER")
 
 					.requestMatchers(HttpMethod.POST,"/api/v1/reviews/**").hasAnyRole("USER")
                     .requestMatchers(HttpMethod.PUT,"/api/v1/reviews/**").hasAnyRole("USER", "ADMIN")
@@ -88,7 +88,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.DELETE,"/api/v1/courses/**").hasAnyRole("USER", "ADMIN")
 
 					// PUBLIC ENDPOINTS
-					.requestMatchers("/v3/api-docs.yaml", "/swagger-ui/*", "/swagger-ui.html").permitAll()
+					.requestMatchers("/v3/api-docs.yaml", "/swagger-ui/*", "/swagger-ui.html", "/api/v1/users/me").permitAll()
 					.anyRequest().permitAll()
 			);
 		

@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.core.io.Resource;
 import es.daw.demo.service.EmailService;
 import es.daw.demo.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import es.daw.demo.dto.UserDTO;
 import es.daw.demo.dto.UserSignUpDTO;
 
@@ -16,8 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URI;
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 @RestController
 @RequestMapping("/api/v1/users")
@@ -99,5 +103,17 @@ public class UserApiController {
 		userService.createUserImage(id, imageFile.getInputStream(), imageFile.getSize());
         URI location = fromCurrentRequest().build().toUri();
 		return ResponseEntity.created(location).build();
+	}
+
+    @GetMapping("/me")
+	public UserDTO me(HttpServletRequest request) {
+		
+		Principal principal = request.getUserPrincipal();
+		
+		if(principal != null) {
+			return userService.findByEmail(principal.getName());
+		} else {
+			throw new NoSuchElementException();
+		}
 	}
 }

@@ -1,0 +1,14 @@
+import { Routes, RouterModule } from "@angular/router";
+
+import { CourseDetailComponent  } from "./components/course-detail.component";
+import { CourseListComponent } from "./components/course-list.component";
+
+const appRoutes: Routes = [
+  { path: "courses", component: CourseListComponent },
+  //{ path: "books/new", component: BookFormComponent },
+  { path: "courses/:id", component: CourseDetailComponent },
+  //{ path: "books/edit/:id", component: BookFormComponent },
+  { path: "", redirectTo: "courses", pathMatch: "full" },
+];
+
+export const routing = RouterModule.forRoot(appRoutes);

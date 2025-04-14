@@ -1,30 +1,39 @@
-// components/course-detail.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LoginService } from '../services/login.service';
 import { CourseService } from '../services/courses.service';
 import { CourseDto } from '../dtos/course.dto';
+import { ReviewDto } from '../dtos/review.dto';
+import { ReviewService } from '../services/reviews.service';
 
 @Component({
-  selector: 'app-course-detail',
-  template: `
-    <div *ngIf="course">
-        <h2>{{ course.title }}</h2>
-        <p><strong>Descripción:</strong> {{ course.description }}</p>
-        <p><strong>Tema:</strong> {{ course.topic }}</p>
-        <p><strong>Instructor:</strong> {{ course.instructor.firstName }} {{ course.instructor.lastName }}</p>
-        <p><strong>Email del instructor:</strong> {{ course.instructor.email }}</p>
-        <p><strong>Rating:</strong> {{ course.rating }}</p>
-    </div>
-    `
+  selector: "app-course-detail",
+  templateUrl: "./x.html",
 })
-export class CourseDetailComponent implements OnInit {
-  course?: CourseDto;
+export class CourseDetailComponent {
 
-  constructor(private courseService: CourseService) {}
+  public course!: CourseDto;
+  reviews: ReviewDto[] = [];
+  isEnrolled = false;
+  isTeacher = false;
 
-  ngOnInit(): void {
-    this.courseService.getCourseById(1).subscribe({
-      next: (data) => this.course = data,
-      error: (err) => console.error('Error al obtener curso:', err)
-    });
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private courseService: CourseService,
+    private loginService: LoginService,
+    private reviewService: ReviewService
+  ) {
+    const id = route.snapshot.params['id'];
+    this.courseService.getCourseById(id).subscribe(
+      (course) => (this.course = course),
+      (error) => console.error(error)
+    );
+
+    this.reviewService.getReviewsByCourse(id).subscribe(
+      (reviews) => (this.reviews = reviews),
+      (error) => console.error(error)
+    );
   }
+
 }
