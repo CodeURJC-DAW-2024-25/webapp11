@@ -9,12 +9,14 @@ import { CourseDetailComponent } from './components/course-detail.component';
 import { HeaderComponent } from './components/header.component';
 import { FormsModule } from '@angular/forms';
 import { CourseListComponent } from './components/course-list.component';
+import { ProfileComponent } from "./components/profile.component";
 @NgModule({
   declarations: [
     AppComponent,
     CourseDetailComponent,
     HeaderComponent,
-    CourseListComponent
+    CourseListComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

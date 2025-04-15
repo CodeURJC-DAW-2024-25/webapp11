@@ -30,7 +30,9 @@
             
             <ng-container *ngIf="loginService.isLogged(); else notLoggedIn">
               <a class="btn btn-sm btn-outline-secondary ml-2" routerLink="/">Inicio</a>
-              <a class="btn btn-sm btn-outline-secondary ml-2" routerLink="/profile">Perfil</a>
+              <ng-container *ngIf="user">
+                <a class="btn btn-sm btn-outline-secondary ml-2" [routerLink]="['/users', user.id]">Perfil</a>
+              </ng-container>
               <button class="btn btn-sm btn-outline-secondary ml-2" (click)="logOut()">Cerrar sesión</button>
             </ng-container>
             

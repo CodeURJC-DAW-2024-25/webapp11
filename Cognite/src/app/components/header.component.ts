@@ -2,6 +2,7 @@ import { Component, ViewChild, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { UserDto } from '../dtos/user.dto';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +14,7 @@ export class HeaderComponent {
   showLoginForm = false;
   loginEmail = '';
   loginPassword = '';
+  user?: UserDto;
 
   @ViewChild('loginErrorModal', { static: true })
   public loginErrorModal: TemplateRef<void> | undefined;
