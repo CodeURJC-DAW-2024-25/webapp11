@@ -16,6 +16,7 @@ export class CourseDetailComponent {
   reviews: ReviewDto[] = [];
   isEnrolled = false;
   isTeacher = false;
+  isLogged = false;
 
   constructor(
     private router: Router,
@@ -34,6 +35,8 @@ export class CourseDetailComponent {
       (reviews) => (this.reviews = reviews),
       (error) => console.error(error)
     );
+
+    this.isLogged = this.loginService.isLogged();
   }
 
 }

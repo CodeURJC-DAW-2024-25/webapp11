@@ -1,28 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['../app.component.css']
 })
-export class HeaderComponent implements OnInit {
-  isLoggedIn = false;
+export class HeaderComponent {
   findCourseText = '';
+  showLoginForm = false;
+  loginEmail = '';
+  loginPassword = '';
+
+  @ViewChild('loginErrorModal', { static: true })
+  public loginErrorModal: TemplateRef<void> | undefined;
   
   constructor(
-    private loginService: LoginService,
-    private router: Router
-  ) { }
+    public loginService: LoginService, // Cambiado a público para acceder desde la plantilla
+    private router: Router,
+    private modalService: NgbModal
+  ) {}
 
-  ngOnInit(): void {
-    // Verificar si el usuario está autenticado
-    this.isLoggedIn = this.loginService.isLogged();
-    this.loginService.reqIsLogged(); // Actualizar el estado de autenticación
-  }
-
-  searchCourse(event: Event): void {
+  public searchCourse(event: Event) {
     event.preventDefault();
     if (this.findCourseText.trim()) {
       this.router.navigate(['/search'], { 
@@ -31,9 +32,34 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  logout(): void {
+  public logOut() {
     this.loginService.logOut();
-    this.isLoggedIn = false;
-    this.router.navigate(['/']);
+  }
+
+  public submitLogin() {
+    this.logIn(this.loginEmail, this.loginPassword);
+  }
+
+  public logIn(email: string, password: string) {
+    this.loginService.logIn(email, password).subscribe(
+      (_) => {
+        this.loginService.reqIsLogged();
+        this.toggleLoginForm(); // Cerrar el formulario de inicio de sesión
+      },
+      (_) => {
+        this.modalService.open(this.loginErrorModal, { centered: true });
+        this.loginEmail = '';
+        this.loginPassword = '';
+      }
+    );
+  }
+
+  public toggleLoginForm() {
+    this.showLoginForm = !this.showLoginForm;
+    // Resetear campos si se cierra el formulario
+    if (!this.showLoginForm) {
+      this.loginEmail = '';
+      this.loginPassword = '';
+    }
   }
 }

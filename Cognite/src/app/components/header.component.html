@@ -1,11 +1,13 @@
 <div class="container">
-    <header>
-      <div class="header py-3">
-        <div class="row flex-nowrap justify-content-between align-items-center">
-          <div class="col-4">
-            <a class="header-logo text-dark" routerLink="/">Cognite</a>
-          </div>
-          <div class="col-6 d-flex justify-content-end align-items-center">
+  <header>
+    <div class="header py-3">
+      <div class="row flex-nowrap justify-content-between align-items-center">
+        <div class="col-4">
+          <a class="header-logo text-dark" routerLink="/">Cognite</a>
+        </div>
+        <div class="col-6 d-flex justify-content-end align-items-center">
+          <!-- Elementos que se muestran cuando no está el formulario de login activo -->
+          <ng-container *ngIf="!showLoginForm">
             <div class="btn btn-sm p-1 d-flex align-items-center" style="transition: none !important; border: 1px solid #6c757d;">
               <form (ngSubmit)="searchCourse($event)" class="d-flex align-items-center">
                 <a class="text-muted" href="#" (click)="searchCourse($event)">
@@ -17,7 +19,7 @@
                 <input type="text" [(ngModel)]="findCourseText" name="findCourse" class="form-control border-0 bg-transparent p-0" style="height: 21px; font-size: 16px;" placeholder="Buscar un curso...">
               </form>
             </div>
-  
+
             <div class="statistics">
               <a routerLink="/charts">
                 <button class="btn">
@@ -26,31 +28,60 @@
               </a>
             </div>
             
-            <ng-container *ngIf="isLoggedIn; else notLoggedIn">
+            <ng-container *ngIf="loginService.isLogged(); else notLoggedIn">
               <a class="btn btn-sm btn-outline-secondary ml-2" routerLink="/">Inicio</a>
               <a class="btn btn-sm btn-outline-secondary ml-2" routerLink="/profile">Perfil</a>
-              <button class="btn btn-sm btn-outline-secondary ml-2" (click)="logout()">Cerrar sesión</button>
+              <button class="btn btn-sm btn-outline-secondary ml-2" (click)="logOut()">Cerrar sesión</button>
             </ng-container>
             
             <ng-template #notLoggedIn>
               <a class="btn btn-sm btn-outline-secondary ml-2" routerLink="/">Inicio</a>
-              <a class="btn btn-sm btn-outline-secondary ml-2" routerLink="/login">Log in</a>
+              <a class="btn btn-sm btn-outline-secondary ml-2" (click)="toggleLoginForm()">Log in</a>
               <a class="btn btn-sm btn-outline-secondary ml-2" routerLink="/signUp">Sign up</a>
             </ng-template>
-          </div>
+          </ng-container>
+
+          <!-- Formulario de login que aparece cuando se pulsa el botón -->
+          <ng-container *ngIf="showLoginForm">
+            <form (ngSubmit)="submitLogin()" class="d-flex align-items-center login-form">
+              <div class="form-group mr-2">
+                <input type="email" [(ngModel)]="loginEmail" name="email" class="form-control" placeholder="Email" required>
+              </div>
+              <div class="form-group mr-2">
+                <input type="password" [(ngModel)]="loginPassword" name="password" class="form-control" placeholder="Contraseña" required>
+              </div>
+              <button type="submit" class="btn btn-sm btn-primary">Log in</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary ml-2" (click)="toggleLoginForm()">Cancelar</button>
+            </form>
+          </ng-container>
         </div>
       </div>
-      <div class="nav-scroller py-1 mb-2">
-        <nav class="nav d-flex justify-content-between">
-          <a class="p-2 text-muted" routerLink="/showCourses/Desarrollo web">Desarrollo web</a>
-          <a class="p-2 text-muted" routerLink="/showCourses/Desarrollo móvil">Desarrollo móvil</a>
-          <a class="p-2 text-muted" routerLink="/showCourses/Desarrollo de videojuegos">Desarrollo de videojuegos</a>
-          <a class="p-2 text-muted" routerLink="/showCourses/Emprendimiento">Emprendimiento</a>
-          <a class="p-2 text-muted" routerLink="/showCourses/Finanzas">Finanzas</a>
-          <a class="p-2 text-muted" routerLink="/showCourses/Marketing digital">Marketing digital</a>
-          <a class="p-2 text-muted" routerLink="/showCourses/Liderazgo">Liderazgo</a>
-          <a class="p-2 text-muted" routerLink="/showCourses/Comunicación">Comunicación</a>
-        </nav>                
-      </div>
-    </header>
-  </div>
+    </div>
+    <div class="nav-scroller py-1 mb-2">
+      <nav class="nav d-flex justify-content-between">
+        <a class="p-2 text-muted" routerLink="/showCourses/Desarrollo web">Desarrollo web</a>
+        <a class="p-2 text-muted" routerLink="/showCourses/Desarrollo móvil">Desarrollo móvil</a>
+        <a class="p-2 text-muted" routerLink="/showCourses/Desarrollo de videojuegos">Desarrollo de videojuegos</a>
+        <a class="p-2 text-muted" routerLink="/showCourses/Emprendimiento">Emprendimiento</a>
+        <a class="p-2 text-muted" routerLink="/showCourses/Finanzas">Finanzas</a>
+        <a class="p-2 text-muted" routerLink="/showCourses/Marketing digital">Marketing digital</a>
+        <a class="p-2 text-muted" routerLink="/showCourses/Liderazgo">Liderazgo</a>
+        <a class="p-2 text-muted" routerLink="/showCourses/Comunicación">Comunicación</a>
+      </nav>                
+    </div>
+  </header>
+
+  <!-- Login Error Modal -->
+  <ng-template #loginErrorModal let-modal>
+    <div class="modal-header bg-danger text-white">
+        <h4 class="modal-title">Login Error</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+        <p>Incorrect username or password. Please try again.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="modal.close()">Close</button>
+    </div>
+  </ng-template>
+</div>
