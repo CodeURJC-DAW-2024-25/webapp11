@@ -3,6 +3,7 @@ import { LoginService } from '../services/login.service';
 import { UserDto } from '../dtos/user.dto';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
+import { CourseService } from '../services/courses.service';
 
 @Component({
   selector: 'app-profile',
@@ -24,10 +25,14 @@ export class ProfileComponent {
 
   isEditing = false;
 
+  taughtCourses: any[] = [];
+  taughtLoading = false;
+
   constructor(
       public loginService: LoginService,
       public userService: UserService,
-      private router: Router
+      private router: Router,
+      private courseService: CourseService,
     ) {
       let user1 = this.loginService.currentUser()
       if (user1) {
@@ -86,5 +91,23 @@ export class ProfileComponent {
       this.loginService.logOut();
       this.router.navigate(['/courses']);
     }
+  }
+
+  public ngOnInit() {
+    this.loadTaughtCourses();
+  }
+
+  public loadTaughtCourses(): void {
+    this.taughtLoading = true;
+    this.courseService.getTaughtCourses().subscribe({
+      next: (courses) => {
+        this.taughtCourses= courses;
+        this.taughtLoading = false;
+      },
+      error: (err) => {
+        console.error('Error al cargar cursos impartidos:', err);
+      }
+      
+    });
   }
 }

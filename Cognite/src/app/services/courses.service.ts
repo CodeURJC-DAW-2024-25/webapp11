@@ -21,6 +21,10 @@ const BASE_URL = "/api/v1/courses";
     getRecommendedCourses(): Observable<CourseDto[]> {
       return this.http.get<any[]>(`${BASE_URL}/recommended`);
     }
+
+    getTaughtCourses(): Observable<CourseDto[]> {
+      return this.http.get<any[]>(`${BASE_URL}/taught`);
+    }
   
     getCourses(page: number, size: number): Observable<any[]> {
       return this.http.get<any[]>(`${BASE_URL}/?page=${page}&size=${size}`);
