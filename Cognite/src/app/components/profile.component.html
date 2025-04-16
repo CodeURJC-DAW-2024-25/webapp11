@@ -15,13 +15,13 @@
                       <div class="col-md-6">
                           <div class="form-group">
                               <label for="firstName">Nombre</label>
-                              <input class="form-control" id="firstName" type="text" name="firstName" [(ngModel)]="user.firstName" placeholder="Nuevo nombre" required/>
+                              <input class="form-control" id="firstName" type="text" name="firstName" [(ngModel)]="formData.firstName" placeholder="Nuevo nombre" required/>
                           </div>
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
                               <label for="lastName">Apellidos</label>
-                              <input class="form-control" id="lastName" type="text" name="lastName" [(ngModel)]="user.lastName" placeholder="Nuevo apellido" required/>
+                              <input class="form-control" id="lastName" type="text" name="lastName" [(ngModel)]="formData.lastName" placeholder="Nuevo apellido" required/>
                           </div>
                       </div>
                   </div>
@@ -29,7 +29,7 @@
                       <div class="col-12">
                           <div class="form-group">
                               <label for="email">Email</label>
-                              <input type="email" id="email" name="email" class="form-control" [(ngModel)]="user.email" placeholder="Email" required/>
+                              <input type="email" id="email" name="email" class="form-control" [(ngModel)]="formData.email" placeholder="Email" required/>
                           </div>
                       </div>
                   </div>
@@ -43,16 +43,17 @@
                           <div class="mb-2"><b>Change Password</b></div>
                           <div class="form-group">
                               <label for="currentPassword">Current Password</label>
-                              <input class="form-control" id="currentPassword" type="password" name="currentPassword" [(ngModel)]="passwords.currentPassword" placeholder="••••••" required/>
+                              <input class="form-control" id="currentPassword" type="password" name="currentPassword" [(ngModel)]="formData.currentPassword" placeholder="••••••" required/>
                           </div>
                           <div class="form-group">
                               <label for="newPassword">New Password</label>
-                              <input class="form-control" id="newPassword" type="password" name="newPassword" [(ngModel)]="passwords.newPassword" placeholder="••••••" required/>
+                              <input class="form-control" id="newPassword" type="password" name="newPassword" [(ngModel)]="formData.newPassword" placeholder="••••••" required/>
                           </div>
                           <div class="form-group">
                               <label for="confirmPassword">Confirm Password</label>
-                              <input class="form-control" id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="passwords.confirmPassword" placeholder="••••••" required/>
-                          </div>
+                              <input class="form-control" id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="formData.confirmPassword" placeholder="••••••" required/>
+                              <p class="text-danger" *ngIf="formData.newPassword !== formData.confirmPassword && formData.confirmPassword">Passwords do not match</p>
+                            </div>
                       </div>
                   </div>
                   <div class="col">

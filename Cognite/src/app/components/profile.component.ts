@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { UserDto } from '../dtos/user.dto';
+import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -9,17 +11,23 @@ import { UserDto } from '../dtos/user.dto';
 })
 export class ProfileComponent {
   user: UserDto;
-
-  passwords = {
+  formData: any = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    topic: '',
     currentPassword: '',
     newPassword: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    imageFile: null
   };
 
   isEditing = false;
 
   constructor(
-      public loginService: LoginService
+      public loginService: LoginService,
+      public userService: UserService,
+      private router: Router
     ) {
       let user1 = this.loginService.currentUser()
       if (user1) {
@@ -49,14 +57,34 @@ export class ProfileComponent {
     }
   }
 
-  onSubmit() {
-    console.log('User data:', this.user);
-    console.log('Passwords:', this.passwords);
-    // Aquí puedes enviar los datos al backend
+  onSubmit(){
+    if(this.user){
+      const userDTO = {
+        id: this.user.id,
+        firstName: this.formData.firstName,
+        lastName: this.formData.lastName,
+        email: this.formData.email,
+        topic: this.formData.topic,
+        roles: this.user.roles}
+
+      this.userService.updateUser(userDTO)
+        .subscribe(
+          response => {
+            console.log('User updated successfully', response);
+            this.user = response; // Actualiza el usuario con la respuesta del servidor
+          },
+          error => {
+            console.error('Error updating user', error);
+          }
+        );
+    }
   }
 
-  deleteAccount() {
-    console.log('Deleting account for user ID:', this.user.id);
-    // Aquí puedes manejar la lógica para eliminar la cuenta
+  deleteAccount(){
+    if(this.user){
+      this.userService.deleteAccount(this.user.id).subscribe();
+      this.loginService.logOut();
+      this.router.navigate(['/courses']);
+    }
   }
 }

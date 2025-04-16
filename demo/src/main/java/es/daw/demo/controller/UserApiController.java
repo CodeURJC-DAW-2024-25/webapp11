@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.core.io.Resource;
 import es.daw.demo.service.EmailService;
+import es.daw.demo.service.ReviewService;
 import es.daw.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import es.daw.demo.dto.ReviewDTO;
 import es.daw.demo.dto.UserDTO;
 import es.daw.demo.dto.UserSignUpDTO;
 
@@ -29,6 +31,9 @@ public class UserApiController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     @Autowired
     private EmailService emailService;
@@ -79,7 +84,10 @@ public class UserApiController {
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         UserDTO user = userService.findById(id);
         if (user != null) {
-            emailService.sendEmail(user.email(), "Cuenta eliminada", "Tu cuenta ha sido eliminada");
+            /*emailService.sendEmail(user.email(), "Cuenta eliminada", "Tu cuenta ha sido eliminada");*/
+            for (ReviewDTO review: reviewService.findReviewsByUser(id)) {
+                reviewService.deleteReview(review.id());
+            }
             userService.deleteById(id);
             return ResponseEntity.ok("Usuario eliminado exitosamente");
         }

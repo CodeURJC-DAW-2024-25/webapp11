@@ -50,8 +50,8 @@ export class UserService {
    * Elimina la cuenta del usuario.
    * @returns Un observable con la respuesta del servidor.
    */
-  deleteAccount(): Observable<void> {
-    return this.http.delete<void>(`${BASE_URL}/me`);
+  deleteAccount(id: number): Observable<void> {
+    return this.http.delete<void>(`${BASE_URL}/${id}`);
   }
 
   /**
