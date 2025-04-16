@@ -5,6 +5,7 @@ import { CourseService } from '../services/courses.service';
 import { CourseDto } from '../dtos/course.dto';
 import { ReviewDto } from '../dtos/review.dto';
 import { ReviewService } from '../services/reviews.service';
+import { EnrollmentService } from '../services/enrollment.service';
 
 @Component({
   selector: "app-course-detail",
@@ -17,13 +18,14 @@ export class CourseDetailComponent {
   isEnrolled = false;
   isTeacher = false;
   isLogged = false;
-
+  active = 1;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private courseService: CourseService,
     private loginService: LoginService,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    private enrollmentService: EnrollmentService
   ) {
     const id = route.snapshot.params['id'];
     this.courseService.getCourseById(id).subscribe(
@@ -37,6 +39,34 @@ export class CourseDetailComponent {
     );
 
     this.isLogged = this.loginService.isLogged();
-  }
+    const userId = this.loginService.currentUser()?.id;
+    if (userId !== undefined) {
+      this.enrollmentService.isUserEnrolled(userId, id).subscribe(
+        (isEnrolled) => (this.isEnrolled = isEnrolled),
+        (error) => {
+          console.error(error);
+          this.isEnrolled = false;
+        }
+      );
+    } else {
+      this.isEnrolled = false;
+    }
 
+    if (userId !== undefined) {
+      this.courseService.isUserInstructor(userId, id).subscribe(
+        (isTeacher) => (this.isTeacher = isTeacher),
+        (error) => {
+          console.error(error);
+          this.isTeacher = false;
+        }
+      );
+    } else {
+      this.isTeacher = false;
+    }
+
+    if (this.isTeacher == false) {
+      this.isTeacher = this.loginService.isAdmin() ?? false;
+    }
+
+  }
 }

@@ -26,4 +26,8 @@ const BASE_URL = "/api/v1/courses";
       return this.http.get<any[]>(`${BASE_URL}/?page=${page}&size=${size}`);
     }
 
+    public isUserInstructor (userId: number, courseId: number): Observable<boolean> {
+      return this.http.get<boolean>(`${BASE_URL}/${userId}/${courseId}`);
+    }
+
   }
