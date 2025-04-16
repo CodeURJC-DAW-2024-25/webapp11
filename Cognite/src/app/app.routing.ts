@@ -10,7 +10,7 @@ const appRoutes: Routes = [
   { path: "courses/:id", component: CourseDetailComponent },
   //{ path: "books/edit/:id", component: BookFormComponent },
   { path: "", redirectTo: "courses", pathMatch: "full" },
-  { path: "users/:id", component: ProfileComponent },
+  { path: "users/me", component: ProfileComponent },
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

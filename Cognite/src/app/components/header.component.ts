@@ -14,7 +14,6 @@ export class HeaderComponent {
   showLoginForm = false;
   loginEmail = '';
   loginPassword = '';
-  user?: UserDto;
 
   @ViewChild('loginErrorModal', { static: true })
   public loginErrorModal: TemplateRef<void> | undefined;

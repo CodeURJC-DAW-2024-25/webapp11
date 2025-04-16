@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { LoginService } from '../services/login.service';
+import { UserDto } from '../dtos/user.dto';
 
 @Component({
   selector: 'app-profile',
@@ -6,13 +8,7 @@ import { Component } from '@angular/core';
   //styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-  user = {
-    id: 1,
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    topic: 'Desarrollo web'
-  };
+  user: UserDto;
 
   passwords = {
     currentPassword: '',
@@ -21,6 +17,24 @@ export class ProfileComponent {
   };
 
   isEditing = false;
+
+  constructor(
+      public loginService: LoginService
+    ) {
+      let user1 = this.loginService.currentUser()
+      if (user1) {
+        this.user = user1;
+      } else{
+        this.user={
+          id: -1,
+          firstName: '',
+          lastName: '',
+          email: '',
+          topic: '',
+          roles: ['USER'],
+        };
+      }
+    }
 
   toggleEdit() {
     this.isEditing = !this.isEditing;
