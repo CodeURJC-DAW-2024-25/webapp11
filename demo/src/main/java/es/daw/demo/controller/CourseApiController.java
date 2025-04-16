@@ -151,4 +151,8 @@ public class CourseApiController {
         return ResponseEntity.ok(courses);
     }
     
+    @GetMapping("/{userId}/{courseId}")
+    public boolean isUserInstructor(@PathVariable Long userId, @PathVariable Long courseId) {
+        return courseService.isUserInstructor(userId, courseId);
+    }
 }

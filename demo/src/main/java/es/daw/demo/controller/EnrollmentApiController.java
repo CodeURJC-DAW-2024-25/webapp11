@@ -77,4 +77,10 @@ public class EnrollmentApiController {
 
         return ResponseEntity.ok(coursesPage);
     }
+
+    @GetMapping("/{userId}/{courseId}")
+    public boolean isUserEnrolledInCourse(@PathVariable Long userId, @PathVariable Long courseId) {
+        return enrollmentService.isUserEnrolledInCourse(userId, courseId);
+    }
+
 }
