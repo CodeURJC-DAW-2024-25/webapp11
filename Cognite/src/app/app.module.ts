@@ -10,6 +10,8 @@ import { HeaderComponent } from './components/header.component';
 import { FormsModule } from '@angular/forms';
 import { CourseListComponent } from './components/course-list.component';
 import { ProfileComponent } from "./components/profile.component";
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,8 @@ import { ProfileComponent } from "./components/profile.component";
     HttpClientModule,
     FormsModule,
     routing,
-    NgbModule
+    NgbModule,
+    PdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

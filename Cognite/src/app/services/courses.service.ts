@@ -34,4 +34,8 @@ const BASE_URL = "/api/v1/courses";
       return this.http.get<boolean>(`${BASE_URL}/${userId}/${courseId}`);
     }
 
+    getPdf(courseId: number): Observable<Blob> {
+      return this.http.get(`${BASE_URL}/${courseId}/notes`, { responseType: 'blob' });
+    }
+
   }
