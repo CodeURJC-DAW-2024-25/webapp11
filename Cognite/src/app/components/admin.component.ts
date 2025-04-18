@@ -3,6 +3,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { LoginService } from '../services/login.service';
 import { UserDto } from '../dtos/user.dto';
+import { Router } from '@angular/router';
+import { CourseService } from '../services/courses.service';
+import { ReviewService } from '../services/reviews.service';
+import { ReviewDto } from '../dtos/review.dto';
 
 @Component({
   selector: 'app-admin',
@@ -10,30 +14,40 @@ import { UserDto } from '../dtos/user.dto';
 })
 export class AdminComponent implements OnInit {
   admin: UserDto | null = null;
-  profileImageUrl = '';
-  reviews: any[] = [];
-  users: any[] = [];
-  showEdit = false;
-  editingReview: string | null = null;
-  searchQuery = '';
+  formData: any = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    topic: '',
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+    imageFile: null
+  };
 
+  isEditing = false;
+  taughtCourses: any[] = [];
+  taughtLoading = false;
+  reviews: ReviewDto[] = [];
+  users: UserDto[] = [];
+  searchQuery = '';
   editForm!: FormGroup;
-  topics = [
-    'Desarrollo web', 'Desarrollo móvil', 'Desarrollo de videojuegos', 'Emprendimiento',
-    'Finanzas', 'Marketing digital', 'Liderazgo', 'Comunicación'
-  ];
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router,
+    private courseService: CourseService,
+    private reviewService: ReviewService
   ) {}
 
   ngOnInit(): void {
     this.setupForm();
     this.fetchAdminData();
-    this.fetchReviews();
-    this.fetchUsers();
+    this.loadTaughtCourses();
+    this.loadAllUsers();
+    this.loadPendingReviews();
   }
 
   setupForm(): void {
@@ -69,56 +83,41 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  fetchReviews(): void {
-    // Lógica para obtener reviews pendientes (con tu ReviewService)
-    // this.reviewService.getPendingReviews().subscribe(data => this.reviews = data);
+  loadTaughtCourses(): void {
+    this.taughtLoading = true;
+    this.courseService.getTaughtCourses().subscribe({
+      next: (courses) => {
+        this.taughtCourses = courses;
+        this.taughtLoading = false;
+      },
+      error: (err) => {
+        console.error('Error al cargar cursos impartidos:', err);
+        this.taughtLoading = false;
+      }
+    });
   }
 
-  fetchUsers(): void {
-    // Lógica para obtener usuarios
-    // this.userService.getAllUsers().subscribe(data => this.users = data);
+  loadAllUsers(): void {
+    this.userService.getAllUsers().subscribe({
+      next: (data) => this.users = data,
+      error: (err) => console.error('Error al cargar usuarios:', err)
+    });
+  }
+
+  loadPendingReviews(): void {
+    this.reviewService.getPendingReviews().subscribe({
+      next: (data) => this.reviews = data,
+      error: (err) => console.error('Error al cargar reseñas pendientes:', err)
+    });
   }
 
   toggleEdit(): void {
-    this.showEdit = !this.showEdit;
-    if (this.showEdit && this.admin) {
-      this.editForm.patchValue({
-        firstName: this.admin.firstName,
-        lastName: this.admin.lastName,
-        email: this.admin.email,
-        topic: this.admin.topic
-      });
-    }
-  }
-
-  saveChanges(): void {
-    if (!this.admin || this.passwordMismatch) return;
-
-    const updatedData = {
-      id: this.admin.id,
-      ...this.editForm.value
-    };
-
-    this.userService.updateUser(updatedData).subscribe({
-      next: (updatedUser) => {
-        this.admin = updatedUser;
-        this.showEdit = false;
-        this.editForm.patchValue({
-          currentPassword: '',
-          newPassword: '',
-          confirmPassword: ''
-        });
-        console.log('Perfil actualizado correctamente');
-      },
-      error: (err) => console.error('Error al actualizar perfil:', err)
-    });
-
-    const { currentPassword, newPassword } = this.editForm.value;
-    if (currentPassword && newPassword) {
-      this.userService.changePassword(currentPassword, newPassword).subscribe({
-        next: () => console.log('Contraseña cambiada correctamente'),
-        error: (err) => console.error('Error al cambiar contraseña:', err)
-      });
+    this.isEditing = !this.isEditing;
+    if (this.isEditing && this.admin) {
+      this.formData.firstName = this.admin.firstName;
+      this.formData.lastName = this.admin.lastName;
+      this.formData.email = this.admin.email;
+      this.formData.topic = this.admin.topic;
     }
   }
 
@@ -132,39 +131,85 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  editReview(review: any): void {
-    this.editingReview = review.id;
+  onSubmit(): void {
+    if (!this.admin || this.passwordMismatch) return;
+
+    const updatedData = {
+      id: this.admin.id,
+      firstName: this.formData.firstName,
+      lastName: this.formData.lastName,
+      email: this.formData.email,
+      topic: this.formData.topic,
+      roles: this.admin.roles
+    };
+
+    this.userService.updateUser(updatedData).subscribe({
+      next: (updatedUser) => {
+        this.admin = updatedUser;
+        this.isEditing = false;
+        console.log('Perfil actualizado correctamente');
+      },
+      error: (err) => console.error('Error al actualizar perfil:', err)
+    });
+
+    const { currentPassword, newPassword } = this.formData;
+    if (currentPassword && newPassword) {
+      this.userService.changePassword(currentPassword, newPassword).subscribe({
+        next: () => console.log('Contraseña cambiada correctamente'),
+        error: (err) => console.error('Error al cambiar contraseña:', err)
+      });
+    }
   }
 
-  cancelEdit(): void {
-    this.editingReview = null;
-  }
-
-  submitReviewEdit(review: any): void {
-    // this.reviewService.editReview(review.id, review.text).subscribe(() => {
-    //   this.editingReview = null;
-    // });
+  deleteAccount(): void {
+    if (this.admin) {
+      this.userService.deleteAccount(this.admin.id).subscribe(() => {
+        this.loginService.logOut();
+        this.router.navigate(['/courses']);
+      });
+    }
   }
 
   deleteReview(id: string): void {
-    // this.reviewService.deleteReview(id).subscribe(() => {
-    //   this.reviews = this.reviews.filter(r => r.id !== id);
-    // });
+    this.reviewService.deleteReview(id).subscribe({
+      next: () => {
+        console.log('Reseña eliminada');
+        this.reviews = this.reviews.filter(r => r.id !== Number(id));
+      },
+      error: (err) => console.error('Error al eliminar reseña:', err)
+    });
   }
 
   ignoreReview(id: string): void {
-    // this.reviewService.ignoreReview(id).subscribe(() => {
-    //   this.reviews = this.reviews.filter(r => r.id !== id);
-    // });
+    this.reviewService.ignoreReview(id).subscribe({
+      next: () => {
+        console.log('Reseña ignorada');
+        this.reviews = this.reviews.filter(r => r.id !== Number(id));
+      },
+      error: (err) => console.error('Error al ignorar reseña:', err)
+    });
   }
 
   deleteUser(id: string): void {
-    // this.userService.deleteUser(id).subscribe(() => {
-    //   this.users = this.users.filter(u => u.id !== id);
-    // });
+    this.userService.deleteAccount(+id).subscribe({
+      next: () => {
+        console.log('Usuario eliminado');
+        this.users = this.users.filter(u => u.id !== +id);
+      },
+      error: (err) => console.error('Error al eliminar usuario:', err)
+    });
   }
 
   searchUser(): void {
-    // this.userService.searchUsers(this.searchQuery).subscribe(data => this.users = data);
+    const query = this.searchQuery.toLowerCase().trim();
+    if (query) {
+      this.users = this.users.filter(user =>
+        user.firstName.toLowerCase().includes(query) ||
+        user.lastName.toLowerCase().includes(query) ||
+        user.email.toLowerCase().includes(query)
+      );
+    } else {
+      this.loadAllUsers();
+    }
   }
 }
