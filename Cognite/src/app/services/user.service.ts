@@ -23,6 +23,13 @@ export class UserService {
   getUserInfo(): Observable<UserDto> {
     return this.http.get<UserDto>(`${BASE_URL}/me`);
   }
+  /**
+ * Obtiene todos los usuarios (solo para administradores).
+ */
+  getAllUsers(): Observable<UserDto[]> {
+  return this.http.get<UserDto[]>(`${BASE_URL}`);
+  }
+
 
   /**
    * Actualiza la información del usuario.
