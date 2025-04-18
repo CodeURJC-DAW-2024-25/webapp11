@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StatisticsService } from '../services/chart.service';
+import { ChartsService } from '../services/chart.service';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';  // Importamos el servicio correcto
 import { UserDto } from '../dtos/user.dto';  // Usamos el DTO correcto
@@ -27,18 +27,18 @@ export type ChartOptions = {
 };
 
 @Component({
-  selector: 'app-statistics',
-  templateUrl: './statistics.component.html',
+  selector: 'app-charts',
+  templateUrl: './charts.component.html',
   styleUrls: ['../../assets/css/bootstrap.css', '../../assets/css/progress.css']
 })
-export class StatisticsComponent implements OnInit {
+export class ChartsComponent implements OnInit {
   chartOptions: ChartOptions | undefined;
   admin: boolean | undefined;
   user: UserDto | undefined;  // Usamos UserDto en vez de Person
   roles: string[] | undefined;  // Definimos roles como un array de strings
 
   constructor(
-    private statisticsService: StatisticsService,
+    private chartsService: ChartsService,
     public userService: UserService,  // Usamos UserService
     public router: Router
   ) {}
@@ -62,7 +62,7 @@ export class StatisticsComponent implements OnInit {
 
   loadCharts() {
     // Llamada al servicio para obtener las estadísticas desde el backend
-    this.statisticsService.getStats().subscribe(
+    this.chartsService.getStats().subscribe(
       (response: any) => {
         // Mapeamos los datos que obtenemos desde el backend
         const coursesCategoriesData = Object.values(response.mostCoursesCategories).map(value => parseFloat((value as string | number).toString()));
