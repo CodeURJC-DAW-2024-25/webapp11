@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { PDFDocumentProxy } from 'ng2-pdf-viewer';
 import { UserService } from '../services/user.service';
 @Component({
-  templateUrl: "./x.html",
+  templateUrl: './course-detail.component.html',
   styleUrls: ["../app.component.css"],
 })
 export class CourseDetailComponent {
@@ -110,7 +110,7 @@ export class CourseDetailComponent {
               } else {
                 console.log("User is neither instructor nor admin");
               }
-              this.isInstructor = isAdmin ?? false;
+              this.isInstructor = isAdmin;
             }
           },
           (error) => {
