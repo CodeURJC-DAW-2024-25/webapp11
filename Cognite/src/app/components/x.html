@@ -21,19 +21,19 @@
               <strong>{{ reply.user.firstName }} {{ reply.user.lastName }}</strong>
               <p>{{ reply.text }}</p>
     
-              <form *ngIf="this.checkInstructorStatus()" [action]="'/reviews/' + reply.id + '/mark-pending'" method="post">
+              <form *ngIf="isInstructor" [action]="'/reviews/' + reply.id + '/mark-pending'" method="post">
                 <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button>
               </form>
             </div>
     
-            <form *ngIf="this.checkEnrollmentStatus() || this.checkInstructorStatus()" action="/course/newReview" method="post" style="display: inline;">
+            <form *ngIf="isEnrolled || isInstructor" action="/course/newReview" method="post" style="display: inline;">
               <input type="hidden" name="courseId" [value]="course.id">
               <input type="hidden" name="parentId" [value]="review.id">
               <textarea class="form-control mb-2" name="text" placeholder="Responder..."></textarea>
               <input type="submit" class="btn btn-link btn-sm" value="Responder">
             </form>
     
-            <form *ngIf="this.checkInstructorStatus()" [action]="'/reviews/' + review.id + '/mark-pending'" method="post" style="display: inline;">
+            <form *ngIf="isInstructor" [action]="'/reviews/' + review.id + '/mark-pending'" method="post" style="display: inline;">
               <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button>
             </form>
           </div>
@@ -45,13 +45,13 @@
         <hr>
     
         <!-- Añadir nuevo comentario -->
-        <form *ngIf="this.checkEnrollmentStatus() || this.checkInstructorStatus()" action="/course/newReview" method="post">
+        <form *ngIf="isEnrolled || isInstructor" action="/course/newReview" method="post">
           <input type="hidden" name="courseId" [value]="course.id">
           <textarea class="form-control mb-2" name="text" placeholder="Añadir un comentario..."></textarea>
           <button class="btn btn-primary">Comentar</button>
         </form>
     
-        <p *ngIf="!this.checkEnrollmentStatus() && !this.checkInstructorStatus()">
+        <p *ngIf="!isEnrolled && !isInstructor">
           <a href="/login">Inicia sesión</a> e inscríbete al curso para dejar un comentario.
         </p>
       </ng-template>
@@ -61,7 +61,7 @@
       <ng-template ngbNavContent>
         <h4>Previsualización del material</h4>
     
-        <ng-container *ngIf="this.checkEnrollmentStatus() || this.checkInstructorStatus(); else noAccess">
+        <ng-container *ngIf="isEnrolled || isInstructor; else noAccess">
           <div class="pdf-container">
             <div class="toolbar" *ngIf="pdfSrc">
               <button (click)="zoomIn()">Zoom +</button>
@@ -89,7 +89,7 @@
           <p>Debe inscribirse al curso para poder ver el material</p>
         </ng-template>
     
-        <div *ngIf="this.checkInstructorStatus()" class="mt-3">
+        <div *ngIf="isInstructor" class="mt-3">
           <a [routerLink]="['/editCourse', course.id]">
             <button class="btn btn-success">Editar curso</button>
           </a>
@@ -105,14 +105,14 @@
   <div [ngbNavOutlet]="nav" class="tab-content mt-3"></div>
   
   <!-- BOTÓN INSCRIBIRSE -->
-  <form *ngIf="!this.checkEnrollmentStatus() && !this.checkInstructorStatus()" method="post" action="/course/enroll">
+  <form *ngIf="!isEnrolled && !isInstructor" method="post" action="/course/enroll">
     <button type="submit" class="btn btn-success mt-3">Inscribirse al curso</button>
 
     <input type="hidden" name="idCourse" [value]="course.id" />
   </form>
 
   <!-- VALORACIÓN -->
-  <div *ngIf="this.checkEnrollmentStatus() && !this.checkInstructorStatus()" class="mt-4">
+  <div *ngIf="isEnrolled && !isInstructor" class="mt-4">
     <hr>
     <h4>Califica el curso</h4>
     <form method="post" action="/enrollment/rate" class="p-3 bg-light">

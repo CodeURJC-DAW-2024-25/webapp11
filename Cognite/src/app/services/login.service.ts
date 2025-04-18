@@ -1,12 +1,15 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject } from "rxjs";
 import { UserDto } from "../dtos/user.dto";
 
 const BASE_URL = "/api/v1/auth";
 
 @Injectable({ providedIn: "root" })
 export class LoginService {
-  public logged: boolean = false;
+  private loggedInSubject = new BehaviorSubject<boolean>(false);
+  public loggedIn$ = this.loggedInSubject.asObservable();
+
   public user?: UserDto;
 
   constructor(private http: HttpClient) {
@@ -17,14 +20,13 @@ export class LoginService {
     this.http.get("/api/v1/users/me", { withCredentials: true }).subscribe(
       (response) => {
         this.user = response as UserDto;
-        this.logged = true;
+        this.loggedInSubject.next(true);
       },
       (error) => {
         if (error.status != 404) {
-          console.error(
-            "Error when asking if logged: " + JSON.stringify(error)
-          );
+          console.error("Error when asking if logged: " + JSON.stringify(error));
         }
+        this.loggedInSubject.next(false);
       }
     );
   }
@@ -34,7 +36,7 @@ export class LoginService {
       BASE_URL + "/login",
       { username: user, password: pass },
       { withCredentials: true }
-    );
+    ).pipe(); // sigue siendo un observable, el componente debe suscribirse
   }
 
   public logOut() {
@@ -42,20 +44,20 @@ export class LoginService {
       .post(BASE_URL + "/logout", { withCredentials: true })
       .subscribe((_) => {
         console.log("LOGOUT: Successfully");
-        this.logged = false;
+        this.loggedInSubject.next(false);
         this.user = undefined;
       });
   }
 
-  public isLogged() {
-    return this.logged;
-  }
-
   public isAdmin() {
-    return this.user && this.user.roles.indexOf("ADMIN") !== -1;
+    return this.user?.roles.includes("ADMIN") ?? false;
   }
 
-  currentUser() {
+  public currentUser() {
     return this.user;
+  }
+
+  public isLogged() {
+    return this.loggedInSubject.getValue();
   }
 }

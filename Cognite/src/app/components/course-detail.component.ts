@@ -8,8 +8,8 @@ import { ReviewService } from '../services/reviews.service';
 import { EnrollmentService } from '../services/enrollment.service';
 import { HttpClient } from '@angular/common/http';
 import { PDFDocumentProxy } from 'ng2-pdf-viewer';
+import { UserService } from '../services/user.service';
 @Component({
-  selector: "app-course-detail",
   templateUrl: "./x.html",
   styleUrls: ["../app.component.css"],
 })
@@ -21,6 +21,8 @@ export class CourseDetailComponent {
   zoom: number = 1;
   page: number = 1;
   totalPages: number = 0;
+  public isEnrolled: boolean = false;
+  public isInstructor: boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -28,12 +30,25 @@ export class CourseDetailComponent {
     private loginService: LoginService,
     private reviewService: ReviewService,
     private enrollmentService: EnrollmentService,
-    private http: HttpClient
+    private http: HttpClient,
+    private userService: UserService
   ) {
     const courseId = this.route.snapshot.params['id'];
     this.loadCourseDetails(courseId);
     this.loadReviews(courseId);
     this.loadPdf(courseId);
+    this.checkEnrollmentStatus();
+    this.checkInstructorStatus(); 
+    this.loginService.loggedIn$.subscribe((loggedIn) => {
+      if (loggedIn) {
+        console.log("Usuario ha iniciado sesión, refrescando datos del curso");
+        this.loadCourseDetails(courseId);
+        this.checkEnrollmentStatus();
+        this.checkInstructorStatus();
+        this.loadReviews(courseId);
+        this.loadPdf(courseId);
+      }
+    });
   }
 
   private loadCourseDetails(courseId: number) {
@@ -51,32 +66,64 @@ export class CourseDetailComponent {
   }
 
 
-  public checkEnrollmentStatus() {
-    const userId = this.loginService.currentUser()?.id;
-    const courseId = this.route.snapshot.params['id'];
-    if (!userId) {
-      return false;
-    } else {
-      return this.enrollmentService.isUserEnrolled(userId, courseId);
-    }
-  }
+  
 
-  public checkInstructorStatus() {
-    const userId = this.loginService.currentUser()?.id;
-    console.log("User ID: " + userId);
+  public checkEnrollmentStatus(): void {
+    this.userService.getUserInfo().subscribe(
+      (user) => {
+        const userId = user.id;
+        const courseId = this.route.snapshot.params['id'];
+        this.enrollmentService.isUserEnrolled(userId, courseId).subscribe(
+          (enrolled) => {
+            this.isEnrolled = enrolled;
+            if (enrolled) {
+              console.log("User is enrolled in the course");
+            } else {
+              console.log("User is not enrolled in the course");
+            }
+          },
+          (error) => console.error("Error checking enrollment:", error)
+        );
+      },
+      (error) => console.error("Error getting user info:", error)
+    );
+  }
+  
+
+  public checkInstructorStatus(): void {
     const courseId = this.route.snapshot.params['id'];
-    if (!userId) {
-      console.log("User not logged in");
-      return false;
-    } else {
-      const isInstructor = this.courseService.isUserInstructor(userId, courseId);
-      if (isInstructor) {
-        console.log("User is instructor");
-        return true;
-      } else {
-        return this.loginService.isAdmin();
+  
+    this.userService.getUserInfo().subscribe(
+      (user) => {
+        const userId = user.id;
+        console.log("User ID:", userId);
+  
+        this.courseService.isUserInstructor(userId, courseId).subscribe(
+          (isInstructor: boolean) => {
+            if (isInstructor) {
+              console.log("User is instructor");
+              this.isInstructor = true;
+            } else {
+              const isAdmin = this.loginService.isAdmin(); // asumido como síncrono
+              if (isAdmin) {
+                console.log("User is admin");
+              } else {
+                console.log("User is neither instructor nor admin");
+              }
+              this.isInstructor = isAdmin ?? false;
+            }
+          },
+          (error) => {
+            console.error("Error checking instructor status:", error);
+            this.isInstructor = false;
+          }
+        );
+      },
+      (error) => {
+        console.error("Error getting user info:", error);
+        this.isInstructor = false;
       }
-    }
+    );
   }
 
   public goToMaterial() {
