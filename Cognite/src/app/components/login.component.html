@@ -1,0 +1,52 @@
+<!-- Mostrar solo si el usuario NO está logueado -->
+<div *ngIf="!loginService.isLogged()" class="text-center body-sign">
+  <form class="form-sign" (ngSubmit)="logIn(email.value, password.value)">
+    <div class="header-logo text-dark">Cognite</div>
+    <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
+
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input
+      #email
+      type="email"
+      id="inputEmail"
+      class="form-control"
+      placeholder="Email address"
+      required
+      autofocus
+    />
+
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input
+      #password
+      type="password"
+      id="inputPassword"
+      class="form-control"
+      placeholder="Password"
+      required
+    />
+
+    <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Log in</button>
+
+    <p class="mt-5 mb-3 text-muted">&copy; 2025 Cognite</p>
+  </form>
+</div>
+
+<!-- Mostrar si el usuario está logueado -->
+<div *ngIf="loginService.isLogged()" class="text-center mt-5">
+  <p class="h4">Bienvenido, <strong>{{ loginService.user?.firstName }}</strong></p>
+  <button (click)="logOut()" class="btn btn-outline-danger mt-3">Log out</button>
+</div>
+
+<!-- Modal de error de login -->
+<ng-template #loginErrorModal>
+  <div class="modal-header bg-danger text-white">
+    <h4 class="modal-title">Error de inicio de sesión</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalService.dismissAll()"></button>
+  </div>
+  <div class="modal-body">
+    <p>Email o contraseña incorrectos. Por favor, inténtalo de nuevo.</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="modalService.dismissAll()">Cerrar</button>
+  </div>
+</ng-template>
