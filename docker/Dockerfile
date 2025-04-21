@@ -1,4 +1,21 @@
 #################################################
+# Base image for the builder container
+#################################################
+FROM  node:lts-alpine3.19 as builderFront
+
+#ENV TZ=Europe/Madrid
+
+WORKDIR /frontend
+
+COPY ../frontend/package*.json ../frontend/angular.json ../frontend/tsconfig*.json  /frontend/
+
+RUN npm install 
+
+COPY ../frontend/src /frontend/src
+
+RUN npm run build -- --configuration production --base-href="/new/"
+
+#################################################
 # Base image for the build container
 #################################################
 FROM  maven:3.9.6-eclipse-temurin-21 as builder
