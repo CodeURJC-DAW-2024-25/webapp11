@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ChartCourseService } from '../services/chart-Course.service';
+import { ChartCourseService } from '../services/chartCourse.service';
 import { ChartConfiguration } from 'chart.js';
 
 @Component({
