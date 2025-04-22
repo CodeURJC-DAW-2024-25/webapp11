@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="header-logo text-dark">Cognite</div>
+    
+    <form (ngSubmit)="onSubmit()" #editCourseForm="ngForm" enctype="multipart/form-data">
+        <input type="hidden" name="courseId" [(ngModel)]="course.id" />   
+        
+        <!-- Title -->
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa-solid fa-font"></i></span>
+            </div>
+            <input type="text" name="title" class="form-control" placeholder="Título del curso" [(ngModel)]="course.title" required>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa-solid fa-align-left"></i></span>
+            </div>
+            <textarea name="description" class="form-control" rows="3" maxlength="200" placeholder="Breve descripción del curso..." [(ngModel)]="course.description" required></textarea>
+        </div>
+
+        <!-- Upload Image -->
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa-solid fa-image"></i></span>
+            </div>
+            <div class="custom-file">
+                <input type="file" name="imageFile" class="custom-file-input" (change)="onImageSelected($event)" accept="image/*">
+                <label class="custom-file-label">{{ imageFileName || 'Selecciona una imagen...' }}</label>
+            </div>
+        </div>
+
+        <!-- Topic -->
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa-solid fa-book"></i></span>
+            </div>
+            <select name="topic" class="form-control" [(ngModel)]="course.topic" required>
+                <option *ngFor="let topic of topics" [value]="topic">{{ topic }}</option>
+            </select>
+        </div>
+        
+        <!-- Upload PDF file -->
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa-solid fa-file-pdf"></i></span>
+            </div>
+            <div class="custom-file">
+                <input type="file" name="notes" class="custom-file-input" (change)="onPdfSelected($event)" accept=".pdf">
+                <label class="custom-file-label">{{ pdfFileName || 'Selecciona un archivo PDF...' }}</label>
+            </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!editCourseForm.valid">Guardar curso</button>
+        </div>
+    </form>
+</div>

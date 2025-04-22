@@ -46,4 +46,8 @@ export class CourseService {
       console.error(error);
       return throwError("Server error (" + error.status + "): " + error.text());
     }
+
+    updateCourse(course: any): Observable<any> {
+      return this.http.put(`/api/v1/courses/${course.id}`, course);
+    }
   }
