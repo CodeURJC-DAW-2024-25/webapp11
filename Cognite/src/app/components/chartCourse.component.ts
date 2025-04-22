@@ -5,7 +5,7 @@ import { ChartConfiguration } from 'chart.js';
 
 @Component({
   selector: 'app-chart-course',
-  templateUrl: './chart-course.component.html'
+  templateUrl: '../app.component.html'
 })
 export class ChartCourseComponent implements OnInit {
   courseId!: number;
