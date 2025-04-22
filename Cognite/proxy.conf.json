@@ -6,6 +6,8 @@
       "logLevel": "debug",
       "pathRewrite": {
         "^/api": "/api" 
-      }
+      },
+      "cookieDomainRewrite": "localhost",
+      "withCredentials": true
     }
   }

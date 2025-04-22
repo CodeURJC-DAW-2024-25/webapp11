@@ -1,120 +1,210 @@
 <main class="container mt-4">
-  <div class="row justify-content-center">
-      <div class="col-md-6 text-center p-4 border rounded">
-          <img id="profile-img" [src]="'/api/v1/users/' + user.id + '/image'" class="rounded-circle img-fluid mb-3" alt="Foto de perfil" style="max-width: 150px;">
-          <input type="file" class="form-control-file d-none" id="upload-photo" (change)="onPhotoSelected($event)">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center p-4 border rounded">
+            <img id="profile-img" [src]="'/api/v1/users/' + user.id + '/image'" class="rounded-circle img-fluid mb-3" alt="Foto de perfil" style="max-width: 150px;">
+            <input type="file" class="form-control-file d-none" id="upload-photo" (change)="onPhotoSelected($event)">
           
-          <p id="user-name"><strong>{{user.firstName}} {{user.lastName}}</strong></p>
-          <p><strong>Email:</strong> <span id="user-email">{{user.email}}</span></p>
+            <p id="user-name"><strong>{{user.firstName}} {{user.lastName}}</strong></p>
+            <p><strong>Email:</strong> <span id="user-email">{{user.email}}</span></p>
           
-          <button class="btn btn-primary" (click)="toggleEdit()">Editar perfil</button>
-          <div id="Settings" class="w3-container tab" [style.display]="isEditing ? 'block' : 'none'">
-              <h2>Settings</h2>
-              <form id="updateForm" class="mx-1 mx-md-4" (ngSubmit)="onSubmit()" #updateForm="ngForm">
-                  <div class="row">
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <label for="firstName">Nombre</label>
-                              <input class="form-control" id="firstName" type="text" name="firstName" [(ngModel)]="formData.firstName" placeholder="Nuevo nombre" required/>
-                          </div>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <label for="lastName">Apellidos</label>
-                              <input class="form-control" id="lastName" type="text" name="lastName" [(ngModel)]="formData.lastName" placeholder="Nuevo apellido" required/>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-12">
-                          <div class="form-group">
-                              <label for="email">Email</label>
-                              <input type="email" id="email" name="email" class="form-control" [(ngModel)]="formData.email" placeholder="Email" required/>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-12 text-center">
-                          <button type="button" class="btn btn-danger btn-lg" (click)="deleteAccount()">Eliminar</button>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-12 mb-3">
-                          <div class="mb-2"><b>Change Password</b></div>
-                          <div class="form-group">
-                              <label for="currentPassword">Current Password</label>
-                              <input class="form-control" id="currentPassword" type="password" name="currentPassword" [(ngModel)]="formData.currentPassword" placeholder="••••••" required/>
-                          </div>
-                          <div class="form-group">
-                              <label for="newPassword">New Password</label>
-                              <input class="form-control" id="newPassword" type="password" name="newPassword" [(ngModel)]="formData.newPassword" placeholder="••••••" required/>
-                          </div>
-                          <div class="form-group">
-                              <label for="confirmPassword">Confirm Password</label>
-                              <input class="form-control" id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="formData.confirmPassword" placeholder="••••••" required/>
-                              <p class="text-danger" *ngIf="formData.newPassword !== formData.confirmPassword && formData.confirmPassword">Passwords do not match</p>
+            <button class="btn btn-primary" (click)="toggleEdit()">Editar perfil</button>
+            <div id="Settings" class="w3-container tab" [style.display]="isEditing ? 'block' : 'none'">
+                <h2>Settings</h2>
+                <form id="updateForm" class="mx-1 mx-md-4" (ngSubmit)="onSubmit()" #updateForm="ngForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="firstName">Nombre</label>
+                                <input class="form-control" id="firstName" type="text" name="firstName" [(ngModel)]="formData.firstName" placeholder="Nuevo nombre" required/>
                             </div>
-                      </div>
-                  </div>
-                  <div class="col">
-                      <div class="form-group">
-                          <div class="mb-2"><b>Change Photo</b></div>
-                          <input class="form-control" name="imageFile" type="file" id="imageFile" accept="image/*" (change)="onPhotoSelected($event)"/>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col d-flex justify-content-end">
-                          <button class="btn btn-primary" type="submit">Save Changes</button>
-                      </div>
-                  </div>
-              </form>
-          </div>
-      </div>
-
-      <h3 class="text-center">Cursos Matriculados</h3>
-        <div class="container">
-      <div class="row g-4" id="my-enroll-list">
-      </div>  
-      <div class="d-flex justify-content-center">
-        <div class="spinner-border" role="status" id="spinner-enroll">
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>   
-      <div class="text-center">
-        <a class="btn btn-primary" id="loadEnrollCourses">Cargar más</a>
-      </div>   
-    </div>
-    <hr>
-
-    <div class="d-flex align-items-center justify-content-between col-12">
-        <h3 class="mb-0">Mis cursos impartidos</h3>
-        <a class="btn btn-primary" href="/createCourse">Añadir curso</a>
-    </div>
-    <br>
-
-    <div class="container">
-    <div class="row g-4" id="my-courses-list">
-        <div class="col-md-3 mb-4" *ngFor="let course of taughtCourses">
-            <div class="card">
-                <img [src]="'/api/v1/courses/' + course.id + '/image'" class="card-img-top">
-                <div class="card-body">
-                    <strong class="d-inline-block mb-2 text-primary">{{course.topic}}</strong>
-                    <h5 class="card-title">{{course.title}}</h5>
-                    <div class="mb-1 text-muted">{{course.rating}}</div>
-                    <p class="card-text">{{course.description}}</p>
-                    <a [routerLink]="['/courses', course.id]" class="btn btn-primary">Ver curso</a>
-                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lastName">Apellidos</label>
+                                <input class="form-control" id="lastName" type="text" name="lastName" [(ngModel)]="formData.lastName" placeholder="Nuevo apellido" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" class="form-control" [(ngModel)]="formData.email" placeholder="Email" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <button type="button" class="btn btn-danger btn-lg" (click)="deleteAccount()">Eliminar</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <div class="mb-2"><b>Change Password</b></div>
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input class="form-control" id="currentPassword" type="password" name="currentPassword" [(ngModel)]="formData.currentPassword" placeholder="••••••" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input class="form-control" id="newPassword" type="password" name="newPassword" [(ngModel)]="formData.newPassword" placeholder="••••••" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input class="form-control" id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="formData.confirmPassword" placeholder="••••••" required/>
+                                <p class="text-danger" *ngIf="formData.newPassword !== formData.confirmPassword && formData.confirmPassword">Passwords do not match</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <div class="mb-2"><b>Change Photo</b></div>
+                            <input class="form-control" name="imageFile" type="file" id="imageFile" accept="image/*" (change)="onPhotoSelected($event)"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col d-flex justify-content-end">
+                            <button class="btn btn-primary" type="submit">Save Changes</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>  
-    <div class="d-flex justify-content-center">
-      <div class="spinner-border" role="status" id="spinner">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div>   
-    <div class="text-center">
-      <a class="btn btn-primary" id="loadTaughtCourses">Cargar más</a>
+        <div *ngIf="isAdmin; else notAdmin">
+              <!-- Revisiones pendientes -->
+            <h3 class="text-center mb-3">Revisiones pendientes</h3>
+            <div *ngIf="reviews.length > 0; else noReviews">
+                <div class="comment mb-4 border p-3 rounded" *ngFor="let review of reviews">
+                    <strong>{{review.user.firstName}} {{review.user.lastName}}</strong>
+                    <p>{{review.text}}</p>
+                    <div>
+                        <button class="btn btn-sm btn-link" (click)="editReview(review)">Editar comentario</button>
+                        <button class="btn btn-sm btn-link text-danger" (click)="deleteReview(review.id)">Eliminar comentario</button>
+                        <button class="btn btn-sm btn-link text-warning" (click)="ignoreReview(review.id)">Ignorar</button>
+                        <button class="btn btn-sm btn-link text-danger" (click)="deleteUser(review.user.id)">Eliminar usuario</button>
+                    </div>
+                    <form *ngIf="editingReview === review.id" (ngSubmit)="submitReviewEdit(review)">
+                        <textarea [(ngModel)]="review.text" name="newText" class="form-control mb-2"></textarea>
+                        <button class="btn btn-success btn-sm" type="submit">Guardar</button>
+                        <button class="btn btn-secondary btn-sm" type="button" (click)="cancelEdit()">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+            <ng-template #noReviews>
+                <p class="text-center">No hay reseñas pendientes.</p>
+            </ng-template>
+
+            <hr class="my-4">
+
+            <!-- Buscador de usuarios -->
+            <h3 class="text-center">Eliminar usuario</h3>
+            <form class="row g-2 justify-content-center" (ngSubmit)="searchUser()" #searchForm="ngForm" >
+                <div class="col-md-4">
+                    <input type="text" class="form-control" [(ngModel)]="searchQuery" name="search" placeholder="Buscar usuario" />
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary w-100" type="submit" [disabled]="searchForm.invalid" >
+                        Buscar
+                    </button>
+                </div>
+            </form>
+
+            <div class="table-responsive mt-4">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let u of users">
+                            <td>{{ u.firstName }}</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" (click)="deleteUser(u.id)">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="users.length === 0">
+                            <td colspan="2" class="text-center">
+                            No se encontraron usuarios
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <ng-template #notAdmin>
+            <br>
+            
+            <h3 class="text-center">Cursos Matriculados</h3>
+            <div class="container">
+                <div class="row mb-2" id="coursesContainer">
+                    <!-- Aquí irán los cursos cargados dinámicamente -->
+                    <div class="col-md-3 mb-4" *ngFor="let course of enrolledCourses">
+                        <div class="card">
+                            <img [src]="'/api/v1/courses/' + course.id + '/image'" class="card-img-top">
+                            <div class="card-body">
+                                <strong class="d-inline-block mb-2 text-primary">{{ course.topic }}</strong>
+                                <h5 class="card-title">{{ course.title }}</h5>
+                                <div class="mb-1 text-muted">{{ course.rating }} ⭐</div>
+                                <p class="card-text">{{ course.description }}</p>
+                                <a [routerLink]="['/courses', course.id]" class="btn btn-primary">Ver curso</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="d-flex justify-content-center" *ngIf="enrolledLoading">
+                    <div class="spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            
+                <div class="text-center" *ngIf="!enrolledLoading && hasMoreEnrolledCourses">
+                    <button class="btn btn-primary" (click)="loadMoreEnrolled()">Cargar más</button>
+                </div>   
+                <br>
+            </div>
+            
+            <hr>
+            
+
+            <div class="d-flex align-items-center justify-content-between col-12">
+                <h3 class="mb-0">Mis cursos impartidos</h3>
+                <a class="btn btn-primary" href="/createCourse">Añadir curso</a>
+            </div>
+            <br>
+            <br>
+            
+            <div class="container">
+                <div class="row mb-2" id="coursesContainer">
+                    <!-- Aquí irán los cursos cargados dinámicamente -->
+                    <div class="col-md-3 mb-4" *ngFor="let course of taughtCourses">
+                        <div class="card">
+                            <img [src]="'/api/v1/courses/' + course.id + '/image'" class="card-img-top">
+                            <div class="card-body">
+                                <strong class="d-inline-block mb-2 text-primary">{{ course.topic }}</strong>
+                                <h5 class="card-title">{{ course.title }}</h5>
+                                <div class="mb-1 text-muted">{{ course.rating }} ⭐</div>
+                                <p class="card-text">{{ course.description }}</p>
+                                <a [routerLink]="['/courses', course.id]" class="btn btn-primary">Ver curso</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center" *ngIf="taughtLoading">
+                    <div class="spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <div class="text-center" *ngIf="!taughtLoading && hasMoreTaughtCourses">
+                    <button class="btn btn-primary" (click)="loadMoreTaught()">Cargar más</button>
+                </div>
+            </div>
+        </ng-template>
+
     </div>
-  </div>
-  </div>
 </main>

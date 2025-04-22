@@ -4,6 +4,10 @@ import { UserDto } from '../dtos/user.dto';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { CourseService } from '../services/courses.service';
+import { ReviewService } from '../services/reviews.service';
+import { ReviewDto } from '../dtos/review.dto';
+import { CourseDto } from '../dtos/course.dto';
+import { EnrollmentService } from '../services/enrollment.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,17 +26,30 @@ export class ProfileComponent {
     confirmPassword: '',
     imageFile: null
   };
+  isAdmin = false;
+  editingReview: number | null = null;
 
-  isEditing = false;
-
-  taughtCourses: any[] = [];
+  taughtCourses: CourseDto[] = [];
   taughtLoading = false;
-
+  reviews: ReviewDto[] = [];
+  users: UserDto[] = [];
+  searchQuery = '';
+  enrolledCourses: CourseDto[] = [];
+  enrolledLoading = false;
+  hasMoreTaughtCourses = true;
+  currentPage = 0;
+  pageSize = 10;
+  currentPageEnrolled = 0;
+  pageSizeEnrolled = 10;
+  hasMoreEnrolledCourses = true;
+  isEditing = false;
   constructor(
       public loginService: LoginService,
       public userService: UserService,
       private router: Router,
       private courseService: CourseService,
+      public reviewService: ReviewService,
+      private enrollmentService: EnrollmentService
     ) {
       let user1 = this.loginService.currentUser()
       if (user1) {
@@ -47,11 +64,18 @@ export class ProfileComponent {
           roles: ['USER'],
         };
       }
+      this.isAdmin = this.loginService.isAdmin();
+      if (this.isAdmin) {
+        this.reviewService.getPendingReviews().subscribe({
+          next: (data) => this.reviews = data,
+          error: (err) => console.error('Error al cargar reseñas pendientes:', err)
+        });
+        
+      } else {
+        this.loadTaughtCourses();
+        this.loadEnrolledCourses();
+      }
     }
-
-  toggleEdit() {
-    this.isEditing = !this.isEditing;
-  }
 
   onPhotoSelected(event: Event) {
     const fileInput = event.target as HTMLInputElement;
@@ -93,21 +117,124 @@ export class ProfileComponent {
     }
   }
 
-  public ngOnInit() {
-    this.loadTaughtCourses();
+  toggleEdit() {
+    this.isEditing = !this.isEditing;
   }
 
   public loadTaughtCourses(): void {
     this.taughtLoading = true;
-    this.courseService.getTaughtCourses().subscribe({
+    this.courseService.getTaughtCourses(this.user.id, this.currentPage, this.pageSize).subscribe({
       next: (courses) => {
-        this.taughtCourses= courses;
+        if (courses.length === 0) {
+          this.hasMoreTaughtCourses = false;
+        } else {
+          this.taughtCourses = [...this.taughtCourses, ...courses];
+          this.currentPage++;
+        }
         this.taughtLoading = false;
       },
       error: (err) => {
-        console.error('Error al cargar cursos impartidos:', err);
+        console.error('Error al cargar cursos:', err);
+        this.taughtLoading = false;
       }
-      
+    });
+  }
+
+  public loadMoreTaught(): void {
+    this.loadTaughtCourses();
+  }
+
+  public loadEnrolledCourses(): void {
+    this.enrolledLoading = true;
+    this.enrollmentService.getEnrolledCourses(this.user.id, this.currentPageEnrolled, this.pageSizeEnrolled).subscribe({
+      next: (courses) => {
+        if (courses.length === 0) {
+          this.hasMoreEnrolledCourses = false;
+        } else {
+          this.enrolledCourses = [...this.enrolledCourses, ...courses];
+          this.currentPageEnrolled++;
+        }
+        this.enrolledLoading = false;
+      },
+      error: (err) => {
+        console.error('Error al cargar cursos:', err);
+        this.enrolledLoading = false;
+      }
+    });
+  }
+
+  public loadMoreEnrolled(): void {
+    this.loadEnrolledCourses();
+  }
+
+  loadPendingReviews(): void {
+    this.reviewService.getPendingReviews().subscribe({
+      next: (data) => this.reviews = data,
+      error: (err) => console.error('Error al cargar reseñas pendientes:', err)
+    });
+  }
+
+  deleteReview(id: number ): void {
+    this.reviewService.deleteReview(id).subscribe({
+      next: () => {
+        console.log('Reseña eliminada');
+        this.reviews = this.reviews.filter(r => r.id !== id);
+      },
+      error: (err) => console.error('Error al eliminar reseña:', err)
+    });
+  }
+
+  ignoreReview(id: number): void {
+    this.reviewService.ignoreReview(id).subscribe({
+      next: () => {
+        console.log('Reseña ignorada');
+        this.reviews = this.reviews.filter(r => r.id !== id);
+      },
+      error: (err) => console.error('Error al ignorar reseña:', err)
+    });
+  }
+
+  deleteUser(id: number): void {
+    this.userService.deleteAccount(+id).subscribe({
+      next: () => {
+        console.log('Usuario eliminado');
+        //this.users = this.users.filter(u => u.id !== id);
+        this.router.navigate(['/profile']);
+        this.loadAllUsers();
+      },
+      error: (err) => console.error('Error al eliminar usuario:', err)
+    });
+  }
+
+  editReview(review: ReviewDto): void {
+    this.editingReview = review.id;
+  }
+
+  cancelEdit(): void {
+    this.editingReview = null;
+  }
+
+  submitReviewEdit(review: ReviewDto): void {
+    this.reviewService.editReview(review).subscribe({
+      next: () => {
+        this.editingReview = null;
+      },
+      error: (err) => console.error('Error al actualizar la reseña:', err)
+    });
+  }
+
+  loadAllUsers(): void {
+    this.userService.getAllUsers().subscribe({
+      next: (data) => this.users = data,
+      error: (err) => console.error('Error al cargar usuarios:', err)
+    });
+  }
+
+
+  searchUser(): void {
+    this.userService.getUsers(this.searchQuery).subscribe({
+      next: users => this.users = users,
+      error: err => console.error('Error al buscar usuarios', err)
     });
   }
 }

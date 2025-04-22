@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { EnrollmentDto } from "../dtos/enrollment.dto";
+import { CourseDto } from "../dtos/course.dto";
 
 
 const BASE_URL = "/api/v1/enrollments";
@@ -13,8 +14,8 @@ const BASE_URL = "/api/v1/enrollments";
   
     constructor(private http: HttpClient) {}
   
-    public getEnrollmentsByUserId(userId: number): Observable<EnrollmentDto[]> {
-        return this.http.get<EnrollmentDto[]>(`${BASE_URL}/${userId}`);
+    public getEnrolledCourses(userId: number, page:number, size: number): Observable<CourseDto[]> {
+        return this.http.get<CourseDto[]>(`${BASE_URL}/${userId}/?page=${page}&size=${size}`);
     }
 
     public isUserEnrolled (userId: number, courseId: number) {

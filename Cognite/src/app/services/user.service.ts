@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserDto } from '../dtos/user.dto';
 
@@ -58,7 +58,9 @@ export class UserService {
    * @returns Un observable con la respuesta del servidor.
    */
   deleteAccount(id: number): Observable<void> {
-    return this.http.delete<void>(`${BASE_URL}/${id}`);
+    return this.http.delete<void>(`${BASE_URL}/${id}`, {
+      withCredentials: true
+    });
   }
 
   /**
@@ -71,5 +73,13 @@ export class UserService {
     formData.append('image', file);
 
     return this.http.post<void>(`${BASE_URL}/me/photo`, formData);
+  }
+
+  getUsers(name?: string): Observable<UserDto[]> {
+    let params = new HttpParams();
+    if (name) {
+      params = params.set('name', name);
+    }
+    return this.http.get<UserDto[]>(`${BASE_URL}/`, { params });
   }
 }

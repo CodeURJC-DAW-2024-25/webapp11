@@ -24,8 +24,8 @@ export class CourseService {
       return this.http.get<any[]>(`${BASE_URL}recommended`);
     }
 
-    getTaughtCourses(): Observable<CourseDto[]> {
-      return this.http.get<any[]>(`${BASE_URL}taught`);
+    getTaughtCourses(id: number,page: number, size: number): Observable<any[]> {
+      return this.http.get<any[]>(`${BASE_URL}taught/${id}/?page=${page}&size=${size}`);
     }
   
     getCourses(page: number, size: number): Observable<any[]> {
@@ -46,4 +46,5 @@ export class CourseService {
       console.error(error);
       return throwError("Server error (" + error.status + "): " + error.text());
     }
+
   }

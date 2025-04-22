@@ -24,7 +24,7 @@ export class ReviewService {
 
    //reseñas pendientes
    getPendingReviews(): Observable<ReviewDto[]> {
-     return this.http.get<ReviewDto[]>(`${BASE_URL}/pending`);
+     return this.http.get<ReviewDto[]>(`${BASE_URL}pending`);
    }
 
   getReviewsByCourse(courseId: number | string): Observable<ReviewDto[]> {

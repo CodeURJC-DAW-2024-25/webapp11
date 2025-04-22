@@ -67,15 +67,15 @@ public class EnrollmentApiController {
         return new ResponseEntity<>(enrollmentService.getMostPunctuation(id), HttpStatus.OK);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<Page<CourseDTO>> getEnrollCourses(@PathVariable Long userId,
+    @GetMapping("/{userId}/")
+    public ResponseEntity<List<CourseDTO>> getEnrollCourses(@PathVariable Long userId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int pageSize) {
 
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<CourseDTO> coursesPage = enrollmentService.getCoursesByUser(userService.findById(userId), pageable);
 
-        return ResponseEntity.ok(coursesPage);
+        return ResponseEntity.ok(coursesPage.getContent());
     }
 
     @GetMapping("/{userId}/{courseId}")

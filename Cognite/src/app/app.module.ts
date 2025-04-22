@@ -12,7 +12,6 @@ import { FormsModule } from '@angular/forms';
 import { CourseListComponent } from './components/course-list.component';
 import { ProfileComponent } from "./components/profile.component";
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { AdminComponent } from './components/admin.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,7 @@ import { AdminComponent } from './components/admin.component';
     CourseDetailComponent,
     HeaderComponent,
     CourseListComponent,
-    ProfileComponent,
-    AdminComponent
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

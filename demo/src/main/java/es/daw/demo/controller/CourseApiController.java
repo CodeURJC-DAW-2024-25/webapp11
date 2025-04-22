@@ -118,16 +118,14 @@ public class CourseApiController {
         return ResponseEntity.ok(coursesPage.getContent());
     }
 
-    @GetMapping("/taught")
-    public ResponseEntity<Page<CourseDTO>> getTaughtCourses(HttpServletRequest request,
+    @GetMapping("/taught/{userId}/")
+    public ResponseEntity<List<CourseDTO>> getTaughtCourses(@PathVariable Long userId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int pageSize) {
         
         Pageable pageable = PageRequest.of(page, pageSize);
-        Principal principal = request.getUserPrincipal();
-        Page<CourseDTO> coursesPage = courseService.findByInstructor(userService.findByEmail(principal.getName()), pageable);
-        
-        return ResponseEntity.ok(coursesPage);
+        Page<CourseDTO> coursesPage = courseService.findByInstructor(userService.findById(userId), pageable);
+        return ResponseEntity.ok(coursesPage.getContent());
     }
 
     @PutMapping("/{id}/image")
