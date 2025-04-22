@@ -14,12 +14,12 @@ export class ReviewService {
 
      //Elimina una reseña por ID.
    deleteReview(id: number | string): Observable<void> {
-     return this.http.delete<void>(`${BASE_URL}/${id}`);
+     return this.http.delete<void>(`${BASE_URL}${id}`);
    }
 
    // ignora reseña
    ignoreReview(id: number | string): Observable<void> {
-     return this.http.post<void>(`${BASE_URL}/${id}/ignore`, {});
+     return this.http.put<void>(`${BASE_URL}${id}/desmark-pending`, {});
    }
 
    //reseñas pendientes
@@ -35,7 +35,7 @@ export class ReviewService {
   }
 
   editReview(review: ReviewDto): Observable<ReviewDto> {
-    return this.http.put<ReviewDto>(BASE_URL + review.id, review)
+    return this.http.put<ReviewDto>(BASE_URL, review)
     .pipe(
       catchError((error) => this.handleError(error))
     ) as Observable<ReviewDto>;

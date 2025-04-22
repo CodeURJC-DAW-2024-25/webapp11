@@ -30,22 +30,10 @@ export class UserService {
   return this.http.get<UserDto[]>(`${BASE_URL}`);
   }
 
-
-  /**
-   * Actualiza la información del usuario.
-   * @param user Los datos actualizados del usuario.
-   * @returns Un observable con la respuesta del servidor.
-   */
   updateUser(user: Partial<UserDto>): Observable<UserDto> {
     return this.http.put<UserDto>(`${BASE_URL}/me`, user);
   }
 
-  /**
-   * Cambia la contraseña del usuario.
-   * @param currentPassword La contraseña actual.
-   * @param newPassword La nueva contraseña.
-   * @returns Un observable con la respuesta del servidor.
-   */
   changePassword(currentPassword: string, newPassword: string): Observable<void> {
     return this.http.post<void>(`${BASE_URL}/me/change-password`, {
       currentPassword,
@@ -53,13 +41,10 @@ export class UserService {
     });
   }
 
-  /**
-   * Elimina la cuenta del usuario.
-   * @returns Un observable con la respuesta del servidor.
-   */
   deleteAccount(id: number): Observable<void> {
     return this.http.delete<void>(`${BASE_URL}/${id}`, {
-      withCredentials: true
+      withCredentials: true,
+      responseType: 'text' as 'json'
     });
   }
 

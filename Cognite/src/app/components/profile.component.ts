@@ -198,9 +198,7 @@ export class ProfileComponent {
     this.userService.deleteAccount(+id).subscribe({
       next: () => {
         console.log('Usuario eliminado');
-        //this.users = this.users.filter(u => u.id !== id);
-        this.router.navigate(['/profile']);
-        this.loadAllUsers();
+        this.users = this.users.filter(u => u.id !== id);
       },
       error: (err) => console.error('Error al eliminar usuario:', err)
     });
