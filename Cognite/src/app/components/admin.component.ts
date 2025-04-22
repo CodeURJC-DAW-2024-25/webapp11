@@ -83,6 +83,7 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  //Esta función creo que no se usa, pero la dejo por si acaso
   loadTaughtCourses(): void {
     this.taughtLoading = true;
     this.courseService.getTaughtCourses().subscribe({
@@ -170,7 +171,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  deleteReview(id: string): void {
+  deleteReview(id: number) {
     this.reviewService.deleteReview(id).subscribe({
       next: () => {
         console.log('Reseña eliminada');
@@ -180,7 +181,7 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  ignoreReview(id: string): void {
+  ignoreReview(id: number): void {
     this.reviewService.ignoreReview(id).subscribe({
       next: () => {
         console.log('Reseña ignorada');
@@ -190,7 +191,7 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  deleteUser(id: string): void {
+  deleteUser(id: number): void {
     this.userService.deleteAccount(+id).subscribe({
       next: () => {
         console.log('Usuario eliminado');
@@ -212,4 +213,15 @@ export class AdminComponent implements OnInit {
       this.loadAllUsers();
     }
   }
+
+  editReview(review: ReviewDto): void {
+    this.reviewService.editReview(review).subscribe({
+      next: () => {
+        console.log('Reseña editada');
+        this.loadPendingReviews(); // Recargar reseñas después de editar
+      },
+      error: (err) => console.error('Error al editar reseña:', err)
+    });  
+  }
+  
 }

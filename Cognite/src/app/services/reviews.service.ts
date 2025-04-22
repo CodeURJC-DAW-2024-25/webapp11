@@ -13,12 +13,12 @@ export class ReviewService {
   constructor(private http: HttpClient) {}
 
      //Elimina una reseña por ID.
-   deleteReview(id: string): Observable<void> {
+   deleteReview(id: number | string): Observable<void> {
      return this.http.delete<void>(`${BASE_URL}/${id}`);
    }
 
    // ignora reseña
-   ignoreReview(id: string): Observable<void> {
+   ignoreReview(id: number | string): Observable<void> {
      return this.http.post<void>(`${BASE_URL}/${id}/ignore`, {});
    }
 
@@ -34,6 +34,12 @@ export class ReviewService {
     ) as Observable<ReviewDto[]>;
   }
 
+  editReview(review: ReviewDto): Observable<ReviewDto> {
+    return this.http.put<ReviewDto>(BASE_URL + review.id, review)
+    .pipe(
+      catchError((error) => this.handleError(error))
+    ) as Observable<ReviewDto>;
+  }
   private handleError(error: any) {
     console.log("ERROR:");
     console.error(error);

@@ -1,7 +1,7 @@
 <main class="container mt-4">
   <div class="row justify-content-center">
     <div class="col-md-6 text-center p-4 border rounded">
-      <img id="profile-img" [src]="'/api/v1/users/' + user.id + '/image'" class="rounded-circle img-fluid mb-3" alt="Foto de perfil" style="max-width: 150px;">
+      <img id="profile-img" [src]="'/api/v1/users/' + admin?.id" class="rounded-circle img-fluid mb-3" alt="Foto de perfil" style="max-width: 150px;">
       <input type="file" class="form-control-file d-none" id="upload-photo" (change)="onPhotoSelected($event)">
 
       <p><strong>{{ admin?.firstName }} {{ admin?.lastName }}</strong></p>
@@ -70,10 +70,10 @@
                   </div>
               </form>
           </div>
-      </div>
-
     </div>
+
   </div>
+
 
   <hr class="my-4">
 
@@ -83,18 +83,19 @@
     <div class="comment mb-4 border p-3 rounded" *ngFor="let review of reviews">
       <strong>{{review.user.firstName}} {{review.user.lastName}}</strong>
       <p>{{review.text}}</p>
-      <div *ngIf="editingReview !== review.id">
+      <div>
         <button class="btn btn-sm btn-link" (click)="editReview(review)">Editar comentario</button>
         <button class="btn btn-sm btn-link text-danger" (click)="deleteReview(review.id)">Eliminar comentario</button>
         <button class="btn btn-sm btn-link text-warning" (click)="ignoreReview(review.id)">Ignorar</button>
         <button class="btn btn-sm btn-link text-danger" (click)="deleteUser(review.user.id)">Eliminar usuario</button>
       </div>
-
+      <!-- Formulario para editar la reseña 
       <form *ngIf="editingReview === review.id" (ngSubmit)="submitReviewEdit(review)">
         <textarea [(ngModel)]="review.text" name="newText" class="form-control mb-2"></textarea>
         <button class="btn btn-success btn-sm" type="submit">Guardar</button>
         <button class="btn btn-secondary btn-sm" type="button" (click)="cancelEdit()">Cancelar</button>
       </form>
+      -->
     </div>
   </div>
   <ng-template #noReviews>

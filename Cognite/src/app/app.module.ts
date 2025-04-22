@@ -1,4 +1,4 @@
-import { ChartsComponent } from './components/chart.component';
+//import { ChartsComponent } from './components/chart.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { routing } from "./app.routing";
@@ -13,7 +13,7 @@ import { CourseListComponent } from './components/course-list.component';
 import { ProfileComponent } from "./components/profile.component";
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { AdminComponent } from './components/admin.component';
-import { LoginComponent } from './components/login.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,8 +21,7 @@ import { LoginComponent } from './components/login.component';
     HeaderComponent,
     CourseListComponent,
     ProfileComponent,
-    AdminComponent,
-    LoginComponent
+    AdminComponent
   ],
   imports: [
     BrowserModule,
