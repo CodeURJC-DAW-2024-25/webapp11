@@ -1,0 +1,79 @@
+<div class="container">
+    <div class="header-logo text-dark">Cognite</div>
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="mx-auto" enctype="multipart/form-data">
+      <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+  
+      <!-- First Name -->
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+        </div>
+        <input type="text" formControlName="firstName" class="form-control" placeholder="Nombre" required>
+      </div>
+  
+      <!-- Last Name -->
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa-solid fa-user-plus"></i></span>
+        </div>
+        <input type="text" formControlName="lastName" class="form-control" placeholder="Apellidos" required>
+      </div>
+  
+      <!-- Email -->
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+        </div>
+        <input type="email" formControlName="email" class="form-control" placeholder="Email" required>
+      </div>
+  
+      <!-- Profile Image -->
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa-solid fa-image"></i></span>
+        </div>
+        <div class="custom-file">
+          <input type="file" (change)="onFileChange($event)" class="custom-file-input" required>
+          <label class="custom-file-label" style="text-align: left;">Imagen de perfil</label>
+        </div>
+      </div>
+  
+      <!-- Topic -->
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa-solid fa-book"></i></span>
+        </div>
+        <select formControlName="topic" class="form-control" required>
+          <option value="" disabled selected>Me gustaría aprender sobre...</option>
+          <option>Desarrollo web</option>
+          <option>Desarrollo móvil</option>
+          <option>Desarrollo de videojuegos</option>
+          <option>Emprendimiento</option>
+          <option>Finanzas</option>
+          <option>Marketing digital</option>
+          <option>Liderazgo</option>
+          <option>Comunicación</option>
+        </select>
+      </div>
+  
+      <!-- Password -->
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+        </div>
+        <input type="password" formControlName="password" class="form-control" placeholder="Contraseña" required>
+      </div>
+  
+      <!-- Repeat Password -->
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+        </div>
+        <input type="password" formControlName="repeatPassword" class="form-control" placeholder="Repetir contraseña" required>
+      </div>
+  
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+      <p class="mt-3">Already have an account? <a routerLink="/login">Log in</a></p>
+      <p class="mt-5 mb-3 text-muted">&copy; 2025 Cognite</p>
+    </form>
+  </div>

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { CourseDetailComponent  } from "./components/course-detail.component";
 import { CourseListComponent } from "./components/course-list.component";
 import { ProfileComponent } from "./components/profile.component";
+import { EditCourseComponent } from "./components/edit-course.component";
 
 const appRoutes: Routes = [
   { path: "courses", component: CourseListComponent },
@@ -11,6 +12,7 @@ const appRoutes: Routes = [
   //{ path: "books/edit/:id", component: BookFormComponent },
   { path: "", redirectTo: "courses", pathMatch: "full" },
   { path: "users/me", component: ProfileComponent },
+  { path: 'editCourse/:id', component: EditCourseComponent },
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

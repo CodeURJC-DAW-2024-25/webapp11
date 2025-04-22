@@ -5,7 +5,7 @@ import { ErrorService } from '../services/error.service';
 @Component({
   selector: 'app-error',
   templateUrl: './error.component.html',
-  styleUrls: ['./error.component.css']
+  styleUrls: ['../app.component.css']
 })
 export class ErrorComponent {
   errorTitle: string | null = '';
