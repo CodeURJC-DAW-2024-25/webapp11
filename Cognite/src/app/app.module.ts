@@ -13,7 +13,8 @@ import { CourseListComponent } from './components/course-list.component';
 import { ProfileComponent } from "./components/profile.component";
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { AdminComponent } from './components/admin.component';
-
+import { SignupComponent } from './components/signup.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +22,8 @@ import { AdminComponent } from './components/admin.component';
     HeaderComponent,
     CourseListComponent,
     ProfileComponent,
-    AdminComponent
+    AdminComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ import { AdminComponent } from './components/admin.component';
     FormsModule,
     routing,
     NgbModule,
-    PdfViewerModule
+    PdfViewerModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
