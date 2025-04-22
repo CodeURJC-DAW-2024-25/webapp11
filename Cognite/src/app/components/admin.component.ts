@@ -33,6 +33,8 @@ export class AdminComponent implements OnInit {
   searchQuery = '';
   editForm!: FormGroup;
 
+  editingReview: number | null = null; // NUEVO
+
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
@@ -170,31 +172,34 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  deleteReview(id: string): void {
-    this.reviewService.deleteReview(id).subscribe({
+  deleteReview(id: number | undefined): void {
+    if (id == null) return;
+    this.reviewService.deleteReview(String(id)).subscribe({
       next: () => {
         console.log('Reseña eliminada');
-        this.reviews = this.reviews.filter(r => r.id !== Number(id));
+        this.reviews = this.reviews.filter(r => r.id !== id);
       },
       error: (err) => console.error('Error al eliminar reseña:', err)
     });
   }
 
-  ignoreReview(id: string): void {
-    this.reviewService.ignoreReview(id).subscribe({
+  ignoreReview(id: number | undefined): void {
+    if (id == null) return;
+    this.reviewService.ignoreReview(String(id)).subscribe({
       next: () => {
         console.log('Reseña ignorada');
-        this.reviews = this.reviews.filter(r => r.id !== Number(id));
+        this.reviews = this.reviews.filter(r => r.id !== id);
       },
       error: (err) => console.error('Error al ignorar reseña:', err)
     });
   }
 
-  deleteUser(id: string): void {
-    this.userService.deleteAccount(+id).subscribe({
+  deleteUser(id: number | undefined): void {
+    if (id == null) return;
+    this.userService.deleteAccount(id).subscribe({
       next: () => {
         console.log('Usuario eliminado');
-        this.users = this.users.filter(u => u.id !== +id);
+        this.users = this.users.filter(u => u.id !== id);
       },
       error: (err) => console.error('Error al eliminar usuario:', err)
     });
@@ -211,5 +216,19 @@ export class AdminComponent implements OnInit {
     } else {
       this.loadAllUsers();
     }
+  }
+
+  editReview(review: ReviewDto): void {
+    this.editingReview = review.id ?? null ;
+  }
+
+  cancelEdit(): void {
+    this.editingReview = null;
+  }
+
+  submitReviewEdit(review: ReviewDto): void {
+    console.log('Review editada:', review);
+    // Aquí puedes enviar los datos editados si es necesario
+    this.editingReview = null;
   }
 }

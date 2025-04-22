@@ -1,77 +1,79 @@
 <main class="container mt-4">
   <div class="row justify-content-center">
     <div class="col-md-6 text-center p-4 border rounded">
-      <img id="profile-img" [src]="'/api/v1/users/' + user.id + '/image'" class="rounded-circle img-fluid mb-3" alt="Foto de perfil" style="max-width: 150px;">
+      <img id="profile-img" [src]="'/api/v1/users/' + admin?.id + '/image'" class="rounded-circle img-fluid mb-3" alt="Foto de perfil" style="max-width: 150px;">
       <input type="file" class="form-control-file d-none" id="upload-photo" (change)="onPhotoSelected($event)">
 
       <p><strong>{{ admin?.firstName }} {{ admin?.lastName }}</strong></p>
       <p><strong>Email:</strong> <span>{{ admin?.email }}</span></p>
       <button class="btn btn-primary" (click)="toggleEdit()">Editar perfil</button>
 
-      <button class="btn btn-primary" (click)="toggleEdit()">Editar perfil</button>
-          <div id="Settings" class="w3-container tab" [style.display]="isEditing ? 'block' : 'none'">
-              <h2>Settings</h2>
-              <form id="updateForm" class="mx-1 mx-md-4" (ngSubmit)="onSubmit()" #updateForm="ngForm">
-                  <div class="row">
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <label for="firstName">Nombre</label>
-                              <input class="form-control" id="firstName" type="text" name="firstName" [(ngModel)]="formData.firstName" placeholder="Nuevo nombre" required/>
-                          </div>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <label for="lastName">Apellidos</label>
-                              <input class="form-control" id="lastName" type="text" name="lastName" [(ngModel)]="formData.lastName" placeholder="Nuevo apellido" required/>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-12">
-                          <div class="form-group">
-                              <label for="email">Email</label>
-                              <input type="email" id="email" name="email" class="form-control" [(ngModel)]="formData.email" placeholder="Email" required/>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-12 text-center">
-                          <button type="button" class="btn btn-danger btn-lg" (click)="deleteAccount()">Eliminar</button>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-12 mb-3">
-                          <div class="mb-2"><b>Change Password</b></div>
-                          <div class="form-group">
-                              <label for="currentPassword">Current Password</label>
-                              <input class="form-control" id="currentPassword" type="password" name="currentPassword" [(ngModel)]="formData.currentPassword" placeholder="••••••" required/>
-                          </div>
-                          <div class="form-group">
-                              <label for="newPassword">New Password</label>
-                              <input class="form-control" id="newPassword" type="password" name="newPassword" [(ngModel)]="formData.newPassword" placeholder="••••••" required/>
-                          </div>
-                          <div class="form-group">
-                              <label for="confirmPassword">Confirm Password</label>
-                              <input class="form-control" id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="formData.confirmPassword" placeholder="••••••" required/>
-                              <p class="text-danger" *ngIf="formData.newPassword !== formData.confirmPassword && formData.confirmPassword">Passwords do not match</p>
-                            </div>
-                      </div>
-                  </div>
-                  <div class="col">
-                      <div class="form-group">
-                          <div class="mb-2"><b>Change Photo</b></div>
-                          <input class="form-control" name="imageFile" type="file" id="imageFile" accept="image/*" (change)="onPhotoSelected($event)"/>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col d-flex justify-content-end">
-                          <button class="btn btn-primary" type="submit">Save Changes</button>
-                      </div>
-                  </div>
-              </form>
+      <div id="Settings" class="w3-container tab mt-4" [style.display]="isEditing ? 'block' : 'none'">
+        <h2>Settings</h2>
+        <form id="updateForm" class="mx-1 mx-md-4" (ngSubmit)="onSubmit()" #updateForm="ngForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="firstName">Nombre</label>
+                <input class="form-control" id="firstName" type="text" name="firstName" [(ngModel)]="formData.firstName" placeholder="Nuevo nombre" required />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="lastName">Apellidos</label>
+                <input class="form-control" id="lastName" type="text" name="lastName" [(ngModel)]="formData.lastName" placeholder="Nuevo apellido" required />
+              </div>
+            </div>
           </div>
-      </div>
 
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" [(ngModel)]="formData.email" placeholder="Email" required />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 text-center">
+              <button type="button" class="btn btn-danger btn-lg" (click)="deleteAccount()">Eliminar</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 mb-3">
+              <div class="mb-2"><b>Change Password</b></div>
+              <div class="form-group">
+                <label for="currentPassword">Current Password</label>
+                <input class="form-control" id="currentPassword" type="password" name="currentPassword" [(ngModel)]="formData.currentPassword" placeholder="••••••" required />
+              </div>
+              <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input class="form-control" id="newPassword" type="password" name="newPassword" [(ngModel)]="formData.newPassword" placeholder="••••••" required />
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input class="form-control" id="confirmPassword" type="password" name="confirmPassword" [(ngModel)]="formData.confirmPassword" placeholder="••••••" required />
+                <p class="text-danger" *ngIf="formData.newPassword !== formData.confirmPassword && formData.confirmPassword">Passwords do not match</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="form-group">
+              <div class="mb-2"><b>Change Photo</b></div>
+              <input class="form-control" name="imageFile" type="file" id="imageFile" accept="image/*" (change)="onPhotoSelected($event)" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col d-flex justify-content-end">
+              <button class="btn btn-primary" type="submit">Save Changes</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -107,7 +109,7 @@
   <h3 class="text-center">Eliminar usuario</h3>
   <form class="row g-2 justify-content-center" (submit)="searchUser()">
     <div class="col-md-4">
-      <input type="text" class="form-control" [(ngModel)]="searchQuery" name="search" placeholder="Buscar usuario"/>
+      <input type="text" class="form-control" [(ngModel)]="searchQuery" name="search" placeholder="Buscar usuario" />
     </div>
     <div class="col-md-2">
       <button class="btn btn-primary w-100" type="submit">Buscar</button>
