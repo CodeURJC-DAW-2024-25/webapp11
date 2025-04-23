@@ -12,6 +12,10 @@ export class ReviewService {
 
   constructor(private http: HttpClient) {}
 
+  addComment(text: string, userId: number, courseId: number | undefined): Observable<ReviewDto> {
+    return this.http.post<ReviewDto>(BASE_URL, {"text": text, "user": { "id": userId }, "course": { "id": courseId }});                 //This API function POST returns the added review (Observable<ReviewDto>). See Body at the bottom part of Postman after making the post request.
+  }
+
      //Elimina una reseña por ID.
    deleteReview(id: number | string): Observable<void> {
      return this.http.delete<void>(`${BASE_URL}${id}`);

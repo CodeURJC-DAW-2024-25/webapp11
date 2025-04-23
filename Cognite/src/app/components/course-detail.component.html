@@ -47,8 +47,8 @@
           <!-- Añadir nuevo comentario -->
           <form *ngIf="isEnrolled || isInstructor" action="/course/newReview" method="post">
             <input type="hidden" name="courseId" [value]="course.id">
-            <textarea class="form-control mb-2" name="text" placeholder="Añadir un comentario..."></textarea>
-            <button class="btn btn-primary">Comentar</button>
+            <textarea class="form-control mb-2" name="text" placeholder="Añadir un comentario..." [(ngModel)]="comentarioTexto"></textarea>
+            <button class="btn btn-primary" (click)="addComment()">Comentar</button>
           </form>
       
           <p *ngIf="!isEnrolled && !isInstructor">

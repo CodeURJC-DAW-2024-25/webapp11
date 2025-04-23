@@ -21,6 +21,7 @@ export class CourseDetailComponent {
   zoom: number = 1;
   page: number = 1;
   totalPages: number = 0;
+  comentarioTexto: string = '';
   public isEnrolled: boolean = false;
   public isInstructor: boolean = false;
   constructor(
@@ -124,6 +125,26 @@ export class CourseDetailComponent {
         this.isInstructor = false;
       }
     );
+  }
+
+  public addComment(): void {
+    const courseId = this.route.snapshot.params['id'];
+    this.userService.getUserInfo().subscribe(
+      (user) => {
+        this.reviewService.addComment(this.comentarioTexto, user.id, courseId).subscribe(
+          (comment) => {
+            console.log("Comentario añadido con exito");
+            this.comentarioTexto = ""
+            this.loadReviews(courseId);
+          },
+          (error) => {console.log("Error al añadir el comentario", error)}
+        );
+      },
+      (error) => {console.log("Error al obtener el usuario al añadir un comentario", error)}
+    );
+    //this.userService.getUserInfo().subscribe(
+      //const courseId = this.route.snapshot.params['id'];
+    //);
   }
 
   public goToMaterial() {
