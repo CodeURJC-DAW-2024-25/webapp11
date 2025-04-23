@@ -15,6 +15,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { SignupComponent } from './components/signup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditCourseComponent } from './components/edit-course.component';
+import { CourseBrowseComponent } from './components/course-browse.component';
+import { CourseSearchComponent } from './components/course-search.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { EditCourseComponent } from './components/edit-course.component';
     ProfileComponent,
     SignupComponent,
     EditCourseComponent,
+    CourseBrowseComponent,
+    CourseSearchComponent
   ],
   imports: [
     BrowserModule,

@@ -24,15 +24,6 @@ export class HeaderComponent {
     private modalService: NgbModal
   ) {}
 
-  public searchCourse(event: Event) {
-    event.preventDefault();
-    if (this.findCourseText.trim()) {
-      this.router.navigate(['/search'], { 
-        queryParams: { query: this.findCourseText }
-      });
-    }
-  }
-
   public logOut() {
     this.loginService.logOut();
   }
@@ -61,6 +52,15 @@ export class HeaderComponent {
     if (!this.showLoginForm) {
       this.loginEmail = '';
       this.loginPassword = '';
+    }
+  }
+  searchCourse(event: Event): void {
+    event.preventDefault();
+
+    const query = this.findCourseText.trim();
+    if (query) {
+      this.router.navigate(['/search', query]);
+      this.findCourseText = ''; // opcional: limpiar el campo después
     }
   }
 }

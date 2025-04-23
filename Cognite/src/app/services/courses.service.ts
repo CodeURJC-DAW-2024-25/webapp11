@@ -50,4 +50,12 @@ export class CourseService {
     updateCourse(course: any): Observable<any> {
       return this.http.put(`/api/v1/courses/${course.id}`, course);
     }
+
+    getCoursesByTopic(topic: string, page: number, size: number): Observable<any[]> {
+      return this.http.get<any[]>(`${BASE_URL}topic/${topic}?page=${page}&size=${size}`);
+    }
+
+    getCoursesByTitle(title: string, page: number, size: number): Observable<any[]> {
+      return this.http.get<any[]>(`${BASE_URL}title/${title}?page=${page}&size=${size}`);
+    }
   }

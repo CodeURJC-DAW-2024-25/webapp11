@@ -130,6 +130,9 @@ export class ProfileComponent {
         } else {
           this.taughtCourses = [...this.taughtCourses, ...courses];
           this.currentPage++;
+          if (courses.length < this.pageSize) {
+            this.hasMoreTaughtCourses = false;
+          }
         }
         this.taughtLoading = false;
       },
@@ -153,6 +156,9 @@ export class ProfileComponent {
         } else {
           this.enrolledCourses = [...this.enrolledCourses, ...courses];
           this.currentPageEnrolled++;
+          if (courses.length < this.pageSizeEnrolled) {
+            this.hasMoreEnrolledCourses = false;
+          }
         }
         this.enrolledLoading = false;
       },

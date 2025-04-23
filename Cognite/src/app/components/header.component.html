@@ -6,7 +6,6 @@
           <a class="header-logo text-dark" routerLink="/">Cognite</a>
         </div>
         <div class="col-6 d-flex justify-content-end align-items-center">
-          <!-- Elementos que se muestran cuando no está el formulario de login activo -->
           <ng-container *ngIf="!showLoginForm">
             <div class="btn btn-sm p-1 d-flex align-items-center" style="transition: none !important; border: 1px solid #6c757d;">
               <form (ngSubmit)="searchCourse($event)" class="d-flex align-items-center">
@@ -59,14 +58,15 @@
     </div>
     <div class="nav-scroller py-1 mb-2">
       <nav class="nav d-flex justify-content-between">
-        <a class="p-2 text-muted" routerLink="/showCourses/Desarrollo web">Desarrollo web</a>
-        <a class="p-2 text-muted" routerLink="/showCourses/Desarrollo móvil">Desarrollo móvil</a>
-        <a class="p-2 text-muted" routerLink="/showCourses/Desarrollo de videojuegos">Desarrollo de videojuegos</a>
-        <a class="p-2 text-muted" routerLink="/showCourses/Emprendimiento">Emprendimiento</a>
-        <a class="p-2 text-muted" routerLink="/showCourses/Finanzas">Finanzas</a>
-        <a class="p-2 text-muted" routerLink="/showCourses/Marketing digital">Marketing digital</a>
-        <a class="p-2 text-muted" routerLink="/showCourses/Liderazgo">Liderazgo</a>
-        <a class="p-2 text-muted" routerLink="/showCourses/Comunicación">Comunicación</a>
+        <a class="p-2 text-muted" [routerLink]="['/courses', 'Desarrollo Web']">Desarrollo web</a>
+        <a class="p-2 text-muted" [routerLink]="['/courses', 'Desarrollo móvil']">Desarrollo móvil</a>
+        <a class="p-2 text-muted" [routerLink]="['/courses', 'Desarrollo de videojuegos']">Desarrollo de videojuegos</a>
+        <a class="p-2 text-muted" [routerLink]="['/courses', 'Emprendimiento']">Emprendimiento</a>
+        <a class="p-2 text-muted" [routerLink]="['/courses', 'Finanzas']">Finanzas</a>
+        <a class="p-2 text-muted" [routerLink]="['/courses', 'Marketing digital']">Marketing digital</a>
+        <a class="p-2 text-muted" [routerLink]="['/courses', 'Liderazgo']">Liderazgo</a>
+        <a class="p-2 text-muted" [routerLink]="['/courses', 'Comunicación']">Comunicación</a>
+
       </nav>                
     </div>
   </header>
