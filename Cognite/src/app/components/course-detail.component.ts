@@ -22,6 +22,7 @@ export class CourseDetailComponent {
   page: number = 1;
   totalPages: number = 0;
   comentarioTexto: string = '';
+  comentarios: { [reviewId: number]: string } = {};
   public isEnrolled: boolean = false;
   public isInstructor: boolean = false;
   constructor(
@@ -131,7 +132,7 @@ export class CourseDetailComponent {
     const courseId = this.route.snapshot.params['id'];
     this.userService.getUserInfo().subscribe(
       (user) => {
-        this.reviewService.addComment(this.comentarioTexto, user.id, courseId).subscribe(
+        this.reviewService.addComment(this.comentarioTexto, user.id, courseId, null).subscribe(
           (comment) => {
             console.log("Comentario añadido con exito");
             this.comentarioTexto = ""
@@ -145,6 +146,23 @@ export class CourseDetailComponent {
     //this.userService.getUserInfo().subscribe(
       //const courseId = this.route.snapshot.params['id'];
     //);
+  }
+
+  public addResponse(reviewId: number): void {
+    const courseId = this.route.snapshot.params['id'];
+    this.userService.getUserInfo().subscribe(
+      (user) => {
+        this.reviewService.addComment(this.comentarios[reviewId], user.id, courseId, reviewId).subscribe(
+          (comment) => {
+            console.log("Comentario añadido con exito");
+            this.comentarios[reviewId] = ""
+            this.loadReviews(courseId);
+          },
+          (error) => {console.log("Error al añadir el comentario", error)}
+        );
+      },
+      (error) => {console.log("Error al obtener el usuario al añadir un comentario", error)}
+    );
   }
 
   public goToMaterial() {

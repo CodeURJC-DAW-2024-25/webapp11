@@ -12,8 +12,8 @@ export class ReviewService {
 
   constructor(private http: HttpClient) {}
 
-  addComment(text: string, userId: number, courseId: number | undefined): Observable<ReviewDto> {
-    return this.http.post<ReviewDto>(BASE_URL, {"text": text, "user": { "id": userId }, "course": { "id": courseId }});                 //This API function POST returns the added review (Observable<ReviewDto>). See Body at the bottom part of Postman after making the post request.
+  addComment(text: string, userId: number, courseId: number, reviewId: number | null): Observable<ReviewDto> {
+    return this.http.post<ReviewDto>(BASE_URL, {"text": text, "user": { "id": userId }, "course": { "id": courseId }, "parent": reviewId === null ? null : { id: reviewId }});                 //This API function POST returns the added review (Observable<ReviewDto>). See Body at the bottom part of Postman after making the post request.
   }
 
      //Elimina una reseña por ID.

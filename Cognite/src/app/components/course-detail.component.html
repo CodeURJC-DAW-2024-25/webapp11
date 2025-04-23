@@ -29,8 +29,8 @@
               <form *ngIf="isEnrolled || isInstructor" action="/course/newReview" method="post" style="display: inline;">
                 <input type="hidden" name="courseId" [value]="course.id">
                 <input type="hidden" name="parentId" [value]="review.id">
-                <textarea class="form-control mb-2" name="text" placeholder="Responder..."></textarea>
-                <input type="submit" class="btn btn-link btn-sm" value="Responder">
+                <textarea class="form-control mb-2" name="text" placeholder="Responder..." [(ngModel)]="comentarios[review.id]"></textarea>
+                <input type="submit" class="btn btn-link btn-sm" (click)="addResponse(review.id)" value="Responder">
               </form>
       
               <form *ngIf="isInstructor" [action]="'/reviews/' + review.id + '/mark-pending'" method="post" style="display: inline;">
