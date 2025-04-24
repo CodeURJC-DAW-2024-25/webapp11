@@ -120,6 +120,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests(authorize -> authorize
 						// PUBLIC PAGES
 						.requestMatchers("/").permitAll()
+						.requestMatchers("/spa/**").permitAll()
 						.requestMatchers("/signUp/**").permitAll()
 						.requestMatchers("/login").permitAll()
 						.requestMatchers("/course/**").permitAll()
@@ -130,6 +131,7 @@ public class SecurityConfig {
 						.requestMatchers("/error-login").permitAll()
 						.requestMatchers("/newUser").permitAll()
 						.requestMatchers("/css/**").permitAll()
+						.requestMatchers("/browser/**").permitAll()
 						.requestMatchers("/js/**").permitAll()
 						.requestMatchers("/getCourses").permitAll()
 						.requestMatchers("/getCoursesByTopic").permitAll()
