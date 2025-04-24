@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import es.daw.demo.service.CourseService;
 import es.daw.demo.service.EnrollmentService;
 import es.daw.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +28,9 @@ public class EnrollmentApiController {
 
     @Autowired
     private EnrollmentService enrollmentService;
+
+    @Autowired
+    private CourseService courseService;
 
     @PostMapping("/{idCourse}")
     public ResponseEntity<EnrollmentDTO> enrollToCourse(@PathVariable Long idCourse, @RequestParam Long userId) {
@@ -59,7 +64,9 @@ public class EnrollmentApiController {
         }
 
         enrollmentService.updateRating(EnrollmentId, rating);
+        courseService.updateCourseRating(enrollmentDTO.course().id());
         return ResponseEntity.ok("Valoración actualizada");
+
     }
 
     @GetMapping("/statistics/{id}")
@@ -79,7 +86,7 @@ public class EnrollmentApiController {
     }
 
     @GetMapping("/{userId}/{courseId}")
-    public boolean isUserEnrolledInCourse(@PathVariable Long userId, @PathVariable Long courseId) {
+    public Long isUserEnrolledInCourse(@PathVariable Long userId, @PathVariable Long courseId) {
         return enrollmentService.isUserEnrolledInCourse(userId, courseId);
     }
 

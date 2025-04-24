@@ -25,6 +25,7 @@ export class CourseDetailComponent {
   comentarios: { [reviewId: number]: string } = {};
   public isEnrolled: boolean = false;
   public isInstructor: boolean = false;
+  selectedRating: number = 0;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -67,8 +68,49 @@ export class CourseDetailComponent {
     );
   }
 
-
+  public enrollCourse(): void {
+    const courseId = this.route.snapshot.params['id'];
+    this.userService.getUserInfo().subscribe(
+      (user) => {
+        const userId = user.id;
+        this.enrollmentService.enrollCourse(userId, courseId).subscribe(
+          (response) => {
+            console.log("Usuario inscrito en el curso con éxito", response);
+            this.isEnrolled = true;
+          },
+          (error) => console.error("Error al inscribir al usuario:", error)
+        );
+      },
+      (error) => console.error("Error al obtener el usuario:", error)
+    );
+  }
   
+  public submitRating(): void {
+    const rating = this.selectedRating;
+    this.userService.getUserInfo().subscribe(
+      (user) => {
+        const userId = user.id;
+        const courseId = this.route.snapshot.params['id'];
+        this.enrollmentService.isUserEnrolled(userId, courseId).subscribe(
+          (enrolled) => {
+            if (enrolled) {
+                this.enrollmentService.rateCourse(enrolled, rating).subscribe();
+            } else {
+              console.log("User is not enrolled in the course");
+            }
+            if (enrolled) {
+              console.log("User is enrolled in the course");
+            } else {
+              console.log("User is not enrolled in the course");
+            }
+          },
+          (error) => console.error("Error checking enrollment:", error)
+        );
+      },
+      (error) => console.error("Error getting user info:", error)
+    );
+  }
+
 
   public checkEnrollmentStatus(): void {
     this.userService.getUserInfo().subscribe(
@@ -77,10 +119,11 @@ export class CourseDetailComponent {
         const courseId = this.route.snapshot.params['id'];
         this.enrollmentService.isUserEnrolled(userId, courseId).subscribe(
           (enrolled) => {
-            this.isEnrolled = enrolled;
             if (enrolled) {
+              this.isEnrolled = true;
               console.log("User is enrolled in the course");
             } else {
+              this.isEnrolled = false;
               console.log("User is not enrolled in the course");
             }
           },

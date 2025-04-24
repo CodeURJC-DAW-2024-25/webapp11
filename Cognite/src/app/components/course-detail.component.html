@@ -105,9 +105,8 @@
     <div [ngbNavOutlet]="nav" class="tab-content mt-3"></div>
     
     <!-- BOTÓN INSCRIBIRSE -->
-    <form *ngIf="!isEnrolled && !isInstructor" method="post" action="/course/enroll">
-      <button type="submit" class="btn btn-success mt-3">Inscribirse al curso</button>
-  
+    <form *ngIf="!isEnrolled && !isInstructor" method="post">
+      <button type="submit" class="btn btn-success mt-3" (click)="enrollCourse()">Inscribirse al curso</button>
       <input type="hidden" name="idCourse" [value]="course.id" />
     </form>
   
@@ -115,12 +114,12 @@
     <div *ngIf="isEnrolled && !isInstructor" class="mt-4">
       <hr>
       <h4>Califica el curso</h4>
-      <form method="post" action="/enrollment/rate" class="p-3 bg-light">
+      <form method="post" class="p-3 bg-light">
         <div class="d-flex align-items-center gap-3">
-          <select id="rating" name="rating" class="form-select" style="width: auto;">
+          <select id="rating" name="rating" class="form-select" style="width: auto;" [(ngModel)]="selectedRating" required>
             <option *ngFor="let r of [0,1,2,3,4,5]" [value]="r">{{ r }} ⭐</option>
           </select>
-          <button type="submit" class="btn btn-success ms-2">
+          <button type="submit" class="btn btn-success ms-2" (click)="submitRating()">
             <i class="bi bi-star-fill"></i> Valorar
           </button>
         </div>

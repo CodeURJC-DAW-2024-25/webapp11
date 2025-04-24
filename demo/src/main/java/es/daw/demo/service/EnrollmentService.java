@@ -112,8 +112,13 @@ public class EnrollmentService {
                 .orElseThrow(() -> new RuntimeException("Inscripción no encontrada")));
     }
 
-    public Boolean isUserEnrolledInCourse(Long userId, Long courseId) {
-        return enrollmentRepository.existsByUserIdAndCourseId(userId, courseId);
+    public Long isUserEnrolledInCourse(Long userId, Long courseId) {
+        Optional<Long> enrollmentId = enrollmentRepository.findEnrollmentIdByUserIdAndCourseId(userId, courseId);
+        if (enrollmentId.isPresent()) {
+            return enrollmentId.get();
+        } else {
+            return null; // or throw an exception if you prefer
+        }
     }
     
 

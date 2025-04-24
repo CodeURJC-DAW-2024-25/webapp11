@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { EnrollmentDto } from "../dtos/enrollment.dto";
 import { CourseDto } from "../dtos/course.dto";
@@ -19,6 +19,19 @@ const BASE_URL = "/api/v1/enrollments";
     }
 
     public isUserEnrolled (userId: number, courseId: number) {
-        return this.http.get<boolean>(`${BASE_URL}/${userId}/${courseId}`);
+        return this.http.get<number>(`${BASE_URL}/${userId}/${courseId}`);
     }
+
+    public enrollCourse(userId: number, courseId: number): Observable<EnrollmentDto> {
+      const url = `${BASE_URL}/${courseId}`;
+      const params = new HttpParams().set('userId', userId.toString());
+      return this.http.post<EnrollmentDto>(url, null, { params });
+    }
+    
+    public rateCourse(enrollmentId: Number, rating: number): Observable<EnrollmentDto> {
+      const url = `${BASE_URL}/${enrollmentId}`;
+      const params = new HttpParams().set('rating', rating.toString());
+      return this.http.put<EnrollmentDto>(url, null, { params });
+    }
+
   }

@@ -26,6 +26,8 @@ import es.daw.demo.repository.UserRepository;
 @Service
 public class DataBaseInitializer{
 
+    private final CourseService courseService;
+
     @Autowired
     private CourseRepository courseRepository;
 
@@ -42,6 +44,10 @@ public class DataBaseInitializer{
 	private PasswordEncoder passwordEncoder;
 
     private final Random random = new Random();
+
+    DataBaseInitializer(CourseService courseService) {
+        this.courseService = courseService;
+    }
     @PostConstruct
     public void initializeDatabase() throws IOException {
 
@@ -184,7 +190,7 @@ public class DataBaseInitializer{
         enrollmentRepository.save(enrollment11);
         enrollmentRepository.save(enrollment12);
 
-        updateCourseRatings();
+        //updateCourseRatings();
         updateUserTopic(user1);
         updateUserTopic(user2);
         updateUserTopic(user3);
@@ -325,6 +331,9 @@ public class DataBaseInitializer{
         courseRepository.save(course31);
         courseRepository.save(course32);
         courseRepository.save(course33);
+
+        updateCourseRatings(); //Change this to update the ratings after all enrollments are saved, check if it works with docker image
+
     }
 
     public void setCourseImage(Course course, String classpathResource) throws IOException {
@@ -345,15 +354,7 @@ public class DataBaseInitializer{
     private void updateCourseRatings() {
         List<Course> courses = courseRepository.findAll();
         for (Course course : courses) {
-            List<Enrollment> enrollments = enrollmentRepository.findByCourse_Id(course.getId());
-            if (!enrollments.isEmpty()) {
-                int totalRating = enrollments.stream()
-                                             .mapToInt(Enrollment::getRating)
-                                             .sum();
-                int newAverageRating = totalRating / enrollments.size();
-                course.setRating(newAverageRating);
-                courseRepository.save(course);  
-            }
+            courseService.updateCourseRating(course.getId());
         }
     }
         private void updateUserTopic(User user) {

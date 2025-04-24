@@ -33,8 +33,8 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
     //@Query("SELECT e.course.topic, COUNT(e) FROM Enrollment e WHERE e.user = :user GROUP BY e.course.topic ORDER BY COUNT(e) DESC")
     //List<Object[]> findMostFrequentTopicByUser(@Param("user") User user);
 
-    @Query("SELECT COUNT(e) > 0 FROM Enrollment e WHERE e.user.id = :userId AND e.course.id = :courseId")
-    Boolean existsByUserIdAndCourseId(@Param("userId") Long userId, @Param("courseId") Long courseId);
+    @Query("SELECT e.id FROM Enrollment e WHERE e.user.id = :userId AND e.course.id = :courseId")
+    Optional<Long> findEnrollmentIdByUserIdAndCourseId(@Param("userId") Long userId, @Param("courseId") Long courseId);
 
     @Query("SELECT e.course.topic FROM Enrollment e WHERE e.user.id = :userId GROUP BY e.course.topic ORDER BY COUNT(e) DESC LIMIT 1")
     String findMostFrequentTopicByUser(@Param("userId") Long userId);
