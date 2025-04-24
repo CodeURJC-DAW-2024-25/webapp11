@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../services/courses.service';
 import { Router } from "@angular/router";
+import { UserService } from '../services/user.service';
+import { UserDto } from '../dtos/user.dto';
 @Component({
   templateUrl: './course-list.component.html',
   styleUrl: '../app.component.css'
@@ -13,9 +15,10 @@ export class CourseListComponent implements OnInit {
   hasMoreCourses = true;
   currentPage = 0;
   pageSize = 10;
-
+  user?: UserDto;
   constructor(private courseService: CourseService,
-              private router: Router
+              private router: Router,
+              private userService: UserService
   ) {}
 
   public ngOnInit() {
@@ -25,17 +28,33 @@ export class CourseListComponent implements OnInit {
 
   public loadRecommendedCourses(): void {
     this.recomendLoading = true;
-    this.courseService.getRecommendedCourses().subscribe({
-      next: (courses) => {
-        this.recomendedCourses= courses;
-        this.recomendLoading = false;
+    this.userService.getUserInfo().subscribe({
+      next: (user) => {
+        this.user = user;
+        this.courseService.getCoursesByTopic(user.topic, 0, 4).subscribe({
+          next: (courses) => {
+            this.recomendedCourses = courses;
+            this.recomendLoading = false;
+          },
+          error: (err) => {
+            console.error('Error al cargar cursos recomendados:', err);
+          }
+        });
       },
       error: (err) => {
-        console.error('Error al cargar cursos recomendados:', err);
+        this.courseService.getRecommendedCourses().subscribe({
+          next: (courses) => {
+            this.recomendedCourses= courses;
+            this.recomendLoading = false;
+         },
+          error: (err) => {
+            console.error('Error al cargar cursos recomendados:', err);
+          }
+        });
       }
-      
     });
   }
+
 
   public loadCourses(): void {
     this.loading = true;
