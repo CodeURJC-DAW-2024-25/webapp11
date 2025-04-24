@@ -165,6 +165,17 @@ export class CourseDetailComponent {
     );
   }
 
+  public markPending(reviewId: number): void {
+    const courseId = this.route.snapshot.params['id'];
+    this.reviewService.markPending(reviewId).subscribe(
+      (response) => {
+        console.log("Comentario marcado como pendiente con exito");
+        this.loadReviews(courseId);
+      },
+      (error) => {console.log("Error al marcar el comentario como pendiente", error)}
+    );
+  }
+
   public goToMaterial() {
     this.active = 2;
   }

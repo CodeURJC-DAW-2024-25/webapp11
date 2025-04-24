@@ -8,7 +8,7 @@ import { CourseBrowseComponent } from "./components/course-browse.component";
 import { CourseSearchComponent } from "./components/course-search.component";
 const appRoutes: Routes = [
   { path: "courses", component: CourseListComponent },
-  { path: "courses/:category", component: CourseBrowseComponent },
+  { path: "courses/topic/:category", component: CourseBrowseComponent },
   { path: "courses/:id", component: CourseDetailComponent },
   //{ path: "books/edit/:id", component: BookFormComponent },
   { path: "", redirectTo: "courses", pathMatch: "full" },

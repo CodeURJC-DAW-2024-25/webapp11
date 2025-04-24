@@ -15,7 +15,7 @@ import { EnrollmentService } from '../services/enrollment.service';
   //styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-  user: UserDto;
+  user: UserDto ;
   formData: any = {
     firstName: '',
     lastName: '',
@@ -43,6 +43,7 @@ export class ProfileComponent {
   pageSizeEnrolled = 10;
   hasMoreEnrolledCourses = true;
   isEditing = false;
+  userId = 0;
   constructor(
       public loginService: LoginService,
       public userService: UserService,
@@ -51,30 +52,35 @@ export class ProfileComponent {
       public reviewService: ReviewService,
       private enrollmentService: EnrollmentService
     ) {
-      let user1 = this.loginService.currentUser()
-      if (user1) {
-        this.user = user1;
-      } else{
-        this.user={
-          id: -1,
-          firstName: '',
-          lastName: '',
-          email: '',
-          topic: '',
-          roles: ['USER'],
-        };
+      this.user = {
+        id: 0,
+        firstName: '',
+        lastName: '',
+        email: '',
+        topic: '',
+        roles: []
       }
-      this.isAdmin = this.loginService.isAdmin();
-      if (this.isAdmin) {
-        this.reviewService.getPendingReviews().subscribe({
-          next: (data) => this.reviews = data,
-          error: (err) => console.error('Error al cargar reseñas pendientes:', err)
-        });
-        
-      } else {
-        this.loadTaughtCourses();
-        this.loadEnrolledCourses();
-      }
+      this.userService.getUserInfo().subscribe(
+        (user) => {
+          this.userId = user.id;
+          this.user = user;
+          if (user.roles.includes("ADMIN")) {
+            this.isAdmin = true;
+            this.reviewService.getPendingReviews().subscribe({
+              next: (data) => this.reviews = data,
+              error: (err) => console.error('Error al cargar reseñas pendientes:', err)
+            });
+          } else {
+            this.loadEnrolledCourses();
+            this.loadTaughtCourses();
+          }
+        },
+        (error) => { 
+          console.error("Error getting user info:", error);
+          this.router.navigate(['/login']);
+          
+        }
+      );
     }
 
   onPhotoSelected(event: Event) {
@@ -123,7 +129,7 @@ export class ProfileComponent {
 
   public loadTaughtCourses(): void {
     this.taughtLoading = true;
-    this.courseService.getTaughtCourses(this.user.id, this.currentPage, this.pageSize).subscribe({
+    this.courseService.getTaughtCourses(this.userId, this.currentPage, this.pageSize).subscribe({
       next: (courses) => {
         if (courses.length === 0) {
           this.hasMoreTaughtCourses = false;
@@ -149,7 +155,7 @@ export class ProfileComponent {
 
   public loadEnrolledCourses(): void {
     this.enrolledLoading = true;
-    this.enrollmentService.getEnrolledCourses(this.user.id, this.currentPageEnrolled, this.pageSizeEnrolled).subscribe({
+    this.enrollmentService.getEnrolledCourses(this.userId, this.currentPageEnrolled, this.pageSizeEnrolled).subscribe({
       next: (courses) => {
         if (courses.length === 0) {
           this.hasMoreEnrolledCourses = false;

@@ -16,16 +16,19 @@ export class ReviewService {
     return this.http.post<ReviewDto>(BASE_URL, {"text": text, "user": { "id": userId }, "course": { "id": courseId }, "parent": reviewId === null ? null : { id: reviewId }});                 //This API function POST returns the added review (Observable<ReviewDto>). See Body at the bottom part of Postman after making the post request.
   }
 
-     //Elimina una reseña por ID.
-   deleteReview(id: number | string): Observable<void> {
-     return this.http.delete<void>(`${BASE_URL}${id}`);
-   }
+    //Elimina una reseña por ID.
+  deleteReview(id: number | string): Observable<void> {
+    return this.http.delete<void>(`${BASE_URL}${id}`);
+  }
 
    // ignora reseña
-   ignoreReview(id: number | string): Observable<void> {
-     return this.http.put<void>(`${BASE_URL}${id}/desmark-pending`, {});
-   }
+  ignoreReview(id: number | string): Observable<void> {
+    return this.http.put<void>(`${BASE_URL}${id}/desmark-pending`, {});
+  }
 
+  markPending(id: number | string): Observable<void> {
+    return this.http.put<void>(`${BASE_URL}${id}/mark-pending`, {});
+  }
    //reseñas pendientes
    getPendingReviews(): Observable<ReviewDto[]> {
      return this.http.get<ReviewDto[]>(`${BASE_URL}pending`);

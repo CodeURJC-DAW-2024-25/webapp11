@@ -21,8 +21,8 @@
                 <strong>{{ reply.user.firstName }} {{ reply.user.lastName }}</strong>
                 <p>{{ reply.text }}</p>
       
-                <form *ngIf="isInstructor" [action]="'/reviews/' + reply.id + '/mark-pending'" method="post">
-                  <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button>
+                <form *ngIf="isInstructor" method="post">
+                  <button class="btn btn-link btn-sm text-danger ms-2" (click)="markPending(reply.id)">Reportar</button>
                 </form>
               </div>
       
@@ -33,8 +33,8 @@
                 <input type="submit" class="btn btn-link btn-sm" (click)="addResponse(review.id)" value="Responder">
               </form>
       
-              <form *ngIf="isInstructor" [action]="'/reviews/' + review.id + '/mark-pending'" method="post" style="display: inline;">
-                <button class="btn btn-link btn-sm text-danger ms-2">Reportar</button>
+              <form *ngIf="isInstructor" method="post" style="display: inline;">
+                <button class="btn btn-link btn-sm text-danger ms-2" (click)="markPending(review.id)">Reportar</button>
               </form>
             </div>
           </div>
