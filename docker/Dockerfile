@@ -1,19 +1,25 @@
 #################################################
-# Base image for the builder container
+# Etapa 1: Construcción del frontend Angular
 #################################################
-FROM  node:lts-alpine3.19 as builderFront
+FROM node:lts-alpine3.19 as builderFront
 
-#ENV TZ=Europe/Madrid
-
+# Establecer directorio de trabajo en el contenedor
 WORKDIR /frontend
 
-COPY ../frontend/package*.json ../frontend/angular.json ../frontend/tsconfig*.json  /frontend/
+# Copiar solo archivos de configuración y dependencias
+COPY ../Cognite/package*.json ./
+COPY ../Cognite/angular.json ./
+COPY ../Cognite/tsconfig*.json ./
 
-RUN npm install 
+# Instalar las dependencias del proyecto Angular
+RUN npm install
 
-COPY ../frontend/src /frontend/src
+# Copiar el código fuente de Angular
+COPY ../Cognite/src ./src
 
+# Generar la build de producción con base-href personalizado
 RUN npm run build -- --configuration production --base-href="/new/"
+
 
 #################################################
 # Base image for the build container
@@ -32,9 +38,11 @@ COPY ../demo/pom.xml ./pom.xml
 # Copies the project's code
 COPY ../demo/src ./src
 
+#Copy frontend files to backend
+COPY --from=builderFront /frontend/dist/cognite/browser/ ./src/main/resources/static/new
+
 # Compiles the project
 RUN mvn clean package -DskipTests=true
-
 
 #################################################
 # Base image for the application container
