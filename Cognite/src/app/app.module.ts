@@ -12,11 +12,11 @@ import { FormsModule } from '@angular/forms';
 import { CourseListComponent } from './components/course-list.component';
 import { ProfileComponent } from "./components/profile.component";
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { SignupComponent } from './components/signup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditCourseComponent } from './components/edit-course.component';
 import { CourseBrowseComponent } from './components/course-browse.component';
 import { CourseSearchComponent } from './components/course-search.component';
+import { UserFormComponent } from './components/user-form.component';
 
 @NgModule({
   declarations: [
@@ -25,10 +25,10 @@ import { CourseSearchComponent } from './components/course-search.component';
     HeaderComponent,
     CourseListComponent,
     ProfileComponent,
-    SignupComponent,
     EditCourseComponent,
     CourseBrowseComponent,
-    CourseSearchComponent
+    CourseSearchComponent,
+    UserFormComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +38,7 @@ import { CourseSearchComponent } from './components/course-search.component';
     routing,
     NgbModule,
     PdfViewerModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

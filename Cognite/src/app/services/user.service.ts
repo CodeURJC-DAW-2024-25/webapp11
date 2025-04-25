@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserDto } from '../dtos/user.dto';
+import { UserFormDto } from '../dtos/userForm.dto';
 
 const BASE_URL = "/api/v1/users";
 
@@ -66,5 +67,15 @@ export class UserService {
       params = params.set('name', name);
     }
     return this.http.get<UserDto[]>(`${BASE_URL}/`, { params });
+  }
+
+  createUser(user: UserFormDto): Observable<UserDto> {
+    return this.http.post<UserDto>(`${BASE_URL}/`, user);
+  }
+
+  createUserImage(userId: number, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('imageFile', file);
+    return this.http.post(`${BASE_URL}/${userId}/image`, formData);
   }
 }

@@ -36,7 +36,7 @@
             <ng-template #notLoggedIn>
               <a class="btn btn-sm btn-outline-secondary ml-2" routerLink="/">Inicio</a>
               <a class="btn btn-sm btn-outline-secondary ml-2" (click)="toggleLoginForm()">Log in</a>
-              <a class="btn btn-sm btn-outline-secondary ml-2" routerLink="/signUp">Sign up</a>
+              <a class="btn btn-sm btn-outline-secondary ml-2" [routerLink]="['/join']">Sign up</a>
             </ng-template>
           </ng-container>
 
