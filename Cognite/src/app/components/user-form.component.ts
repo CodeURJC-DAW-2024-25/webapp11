@@ -39,43 +39,48 @@ export class UserFormComponent {
     this.selectedFile = event.target.files[0];
   }
 
-  onSubmit() {
-    if (this.userForm.invalid || this.userForm.value.password !== this.userForm.value.repeatPassword) {
-      this.showModal('Error', 'Formulario inválido o contraseñas no coinciden', 'error');
-      return;
-    }
-
-    const user: UserFormDto = {
-      firstName: this.userForm.value.firstName,
-      lastName: this.userForm.value.lastName,
-      email: this.userForm.value.email,
-      topic: this.userForm.value.topic,
-      password: this.userForm.value.password,
-      roles: ['USER']
-    };
-
-    this.userService.createUser(user).subscribe({
-      next: (createdUser) => {
-        const userId = createdUser.id;
-
-        if (this.selectedFile) {
-          this.userService.createUserImage(userId, this.selectedFile).subscribe({
-            next: () => this.showModal('Éxito', 'Usuario creado exitosamente', 'success'),
-            error: (err) => this.showModal('Error', 'Error subiendo imagen: ' + err.message, 'error')
-          });
-        } else {
-          this.showModal('Éxito', 'Usuario creado (sin imagen)', 'success');
-        }
-      },
-      error: (err: HttpErrorResponse) => {
-        if (err.status === 400) {
-          this.showModal('Error', 'El usuario ya está registrado', 'error');
-        } else {
-          this.showModal('Error', 'Error creando usuario: ' + err.message, 'error');
-        }
-      }
-    });
+onSubmit() {
+  if (this.userForm.invalid || this.userForm.value.password !== this.userForm.value.repeatPassword) {
+    this.showModal('Error', 'Formulario inválido o contraseñas no coinciden', 'error');
+    return;
   }
+
+  const user: UserFormDto = {
+    firstName: this.userForm.value.firstName,
+    lastName: this.userForm.value.lastName,
+    email: this.userForm.value.email,
+    topic: this.userForm.value.topic,
+    password: this.userForm.value.password,
+    roles: ['USER']
+  };
+
+  this.userService.createUser(user).subscribe({
+    next: (createdUser) => {
+      const userId = createdUser.id;
+
+      if (this.selectedFile) {
+        this.userService.createUserImage(userId, this.selectedFile).subscribe({
+          next: () => {
+            this.showModal('Éxito', 'Usuario creado exitosamente', 'success');
+          },
+          error: (err) => {
+            this.showModal('Error', 'Error subiendo imagen: ' + err.message, 'error');
+          }
+        });
+      } else {
+        this.showModal('Éxito', 'Usuario creado (sin imagen)', 'success');
+      }
+    },
+    error: (err: HttpErrorResponse) => {
+      if (err.status === 400) {
+        this.showModal('Error', 'El usuario ya está registrado', 'error');
+      } else {
+        this.showModal('Error', 'Error creando usuario: ' + err.message, 'error');
+      }
+    }
+  });
+}
+
 
 
   showModal(title: string, message: string, type: 'success' | 'error' = 'success') {

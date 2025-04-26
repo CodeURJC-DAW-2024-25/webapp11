@@ -85,7 +85,7 @@ public class CourseService {
         return courseDTO;
     }
 
-    public boolean isUserInstructor(Long courseId, Long userId) {
+    public boolean isUserInstructor(Long userId, Long courseId) {
         Course course = courseRepository.findById(courseId).orElse(null);
         return course != null && course.getInstructor() != null && course.getInstructor().getId() == userId;
     }

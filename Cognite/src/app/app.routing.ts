@@ -7,8 +7,10 @@ import { EditCourseComponent } from "./components/edit-course.component";
 import { CourseBrowseComponent } from "./components/course-browse.component";
 import { CourseSearchComponent } from "./components/course-search.component";
 import { UserFormComponent } from "./components/user-form.component";
+import { CourseFormComponent } from "./components/course-form.component";
 const appRoutes: Routes = [
   { path: "courses", component: CourseListComponent },
+  { path: "courses/new", component: CourseFormComponent },
   { path: "courses/topic/:category", component: CourseBrowseComponent },
   { path: "courses/:id", component: CourseDetailComponent },
   { path: "join", component: UserFormComponent },

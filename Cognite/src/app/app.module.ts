@@ -17,6 +17,7 @@ import { EditCourseComponent } from './components/edit-course.component';
 import { CourseBrowseComponent } from './components/course-browse.component';
 import { CourseSearchComponent } from './components/course-search.component';
 import { UserFormComponent } from './components/user-form.component';
+import { CourseFormComponent } from './components/course-form.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { UserFormComponent } from './components/user-form.component';
     EditCourseComponent,
     CourseBrowseComponent,
     CourseSearchComponent,
-    UserFormComponent
+    UserFormComponent,
+    CourseFormComponent
   ],
   imports: [
     BrowserModule,

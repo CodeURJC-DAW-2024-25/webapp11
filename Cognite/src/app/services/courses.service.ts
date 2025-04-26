@@ -58,4 +58,20 @@ export class CourseService {
     getCoursesByTitle(title: string, page: number, size: number): Observable<any[]> {
       return this.http.get<any[]>(`${BASE_URL}title/${title}?page=${page}&size=${size}`);
     }
+
+    createCourse(course: CourseDto): Observable<CourseDto> {
+      return this.http.post<CourseDto>(BASE_URL, course);
+    }
+
+    createCourseImage (courseId: number, imageFile: File): Observable<any> {
+      const formData = new FormData();
+      formData.append('imageFile', imageFile);
+      return this.http.post(`${BASE_URL}${courseId}/image`, formData);
+    }
+
+    createCourseNotes (courseId: number, notesFile: File): Observable<any> {
+      const formData = new FormData();
+      formData.append('noteFile', notesFile);
+      return this.http.post(`${BASE_URL}${courseId}/notes`, formData);
+    }
   }
