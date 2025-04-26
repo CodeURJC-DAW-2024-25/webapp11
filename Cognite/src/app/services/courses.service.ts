@@ -74,4 +74,11 @@ export class CourseService {
       formData.append('noteFile', notesFile);
       return this.http.post(`${BASE_URL}${courseId}/notes`, formData);
     }
+
+    deleteCourse(id: number | undefined): Observable<void> {
+      return this.http.delete<void>(`${BASE_URL}/${id}`, {
+        withCredentials: true,
+        responseType: 'text' as 'json'
+      });
+    }
   }

@@ -93,9 +93,7 @@
             <a [routerLink]="['/editCourse', course.id]">
               <button class="btn btn-success">Editar curso</button>
             </a>
-            <a [routerLink]="['/deleteCourse', course.id]">
-              <button class="btn btn-danger">Eliminar curso</button>
-            </a>
+            <button class="btn btn-danger" (click)="deleteCourse()">Eliminar curso</button>
             <a [routerLink]="['/statistics', course.id]" class="btn btn-secondary">Ver estadísticas</a>
           </div>
         </ng-template>

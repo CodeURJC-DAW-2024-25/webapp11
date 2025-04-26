@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../services/courses.service';
+import { CourseDto } from '../dtos/course.dto';
 
 @Component({
   selector: 'app-edit-course',
@@ -8,26 +9,31 @@ import { CourseService } from '../services/courses.service';
   //styleUrls: ['./edit-course.component.css']
 })
 export class EditCourseComponent implements OnInit {
-  course: { id: number | null; title: string; description: string; topic: string } = {
-    id: null,
-    title: '',
-    description: '',
-    topic: '',
-  };
+  public course!: CourseDto;
   topics = [
-    'desarrollo-web',
-    'desarrollo-movil',
-    'desarrollo-videojuegos',
-    'emprendimiento',
-    'finanzas',
-    'marketing-digital',
-    'liderazgo',
-    'comunicacion'
+    'Desarrollo web',
+    'Desarrollo móvil',
+    'Desarrollo de videojuegos',
+    'Emprendimiento',
+    'Finanzas',
+    'Marketing digital',
+    'Liderazgo',
+    'Comunicacion'
   ];
   imageFileName: string | null = null;
   pdfFileName: string | null = null;
 
-  constructor(private courseService: CourseService, private router: Router) {}
+  constructor(private courseService: CourseService, private router: Router, private route: ActivatedRoute) {
+    const courseId = this.route.snapshot.params['id'];
+    this.courseService.getCourseById(courseId).subscribe(
+      (course) => {
+        this.course = course;
+      },
+      (error) => {
+        console.error('Error al cargar el curso:', error);
+      }
+    );
+  }
 
   ngOnInit(): void {
     // Aquí puedes cargar los datos del curso si es necesario
@@ -36,12 +42,12 @@ export class EditCourseComponent implements OnInit {
 
   loadCourse(): void {
     // Simulación de carga de datos del curso
-    this.course = {
+    /*this.course = {
       id: 1,
       title: 'Curso de ejemplo',
       description: 'Descripción del curso de ejemplo',
       topic: 'desarrollo-web'
-    };
+    };*/
   }
 
   onImageSelected(event: Event): void {

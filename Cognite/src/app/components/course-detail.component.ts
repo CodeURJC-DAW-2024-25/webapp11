@@ -267,4 +267,9 @@ export class CourseDetailComponent {
       a.remove();
     }
   }
+
+  deleteCourse(){
+    this.courseService.deleteCourse(this.course.id).subscribe();
+    this.router.navigate(['/courses']);
+  }
 }
