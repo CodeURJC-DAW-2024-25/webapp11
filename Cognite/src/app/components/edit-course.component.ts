@@ -6,9 +6,8 @@ import { CourseDto } from '../dtos/course.dto';
 @Component({
   selector: 'app-edit-course',
   templateUrl: './edit-course.component.html',
-  //styleUrls: ['./edit-course.component.css']
 })
-export class EditCourseComponent implements OnInit {
+export class EditCourseComponent{
   public course!: CourseDto;
   topics = [
     'Desarrollo web',
@@ -18,10 +17,13 @@ export class EditCourseComponent implements OnInit {
     'Finanzas',
     'Marketing digital',
     'Liderazgo',
-    'Comunicacion'
+    'Comunicación'
   ];
   imageFileName: string | null = null;
   pdfFileName: string | null = null;
+
+  image: File | null = null;
+  pdf: File | null = null;
 
   constructor(private courseService: CourseService, private router: Router, private route: ActivatedRoute) {
     const courseId = this.route.snapshot.params['id'];
@@ -35,38 +37,37 @@ export class EditCourseComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
-    // Aquí puedes cargar los datos del curso si es necesario
-    this.loadCourse();
-  }
-
-  loadCourse(): void {
-    // Simulación de carga de datos del curso
-    /*this.course = {
-      id: 1,
-      title: 'Curso de ejemplo',
-      description: 'Descripción del curso de ejemplo',
-      topic: 'desarrollo-web'
-    };*/
-  }
-
-  onImageSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      this.imageFileName = input.files[0].name;
+    onImageSelected(event: Event): void {
+      const input = event.target as HTMLInputElement;
+      if (input.files && input.files[0]) {
+        this.imageFileName = input.files[0].name;
+        this.image = input.files[0];
+      }
     }
-  }
-
-  onPdfSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      this.pdfFileName = input.files[0].name;
+  
+    onPdfSelected(event: Event): void {
+      const input = event.target as HTMLInputElement;
+      if (input.files && input.files[0]) {
+        this.pdfFileName = input.files[0].name;
+        this.pdf = input.files[0];
+      }
     }
-  }
 
   onSubmit(): void {
-    console.log('Datos del curso:', this.course);
-    // Aquí puedes enviar los datos al backend
+    if (this.image) {
+        this.courseService.updateCourseImage(this.course.id, this.image).subscribe(
+          () => {
+            console.log('Imagen actualizada con éxito');
+          }
+        );
+    }
+    if (this.pdf) {
+        this.courseService.updateCourseNotes(this.course.id, this.pdf).subscribe(
+          () => {
+            console.log('Notas actualizadas con éxito');
+          }
+        );
+    }
     this.courseService.updateCourse(this.course).subscribe(() => {
       alert('Curso actualizado con éxito');
       this.router.navigate(['/courses']);
