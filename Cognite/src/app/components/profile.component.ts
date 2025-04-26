@@ -94,19 +94,22 @@ export class ProfileComponent {
 
   onSubmit(){
     if(this.user){
-      const userDTO = {
+      const userFormDto = {
         id: this.user.id,
         firstName: this.formData.firstName,
         lastName: this.formData.lastName,
         email: this.formData.email,
         topic: this.formData.topic,
-        roles: this.user.roles}
+        roles: this.user.roles,
+        password: this.formData.newPassword,
+      }
 
-      this.userService.updateUser(userDTO)
+      this.userService.updateUser(userFormDto)
         .subscribe(
           response => {
             console.log('User updated successfully', response);
             this.user = response; // Actualiza el usuario con la respuesta del servidor
+            this.isEditing = false; 
           },
           error => {
             console.error('Error updating user', error);

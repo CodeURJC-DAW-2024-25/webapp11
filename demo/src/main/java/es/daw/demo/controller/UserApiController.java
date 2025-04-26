@@ -94,16 +94,14 @@ public class UserApiController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id,
-                                            @RequestBody UserDTO UpdatedUser,
-                                            @RequestParam(required = false) String password) throws IOException {
-        UserDTO user = userService.findById(id);
+    @PutMapping("/")
+    public ResponseEntity<UserDTO> updateUser( @RequestBody UserSignUpDTO UpdatedUser) throws IOException {
+        UserDTO user = userService.findById(UpdatedUser.id());
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
-        userService.updateUser(id, UpdatedUser.firstName(), UpdatedUser.lastName(), UpdatedUser.email(), UpdatedUser.topic(), null, passwordEncoder.encode(password));
-        return ResponseEntity.ok(userService.findById(id));
+        userService.updateUser(UpdatedUser.id(), UpdatedUser.firstName(), UpdatedUser.lastName(), UpdatedUser.email(), UpdatedUser.topic(), null, passwordEncoder.encode(UpdatedUser.password()));
+        return ResponseEntity.ok(userService.findById(user.id()));
     }
 
     @PutMapping("/{id}/image")

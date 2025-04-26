@@ -227,17 +227,18 @@ export class CourseDetailComponent {
   }
 
   loadPdf(courseId: number) {
-      const pdfSubscription = this.courseService.getPdf(courseId)
-        .subscribe(
-          (data) => {
-            const blob = new Blob([data], { type: 'application/pdf' });
-            this.pdfSrc = { blob: blob };
-          },
-          (error) => {
-            console.error('Error al obtener el PDF:', error);
-          }
-        );
+    this.courseService.getPdf(courseId).subscribe(
+      (data) => {
+        const blob = new Blob([data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob); // <--- este cambio es clave
+        this.pdfSrc = url; // le pasamos la URL, no el objeto blob
+      },
+      (error) => {
+        console.error('Error al obtener el PDF:', error);
+      }
+    );
   }
+  
 
   pdfLoaded(pdf: PDFDocumentProxy) {
     this.totalPages = pdf.numPages;
@@ -270,6 +271,6 @@ export class CourseDetailComponent {
 
   deleteCourse(){
     this.courseService.deleteCourse(this.course.id).subscribe();
-    this.router.navigate(['/courses']);
+    this.router.navigate(['/users/me']);
   }
 }

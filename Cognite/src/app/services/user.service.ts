@@ -31,8 +31,8 @@ export class UserService {
   return this.http.get<UserDto[]>(`${BASE_URL}`);
   }
 
-  updateUser(user: Partial<UserDto>): Observable<UserDto> {
-    return this.http.put<UserDto>(`${BASE_URL}/me`, user);
+  updateUser(user: UserFormDto): Observable<UserDto> {
+    return this.http.put<UserDto>(`${BASE_URL}/`, user);
   }
 
   changePassword(currentPassword: string, newPassword: string): Observable<void> {

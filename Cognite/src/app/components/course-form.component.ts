@@ -49,6 +49,11 @@ export class CourseFormComponent {
 
     onSubmit() {
         if (this.courseForm.valid) {
+          if (!this.imageFile || !this.notesFile) {
+            this.showModal('Archivos requeridos', 'Debes seleccionar una imagen y un archivo de notas antes de crear el curso.', 'error');
+            return;
+          }
+      
           this.userService.getUserInfo().subscribe({
             next: (user) => {
               const course: CourseDto = {
@@ -61,34 +66,28 @@ export class CourseFormComponent {
       
               this.courseService.createCourse(course).subscribe({
                 next: (createdCourse) => {
-                  // Curso creado exitosamente
-                  this.showModal('Curso creado', 'El curso ha sido creado exitosamente.', 'success');
-      
-                  // Subir imagen si existe
-                  if (this.imageFile) {
-                    this.courseService.createCourseImage(createdCourse.id!, this.imageFile).subscribe({
-                      next: () => {
-                        console.log('Imagen subida correctamente');
-                      },
-                      error: (err) => {
-                        console.error('Error subiendo imagen', err);
-                        this.showModal('Error', 'Hubo un error al subir la imagen.', 'error');
-                      }
-                    });
-                  }
-      
-                  // Subir notas si existe
-                  if (this.notesFile) {
-                    this.courseService.createCourseNotes(createdCourse.id!, this.notesFile).subscribe({
-                      next: () => {
-                        console.log('Notas subidas correctamente');
-                      },
-                      error: (err) => {
-                        console.error('Error subiendo notas', err);
-                        this.showModal('Error', 'Hubo un error al subir las notas.', 'error');
-                      }
-                    });
-                  }
+                  // Subir imagen primero
+                  this.courseService.createCourseImage(createdCourse.id!, this.imageFile!).subscribe({
+                    next: () => {
+                      console.log('Imagen subida correctamente');
+                      // Luego subir notas
+                      this.courseService.createCourseNotes(createdCourse.id!, this.notesFile!).subscribe({
+                        next: () => {
+                          console.log('Notas subidas correctamente');
+                          // Todo subido: mostrar éxito
+                          this.showModal('Curso creado', 'El curso y sus archivos se han creado exitosamente.', 'success');
+                        },
+                        error: (err) => {
+                          console.error('Error subiendo notas', err);
+                          this.showModal('Error', 'Hubo un error al subir las notas.', 'error');
+                        }
+                      });
+                    },
+                    error: (err) => {
+                      console.error('Error subiendo imagen', err);
+                      this.showModal('Error', 'Hubo un error al subir la imagen.', 'error');
+                    }
+                  });
                 },
                 error: (err) => {
                   console.error('Error creando curso', err);
@@ -107,24 +106,22 @@ export class CourseFormComponent {
       }
       
       
+    showModal(title: string, message: string, type: 'success' | 'error' = 'success') {
+        this.modalTitle = title;
+        this.modalMessage = message;
+        this.modalType = type;
+        const modalRef = this.modalService.open(this.modalContent);  // Abrir modal
 
-
-  showModal(title: string, message: string, type: 'success' | 'error' = 'success') {
-    this.modalTitle = title;
-    this.modalMessage = message;
-    this.modalType = type;
-    const modalRef = this.modalService.open(this.modalContent);  // Abrir modal
-
-    // Si es un mensaje de éxito, redirigimos después de 5 segundos
-    if (type === 'success') {
-      setTimeout(() => {
-        modalRef.close();  // Cerrar modal después de 5 segundos
-        this.router.navigate(['/users/me']);  // Redirigir a la ruta /courses
-      }, 5000);  // 5000 ms = 5 segundos
+        // Si es un mensaje de éxito, redirigimos después de 5 segundos
+        if (type === 'success') {
+        setTimeout(() => {
+            modalRef.close();  // Cerrar modal después de 5 segundos
+            this.router.navigate(['/users/me']);  // Redirigir a la ruta /courses
+        }, 5000);  // 5000 ms = 5 segundos
+        }
     }
-  }
 
-  cancel() {
-    this.router.navigate(['/users/me']);
-  }
+    cancel() {
+        this.router.navigate(['/users/me']);
+    }
 }
