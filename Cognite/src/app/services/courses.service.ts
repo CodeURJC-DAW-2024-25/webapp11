@@ -51,6 +51,18 @@ export class CourseService {
       return this.http.put(`/api/v1/courses/${course.id}`, course);
     }
 
+    updateCourseImage(courseId: any, imageFile: File): Observable<any> {
+      const formData = new FormData();
+      formData.append('imageFile', imageFile);
+      return this.http.put(`${BASE_URL}${courseId}/image`, formData);
+    }
+
+    updateCourseNotes(courseId: any, notesFile: File): Observable<any> {
+      const formData = new FormData();
+      formData.append('noteFile', notesFile);
+      return this.http.put(`${BASE_URL}${courseId}/notes`, formData);
+    }
+
     getCoursesByTopic(topic: string, page: number, size: number): Observable<any[]> {
       return this.http.get<any[]>(`${BASE_URL}topic/${topic}?page=${page}&size=${size}`);
     }
