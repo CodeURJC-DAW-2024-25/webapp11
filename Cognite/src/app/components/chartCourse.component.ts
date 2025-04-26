@@ -4,8 +4,9 @@ import { ChartCourseService } from '../services/chartCourse.service';
 import { ChartConfiguration } from 'chart.js';
 
 @Component({
-  selector: 'app-chart-course',
-  templateUrl: '../app.component.html'
+  //selector: 'app-chart-course',
+  //templateUrl: '../app.component.html'
+  templateUrl: './chartCourse.component.html',
 })
 export class ChartCourseComponent implements OnInit {
   courseId!: number;

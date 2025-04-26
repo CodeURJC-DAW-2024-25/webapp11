@@ -18,6 +18,10 @@ import { CourseBrowseComponent } from './components/course-browse.component';
 import { CourseSearchComponent } from './components/course-search.component';
 import { UserFormComponent } from './components/user-form.component';
 import { CourseFormComponent } from './components/course-form.component';
+//import { Chart } from 'chart.js';
+import { ChartCourseComponent } from './components/chartCourse.component';
+//import { NgChartsModule } from 'ng2-charts';
+//import { NgApexchartsModule } from "ng-apexcharts";
 
 @NgModule({
   declarations: [
@@ -30,7 +34,8 @@ import { CourseFormComponent } from './components/course-form.component';
     CourseBrowseComponent,
     CourseSearchComponent,
     UserFormComponent,
-    CourseFormComponent
+    CourseFormComponent,
+    ChartCourseComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,9 @@ import { CourseFormComponent } from './components/course-form.component';
     routing,
     NgbModule,
     PdfViewerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    //NgChartsModule,
+    //NgApexchartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

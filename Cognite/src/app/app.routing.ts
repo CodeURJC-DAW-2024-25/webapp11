@@ -8,6 +8,7 @@ import { CourseBrowseComponent } from "./components/course-browse.component";
 import { CourseSearchComponent } from "./components/course-search.component";
 import { UserFormComponent } from "./components/user-form.component";
 import { CourseFormComponent } from "./components/course-form.component";
+import { ChartCourseComponent } from "./components/chartCourse.component";
 const appRoutes: Routes = [
   { path: "courses", component: CourseListComponent },
   { path: "courses/new", component: CourseFormComponent },
@@ -17,7 +18,8 @@ const appRoutes: Routes = [
   { path: "", redirectTo: "courses", pathMatch: "full" },
   { path: "users/me", component: ProfileComponent },
   { path: 'editCourse/:id', component: EditCourseComponent },
-  { path: 'search/:query', component: CourseSearchComponent }
+  { path: 'search/:query', component: CourseSearchComponent },
+  { path: "chartsCourse/:id", component: ChartCourseComponent}
 
 ];
 

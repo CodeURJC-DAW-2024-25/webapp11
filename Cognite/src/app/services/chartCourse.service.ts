@@ -14,6 +14,6 @@ export class ChartCourseService {
   constructor(private http: HttpClient) {}
 
   getCourseRatings(courseId: number): Observable<CourseRatingChartData> {
-    return this.http.get<CourseRatingChartData>(`/api/v1/charts/course/${courseId}`);
+    return this.http.get<CourseRatingChartData>(`/api/v1/enrollments/statistics/${courseId}`);
   }
 }
