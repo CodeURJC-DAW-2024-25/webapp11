@@ -1,7 +1,7 @@
 version: "3.9"
 services: 
   web:
-    image: eloysh/webapp11:latest
+    image: josevictorgarcia/webapp11:latest
     build: 
        context: ../
        dockerfile: docker/Dockerfile
