@@ -70,7 +70,8 @@
 ## Diagrama de clases y templates:
 ![Diagrama de clases y templates](images/diagrama_clases.png)
 
-
+## Diagrama de clases y templates de la SPA:
+![Diagrama de clases y templates](images/diagrama_spa.png)
 ## Instrucciones de Ejecución:  
 
 ## 1. Clonar el Repositorio y Configurar el Proyecto en VS Code  
@@ -176,7 +177,29 @@ Por defecto, la aplicación tiene algunos usuarios y cursos creados para interac
 > - Password: `1234`
 
 ---
+## Desarrollo en Angular
+1. Clonar el repositorio:
+   ```bash
+      git clone https://github.com/CodeURJC-DAW-2024-25/webapp11 Cognite --branch main --depth 1
+   ```
+2. Moverse a la carpeta webapp11/Cognite e instalar dependencias:
+- `cd Cognite`
+- `npm install`
 
+3. Generar los ficheros build de Angular:
+- `ng build --configuration production --base-href="/new/" `
+
+4. Copiar los ficheros generados a la carpeta static del backend. Moverse a la carpeta static y cambiar el nombre de la carpeta de 'browser' a 'new'. Esto es porque por defecto el comando del apartado 2 genera una carpeta llamada 'browser', pero nosotros queremos que esa carpeta se llame 'new':
+- `cp -r dist/cognite/* ../demo/src/main/resources/static`
+- `cd ../demo/src/main/resources/static`
+- `mv browser new`
+
+5. Ejecutar la aplicación Spring-Boot:
+- Se puede hacer con la extensión de Spring Boot de VSC (pulsando el botón de ejecutar, como si fuesemos a ejecutar el backend)
+- O bien se puede ejecutar moviéndonos a la carpeta donde se encuentra el pom.xml (`cd ../../../../` desde donde estamos, que sería la carpeta static) y ejecutando el comando `mvn spring-boot:run`
+   Disponible en [http://localhost:4200/](http://localhost:4200/) 
+Para acceder a la aplicación, navege a `appWeb11.dawgis.etsii.urjc.es` o `10.100.139.135` en tu navegador web. La parte de Angular estará disponible en `https://10.100.139.135:8443/new/` o `https:/appWeb11.dawgis.etsii.urjc.es:8443/new/`.
+---
 ## Participación P1:
 - Eloy de Sande.
 
