@@ -13,7 +13,7 @@ interface CourseRatingChartData {
 export class ChartCourseService {
   constructor(private http: HttpClient) {}
 
-  getCourseRatings(courseId: number): Observable<CourseRatingChartData> {
-    return this.http.get<CourseRatingChartData>(`/api/v1/enrollments/statistics/${courseId}`);
+  getCourseRatings(courseId: number): Observable<number[][]> {
+    return this.http.get<number[][]>(`/api/v1/enrollments/statistics/${courseId}`);
   }
 }

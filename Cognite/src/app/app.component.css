@@ -178,3 +178,19 @@ h1, h2, h3, h4, h5, h6 {
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
+
+  .chart-container {
+    width: 80%;      /* Ajusta el ancho como lo desees (porcentaje o valor en píxeles) */
+
+  }
+  
+  .chart-container-wrapper {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente si el contenedor tiene altura */
+    height: 100%;            /* Si deseas que ocupe todo el alto del contenedor padre */
+    margin: 0 auto;          /* Centra el contenedor en su contenedor padre */
+    padding: 100px;          /* Espacio alrededor del gráfico */
+  }
+
+  

@@ -3,6 +3,7 @@ package es.daw.demo.controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -152,5 +153,17 @@ public class CourseApiController {
     @GetMapping("/{userId}/{courseId}")
     public boolean isUserInstructor(@PathVariable Long userId, @PathVariable Long courseId) {
         return courseService.isUserInstructor(userId, courseId);
+    }
+
+    @GetMapping("/mostpopular")
+    public ResponseEntity<List<Object[]>> mostInscribedCategories() {
+        List<Object[]> result = courseService.getMostInscribedCategoriesNameAndCount();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/most-courses")
+    public ResponseEntity<List<Object[]>> mostCoursesCategories() {
+        List<Object[]> result = courseService.getMostCoursesCategoriesNameAndCount();
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
