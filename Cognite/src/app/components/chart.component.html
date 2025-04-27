@@ -1,17 +1,11 @@
-
-<app-header [searchOptions]="{ search: false, search2: true, admin: admin }"></app-header>
-
-<section class="team_section layout_padding_progress">
-  <div class="container-grafico1">
-    <apx-chart *ngIf="chartOptions"
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [dataLabels]="chartOptions.dataLabels"
-      [plotOptions]="chartOptions.plotOptions"
-      [yaxis]="chartOptions.yaxis"
-      [xaxis]="chartOptions.xaxis"
-      [fill]="chartOptions.fill"
-      [title]="chartOptions.title">
-    </apx-chart>
+<div class="chart-wrapper">
+  <h3>Top 5 categorías con más inscripciones</h3>
+  <div class="chart-container-wrapper">
+    <canvas id="categoryChart" class="chart-container"></canvas>
   </div>
-</section>
+
+  <h3>Top 5 categorías con más cursos</h3>
+  <div class="chart-container-wrapper">
+    <canvas id="categoryCoursesChart" class="chart-container"></canvas>
+  </div>
+</div>

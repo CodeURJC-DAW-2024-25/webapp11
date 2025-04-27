@@ -20,6 +20,7 @@ import { UserFormComponent } from './components/user-form.component';
 import { CourseFormComponent } from './components/course-form.component';
 //import { Chart } from 'chart.js';
 import { ChartCourseComponent } from './components/chartCourse.component';
+import { ChartComponent } from './components/chart.component';
 //import { NgChartsModule } from 'ng2-charts';
 //import { NgApexchartsModule } from "ng-apexcharts";
 
@@ -35,7 +36,8 @@ import { ChartCourseComponent } from './components/chartCourse.component';
     CourseSearchComponent,
     UserFormComponent,
     CourseFormComponent,
-    ChartCourseComponent
+    ChartCourseComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,

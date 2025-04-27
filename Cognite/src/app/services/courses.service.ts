@@ -93,4 +93,12 @@ export class CourseService {
         responseType: 'text' as 'json'
       });
     }
+
+    getCategoryEnrollments(): Observable<any[]> {
+      return this.http.get<any[]>(`${BASE_URL}mostpopular`);
+    }
+
+    getCategoryCourses(): Observable<any[]> {
+      return this.http.get<any[]>(`${BASE_URL}most-courses`);
+    }
   }
