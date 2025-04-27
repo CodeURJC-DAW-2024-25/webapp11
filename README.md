@@ -433,3 +433,25 @@ Durante esta parte de la práctica, se han realizado las siguientes tareas:  cre
   |course-search.component.ts|[Ver archivo](Cognite/src/app/components/course-search.component.ts)|
   |course-browse.component.ts|[Ver archivo](Cognite/src/app/components/course-browse.component.ts)|
   |profile-component.ts|[Ver archivo](Cognite/src/app/components/profile.component.ts)|
+
+
+  - Olga Somalo Serrano
+
+Entre las tareas realizadas cabe destacar: las funcionalidades de eliminar curso y editar curso (creando un componente para ello). También, el formulario de edición del perfil y la funcionalidad de eliminar perfil, creando el componente relacionado con el perfil de usuario y el servicio del usuario.
+  
+ | Principales Commit | Descripción  | Enlace al Commit |
+|--------------------|-------------|------------------|
+| **Commit 1** | Creación del template y componente del perfil de usuario y creación de user.service | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/b8e4e4f9752fc94a7ae465f19acfd9334c6ee2f9) |
+| **Commit 2** | Creación del template y componente para editar los cursos | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/ef73ee0deb19072f6dd952ffa9670d1925448d81) |
+| **Commit 3** | Mostrar los cursos impartidos en el perfil de usuario| [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/2571696038e7bb45fde8e3445bdc4e03c9e861c8) |
+| **Commit 4** | Mejorar la edición del curso con un modal y con la posibilidad de cambiar la imagen y las notas | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/6840ac13f4877426c8906d9b708eb8052ef0f665) |
+| **Commit 5** | Añadir la funcionalidad de eliminar la cuenta | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/d6673243f78f2062e298ecb60569f14ff4d58492) |
+
+  
+  | Principales archivos | Enlace al archivo |
+  |----------------------|-------------------|
+  |edit-course.component.ts|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/components/edit-course.component.ts)|
+  |edit-course.component.html|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/components/edit-course.component.html)|
+  |profile.component.ts|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/components/profile.component.ts)|
+  |courses.service.ts|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/services/courses.service.ts)|
+  |user.service.ts|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/services/user.service.ts)|
