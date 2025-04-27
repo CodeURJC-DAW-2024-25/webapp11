@@ -180,8 +180,8 @@ Por defecto, la aplicación tiene algunos usuarios y cursos creados para interac
 ## Desarrollo en Angular
 1. Clonar el repositorio:
    ```bash
-git clone https://github.com/CodeURJC-DAW-2024-25/webapp11 Cognite --branch main --depth 1
-```
+      git clone https://github.com/CodeURJC-DAW-2024-25/webapp11 Cognite --branch main --depth 1
+   ```
 2. Moverse a la carpeta webapp11/Cognite e instalar dependencias:
 - `cd Cognite`
 - `npm install`
