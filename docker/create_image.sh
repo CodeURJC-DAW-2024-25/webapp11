@@ -6,5 +6,5 @@ else
     TAG=$1
 fi
 docker login
-docker build -t josevictorgarcia/webapp11:$TAG -f docker/Dockerfile .
-docker push josevictorgarcia/webapp11:$TAG
+docker build -t eloysh/webapp11:$TAG -f docker/Dockerfile .
+docker push eloysh/webapp11:$TAG

@@ -7,15 +7,15 @@ FROM node:lts-alpine3.19 as builderFront
 WORKDIR /frontend
 
 # Copiar solo archivos de configuración y dependencias
-COPY ../Cognite/package*.json ./
-COPY ../Cognite/angular.json ./
-COPY ../Cognite/tsconfig*.json ./
+COPY ./Cognite/package*.json ./
+COPY ./Cognite/angular.json ./
+COPY ./Cognite/tsconfig*.json ./
 
 # Instalar las dependencias del proyecto Angular
 RUN npm install
 
 # Copiar el código fuente de Angular
-COPY ../Cognite/src ./src
+COPY ./Cognite/src ./src
 
 # Generar la build de producción con base-href personalizado
 RUN npm run build -- --configuration production --base-href="/new/"
@@ -30,13 +30,13 @@ FROM  maven:3.9.6-eclipse-temurin-21 as builder
 WORKDIR /demo
 
 # Copies the project's dependencies
-COPY ../demo/pom.xml ./pom.xml
+COPY ./demo/pom.xml ./pom.xml
 
 # Downloads the project's dependencies
 #RUN mvn clean verify 
 
 # Copies the project's code
-COPY ../demo/src ./src
+COPY ./demo/src ./src
 
 #Copy frontend files to backend
 COPY --from=builderFront /frontend/dist/cognite/browser/ ./src/main/resources/static/new
@@ -53,7 +53,7 @@ FROM openjdk:21-jdk AS runtime
 WORKDIR /demo
 
 # Copies the JAR from the build container
-COPY --from=builder ../demo/target/demo-0.0.1-SNAPSHOT.jar .
+COPY --from=builder ./demo/target/demo-0.0.1-SNAPSHOT.jar .
 
 # Indicates the port that the container exposes
 EXPOSE 8443
