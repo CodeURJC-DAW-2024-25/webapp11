@@ -387,3 +387,26 @@ Durante esta parte de la práctica, se han realizado las siguientes tareas:  cre
   |LoginWebController.java|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/controller/LoginWebController.java)|
   |NewCourseRequestDTO.java|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/dto/NewCourseRequestDTO.java)|
   |CourseService.java|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/service/CourseService.java)|
+
+
+## Participación P3:
+- Eloy de Sande de las Heras
+
+  Entre las tareas desarrolladas cabe destacar la creación de algunos componentes, templates y servicios como: user.service, enrollment.service, course-list (componente y template), course-detail (componente y template), profile (component y template), ...
+  
+ | Principales Commit | Descripción  | Enlace al Commit |
+|--------------------|-------------|------------------|
+| **Commit 1** | Creación del template y componente para crear nuevos cursos, actualizando course.service | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/0fe2fdef3a08baa91b975c03d181abdf262b21e2) |
+| **Commit 2** | Creación del template y componente para crear nuevos usuarios | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/43208bd379a83823b0df4cc4d8bfc0f5adc8d831) |
+| **Commit 3** | Creación de los templates y componentes para buscar cursos y filtrar por categoría| [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/e03c4c988bea3c2acf1c835927a18110c879fcb2) |
+| **Commit 4** | Creación del template y componente del perfil del usuario, | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/d5cc9db8df96a8a9d662224be24f6a3f848cf8c3) |
+| **Commit 5** | Creación del template y componente para mostrar los detalles de un curso| [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/8494d0814af44fbe0d6af4c1aedbbc81f1a73f90) |
+
+  
+  | Principales archivos | Enlace al archivo |
+  |----------------------|-------------------|
+  |course-form.component.ts|[Ver archivo](Cognite/src/app/components/course-form.component.ts)|
+  |signup.component.ts|[Ver archivo](Cognite/src/app/components/signup.component.ts)|
+  |course-search.component.ts|[Ver archivo](Cognite/src/app/components/course-search.component.ts)|
+  |course-browse.component.ts|[Ver archivo](Cognite/src/app/components/course-browse.component.ts)|
+  |profile-component.ts|[Ver archivo](Cognite/src/app/components/profile.component.ts)|
