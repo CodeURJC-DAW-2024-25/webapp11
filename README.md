@@ -501,3 +501,24 @@ Entre las tareas realizadas cabe destacar: la creación del formulario de regist
    |reviews.service.ts|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/services/reviews.service.ts)|
    |SPAController.java|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/controller/SPAController.java)|
    |Dockerfile|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/docker/Dockerfile)|
+
+
+Álvaro Fernández González
+
+Entre las tareas realizadas cabe destacar: la ampliación de funcionalidades en los servicios de usuarios y reseñas (UserService y ReviewService) para la gestión por parte del administrador, la implementación de mejoras específicas para el administrador, la corrección de errores en la visualización de gráficos (Charts), y la creación del componente de inicio de sesión (Login).
+
+| Principales Commit | Descripción | Enlace al Commit |
+|--------------------|-------------|------------------|
+| **Commit 1** | Añadida funcionalidad de administración en ReviewService para gestión de reseñas | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/d3b6742524b3a90e427f456e133ef14f3e24101f) |
+| **Commit 2** | Añadida funcionalidad de administración en UserService para gestión de usuarios | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/d3b6742524b3a90e427f456e133ef14f3e24101f) |
+| **Commit 3** | Implementación de mejoras para la gestión del administrador | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/0bcc63b11d83220a207eb8ec05483a9648633f91) |
+| **Commit 4** | Corrección de errores en los componentes de gráficos (Chart) | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/d6ef8ab435ff148e8d20350a981c0314f3d541fd) |
+| **Commit 5** | Creación e implementación del componente de login | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/9268e811dd0dd2954e6becbb424373352dc5066a) |
+
+| Principales Archivos | Enlace al Archivo |
+|----------------------|-------------------|
+| user.service.ts | [Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/services/user.service.ts) |
+| review.service.ts | [Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/services/reviews.service.ts) |
+| profile.component.ts | [Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/components/profile.component.html) |
+| chart.component.html | [Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/components/chart.component.html) |
+| chart.component.ts | [Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/components/chart.component.ts) |
