@@ -480,3 +480,24 @@ Entre las tareas realizadas cabe destacar: la creación del formulario de regist
   |chartCourse.component.ts|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/components/chartCourse.component.ts)|
   |chartCourse.service|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/services/chartCourse.service.ts)|
 
+
+ - José Víctor García Llorente
+ 
+ Entre las tareas realizadas cabe destacar: Las funcionalidades de añadir review y sub-reviews dentro de cada curso. También se han realizado tareas respecto al despliegue de Angular (modificación del Dockerfile) y despliegue en máquina virtual.
+   
+  | Principales Commit | Descripción  | Enlace al Commit |
+ |--------------------|-------------|------------------|
+ | **Commit 1** | Añadir reviews a un curso | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/8ae38317076344779c6f48606001462c5136cf5c) |
+ | **Commit 2** | Añadir sub-reviews | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/6fb2eade747001dd162b66bb1b39e9206e61646a) |
+ | **Commit 3** | Actualización de Dockerfile| [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/ca06804d2d35fbf097ecf3a49919000e1b69b509) |
+ | **Commit 4** | Preparación para el despliegue con frontend Angular | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/5499983c1f0d0d9eebfdc561324a790836639ece) |
+ | **Commit 5** | Versión final del Dockerfile | [Ver commit](https://github.com/CodeURJC-DAW-2024-25/webapp11/commit/5f3b5a9d077b4baf411096b6e9f8492d54c21e34) |
+ 
+   
+   | Principales archivos | Enlace al archivo |
+   |----------------------|-------------------|
+   |course-detail.component.html|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/components/course-detail.component.html)|
+   |course-detail.component.ts|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/components/course-detail.component.ts)|
+   |reviews.service.ts|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/services/reviews.service.ts)|
+   |SPAController.java|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/demo/src/main/java/es/daw/demo/controller/SPAController.java)|
+   |Dockerfile|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/docker/Dockerfile)|
