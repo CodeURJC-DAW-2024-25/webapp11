@@ -200,6 +200,12 @@ Por defecto, la aplicación tiene algunos usuarios y cursos creados para interac
    Disponible en [http://localhost:4200/](http://localhost:4200/) 
 Para acceder a la aplicación, navege a `appWeb11.dawgis.etsii.urjc.es` o `10.100.139.135` en tu navegador web. La parte de Angular estará disponible en `https://10.100.139.135:8443/new/` o `https:/appWeb11.dawgis.etsii.urjc.es:8443/new/`.
 ---
+
+## Enlace a la demo en youtube
+
+ Se ha subido un video a YouTube mostrando cómo funcionaría la web con toda su funcionalidad. Se puede acceder desde [este enlace](https://youtu.be/c3aWdTUQZhY).
+
+
 ## Participación P1:
 - Eloy de Sande.
 
