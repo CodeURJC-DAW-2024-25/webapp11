@@ -952,7 +952,7 @@ Entre las tareas realizadas cabe destacar: la creación del formulario de regist
   
   | Principales archivos | Enlace al archivo |
   |----------------------|-------------------|
-  |chart.component.html|[Ver archivo]((https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/components/chart.component.html))|
+  |chart.component.html|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/components/chart.component.html)|
   |chart.component.ts|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/components/chart.component.ts)|
   |chartCourse.component.html|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/components/chartCourse.component.html)|
   |chartCourse.component.ts|[Ver archivo](https://github.com/CodeURJC-DAW-2024-25/webapp11/blob/main/Cognite/src/app/components/chartCourse.component.ts)|
